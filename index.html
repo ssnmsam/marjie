@@ -240,6 +240,22 @@
       .score-cell-value{font-size:0.85rem}
       .cf-row{grid-template-columns:1fr 1fr;gap:0.3rem}
     }
+
+    /* CSS للطباعة (PDF) */
+    @media print {
+      @page { margin: 2cm 1.8cm; size: A4; }
+      body { background: #fff !important; color: #000 !important; }
+      .navbar, .footer, #toasts, #print-controls, .no-print { display: none !important; }
+      main { padding: 0 !important; }
+      .container { max-width: none !important; padding: 0 !important; }
+      #print-area { display: block !important; }
+      #print-area .letterhead { width: 100%; margin-bottom: 1.5cm; max-height: 4cm; object-fit: contain; }
+      #print-area h1 { font-size: 18pt; text-align: center; margin-bottom: 0.5cm; color: #000; border-bottom: 2px solid #000; padding-bottom: 0.3cm; }
+      #print-area .meta { font-size: 10pt; color: #555; text-align: center; margin-bottom: 1cm; }
+      #print-area .body { font-size: 12pt; line-height: 1.9; white-space: pre-wrap; }
+      #print-area .footer-note { margin-top: 1cm; padding-top: 0.5cm; border-top: 1px solid #999; font-size: 9pt; color: #666; }
+    }
+    #print-area { display: none; }
   </style>
 </head>
 <body>
@@ -271,6 +287,9 @@
 
   <div id="toasts"></div>
 
+  <!-- منطقة الطباعة المخفية (للسياسات بصيغة PDF) -->
+  <div id="print-area"></div>
+
 <script>
 // ═════════════════════════════════════════════════════════════════
 // الإعدادات
@@ -286,7 +305,7 @@ const STANDARDS_LABELS = {
 };
 
 // المعايير التي تعمل في الواجهة حتى لو لم تتوفر بيانات الممارسات
-const FRONTEND_ENABLED_STANDARDS = ['transparency', 'financial'];
+const FRONTEND_ENABLED_STANDARDS = ['transparency', 'financial', 'compliance'];
 
 // مدخلات الحاسبة المالية (مجمّعة حسب الفئة)
 const FIN_INPUTS = [
@@ -670,6 +689,7 @@ function renderStandardsContent(activeStd) {
     const std = stds[key];
     const isClickable = std.available || FRONTEND_ENABLED_STANDARDS.includes(key);
     const countText = key === 'financial' ? 'تنظيم'
+                    : key === 'compliance' ? 'هيكل'
                     : std.available ? std.practiceCount
                     : 'قريباً';
     tabsHtml += `
@@ -685,6 +705,11 @@ function renderStandardsContent(activeStd) {
   // المعالجة الخاصة لمعيار السلامة المالية → مؤشرات التنظيم المالي
   if (activeStd === 'financial') {
     renderFinancialRegulation(tabsHtml);
+    return;
+  }
+  // المعالجة الخاصة لمعيار الامتثال → عرض هيكلي
+  if (activeStd === 'compliance') {
+    renderComplianceOverview(tabsHtml);
     return;
   }
 
@@ -1104,7 +1129,7 @@ function renderPolicyForm(p) {
 
     <div class="card">
       <h2 class="mb-3">احصل على نسختك</h2>
-      <p class="muted small mb-4">املأ البيانات التالية وسيتم توليد سياسة مخصّصة لجمعيتك.</p>
+      <p class="muted small mb-4">املأ البيانات وستحصل على نسخة مخصّصة بصيغ متعدّدة.</p>
 
       <form id="generate-form">
         <div class="form-group">
@@ -1114,9 +1139,21 @@ function renderPolicyForm(p) {
 
         ${customFieldsHtml}
 
-        <button type="submit" class="btn btn-primary btn-lg" id="gen-btn">
-          توليد السياسة وتنزيلها
-        </button>
+        <div class="card-tight" style="background:var(--gray-50);border:1px dashed var(--border-strong);border-radius:10px;margin-top:1rem">
+          <label class="flex-between" style="margin-bottom:0.5rem">
+            <span>🖨️ ورق رسمي للجمعية (اختياري)</span>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="clearLetterhead()">إزالة</button>
+          </label>
+          <p class="form-help">ارفع صورة لترويسة جمعيتك (PNG/JPG) لتظهر في أعلى نسخة الـPDF. تُحفظ في متصفحك فقط.</p>
+          <input type="file" accept="image/*" id="letterhead-input" onchange="handleLetterheadUpload(event)" />
+          <div id="letterhead-preview" style="margin-top:0.5rem"></div>
+        </div>
+
+        <div class="flex flex-gap-2 flex-wrap mt-5">
+          <button type="submit" data-format="pdf" class="btn btn-primary btn-lg">📄 تنزيل PDF</button>
+          <button type="submit" data-format="docx" class="btn btn-secondary btn-lg">📝 تنزيل Word</button>
+          <button type="submit" data-format="txt" class="btn btn-ghost btn-lg">📃 تنزيل نص</button>
+        </div>
       </form>
     </div>
 
@@ -1125,11 +1162,21 @@ function renderPolicyForm(p) {
     </div>
   `;
 
+  // عرض الورق الرسمي المحفوظ
+  showLetterheadPreview();
+
+  // تتبّع الصيغة المختارة
+  $$('#generate-form button[type=submit]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $('#generate-form').dataset.format = btn.dataset.format;
+    });
+  });
+
   $('#generate-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = $('#gen-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="loader"></span> جاري التوليد...';
+    const format = e.target.dataset.format || 'pdf';
+    const buttons = $$('#generate-form button[type=submit]');
+    buttons.forEach(b => b.disabled = true);
 
     const data = Object.fromEntries(new FormData(e.target));
     const associationName = data.associationName;
@@ -1137,15 +1184,148 @@ function renderPolicyForm(p) {
 
     try {
       const result = await API.generatePolicy(p.id, associationName, data);
-      downloadText(result.fileName, result.content);
-      showToast('تم توليد السياسة وتنزيلها ✓', 'success');
+      if (format === 'pdf') {
+        downloadAsPDF(result, p);
+      } else if (format === 'docx') {
+        downloadAsWord(result, p);
+      } else {
+        downloadText(result.fileName, result.content);
+      }
+      showToast('تم توليد السياسة ✓', 'success');
     } catch (err) {
       showToast(err.message, 'error');
     } finally {
-      btn.disabled = false;
-      btn.innerHTML = 'توليد السياسة وتنزيلها';
+      buttons.forEach(b => b.disabled = false);
     }
   });
+}
+
+// ═════════════════════════════════════════════════════════════════
+// إدارة الورق الرسمي (يُحفظ في localStorage)
+// ═════════════════════════════════════════════════════════════════
+
+function getLetterhead() {
+  try { return localStorage.getItem('marjie_letterhead') || null; }
+  catch (e) { return null; }
+}
+
+function handleLetterheadUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) {
+    showToast('الصورة كبيرة جداً (الحد الأقصى 2 ميجا)', 'error');
+    event.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      localStorage.setItem('marjie_letterhead', e.target.result);
+      showLetterheadPreview();
+      showToast('تم حفظ الورق الرسمي ✓', 'success');
+    } catch (err) {
+      showToast('تعذّر حفظ الصورة (قد تكون كبيرة)', 'error');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearLetterhead() {
+  try { localStorage.removeItem('marjie_letterhead'); } catch (e) {}
+  showLetterheadPreview();
+  const input = $('#letterhead-input');
+  if (input) input.value = '';
+}
+
+function showLetterheadPreview() {
+  const preview = $('#letterhead-preview');
+  if (!preview) return;
+  const lh = getLetterhead();
+  preview.innerHTML = lh
+    ? `<img src="${lh}" style="max-height:80px;max-width:300px;border:1px solid var(--border);border-radius:6px;padding:4px;background:#fff" />`
+    : '<p class="small faint">لا يوجد ورق رسمي محفوظ.</p>';
+}
+
+// ═════════════════════════════════════════════════════════════════
+// تنزيل السياسة بصيغ مختلفة
+// ═════════════════════════════════════════════════════════════════
+
+function downloadAsPDF(result, policy) {
+  const lh = getLetterhead();
+  const meta = `${escapeHtml(result.associationName)} • الإصدار ${escapeHtml(policy.version || '1')} • ${escapeHtml(formatDate(result.generatedAt))}`;
+
+  // فصل التذييل عن المحتوى
+  const sep = '──────────────────────────';
+  let mainContent = result.content;
+  let footerNote = '';
+  const idx = result.content.indexOf(sep);
+  if (idx !== -1) {
+    mainContent = result.content.substring(0, idx).trim();
+    footerNote = result.content.substring(idx + sep.length).trim();
+  }
+
+  $('#print-area').innerHTML = `
+    ${lh ? `<img src="${lh}" class="letterhead" />` : ''}
+    <h1>${escapeHtml(result.title)}</h1>
+    <div class="meta">${meta}</div>
+    <div class="body">${escapeHtml(mainContent)}</div>
+    ${footerNote ? `<div class="footer-note">${escapeHtml(footerNote)}</div>` : ''}
+  `;
+
+  // تأخير قصير للتأكد من تحميل الصورة قبل الطباعة
+  setTimeout(() => {
+    window.print();
+    showToast('في نافذة الطباعة، اختر "حفظ كـ PDF" من قائمة الطابعات', 'info');
+  }, 250);
+}
+
+function downloadAsWord(result, policy) {
+  const lh = getLetterhead();
+  const meta = `${escapeHtml(result.associationName)} • الإصدار ${escapeHtml(policy.version || '1')} • ${escapeHtml(formatDate(result.generatedAt))}`;
+
+  const sep = '──────────────────────────';
+  let mainContent = result.content;
+  let footerNote = '';
+  const idx = result.content.indexOf(sep);
+  if (idx !== -1) {
+    mainContent = result.content.substring(0, idx).trim();
+    footerNote = result.content.substring(idx + sep.length).trim();
+  }
+
+  // HTML بصيغة Word (.doc) — Microsoft Word يفتحه طبيعياً
+  const html = `
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+  <meta charset="utf-8" />
+  <title>${escapeHtml(result.title)}</title>
+  <!--[if gte mso 9]>
+  <xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>
+  <![endif]-->
+  <style>
+    body { font-family: 'Calibri', 'Arial', sans-serif; direction: rtl; line-height: 1.8; }
+    h1 { text-align: center; color: #0F6E56; border-bottom: 2px solid #0F6E56; padding-bottom: 8px; }
+    .meta { text-align: center; color: #666; font-size: 10pt; margin-bottom: 24px; }
+    .letterhead { display: block; max-height: 100px; margin: 0 auto 24px; }
+    .body { white-space: pre-wrap; font-size: 12pt; }
+    .footer-note { margin-top: 32px; padding-top: 12px; border-top: 1px solid #999; font-size: 9pt; color: #666; }
+  </style>
+</head>
+<body dir="rtl">
+  ${lh ? `<img src="${lh}" class="letterhead" />` : ''}
+  <h1>${escapeHtml(result.title)}</h1>
+  <div class="meta">${meta}</div>
+  <div class="body">${escapeHtml(mainContent)}</div>
+  ${footerNote ? `<div class="footer-note">${escapeHtml(footerNote)}</div>` : ''}
+</body>
+</html>`;
+
+  const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = result.fileName.replace(/\.txt$/, '.doc');
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 // ═════════════════════════════════════════════════════════════════
@@ -1577,6 +1757,122 @@ async function renderAdminDashboard() {
 }
 
 // ═════════════════════════════════════════════════════════════════
+// عرض: الامتثال والالتزام ← هيكل المؤشرات وعدد الممارسات
+// ═════════════════════════════════════════════════════════════════
+
+const COMPLIANCE_INDICATORS = [
+  { name: 'اللائحة الأساسية للجمعية',
+    desc: 'مطابقة اللائحة المعتمدة مع النموذج النظامي ونشرها.',
+    counts: { 'متناهية الصغر': 3, 'الصغيرة': 3, 'المتوسطة': 3, 'الكبيرة': 3, 'متناهية الكبر': 3 } },
+  { name: 'الجمعية العمومية',
+    desc: 'انعقاد الاجتماع السنوي، اعتماد الميزانية والتقارير، توثيق المحاضر.',
+    counts: { 'متناهية الصغر': 3, 'الصغيرة': 3, 'المتوسطة': 4, 'الكبيرة': 4, 'متناهية الكبر': 4 } },
+  { name: 'مجلس الإدارة',
+    desc: 'تشكيل المجلس، تعارض المصالح، الإفصاح عن العلاقات التعاقدية، اجتماعات المجلس.',
+    counts: { 'متناهية الصغر': 2, 'الصغيرة': 6, 'المتوسطة': 19, 'الكبيرة': 32, 'متناهية الكبر': 34 },
+    flag: 'متناهية الكبر' },
+  { name: 'الفروع والمكاتب',
+    desc: 'تنظيم الفروع وتوثيق نشاطها.',
+    counts: { 'متناهية الصغر': 1, 'الصغيرة': 1, 'المتوسطة': 1, 'الكبيرة': 1, 'متناهية الكبر': 1 } },
+  { name: 'التقارير',
+    desc: 'التقارير الإدارية والمالية السنوية وتقارير المراجعة.',
+    counts: { 'متناهية الصغر': 2, 'الصغيرة': 2, 'المتوسطة': 4, 'الكبيرة': 4, 'متناهية الكبر': 4 } },
+  { name: 'الأنظمة السارية',
+    desc: 'الالتزام بأنظمة العمل، مكافحة غسل الأموال، حماية البيانات.',
+    counts: { 'متناهية الصغر': 0, 'الصغيرة': 0, 'المتوسطة': 3, 'الكبيرة': 6, 'متناهية الكبر': 6 },
+    introducedAt: 'المتوسطة' },
+  { name: 'البرامج والأنشطة',
+    desc: 'مطابقة الأنشطة لأهداف الجمعية، الشراكات، النطاق الجغرافي.',
+    counts: { 'متناهية الصغر': 1, 'الصغيرة': 2, 'المتوسطة': 2, 'الكبيرة': 4, 'متناهية الكبر': 4 } },
+  { name: 'الإيرادات والمصروفات والتملك',
+    desc: 'حوكمة دورة المال، الموافقة على الاستثمارات، التملك.',
+    counts: { 'متناهية الصغر': 0, 'الصغيرة': 0, 'المتوسطة': 1, 'الكبيرة': 7, 'متناهية الكبر': 7 },
+    introducedAt: 'المتوسطة' },
+  { name: 'الوثائق والسجلات',
+    desc: 'سجل المستفيدين، البطاقات، السرية، التطابق مع السجل المركزي.',
+    counts: { 'متناهية الصغر': 1, 'الصغيرة': 3, 'المتوسطة': 3, 'الكبيرة': 4, 'متناهية الكبر': 5 },
+    flag: 'متناهية الكبر' },
+  { name: 'اللجان',
+    desc: 'لجنة المراجعة، لجنة الترشيحات والمكافآت، لجان المشاريع.',
+    counts: { 'متناهية الصغر': 1, 'الصغيرة': 1, 'المتوسطة': 10, 'الكبيرة': 20, 'متناهية الكبر': 23 } }
+];
+
+function renderComplianceOverview(tabsHtml) {
+  // إجمالي الممارسات لكل تصنيف
+  const totals = {};
+  CLASSIFICATIONS.forEach(c => {
+    totals[c] = COMPLIANCE_INDICATORS.reduce((s, ind) => s + (ind.counts[c] || 0), 0);
+  });
+
+  // جدول الإجماليات
+  const totalsHtml = CLASSIFICATIONS.map(c => `
+    <div class="score-cell has-score">
+      <span class="score-cell-value">${totals[c]}</span>
+      <span class="score-cell-label">${escapeHtml(c)}</span>
+    </div>
+  `).join('');
+
+  // كل مؤشر
+  const indicatorsHtml = COMPLIANCE_INDICATORS.map((ind, i) => {
+    const cellsHtml = CLASSIFICATIONS.map(c => {
+      const n = ind.counts[c] || 0;
+      return n > 0
+        ? `<div class="score-cell has-score"><span class="score-cell-value">${n}</span><span class="score-cell-label">${escapeHtml(c)}</span></div>`
+        : `<div class="score-cell no-score"><span class="score-cell-value">—</span><span class="score-cell-label">${escapeHtml(c)}</span></div>`;
+    }).join('');
+
+    let badge = '';
+    if (ind.introducedAt) {
+      badge = `<span class="badge badge-amber">↑ تُضاف عند ${escapeHtml(ind.introducedAt)}</span>`;
+    } else if (ind.flag === 'متناهية الكبر') {
+      badge = `<span class="badge badge-coral">⊛ قفزة كبيرة في متناهية الكبر</span>`;
+    } else {
+      badge = `<span class="badge badge-green">⊛ لكل التصنيفات</span>`;
+    }
+
+    return `
+      <div class="practice-card">
+        <div class="practice-meta">
+          <span class="badge badge-gray">المؤشر ${i + 1}</span>
+          ${badge}
+        </div>
+        <div class="practice-title">${escapeHtml(ind.name)}</div>
+        <div class="practice-desc">${escapeHtml(ind.desc)}</div>
+        <div class="small faint mb-2">عدد الممارسات في كل تصنيف:</div>
+        <div class="scores-row">${cellsHtml}</div>
+      </div>
+    `;
+  }).join('');
+
+  $('#standards-content').innerHTML = tabsHtml + `
+    <div class="alert alert-info">
+      <strong>هيكل معيار الامتثال والالتزام</strong> — 10 مؤشرات تتدرّج من ${totals['متناهية الصغر']} ممارسة
+      للجمعيات متناهية الصغر إلى ${totals['متناهية الكبر']} ممارسة لمتناهية الكبر. مؤشرا
+      <strong>"الأنظمة السارية"</strong> و<strong>"الإيرادات والمصروفات"</strong> يظهران من تصنيف "المتوسطة" فأعلى.
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">إجمالي عدد الممارسات لكل تصنيف</h2>
+          <p class="muted small" style="margin-top:0.25rem">المجموع التراكمي عبر المؤشرات العشرة</p>
+        </div>
+      </div>
+      <div class="scores-row">${totalsHtml}</div>
+    </div>
+
+    <h2 class="mt-5 mb-3">المؤشرات العشرة</h2>
+    ${indicatorsHtml}
+
+    <div class="alert alert-warning mt-4">
+      البيانات أعلاه تُظهر <strong>الهيكل وعدد الممارسات</strong> لكل تصنيف، استناداً للدليل الاسترشادي الصادر من
+      المركز الوطني لتنمية القطاع غير الربحي. الممارسات التفصيلية (نص كل ممارسة، الشاهد، الدرجات) ستُضاف تدريجياً
+      عبر لوحة الإدارة.
+    </div>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
 // عرض: السلامة المالية ← مؤشرات التنظيم المالي (في تبويب المعايير)
 // ═════════════════════════════════════════════════════════════════
 
@@ -1699,7 +1995,7 @@ function getFinancialValues() {
 function renderCalculator() {
   const saved = loadFinancialInputs();
 
-  // بناء حقول المدخلات مجمّعة
+  // بناء حقول المدخلات مجمّعة (محاكاة شكل القوائم المالية)
   let inputsHtml = '';
   Object.keys(FIN_INPUT_GROUPS).forEach(g => {
     const inputs = FIN_INPUTS.filter(i => i.group === g);
@@ -1731,36 +2027,61 @@ function renderCalculator() {
       </p>
 
       <div class="alert alert-info">
-        <strong>خيار سريع:</strong> ارفع ملف القوائم المالية (PDF) وستتم محاولة استخراج الأرقام تلقائياً.
-        أو املأ الحقول يدوياً في الأسفل. بياناتك تبقى في متصفحك ولا تُرسل لأي خادم.
+        <strong>3 طرق لإدخال البيانات:</strong> اختر الأنسب لك. بياناتك تبقى في متصفحك ولا تُرسل لأي خادم.
       </div>
 
       <div class="card">
         <div class="card-header">
-          <div>
-            <h2 class="card-title">📄 تحليل ملف القوائم المالية (PDF)</h2>
-            <p class="muted small" style="margin-top:0.25rem">تجريبي — يستخرج ما يستطيع، راجع النتائج قبل الاعتماد</p>
+          <h2 class="card-title">طريقة الإدخال</h2>
+        </div>
+        <div class="standards-tabs" style="margin-bottom:0">
+          <button class="std-tab active" onclick="switchInputMode('manual')" id="mode-manual">✍️ إدخال يدوي</button>
+          <button class="std-tab" onclick="switchInputMode('ocr')" id="mode-ocr">📷 رفع صورة (OCR)</button>
+          <button class="std-tab" onclick="switchInputMode('pdf')" id="mode-pdf">📄 تحليل PDF (تجريبي)</button>
+        </div>
+      </div>
+
+      <!-- وضع: رفع صورة OCR -->
+      <div id="mode-content-ocr" class="mode-content" style="display:none">
+        <div class="card">
+          <h3>ارفع صورة لقائمة مالية</h3>
+          <p class="muted small mb-3">
+            صوّر صفحة من قوائمك المالية بجوّالك (صورة واضحة، إضاءة جيدة)، أو ارفع لقطة شاشة من PDF.
+            تستخدم المنصة محرّك تعرّف ضوئي على الحروف (OCR) ليقرأ النص العربي.
+          </p>
+          <p class="form-help mb-3">⚠️ تجريبي — يعمل أفضل مع: صور عالية الدقة، نص طباعي واضح، إضاءة متجانسة.</p>
+          <input type="file" id="ocr-input" accept="image/*" onchange="handleOCRUpload(event)" />
+          <div id="ocr-status" class="mt-3"></div>
+          <div id="ocr-text" style="display:none" class="mt-3">
+            <label>النص المستخرج (راجعه وانقل الأرقام للحقول أدناه):</label>
+            <textarea id="ocr-text-area" readonly style="min-height:250px;font-family:monospace;font-size:0.82rem"></textarea>
           </div>
         </div>
-        <div class="flex flex-gap-2 flex-wrap">
-          <input type="file" id="pdf-input" accept="application/pdf" style="display:none" onchange="handlePDFUpload(event)" />
-          <button class="btn btn-primary" onclick="document.getElementById('pdf-input').click()">
-            اختر ملف PDF
-          </button>
-          <button class="btn btn-secondary" onclick="togglePDFRawText()">عرض النص المستخرج</button>
-        </div>
-        <div id="pdf-status" class="mt-3"></div>
-        <div id="pdf-raw" style="display:none" class="mt-3">
-          <label>النص المستخرج (للمراجعة اليدوية):</label>
-          <textarea id="pdf-raw-text" readonly style="min-height:200px;font-family:monospace;font-size:0.78rem;direction:ltr;text-align:left"></textarea>
+      </div>
+
+      <!-- وضع: تحليل PDF -->
+      <div id="mode-content-pdf" class="mode-content" style="display:none">
+        <div class="card">
+          <h3>ارفع ملف PDF للقوائم المالية</h3>
+          <p class="muted small mb-3">
+            تجريبي. يعمل بشكل أفضل مع PDFs مولّدة آلياً (وليس مسحاً ضوئياً).
+            إن فشل التحليل، استخدم الإدخال اليدوي.
+          </p>
+          <input type="file" id="pdf-input" accept="application/pdf" onchange="handlePDFUpload(event)" />
+          <div id="pdf-status" class="mt-3"></div>
+          <div id="pdf-raw" style="display:none" class="mt-3">
+            <label>النص المستخرج:</label>
+            <textarea id="pdf-raw-text" readonly style="min-height:200px;font-family:monospace;font-size:0.78rem;direction:ltr;text-align:left"></textarea>
+          </div>
         </div>
       </div>
 
+      <!-- الإدخال (يظهر دائماً) -->
       <div class="card">
         <div class="card-header">
           <div>
-            <h2 class="card-title">أرقام جمعيتك المالية (سنوية)</h2>
-            <p class="muted small" style="margin-top:0.25rem">من القوائم المالية المُدققة</p>
+            <h2 class="card-title">📊 أرقام جمعيتك المالية (سنوية)</h2>
+            <p class="muted small" style="margin-top:0.25rem">من القوائم المالية المُدققة لآخر سنة مالية</p>
           </div>
           <button class="btn btn-ghost btn-sm" onclick="resetFinancialInputs()">مسح الأرقام</button>
         </div>
@@ -1774,9 +2095,13 @@ function renderCalculator() {
   updateFinancialResults();
 }
 
-function togglePDFRawText() {
-  const el = $('#pdf-raw');
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+function switchInputMode(mode) {
+  $$('.mode-content').forEach(el => el.style.display = 'none');
+  $$('.std-tab').forEach(t => t.classList.remove('active'));
+  $('#mode-' + mode).classList.add('active');
+  if (mode !== 'manual') {
+    $('#mode-content-' + mode).style.display = 'block';
+  }
 }
 
 // ═════════════════════════════════════════════════════════════════
@@ -1861,6 +2186,103 @@ async function parsePDF(file) {
   });
 
   return { rawText: normalized, extracted, matchDetails };
+}
+
+// تحميل Tesseract عند الطلب (لا نحمّله مع الصفحة لأنه ثقيل)
+let _tesseractLoaded = false;
+function loadTesseract() {
+  if (_tesseractLoaded) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+    s.onload = () => { _tesseractLoaded = true; resolve(); };
+    s.onerror = () => reject(new Error('فشل تحميل محرّك OCR. تحقّق من الاتصال.'));
+    document.head.appendChild(s);
+  });
+}
+
+async function handleOCRUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const status = $('#ocr-status');
+  status.innerHTML = '<div class="alert alert-info"><span class="loader"></span> جاري تحميل محرّك OCR (قد يستغرق 30 ثانية أول مرة)...</div>';
+
+  try {
+    await loadTesseract();
+    status.innerHTML = '<div class="alert alert-info"><span class="loader"></span> جاري قراءة الصورة... قد يستغرق دقيقة.</div>';
+
+    const result = await Tesseract.recognize(file, 'ara+eng', {
+      logger: m => {
+        if (m.status === 'recognizing text') {
+          const pct = Math.round(m.progress * 100);
+          status.innerHTML = `<div class="alert alert-info"><span class="loader"></span> جاري قراءة الصورة... ${pct}%</div>`;
+        }
+      }
+    });
+
+    const text = result.data.text || '';
+    $('#ocr-text-area').value = text;
+    $('#ocr-text').style.display = 'block';
+
+    // محاولة استخراج الأرقام
+    const extracted = extractFinancialFromText(text);
+    let appliedCount = 0;
+    Object.keys(extracted).forEach(key => {
+      const input = document.querySelector('input[data-fin-key="' + key + '"]');
+      if (input) {
+        input.value = extracted[key];
+        input.style.background = '#FAEEDA';
+        appliedCount++;
+      }
+    });
+    updateFinancialResults();
+
+    if (appliedCount > 0) {
+      status.innerHTML = `
+        <div class="alert alert-success">
+          <strong>تم استخراج ${appliedCount} حقل من الصورة.</strong>
+          راجع القيم البرتقالية في الجدول أدناه. النص الكامل في الصندوق أعلاه للمراجعة اليدوية.
+        </div>
+      `;
+    } else {
+      status.innerHTML = `
+        <div class="alert alert-warning">
+          <strong>لم يتم استخراج أرقام تلقائياً.</strong>
+          النص ظاهر في الصندوق أعلاه — انقل الأرقام يدوياً للحقول أدناه.
+          نصيحة: جودة الصورة تؤثر كثيراً، صوّر بإضاءة أفضل أو أقرب.
+        </div>
+      `;
+    }
+
+    event.target.value = '';
+  } catch (err) {
+    status.innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+// استخراج موحّد من النص (يستخدم لكل من PDF و OCR)
+function extractFinancialFromText(text) {
+  const normalized = normalizePDFDigits(text);
+  const extracted = {};
+
+  PDF_FIELD_PATTERNS.forEach(field => {
+    for (const tok of field.tokens) {
+      const idx = normalized.indexOf(tok);
+      if (idx === -1) continue;
+      const slice = normalized.substring(idx + tok.length, Math.min(idx + tok.length + 300, normalized.length));
+      const numMatches = slice.match(/\d{1,3}(?:,\d{3})+(?:\.\d+)?/g);
+      if (numMatches && numMatches.length > 0) {
+        const v = parseFloat(numMatches[0].replace(/,/g, ''));
+        if (!isNaN(v) && v > 0) {
+          extracted[field.key] = v;
+          break;
+        }
+      }
+    }
+  });
+
+  return extracted;
 }
 
 async function handlePDFUpload(event) {
