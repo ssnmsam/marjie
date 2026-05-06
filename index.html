@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مَرْجِع — منصّة الحوكمة العملية للجمعيات</title>
+  <meta name="description" content="منصّة عملية لاستعراض معايير الحوكمة وتوليد سياسات الجمعيات الأهلية" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230F6E56'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3Eم%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ═════════════════════════════════════════════════
+       نظام التصميم
+       ═════════════════════════════════════════════════ */
+    :root {
+      --teal-50:#E1F5EE; --teal-100:#9FE1CB; --teal-500:#1D9E75; --teal-700:#0F6E56; --teal-900:#04342C;
+      --coral-50:#FAECE7; --coral-500:#D85A30; --coral-700:#993C1D;
+      --amber-100:#FAC775; --amber-500:#BA7517;
+      --green-100:#C0DD97; --green-500:#639922;
+      --red-100:#F7C1C1; --red-500:#E24B4A;
+      --gray-50:#FAF8F3; --gray-100:#F1EFE8; --gray-200:#D3D1C7;
+      --gray-300:#B4B2A9; --gray-500:#888780; --gray-700:#444441; --gray-900:#2C2C2A;
+      --bg:var(--gray-50); --bg-card:#FFFFFF; --border:rgba(0,0,0,0.08); --border-strong:rgba(0,0,0,0.15);
+      --text:var(--gray-900); --text-muted:var(--gray-700); --text-faint:var(--gray-500);
+      --radius-sm:6px; --radius-md:10px; --radius-lg:14px;
+      --shadow-sm:0 1px 2px rgba(0,0,0,0.04); --shadow-md:0 4px 12px rgba(0,0,0,0.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px;scroll-behavior:smooth}
+    body{font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;font-weight:400;line-height:1.65;color:var(--text);background:var(--bg);min-height:100vh;direction:rtl;text-align:right}
+
+    /* تخطيط */
+    .container{width:100%;max-width:1180px;margin:0 auto;padding:0 1.25rem}
+    .container-narrow{max-width:780px}
+    main{padding:2.5rem 0;min-height:calc(100vh - 64px - 60px)}
+
+    /* تنقل */
+    .navbar{background:var(--bg-card);border-bottom:1px solid var(--border);padding:0.7rem 0;position:sticky;top:0;z-index:50}
+    .navbar-content{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+    .brand{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:var(--text)}
+    .brand-logo{width:38px;height:38px;background:var(--teal-700);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:1.15rem}
+    .brand-name{font-weight:600;font-size:1.05rem;letter-spacing:-0.01em}
+    .brand-name small{display:block;font-weight:400;font-size:0.72rem;color:var(--text-faint);margin-top:-2px}
+    .nav-links{display:flex;align-items:center;gap:0.4rem}
+    .nav-link{color:var(--text-muted);text-decoration:none;padding:0.4rem 0.8rem;border-radius:6px;font-size:0.9rem;transition:.15s;background:none;border:none;font-family:inherit;cursor:pointer}
+    .nav-link:hover{background:var(--gray-100);color:var(--text)}
+    .nav-link.active{background:var(--teal-50);color:var(--teal-700)}
+
+    .footer{background:var(--bg-card);border-top:1px solid var(--border);padding:1.25rem 0;text-align:center;color:var(--text-faint);font-size:0.82rem}
+
+    /* طباعة */
+    h1,h2,h3,h4{font-weight:600;line-height:1.3;color:var(--text)}
+    h1{font-size:2.25rem;margin-bottom:0.75rem;letter-spacing:-0.02em}
+    h2{font-size:1.6rem;margin-bottom:0.75rem;letter-spacing:-0.01em}
+    h3{font-size:1.2rem;margin-bottom:0.5rem}
+    h4{font-size:1.05rem;margin-bottom:0.5rem}
+    p{margin-bottom:0.75rem}
+    .muted{color:var(--text-muted)} .faint{color:var(--text-faint)}
+    .small{font-size:0.85rem} .tiny{font-size:0.75rem} .center{text-align:center}
+
+    /* أزرار */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.6rem 1.2rem;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--text);font-family:inherit;font-size:0.92rem;font-weight:500;cursor:pointer;text-decoration:none;transition:.15s;white-space:nowrap}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .btn-primary{background:var(--teal-700);color:#fff}
+    .btn-primary:hover:not(:disabled){background:var(--teal-900)}
+    .btn-secondary{background:var(--bg-card);color:var(--text);border-color:var(--border-strong)}
+    .btn-secondary:hover:not(:disabled){background:var(--gray-100)}
+    .btn-ghost{color:var(--text-muted)}
+    .btn-ghost:hover:not(:disabled){background:var(--gray-100)}
+    .btn-danger{background:transparent;color:var(--coral-700);border-color:var(--coral-500)}
+    .btn-danger:hover:not(:disabled){background:var(--coral-50)}
+    .btn-lg{padding:0.8rem 1.4rem;font-size:0.97rem}
+    .btn-sm{padding:0.35rem 0.75rem;font-size:0.83rem}
+    .btn-block{display:flex;width:100%}
+
+    /* بطاقات */
+    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
+    .card-header{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+    .card-title{font-size:1.15rem;font-weight:600;margin:0}
+    .card-tight{padding:1rem}
+
+    /* نماذج */
+    .form-group{margin-bottom:1rem}
+    label{display:block;margin-bottom:0.4rem;font-weight:500;font-size:0.88rem;color:var(--text)}
+    label .required{color:var(--coral-500)}
+    input[type=text],input[type=email],input[type=tel],input[type=password],input[type=url],input[type=number],input[type=date],select,textarea{width:100%;padding:0.65rem 0.85rem;border:1px solid var(--border-strong);border-radius:10px;background:var(--bg-card);color:var(--text);font-family:inherit;font-size:0.93rem;transition:.15s}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal-500);box-shadow:0 0 0 3px rgba(29,158,117,.12)}
+    textarea{min-height:140px;resize:vertical;line-height:1.6;font-family:inherit}
+    .form-help{margin-top:0.4rem;font-size:0.78rem;color:var(--text-faint)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:600px){.form-row{grid-template-columns:1fr}}
+
+    /* تنبيهات */
+    .alert{padding:0.9rem 1rem;border-radius:10px;margin-bottom:1rem;border:1px solid;font-size:0.9rem}
+    .alert-info{background:var(--teal-50);border-color:var(--teal-100);color:var(--teal-900)}
+    .alert-success{background:#EAF3DE;border-color:var(--green-100);color:#173404}
+    .alert-warning{background:#FAEEDA;border-color:var(--amber-100);color:#633806}
+    .alert-error{background:#FCEBEB;border-color:var(--red-100);color:#501313}
+
+    /* شارات */
+    .badge{display:inline-flex;align-items:center;gap:0.25rem;padding:0.18rem 0.6rem;border-radius:999px;font-size:0.72rem;font-weight:500;line-height:1.5}
+    .badge-teal{background:var(--teal-50);color:var(--teal-900)}
+    .badge-coral{background:var(--coral-50);color:var(--coral-700)}
+    .badge-amber{background:#FAEEDA;color:#633806}
+    .badge-green{background:#EAF3DE;color:#173404}
+    .badge-gray{background:var(--gray-100);color:var(--gray-700)}
+
+    /* صفحة الهبوط */
+    .hero{padding:4rem 0 2.5rem;text-align:center}
+    .hero h1{font-size:2.7rem;margin-bottom:1rem;letter-spacing:-0.025em;max-width:900px;margin-inline:auto;line-height:1.2}
+    .hero-tagline{display:inline-block;padding:0.3rem 0.9rem;background:var(--teal-50);color:var(--teal-700);border-radius:999px;font-size:0.85rem;font-weight:500;margin-bottom:1.5rem}
+    .hero-subtitle{font-size:1.1rem;color:var(--text-muted);max-width:680px;margin:0 auto 1.5rem}
+    .hero-actions{display:flex;justify-content:center;gap:0.75rem;flex-wrap:wrap}
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin:2.5rem 0}
+    .feature{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column}
+    .feature-icon{width:46px;height:46px;background:var(--teal-50);color:var(--teal-700);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem;font-weight:600}
+    .feature h3{font-size:1.1rem;margin-bottom:0.4rem}
+    .feature p{color:var(--text-muted);font-size:0.92rem;margin:0;flex:1}
+    .feature-action{margin-top:1rem}
+
+    /* مستعرض المعايير */
+    .standards-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0}
+    .std-tab{padding:0.7rem 1.2rem;background:none;border:none;font-family:inherit;font-size:0.95rem;color:var(--text-muted);cursor:pointer;position:relative;font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s}
+    .std-tab:hover:not(:disabled){color:var(--text)}
+    .std-tab.active{color:var(--teal-700);border-bottom-color:var(--teal-700)}
+    .std-tab:disabled{color:var(--text-faint);cursor:not-allowed}
+    .std-tab .count{display:inline-block;background:var(--gray-100);color:var(--text-muted);font-size:0.7rem;padding:0.05rem 0.45rem;border-radius:999px;margin-right:0.4rem;font-weight:400;vertical-align:1px}
+    .std-tab.active .count{background:var(--teal-100);color:var(--teal-900)}
+
+    .filters-bar{display:flex;gap:0.75rem;flex-wrap:wrap;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:1.25rem}
+    .filter-group{display:flex;flex-direction:column;gap:0.25rem;flex:1;min-width:180px}
+    .filter-group label{font-size:0.78rem;color:var(--text-muted);margin-bottom:0;font-weight:500}
+    .filter-group select{padding:0.45rem 0.7rem;font-size:0.88rem}
+
+    .practice-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:0.75rem;transition:.15s}
+    .practice-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-sm)}
+    .practice-meta{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;font-size:0.78rem;color:var(--text-faint);margin-bottom:0.5rem}
+    .practice-title{font-size:1rem;font-weight:500;margin-bottom:0.4rem;line-height:1.5}
+    .practice-desc{color:var(--text-muted);font-size:0.88rem;margin-bottom:0.75rem}
+    .scores-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0.4rem;margin-top:0.75rem}
+    .score-cell{padding:0.5rem 0.4rem;border-radius:8px;text-align:center;font-size:0.78rem;line-height:1.3}
+    .score-cell.has-score{background:var(--teal-50);color:var(--teal-900);border:1px solid var(--teal-100)}
+    .score-cell.no-score{background:var(--gray-100);color:var(--text-faint);border:1px solid var(--gray-200)}
+    .score-cell-value{font-weight:600;font-size:0.95rem;display:block;margin-bottom:0.05rem}
+    .score-cell-label{font-size:0.68rem;opacity:0.75}
+
+    /* محاكي الانتقال */
+    .transition-result{margin-top:1.5rem}
+    .transition-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;margin-bottom:1.25rem}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem}
+    .stat-label{font-size:0.78rem;color:var(--text-muted);margin-bottom:0.3rem}
+    .stat-value{font-size:1.6rem;font-weight:600;line-height:1.1}
+    .indicator-row{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+    .indicator-row:last-child{border-bottom:none}
+    .indicator-name{flex:1;font-size:0.93rem}
+    .indicator-name .small{display:block;color:var(--text-faint);margin-top:0.1rem;font-size:0.78rem}
+
+    /* السياسات */
+    .policies-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+    .policy-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:.15s;cursor:pointer}
+    .policy-card:hover{border-color:var(--teal-500);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+    .policy-card h3{font-size:1.05rem;margin-bottom:0.4rem}
+    .policy-card-meta{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.6rem}
+    .policy-card-desc{color:var(--text-muted);font-size:0.88rem;flex:1;margin-bottom:0.75rem}
+    .policy-card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:0.6rem;border-top:1px solid var(--border);font-size:0.78rem;color:var(--text-faint)}
+
+    /* لوحة الإدارة */
+    .admin-table{width:100%;border-collapse:collapse;font-size:0.9rem}
+    .admin-table th{text-align:right;padding:0.7rem 0.5rem;font-weight:600;color:var(--text-muted);border-bottom:2px solid var(--border);font-size:0.83rem}
+    .admin-table td{padding:0.85rem 0.5rem;border-bottom:1px solid var(--border);vertical-align:top}
+    .admin-table tr:hover{background:var(--gray-50)}
+    .admin-actions{display:flex;gap:0.3rem;flex-wrap:wrap}
+
+    .custom-fields-editor{border:1px dashed var(--border-strong);border-radius:10px;padding:0.75rem;margin-top:0.5rem;background:var(--gray-50)}
+    .cf-row{display:grid;grid-template-columns:1fr 1.5fr 100px 80px auto;gap:0.4rem;margin-bottom:0.5rem;align-items:center}
+    .cf-row input,.cf-row select{padding:0.35rem 0.5rem;font-size:0.83rem}
+    .cf-row label{margin:0;font-size:0.75rem}
+
+    /* مساعدات */
+    .flex{display:flex} .flex-between{display:flex;align-items:center;justify-content:space-between}
+    .flex-center{display:flex;align-items:center;justify-content:center}
+    .flex-gap-2{gap:0.5rem} .flex-gap-3{gap:0.75rem} .flex-wrap{flex-wrap:wrap}
+    .mt-2{margin-top:0.5rem} .mt-3{margin-top:0.75rem} .mt-4{margin-top:1rem} .mt-5{margin-top:1.5rem} .mt-6{margin-top:2rem}
+    .mb-2{margin-bottom:0.5rem} .mb-3{margin-bottom:0.75rem} .mb-4{margin-bottom:1rem}
+    .hidden{display:none !important}
+
+    /* تحميل */
+    .loader{display:inline-block;width:18px;height:18px;border:2px solid var(--gray-200);border-top-color:var(--teal-700);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-overlay{position:fixed;inset:0;background:rgba(250,248,243,.85);display:flex;align-items:center;justify-content:center;z-index:100}
+    .loading-overlay .loader{width:40px;height:40px;border-width:3px}
+
+    /* Toast */
+    #toasts{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:200;width:90%;max-width:500px}
+    #toasts .alert{box-shadow:var(--shadow-md);animation:slideDown .3s ease}
+    @keyframes slideDown{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+    /* الحاسبة المالية */
+    .fin-input-section{margin-bottom:1.25rem}
+    .fin-input-section h4{font-size:0.92rem;color:var(--text-muted);margin-bottom:0.5rem;font-weight:500;padding-bottom:0.4rem;border-bottom:1px dashed var(--border)}
+    .fin-inputs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.75rem}
+    .fin-inputs-grid .form-group{margin-bottom:0}
+    .fin-inputs-grid label{font-size:0.82rem;color:var(--text-muted)}
+    .fin-inputs-grid input{padding:0.5rem 0.7rem;font-size:0.92rem}
+    .indicator-section{padding:1.25rem 0;border-top:1px solid var(--border)}
+    .indicator-section:first-of-type{border-top:none;padding-top:0}
+    .indicator-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.85rem}
+    .indicator-header h3{margin:0;font-size:1.05rem}
+    .metric-row{display:grid;grid-template-columns:1.5fr auto auto;gap:0.5rem 1rem;padding:0.65rem 0;border-bottom:1px solid var(--border);align-items:center}
+    .metric-row:last-child{border-bottom:none}
+    .metric-name{font-size:0.9rem;line-height:1.5}
+    .metric-name .badge{margin-right:0.4rem;font-size:0.65rem}
+    .metric-target{font-size:0.78rem;color:var(--text-faint);display:block;margin-top:0.2rem}
+    .metric-actual{font-weight:600;font-size:1rem;color:var(--teal-700);text-align:left;direction:ltr;font-variant-numeric:tabular-nums}
+    .metric-actual.no-data{color:var(--text-faint);font-weight:400}
+    .total-score-card{background:linear-gradient(135deg,var(--teal-700),var(--teal-900));color:#fff;padding:1.5rem 1.75rem;border-radius:14px;margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem}
+    .total-score-card .label{font-size:1rem;opacity:0.92}
+    .total-score-card .label-sub{font-size:0.78rem;opacity:0.7;display:block;margin-top:0.1rem}
+    .total-score-value{font-size:2.6rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+    .total-score-value small{font-size:1.05rem;font-weight:400;opacity:0.7;margin-right:0.2rem}
+
+    /* الجوال */
+    @media(max-width:768px){
+      .nav-links{gap:0}
+      .nav-link{padding:0.4rem;font-size:0.82rem}
+      h1{font-size:1.7rem} h2{font-size:1.3rem}
+      .hero h1{font-size:2rem}
+      .container{padding:0 1rem}
+      main{padding:1.5rem 0}
+      .card{padding:1rem}
+      .scores-row{grid-template-columns:repeat(5,1fr);gap:0.2rem}
+      .score-cell{padding:0.4rem 0.2rem;font-size:0.7rem}
+      .score-cell-value{font-size:0.85rem}
+      .cf-row{grid-template-columns:1fr 1fr;gap:0.3rem}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════
+       شريط التنقل
+       ════════════════════════════════════════════════════ -->
+  <header>
+    <nav class="navbar">
+      <div class="container navbar-content">
+        <a href="#/" class="brand">
+          <div class="brand-logo">م</div>
+          <div class="brand-name">مَرْجِع<small>منصّة الحوكمة العملية للجمعيات</small></div>
+        </a>
+        <div class="nav-links" id="nav-links"></div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div id="app"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      مَرْجِع — منصّة الحوكمة العملية للجمعيات الأهلية • © <span id="year"></span>
+    </div>
+  </footer>
+
+  <div id="toasts"></div>
+
+<script>
+// ═════════════════════════════════════════════════════════════════
+// الإعدادات
+// ═════════════════════════════════════════════════════════════════
+
+const API_URL = 'https://script.google.com/macros/s/AKfycbxtZMFpNtqzdkXQon84PQ8jnjlfMNRh4sR4Sck3rqEcEYDUntlkd6oXCOs52YTxXKc/exec';
+
+const CLASSIFICATIONS = ['متناهية الصغر', 'الصغيرة', 'المتوسطة', 'الكبيرة', 'متناهية الكبر'];
+const STANDARDS_LABELS = {
+  transparency: 'الشفافية والإفصاح',
+  compliance: 'الامتثال والالتزام',
+  financial: 'السلامة المالية'
+};
+
+// المعايير التي تعمل في الواجهة حتى لو لم تتوفر بيانات الممارسات
+const FRONTEND_ENABLED_STANDARDS = ['transparency', 'financial'];
+
+// مدخلات الحاسبة المالية (مجمّعة حسب الفئة)
+const FIN_INPUTS = [
+  { key: 'totalExpenses',         label: 'إجمالي المصاريف',                 group: 'expenses' },
+  { key: 'adminExpenses',         label: 'المصاريف الإدارية',               group: 'expenses' },
+  { key: 'programsExpenses',      label: 'مصاريف البرامج والأنشطة',         group: 'expenses' },
+  { key: 'sustainabilityExpenses',label: 'مصاريف الاستدامة',                group: 'expenses' },
+  { key: 'fundraisingExpenses',   label: 'مصاريف جمع الأموال',              group: 'expenses' },
+  { key: 'sustainabilityReturns', label: 'عوائد الاستدامة',                 group: 'income' },
+  { key: 'totalDonations',        label: 'إجمالي التبرعات',                 group: 'income' },
+  { key: 'cashAndEquivalents',    label: 'النقد وما في حكمه',               group: 'assets' },
+  { key: 'sustainabilityAssets',  label: 'إجمالي أصول الاستدامة',           group: 'assets' },
+  { key: 'restrictedAssets',      label: 'الأصول المقيدة',                  group: 'assets' },
+  { key: 'endowmentCash',         label: 'أصول الأوقاف النقدية',            group: 'assets' },
+  { key: 'netCashInvestments',    label: 'صافي النقد والاستثمارات المتداولة',group: 'assets' },
+  { key: 'currentLiabilities',    label: 'الالتزامات المتداولة',            group: 'liabilities' }
+];
+
+const FIN_INPUT_GROUPS = {
+  expenses: 'المصاريف',
+  income: 'الإيرادات',
+  assets: 'الأصول والاستثمارات',
+  liabilities: 'الالتزامات'
+};
+
+// مؤشرات الأداء المالي (موحّدة لكل التصنيفات الخمسة)
+const FIN_INDICATORS = [
+  {
+    id: 'admin', name: 'المصاريف الإدارية', weight: 20,
+    metrics: [
+      { name: 'نسبة المصاريف الإدارية إلى إجمالي المصاريف',
+        compute: v => (v.totalExpenses > 0) ? (v.adminExpenses / v.totalExpenses) * 100 : null,
+        target: 15, type: 'less_than', subWeight: 80, targetText: 'أقل من 15%' },
+      { name: 'نسبة عوائد الاستدامة إلى المصاريف الإدارية',
+        compute: v => (v.adminExpenses > 0) ? (v.sustainabilityReturns / v.adminExpenses) * 100 : null,
+        target: 100, type: 'greater_or_equal', subWeight: 20, targetText: '100% فأكثر' }
+    ]
+  },
+  {
+    id: 'programs', name: 'مصاريف البرامج والأنشطة', weight: 45,
+    metrics: [
+      { name: 'نسبة مصاريف البرامج إلى إجمالي المصاريف',
+        compute: v => (v.totalExpenses > 0) ? (v.programsExpenses / v.totalExpenses) * 100 : null,
+        target: 80, type: 'greater_than', subWeight: 100, targetText: 'أكبر من 80%' }
+    ]
+  },
+  {
+    id: 'sustainability', name: 'الاستدامة المالية', weight: 10,
+    metrics: [
+      { name: 'نسبة مصاريف الاستدامة إلى إجمالي المصاريف',
+        compute: v => (v.totalExpenses > 0) ? (v.sustainabilityExpenses / v.totalExpenses) * 100 : null,
+        target: 5, type: 'less_than', subWeight: 50, targetText: 'أقل من 5%' },
+      { name: 'نسبة مصاريف الاستدامة إلى عوائد الاستدامة',
+        compute: v => (v.sustainabilityReturns > 0) ? (v.sustainabilityExpenses / v.sustainabilityReturns) * 100 : null,
+        target: 10, type: 'less_than', subWeight: 50, targetText: 'أقل من 10%' },
+      { name: 'نسبة عوائد الاستدامة إلى إجمالي أصول الاستدامة',
+        compute: v => (v.sustainabilityAssets > 0) ? (v.sustainabilityReturns / v.sustainabilityAssets) * 100 : null,
+        target: 7.5, type: 'greater_than', subWeight: 0, targetText: 'أعلى من 7.5%', informational: true }
+    ]
+  },
+  {
+    id: 'fundraising', name: 'جمع الأموال والتبرعات', weight: 10,
+    metrics: [
+      { name: 'نسبة مصاريف جمع الأموال إلى إجمالي المصاريف',
+        compute: v => (v.totalExpenses > 0) ? (v.fundraisingExpenses / v.totalExpenses) * 100 : null,
+        target: 5, type: 'less_than', subWeight: 50, targetText: 'أقل من 5%' },
+      { name: 'نسبة مصاريف جمع الأموال إلى إجمالي التبرعات',
+        compute: v => (v.totalDonations > 0) ? (v.fundraisingExpenses / v.totalDonations) * 100 : null,
+        target: 10, type: 'less_than', subWeight: 50, targetText: 'أقل من 10%' }
+    ]
+  },
+  {
+    id: 'coverage', name: 'تغطية الالتزامات المستقبلية', weight: 15,
+    metrics: [
+      { name: 'النقد إلى (المقيدة + الأوقاف النقدية + الالتزامات المتداولة)',
+        compute: v => {
+          const denom = (v.restrictedAssets || 0) + (v.endowmentCash || 0) + (v.currentLiabilities || 0);
+          return denom > 0 ? (v.cashAndEquivalents / denom) * 100 : null;
+        },
+        target: 100, type: 'greater_than', subWeight: 70, targetText: 'أكبر من 100%' },
+      { name: 'صافي النقد والاستثمارات / المصاريف الإدارية الشهرية',
+        compute: v => {
+          const monthly = (v.adminExpenses > 0) ? v.adminExpenses / 12 : null;
+          return monthly ? v.netCashInvestments / monthly : null;
+        },
+        target: 12, targetMax: 18, type: 'between', subWeight: 30, targetText: '12 إلى 18 شهراً', unit: 'شهر' }
+    ]
+  }
+];
+
+// ═════════════════════════════════════════════════════════════════
+// الحالة العامة
+// ═════════════════════════════════════════════════════════════════
+
+const State = {
+  standards: null,        // مخزّن مؤقتاً
+  policies: null,         // قائمة السياسات
+  currentRoute: null,
+  adminToken: localStorage.getItem('marjie_admin_token') || null,
+  adminEmail: localStorage.getItem('marjie_admin_email') || null
+};
+
+// ═════════════════════════════════════════════════════════════════
+// عميل API
+// ═════════════════════════════════════════════════════════════════
+
+const API = {
+  async call(action, data = {}, requireAdmin = false) {
+    const body = { action, data };
+    if (requireAdmin) {
+      if (!State.adminToken) throw new Error('يجب تسجيل دخول مدير');
+      body.token = State.adminToken;
+    }
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    });
+    if (!res.ok) throw new Error('خطأ في الاتصال (' + res.status + ')');
+    const json = await res.json();
+    if (!json.ok) {
+      if (json.code === 'UNAUTHORIZED') {
+        clearAdminSession();
+        navigate('#/admin/login');
+      }
+      throw new Error(json.error || 'حدث خطأ');
+    }
+    return json.data;
+  },
+  // عام
+  getStandards: () => API.call('getStandards'),
+  listPolicies: () => API.call('listPolicies'),
+  getPolicy: (id) => API.call('getPolicy', { id }),
+  generatePolicy: (id, associationName, customValues) =>
+    API.call('generatePolicy', { id, associationName, customValues }),
+  simulateTransition: (from, to) => API.call('simulateTransition', { from, to }),
+  // مدير
+  adminLogin: (email, password) => API.call('adminLogin', { email, password }),
+  adminMe: () => API.call('adminMe', {}, true),
+  adminLogout: () => API.call('adminLogout', {}, true),
+  adminChangePassword: (oldP, newP) => API.call('adminChangePassword', { oldPassword: oldP, newPassword: newP }, true),
+  adminListPolicies: () => API.call('adminListPolicies', {}, true),
+  adminCreatePolicy: (data) => API.call('adminCreatePolicy', data, true),
+  adminUpdatePolicy: (data) => API.call('adminUpdatePolicy', data, true),
+  adminDeletePolicy: (id) => API.call('adminDeletePolicy', { id }, true),
+  adminTogglePolicy: (id) => API.call('adminTogglePolicy', { id }, true),
+  adminGetStats: () => API.call('adminGetStats', {}, true)
+};
+
+// ═════════════════════════════════════════════════════════════════
+// أدوات مساعدة
+// ═════════════════════════════════════════════════════════════════
+
+function $(s, root) { return (root || document).querySelector(s); }
+function $$(s, root) { return Array.from((root || document).querySelectorAll(s)); }
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
+
+function showToast(msg, type) {
+  type = type || 'info';
+  const el = document.createElement('div');
+  el.className = 'alert alert-' + type;
+  el.textContent = msg;
+  $('#toasts').appendChild(el);
+  setTimeout(() => el.remove(), 4500);
+}
+
+function showLoader() {
+  if ($('#global-loader')) return;
+  const el = document.createElement('div');
+  el.id = 'global-loader';
+  el.className = 'loading-overlay';
+  el.innerHTML = '<div class="loader"></div>';
+  document.body.appendChild(el);
+}
+function hideLoader() {
+  const el = $('#global-loader');
+  if (el) el.remove();
+}
+
+function downloadText(filename, content) {
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function clearAdminSession() {
+  State.adminToken = null;
+  State.adminEmail = null;
+  localStorage.removeItem('marjie_admin_token');
+  localStorage.removeItem('marjie_admin_email');
+}
+
+function setAdminSession(token, email) {
+  State.adminToken = token;
+  State.adminEmail = email;
+  localStorage.setItem('marjie_admin_token', token);
+  localStorage.setItem('marjie_admin_email', email);
+}
+
+// ═════════════════════════════════════════════════════════════════
+// الموجّه (Router)
+// ═════════════════════════════════════════════════════════════════
+
+function navigate(hash) {
+  if (window.location.hash !== hash) {
+    window.location.hash = hash;
+  } else {
+    handleRoute();
+  }
+}
+
+function parseRoute() {
+  const hash = window.location.hash || '#/';
+  const parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+  return parts;
+}
+
+function handleRoute() {
+  const parts = parseRoute();
+  const route = parts[0] || 'home';
+  State.currentRoute = route;
+  renderNav();
+
+  switch (route) {
+    case '':
+    case 'home':
+      renderHome(); break;
+    case 'standards':
+      if (parts[1]) renderStandardDetail(parts[1]);
+      else renderStandards(); break;
+    case 'transition':
+      renderTransition(); break;
+    case 'policies':
+      if (parts[1]) renderPolicyDetail(parts[1]);
+      else renderPolicies(); break;
+    case 'admin':
+      if (parts[1] === 'login' || !State.adminToken) renderAdminLogin();
+      else if (parts[1] === 'policies') {
+        if (parts[2] === 'new') renderAdminPolicyEditor(null);
+        else if (parts[2]) renderAdminPolicyEditor(parts[2]);
+        else renderAdminPolicies();
+      } else renderAdminDashboard();
+      break;
+    case 'about':
+      renderAbout(); break;
+    default:
+      renderNotFound();
+  }
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('hashchange', handleRoute);
+
+// ═════════════════════════════════════════════════════════════════
+// شريط التنقل
+// ═════════════════════════════════════════════════════════════════
+
+function renderNav() {
+  const route = State.currentRoute;
+  const isAdmin = !!State.adminToken;
+
+  let html = `
+    <a href="#/standards" class="nav-link ${route === 'standards' ? 'active' : ''}">المعايير</a>
+    <a href="#/policies" class="nav-link ${route === 'policies' ? 'active' : ''}">السياسات</a>
+    <a href="#/transition" class="nav-link ${route === 'transition' ? 'active' : ''}">محاكي الانتقال</a>
+  `;
+
+  if (isAdmin) {
+    html += `
+      <span style="width:1px;background:var(--border);height:20px;margin:0 0.25rem"></span>
+      <a href="#/admin" class="nav-link ${route === 'admin' ? 'active' : ''}">لوحة الإدارة</a>
+    `;
+  } else {
+    html += `<a href="#/admin/login" class="nav-link" style="color:var(--text-faint)">دخول المدير</a>`;
+  }
+
+  $('#nav-links').innerHTML = html;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: الصفحة الرئيسية
+// ═════════════════════════════════════════════════════════════════
+
+function renderHome() {
+  $('#app').innerHTML = `
+    <div class="container container-narrow hero">
+      <span class="hero-tagline">منصّة عملية لأخصائيي الحوكمة ومسؤولي الجمعيات</span>
+      <h1>كل ما تحتاجه لحوكمة جمعيتك في مكان واحد</h1>
+      <p class="hero-subtitle">
+        استعرض معايير الحوكمة بوضوح، حمّل السياسات الجاهزة باسم جمعيتك،
+        وافهم متطلبات الانتقال بين التصنيفات — بدون تسجيل، بدون تعقيد.
+      </p>
+      <div class="hero-actions">
+        <a href="#/standards" class="btn btn-primary btn-lg">استعرض المعايير</a>
+        <a href="#/policies" class="btn btn-secondary btn-lg">مكتبة السياسات</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">📋</div>
+          <h3>مستعرض المعايير</h3>
+          <p>ممارسات معيار الشفافية مع درجاتها لكل تصنيف، وحاسبة تفاعلية لمؤشرات الأداء المالي.</p>
+          <div class="feature-action"><a href="#/standards" class="btn btn-secondary btn-sm">افتح المستعرض ←</a></div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📜</div>
+          <h3>مكتبة السياسات</h3>
+          <p>سياسات ولوائح جاهزة قابلة للتخصيص باسم جمعيتك وبياناتها بضغطة زر.</p>
+          <div class="feature-action"><a href="#/policies" class="btn btn-secondary btn-sm">افتح المكتبة ←</a></div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔁</div>
+          <h3>محاكي الانتقال</h3>
+          <p>اعرف تماماً ما الذي يُضاف لمسؤولياتك عند الانتقال من تصنيف إلى آخر.</p>
+          <div class="feature-action"><a href="#/transition" class="btn btn-secondary btn-sm">جرّب المحاكي ←</a></div>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        <strong>ملاحظة:</strong> جميع المحتويات استرشادية. السياسات الجاهزة تتطلب اعتماد مجلس إدارة جمعيتك ومراجعة قانونية قبل العمل بها.
+      </div>
+    </div>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: مستعرض المعايير
+// ═════════════════════════════════════════════════════════════════
+
+async function renderStandards() {
+  $('#app').innerHTML = `
+    <div class="container">
+      <div class="flex-between mb-4 flex-wrap flex-gap-3">
+        <div>
+          <h1>مستعرض المعايير</h1>
+          <p class="muted">تصفّح ممارسات الحوكمة المعتمدة وفلترها حسب احتياج جمعيتك.</p>
+        </div>
+      </div>
+      <div id="standards-content"><div class="card center"><div class="loader"></div></div></div>
+    </div>
+  `;
+
+  try {
+    if (!State.standards) State.standards = await API.getStandards();
+    renderStandardsContent('transparency');
+  } catch (err) {
+    $('#standards-content').innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+function renderStandardsContent(activeStd) {
+  const stds = State.standards;
+
+  // تبويبات المعايير
+  let tabsHtml = `<div class="standards-tabs">`;
+  Object.keys(stds).forEach(key => {
+    const std = stds[key];
+    const isClickable = std.available || FRONTEND_ENABLED_STANDARDS.includes(key);
+    const countText = key === 'financial' ? 'حاسبة'
+                    : std.available ? std.practiceCount
+                    : 'قريباً';
+    tabsHtml += `
+      <button class="std-tab ${activeStd === key ? 'active' : ''}"
+              ${isClickable ? `onclick="renderStandardsContent('${key}')"` : 'disabled'}>
+        ${escapeHtml(std.name)}
+        <span class="count">${countText}</span>
+      </button>
+    `;
+  });
+  tabsHtml += `</div>`;
+
+  // المعالجة الخاصة لمعيار السلامة المالية → الحاسبة
+  if (activeStd === 'financial') {
+    renderFinancialCalculator(tabsHtml);
+    return;
+  }
+
+  const std = stds[activeStd];
+  if (!std.available) {
+    $('#standards-content').innerHTML = tabsHtml + `
+      <div class="card center">
+        <h3>قريباً</h3>
+        <p class="muted">معيار ${escapeHtml(std.name)} سيتاح بعد إضافة بياناته من قبل مدير المنصة.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // أدوات التصفية
+  const indicatorOptions = Object.entries(std.indicators)
+    .map(([key, ind]) => `<option value="${key}">${escapeHtml(ind.name)} (${ind.count})</option>`)
+    .join('');
+
+  const classOptions = CLASSIFICATIONS
+    .map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`)
+    .join('');
+
+  $('#standards-content').innerHTML = tabsHtml + `
+    <div class="filters-bar">
+      <div class="filter-group">
+        <label>عرض الممارسات الخاصة بـ:</label>
+        <select id="filter-class" onchange="applyStandardsFilter('${activeStd}')">
+          <option value="">كل التصنيفات</option>
+          ${classOptions}
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>المؤشر:</label>
+        <select id="filter-indicator" onchange="applyStandardsFilter('${activeStd}')">
+          <option value="">كل المؤشرات</option>
+          ${indicatorOptions}
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>نطاق التطبيق:</label>
+        <select id="filter-coverage" onchange="applyStandardsFilter('${activeStd}')">
+          <option value="">الجميع</option>
+          <option value="universal">للجميع (كل التصنيفات)</option>
+          <option value="tier-specific">خاصة بتصنيف معين</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="practices-list"></div>
+  `;
+
+  applyStandardsFilter(activeStd);
+}
+
+function applyStandardsFilter(activeStd) {
+  const std = State.standards[activeStd];
+  const filterClass = $('#filter-class').value;
+  const filterIndicator = $('#filter-indicator').value;
+  const filterCoverage = $('#filter-coverage').value;
+
+  let practices = std.practices.slice();
+
+  if (filterClass) {
+    practices = practices.filter(p => p.scores[filterClass] > 0);
+  }
+  if (filterIndicator) {
+    practices = practices.filter(p => p.indicator === filterIndicator);
+  }
+  if (filterCoverage === 'universal') {
+    practices = practices.filter(p => p.coverage === 'universal');
+  } else if (filterCoverage === 'tier-specific') {
+    practices = practices.filter(p => p.coverage !== 'universal' && p.coverage !== 'none');
+  }
+
+  if (practices.length === 0) {
+    $('#practices-list').innerHTML = `
+      <div class="alert alert-warning">لا توجد ممارسات تطابق الفلاتر المختارة.</div>
+    `;
+    return;
+  }
+
+  const html = `
+    <p class="small muted mb-3">عُرض ${practices.length} ممارسة من أصل ${std.practices.length}</p>
+    ${practices.map(p => renderPracticeCard(p)).join('')}
+  `;
+  $('#practices-list').innerHTML = html;
+}
+
+function renderPracticeCard(p) {
+  const coverageBadge = p.coverage === 'universal'
+    ? `<span class="badge badge-green">⊛ للجميع</span>`
+    : p.coverage.startsWith('starts_at:')
+      ? `<span class="badge badge-amber">↑ تُضاف عند ${escapeHtml(p.coverage.replace('starts_at:', ''))}</span>`
+      : '';
+
+  const scoresHtml = CLASSIFICATIONS.map(c => {
+    const score = p.scores[c];
+    return score > 0
+      ? `<div class="score-cell has-score"><span class="score-cell-value">${score}</span><span class="score-cell-label">${escapeHtml(c)}</span></div>`
+      : `<div class="score-cell no-score"><span class="score-cell-value">—</span><span class="score-cell-label">${escapeHtml(c)}</span></div>`;
+  }).join('');
+
+  return `
+    <div class="practice-card">
+      <div class="practice-meta">
+        <span class="badge badge-gray">${escapeHtml(p.id)}</span>
+        <span>•</span>
+        <span>${escapeHtml(p.indicatorName)}</span>
+        ${coverageBadge}
+      </div>
+      <div class="practice-title">${escapeHtml(p.practice)}</div>
+      ${p.description ? `<div class="practice-desc">${escapeHtml(p.description)}</div>` : ''}
+      ${p.evidenceExample ? `<div class="small faint">📎 الشاهد: ${escapeHtml(p.evidenceExample)}</div>` : ''}
+      <div class="scores-row">${scoresHtml}</div>
+    </div>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: محاكي الانتقال
+// ═════════════════════════════════════════════════════════════════
+
+function renderTransition() {
+  const opts = CLASSIFICATIONS.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+  $('#app').innerHTML = `
+    <div class="container container-narrow">
+      <h1>محاكي الانتقال بين التصنيفات</h1>
+      <p class="muted mb-4">اعرف تماماً ما الممارسات الجديدة المطلوبة عند انتقال جمعيتك من تصنيف إلى آخر.</p>
+
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>من تصنيف</label>
+            <select id="trans-from"><option value="">اختر</option>${opts}</select>
+          </div>
+          <div class="form-group">
+            <label>إلى تصنيف</label>
+            <select id="trans-to"><option value="">اختر</option>${opts}</select>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="runTransition()">احسب الفجوة</button>
+      </div>
+
+      <div id="transition-result"></div>
+    </div>
+  `;
+}
+
+async function runTransition() {
+  const from = $('#trans-from').value;
+  const to = $('#trans-to').value;
+  if (!from || !to) { showToast('اختر التصنيفين', 'warning'); return; }
+  if (from === to) { showToast('التصنيفان متطابقان', 'warning'); return; }
+
+  showLoader();
+  try {
+    const r = await API.simulateTransition(from, to);
+    hideLoader();
+    renderTransitionResult(r);
+  } catch (err) {
+    hideLoader();
+    showToast(err.message, 'error');
+  }
+}
+
+function renderTransitionResult(r) {
+  const indicators = r.gapsByIndicator;
+  let html = `
+    <div class="card transition-result">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">من ${escapeHtml(r.from)} ← إلى ${escapeHtml(r.to)}</h2>
+          <p class="muted small">المتطلبات الإضافية للانتقال</p>
+        </div>
+        <span class="badge badge-coral">${r.estimatedMonths} أشهر تقريباً</span>
+      </div>
+
+      <div class="transition-stats">
+        <div class="stat-card">
+          <div class="stat-label">ممارسات جديدة</div>
+          <div class="stat-value">${r.newPracticesCount}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">إجمالي النقاط</div>
+          <div class="stat-value">${r.totalNewScore}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">ممارسات زادت درجاتها</div>
+          <div class="stat-value">${r.increasedPracticesCount}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  if (Object.keys(indicators).length > 0) {
+    html += `<div class="card"><div class="card-header"><h2 class="card-title">الممارسات الجديدة المطلوبة</h2></div>`;
+    Object.values(indicators).forEach(ind => {
+      html += `<div class="mb-4">
+        <div class="flex-between mb-3"><h3 style="margin:0">${escapeHtml(ind.name)}</h3>
+          <span class="badge badge-teal">${ind.totalScore} نقطة</span></div>`;
+      ind.practices.forEach(p => {
+        html += `<div class="indicator-row">
+          <div class="indicator-name">${escapeHtml(p.practice)}
+            ${p.description ? `<span class="small">${escapeHtml(p.description)}</span>` : ''}
+          </div>
+          <span class="badge badge-gray">+${p.score}</span>
+        </div>`;
+      });
+      html += `</div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="alert alert-info">لا توجد ممارسات جديدة مطلوبة لهذا الانتقال.</div>`;
+  }
+
+  $('#transition-result').innerHTML = html;
+  $('#transition-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: مكتبة السياسات
+// ═════════════════════════════════════════════════════════════════
+
+async function renderPolicies() {
+  $('#app').innerHTML = `
+    <div class="container">
+      <div class="flex-between mb-4 flex-wrap flex-gap-3">
+        <div>
+          <h1>مكتبة السياسات</h1>
+          <p class="muted">سياسات ولوائح جاهزة للتخصيص باسم جمعيتك. اختر السياسة المطلوبة وحمّلها فوراً.</p>
+        </div>
+      </div>
+      <div id="policies-content"><div class="card center"><div class="loader"></div></div></div>
+    </div>
+  `;
+
+  try {
+    const policies = await API.listPolicies();
+    State.policies = policies;
+    renderPoliciesList(policies);
+  } catch (err) {
+    $('#policies-content').innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+function renderPoliciesList(policies) {
+  if (policies.length === 0) {
+    $('#policies-content').innerHTML = `
+      <div class="card center">
+        <h3>لا توجد سياسات حالياً</h3>
+        <p class="muted">يمكن لمدير المنصة إضافة السياسات من لوحة الإدارة.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // تجميع حسب الفئة
+  const byCategory = {};
+  policies.forEach(p => {
+    const cat = p.category || 'غير مصنّف';
+    if (!byCategory[cat]) byCategory[cat] = [];
+    byCategory[cat].push(p);
+  });
+
+  // البحث
+  let html = `
+    <div class="card card-tight mb-4">
+      <input type="text" placeholder="🔍 ابحث عن سياسة..." id="policy-search"
+             oninput="filterPolicies()" style="border:none;background:transparent;font-size:0.95rem" />
+    </div>
+    <div id="policies-grid-container">
+  `;
+
+  Object.keys(byCategory).sort().forEach(cat => {
+    html += `<h2 class="mt-5 mb-3">${escapeHtml(cat)}</h2>`;
+    html += `<div class="policies-grid">`;
+    byCategory[cat].forEach(p => {
+      html += renderPolicyCard(p);
+    });
+    html += `</div>`;
+  });
+  html += `</div>`;
+
+  $('#policies-content').innerHTML = html;
+}
+
+function renderPolicyCard(p) {
+  const mandatoryBadge = p.mandatory
+    ? '<span class="badge badge-coral">إلزامية</span>'
+    : '<span class="badge badge-gray">استرشادية</span>';
+
+  return `
+    <a class="policy-card" onclick="navigate('#/policies/${escapeHtml(p.id)}')">
+      <h3>${escapeHtml(p.title)}</h3>
+      <div class="policy-card-meta">
+        ${mandatoryBadge}
+        ${p.customFieldsCount > 0
+          ? `<span class="badge badge-amber">${p.customFieldsCount} حقل مخصص</span>`
+          : `<span class="badge badge-green">جاهزة</span>`}
+      </div>
+      ${p.description ? `<div class="policy-card-desc">${escapeHtml(p.description)}</div>` : ''}
+      <div class="policy-card-footer">
+        <span>الإصدار ${escapeHtml(p.version || '1')}</span>
+        <span>عرض ←</span>
+      </div>
+    </a>
+  `;
+}
+
+function filterPolicies() {
+  const q = $('#policy-search').value.trim().toLowerCase();
+  const policies = State.policies || [];
+  const filtered = q
+    ? policies.filter(p =>
+        (p.title || '').toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q) ||
+        (p.category || '').toLowerCase().includes(q))
+    : policies;
+
+  // إعادة عرض النتائج (أبسط طريقة: استبدال containerو إعادة الرسم)
+  const container = $('#policies-grid-container');
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="alert alert-warning">لا توجد سياسات تطابق البحث.</div>`;
+    return;
+  }
+  const byCategory = {};
+  filtered.forEach(p => {
+    const cat = p.category || 'غير مصنّف';
+    if (!byCategory[cat]) byCategory[cat] = [];
+    byCategory[cat].push(p);
+  });
+  let html = '';
+  Object.keys(byCategory).sort().forEach(cat => {
+    html += `<h2 class="mt-5 mb-3">${escapeHtml(cat)}</h2><div class="policies-grid">`;
+    byCategory[cat].forEach(p => { html += renderPolicyCard(p); });
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: تفاصيل سياسة (مع نموذج التوليد)
+// ═════════════════════════════════════════════════════════════════
+
+async function renderPolicyDetail(id) {
+  $('#app').innerHTML = `
+    <div class="container container-narrow">
+      <div id="policy-detail"><div class="card center"><div class="loader"></div></div></div>
+    </div>
+  `;
+
+  try {
+    const p = await API.getPolicy(id);
+    renderPolicyForm(p);
+  } catch (err) {
+    $('#policy-detail').innerHTML = `
+      <div class="alert alert-error">${escapeHtml(err.message)}</div>
+      <a href="#/policies" class="btn btn-secondary mt-3">← العودة للمكتبة</a>
+    `;
+  }
+}
+
+function renderPolicyForm(p) {
+  const mandatoryBadge = p.mandatory
+    ? '<span class="badge badge-coral">إلزامية</span>'
+    : '<span class="badge badge-gray">استرشادية</span>';
+
+  let customFieldsHtml = '';
+  (p.customFields || []).forEach(f => {
+    let inputHtml = '';
+    const required = f.required ? 'required' : '';
+    const defaultVal = escapeHtml(f.default || '');
+    if (f.type === 'textarea') {
+      inputHtml = `<textarea name="${escapeHtml(f.key)}" ${required}>${defaultVal}</textarea>`;
+    } else if (f.type === 'number') {
+      inputHtml = `<input type="number" name="${escapeHtml(f.key)}" value="${defaultVal}" ${required} />`;
+    } else if (f.type === 'date') {
+      inputHtml = `<input type="date" name="${escapeHtml(f.key)}" value="${defaultVal}" ${required} />`;
+    } else {
+      inputHtml = `<input type="text" name="${escapeHtml(f.key)}" value="${defaultVal}" ${required} />`;
+    }
+    customFieldsHtml += `
+      <div class="form-group">
+        <label>${escapeHtml(f.label)} ${f.required ? '<span class="required">*</span>' : ''}</label>
+        ${inputHtml}
+      </div>
+    `;
+  });
+
+  $('#policy-detail').innerHTML = `
+    <a href="#/policies" class="btn btn-ghost btn-sm mb-3">← العودة للمكتبة</a>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h1 style="margin:0;font-size:1.7rem">${escapeHtml(p.title)}</h1>
+          <div class="flex flex-gap-2 mt-2">
+            ${mandatoryBadge}
+            <span class="badge badge-gray">${escapeHtml(p.category || '—')}</span>
+            <span class="badge badge-gray">الإصدار ${escapeHtml(p.version || '1')}</span>
+          </div>
+        </div>
+      </div>
+
+      ${p.description ? `<p class="muted mb-4">${escapeHtml(p.description)}</p>` : ''}
+
+      ${p.applicableClassifications && p.applicableClassifications.length > 0 ? `
+        <div class="mb-4">
+          <label class="small muted">تنطبق على:</label>
+          <div class="flex flex-gap-2 flex-wrap mt-2">
+            ${p.applicableClassifications.map(c => `<span class="badge badge-teal">${escapeHtml(c)}</span>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+    </div>
+
+    <div class="card">
+      <h2 class="mb-3">احصل على نسختك</h2>
+      <p class="muted small mb-4">املأ البيانات التالية وسيتم توليد سياسة مخصّصة لجمعيتك.</p>
+
+      <form id="generate-form">
+        <div class="form-group">
+          <label>اسم الجمعية <span class="required">*</span></label>
+          <input type="text" name="associationName" required placeholder="مثال: جمعية الخير الأهلية" />
+        </div>
+
+        ${customFieldsHtml}
+
+        <button type="submit" class="btn btn-primary btn-lg" id="gen-btn">
+          توليد السياسة وتنزيلها
+        </button>
+      </form>
+    </div>
+
+    <div class="alert alert-warning small">
+      <strong>تنبيه قانوني:</strong> هذه السياسة استرشادية. تتطلب اعتماد مجلس إدارة جمعيتك ومراجعة قانونية قبل العمل بها.
+    </div>
+  `;
+
+  $('#generate-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('#gen-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loader"></span> جاري التوليد...';
+
+    const data = Object.fromEntries(new FormData(e.target));
+    const associationName = data.associationName;
+    delete data.associationName;
+
+    try {
+      const result = await API.generatePolicy(p.id, associationName, data);
+      downloadText(result.fileName, result.content);
+      showToast('تم توليد السياسة وتنزيلها ✓', 'success');
+    } catch (err) {
+      showToast(err.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = 'توليد السياسة وتنزيلها';
+    }
+  });
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: دخول المدير
+// ═════════════════════════════════════════════════════════════════
+
+function renderAdminLogin() {
+  if (State.adminToken) {
+    navigate('#/admin/policies');
+    return;
+  }
+  $('#app').innerHTML = `
+    <div class="container container-narrow" style="max-width:450px">
+      <div class="card mt-6">
+        <h1>دخول المدير</h1>
+        <p class="muted mb-4">للوصول إلى لوحة إدارة السياسات.</p>
+        <form id="admin-login-form">
+          <div class="form-group">
+            <label>البريد الإلكتروني</label>
+            <input type="email" name="email" required autofocus
+                   value="admin@marjie.local" />
+          </div>
+          <div class="form-group">
+            <label>كلمة المرور</label>
+            <input type="password" name="password" required />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg" id="admin-login-btn">دخول</button>
+        </form>
+      </div>
+    </div>
+  `;
+
+  $('#admin-login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('#admin-login-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loader"></span> جاري الدخول...';
+    const data = Object.fromEntries(new FormData(e.target));
+
+    try {
+      const result = await API.adminLogin(data.email, data.password);
+      setAdminSession(result.token, result.email);
+      if (result.mustChangePassword) {
+        showToast('⚠ كلمة المرور الافتراضية — يجب تغييرها', 'warning');
+      }
+      navigate('#/admin/policies');
+    } catch (err) {
+      showToast(err.message, 'error');
+      btn.disabled = false;
+      btn.textContent = 'دخول';
+    }
+  });
+}
+
+async function adminLogout() {
+  try { await API.adminLogout(); } catch (e) {}
+  clearAdminSession();
+  showToast('تم تسجيل الخروج', 'info');
+  navigate('#/');
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: لوحة المدير - السياسات
+// ═════════════════════════════════════════════════════════════════
+
+async function renderAdminPolicies() {
+  $('#app').innerHTML = `
+    <div class="container">
+      <div class="flex-between mb-4 flex-wrap flex-gap-3">
+        <div>
+          <h1>لوحة الإدارة — السياسات</h1>
+          <p class="muted">إدارة كل السياسات (الظاهرة والمخفية).</p>
+        </div>
+        <div class="flex flex-gap-2">
+          <a href="#/admin/policies/new" class="btn btn-primary">+ إضافة سياسة</a>
+          <button class="btn btn-ghost" onclick="adminLogout()">خروج</button>
+        </div>
+      </div>
+
+      <div id="admin-policies-content"><div class="card center"><div class="loader"></div></div></div>
+    </div>
+  `;
+
+  try {
+    const policies = await API.adminListPolicies();
+    if (policies.length === 0) {
+      $('#admin-policies-content').innerHTML = `
+        <div class="card center">
+          <h3>لا توجد سياسات بعد</h3>
+          <p class="muted">ابدأ بإضافة سياسة جديدة.</p>
+          <a href="#/admin/policies/new" class="btn btn-primary mt-3">+ إضافة سياسة</a>
+        </div>
+      `;
+      return;
+    }
+
+    let html = `<div class="card">
+      <table class="admin-table">
+        <thead><tr>
+          <th>العنوان</th><th>الفئة</th><th>الإلزامية</th><th>الحقول</th>
+          <th>الإصدار</th><th>الحالة</th><th>إجراءات</th>
+        </tr></thead><tbody>`;
+    policies.forEach(p => {
+      html += `<tr>
+        <td><strong>${escapeHtml(p.title)}</strong>
+          ${p.description ? `<div class="small faint">${escapeHtml(p.description.substring(0,80))}${p.description.length>80?'…':''}</div>` : ''}
+        </td>
+        <td>${escapeHtml(p.category || '—')}</td>
+        <td>${p.mandatory ? '<span class="badge badge-coral">إلزامية</span>' : '<span class="badge badge-gray">استرشادية</span>'}</td>
+        <td>${(p.customFields || []).length}</td>
+        <td>${escapeHtml(p.version || '1')}</td>
+        <td>${p.visible ? '<span class="badge badge-green">ظاهرة</span>' : '<span class="badge badge-gray">مخفية</span>'}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="btn btn-ghost btn-sm" onclick="navigate('#/admin/policies/${escapeHtml(p.id)}')">تعديل</button>
+            <button class="btn btn-ghost btn-sm" onclick="adminToggle('${escapeHtml(p.id)}')">${p.visible ? 'إخفاء' : 'إظهار'}</button>
+            <button class="btn btn-danger btn-sm" onclick="adminDelete('${escapeHtml(p.id)}', '${escapeHtml(p.title)}')">حذف</button>
+          </div>
+        </td>
+      </tr>`;
+    });
+    html += `</tbody></table></div>`;
+    $('#admin-policies-content').innerHTML = html;
+  } catch (err) {
+    $('#admin-policies-content').innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+async function adminToggle(id) {
+  showLoader();
+  try {
+    await API.adminTogglePolicy(id);
+    hideLoader();
+    showToast('تم التحديث ✓', 'success');
+    renderAdminPolicies();
+  } catch (err) { hideLoader(); showToast(err.message, 'error'); }
+}
+
+async function adminDelete(id, title) {
+  if (!confirm(`حذف السياسة "${title}"؟ لا يمكن التراجع.`)) return;
+  showLoader();
+  try {
+    await API.adminDeletePolicy(id);
+    hideLoader();
+    showToast('تم الحذف ✓', 'success');
+    renderAdminPolicies();
+  } catch (err) { hideLoader(); showToast(err.message, 'error'); }
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: محرّر السياسة (إضافة/تعديل)
+// ═════════════════════════════════════════════════════════════════
+
+async function renderAdminPolicyEditor(id) {
+  const isEdit = !!id;
+  $('#app').innerHTML = `
+    <div class="container container-narrow">
+      <a href="#/admin/policies" class="btn btn-ghost btn-sm mb-3">← العودة لقائمة السياسات</a>
+      <div id="editor-content"><div class="card center"><div class="loader"></div></div></div>
+    </div>
+  `;
+
+  let policy = {
+    title: '', category: 'حوكمة', mandatory: true,
+    applicableClassifications: '', description: '', content: '',
+    customFields: [], visible: true, order: 999
+  };
+
+  if (isEdit) {
+    try {
+      const all = await API.adminListPolicies();
+      const found = all.find(p => p.id === id);
+      if (!found) { showToast('السياسة غير موجودة', 'error'); navigate('#/admin/policies'); return; }
+      policy = found;
+      // applicableClassifications قد تأتي كنص — نحوّلها لمصفوفة
+      if (typeof policy.applicableClassifications === 'string') {
+        policy.applicableClassifications = policy.applicableClassifications
+          ? policy.applicableClassifications.split(',').map(s => s.trim()) : [];
+      }
+    } catch (err) {
+      $('#editor-content').innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
+      return;
+    }
+  }
+
+  const classChecks = CLASSIFICATIONS.map(c => `
+    <label style="display:flex;align-items:center;gap:0.4rem;font-weight:400">
+      <input type="checkbox" name="classifications" value="${escapeHtml(c)}"
+        ${(policy.applicableClassifications || []).includes(c) ? 'checked' : ''} />
+      ${escapeHtml(c)}
+    </label>
+  `).join('');
+
+  $('#editor-content').innerHTML = `
+    <div class="card">
+      <h1>${isEdit ? 'تعديل السياسة' : 'إضافة سياسة جديدة'}</h1>
+      ${isEdit ? `<p class="small faint">الإصدار الحالي: ${escapeHtml(policy.version || '1')} • سيُرفع لـ ${Number(policy.version || 1) + 1} عند الحفظ</p>` : ''}
+
+      <form id="policy-form">
+        <div class="form-group">
+          <label>عنوان السياسة <span class="required">*</span></label>
+          <input type="text" name="title" required value="${escapeHtml(policy.title)}" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>الفئة</label>
+            <input type="text" name="category" value="${escapeHtml(policy.category)}" placeholder="حوكمة / مالية / موارد بشرية / ..." />
+          </div>
+          <div class="form-group">
+            <label>ترتيب العرض</label>
+            <input type="number" name="order" value="${policy.order || 999}" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:0.5rem;font-weight:400">
+              <input type="checkbox" name="mandatory" ${policy.mandatory ? 'checked' : ''} />
+              <span>إلزامية</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:0.5rem;font-weight:400">
+              <input type="checkbox" name="visible" ${policy.visible ? 'checked' : ''} />
+              <span>ظاهرة للزوار</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>تنطبق على التصنيفات</label>
+          <div style="display:flex;flex-direction:column;gap:0.3rem">${classChecks}</div>
+        </div>
+
+        <div class="form-group">
+          <label>وصف مختصر</label>
+          <textarea name="description" style="min-height:60px">${escapeHtml(policy.description)}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>محتوى السياسة <span class="required">*</span></label>
+          <p class="form-help">
+            استخدم <code>{{name}}</code> لاسم الجمعية، <code>{{date}}</code> لتاريخ التوليد،
+            و <code>{{custom:KEY}}</code> للحقول المخصّصة المعرّفة أسفل.
+          </p>
+          <textarea name="content" required style="min-height:300px;font-family:'Consolas',monospace;font-size:0.88rem">${escapeHtml(policy.content)}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="flex-between">
+            الحقول المخصّصة (اختيارية)
+            <button type="button" class="btn btn-secondary btn-sm" onclick="addCustomField()">+ إضافة حقل</button>
+          </label>
+          <p class="form-help">عرّف حقولاً إضافية يملؤها الزائر، تُستبدل في النص بـ <code>{{custom:KEY}}</code></p>
+          <div id="custom-fields-list" class="custom-fields-editor"></div>
+        </div>
+
+        <div class="flex flex-gap-2 mt-5">
+          <button type="submit" class="btn btn-primary btn-lg" id="save-btn">
+            ${isEdit ? 'حفظ التغييرات' : 'إنشاء السياسة'}
+          </button>
+          <a href="#/admin/policies" class="btn btn-ghost">إلغاء</a>
+        </div>
+      </form>
+    </div>
+  `;
+
+  // ملء الحقول المخصّصة الموجودة
+  const cfList = policy.customFields || [];
+  cfList.forEach(f => addCustomField(f));
+  if (cfList.length === 0) {
+    $('#custom-fields-list').innerHTML = '<p class="small faint">لم تُضف حقول مخصّصة بعد.</p>';
+  }
+
+  $('#policy-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('#save-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loader"></span> جاري الحفظ...';
+
+    const fd = new FormData(e.target);
+    const classifications = fd.getAll('classifications');
+
+    // جمع الحقول المخصّصة
+    const customFields = $$('.cf-row').map(row => {
+      const key = $('input[name=cf-key]', row).value.trim();
+      const label = $('input[name=cf-label]', row).value.trim();
+      if (!key || !label) return null;
+      return {
+        key: key,
+        label: label,
+        type: $('select[name=cf-type]', row).value,
+        required: $('input[name=cf-required]', row).checked,
+        default: $('input[name=cf-default]', row).value
+      };
+    }).filter(Boolean);
+
+    const data = {
+      title: fd.get('title'),
+      category: fd.get('category'),
+      mandatory: !!fd.get('mandatory'),
+      visible: !!fd.get('visible'),
+      applicableClassifications: classifications,
+      description: fd.get('description'),
+      content: fd.get('content'),
+      order: Number(fd.get('order')) || 999,
+      customFields: customFields
+    };
+
+    try {
+      if (isEdit) {
+        data.id = id;
+        await API.adminUpdatePolicy(data);
+        showToast('تم الحفظ ✓', 'success');
+      } else {
+        await API.adminCreatePolicy(data);
+        showToast('تم الإنشاء ✓', 'success');
+      }
+      navigate('#/admin/policies');
+    } catch (err) {
+      showToast(err.message, 'error');
+      btn.disabled = false;
+      btn.innerHTML = isEdit ? 'حفظ التغييرات' : 'إنشاء السياسة';
+    }
+  });
+}
+
+function addCustomField(existing) {
+  const list = $('#custom-fields-list');
+  // إزالة رسالة "لا حقول"
+  if (list.querySelector('p.small')) list.innerHTML = '';
+
+  const f = existing || { key: '', label: '', type: 'text', required: false, default: '' };
+  const row = document.createElement('div');
+  row.className = 'cf-row';
+  row.innerHTML = `
+    <input type="text" name="cf-key" placeholder="key (مثل: city)" value="${escapeHtml(f.key)}" />
+    <input type="text" name="cf-label" placeholder="التسمية للزائر" value="${escapeHtml(f.label)}" />
+    <select name="cf-type">
+      <option value="text" ${f.type === 'text' ? 'selected' : ''}>نص</option>
+      <option value="textarea" ${f.type === 'textarea' ? 'selected' : ''}>نص طويل</option>
+      <option value="number" ${f.type === 'number' ? 'selected' : ''}>رقم</option>
+      <option value="date" ${f.type === 'date' ? 'selected' : ''}>تاريخ</option>
+    </select>
+    <label style="font-weight:400;font-size:0.78rem">
+      <input type="checkbox" name="cf-required" ${f.required ? 'checked' : ''} /> إلزامي
+    </label>
+    <button type="button" class="btn btn-ghost btn-sm" onclick="this.parentNode.remove()">✕</button>
+    <input type="text" name="cf-default" placeholder="قيمة افتراضية (اختياري)" value="${escapeHtml(f.default || '')}" style="grid-column:1/-1" />
+  `;
+  list.appendChild(row);
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: لوحة المدير - الرئيسية (لوحة الإحصائيات)
+// ═════════════════════════════════════════════════════════════════
+
+async function renderAdminDashboard() {
+  $('#app').innerHTML = `
+    <div class="container">
+      <div class="flex-between mb-4 flex-wrap flex-gap-3">
+        <div>
+          <h1>لوحة الإدارة</h1>
+          <p class="muted">مرحباً ${escapeHtml(State.adminEmail || '')}</p>
+        </div>
+        <div class="flex flex-gap-2">
+          <a href="#/admin/policies" class="btn btn-primary">إدارة السياسات</a>
+          <button class="btn btn-ghost" onclick="adminLogout()">خروج</button>
+        </div>
+      </div>
+      <div id="dashboard-content"><div class="card center"><div class="loader"></div></div></div>
+    </div>
+  `;
+
+  try {
+    const stats = await API.adminGetStats();
+    let html = `
+      <div class="transition-stats">
+        <div class="stat-card">
+          <div class="stat-label">إجمالي السياسات</div>
+          <div class="stat-value">${stats.totalPolicies}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">سياسات ظاهرة</div>
+          <div class="stat-value" style="color:var(--green-500)">${stats.visiblePolicies}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">سياسات مخفية</div>
+          <div class="stat-value" style="color:var(--text-faint)">${stats.hiddenPolicies}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">عدد التوليدات</div>
+          <div class="stat-value">${stats.totalGenerations}</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">السياسات حسب الفئة</h2>
+        </div>
+        ${Object.keys(stats.byCategory).length === 0
+          ? '<p class="muted">لا توجد سياسات بعد.</p>'
+          : Object.entries(stats.byCategory).map(([cat, count]) => `
+              <div class="indicator-row">
+                <div class="indicator-name">${escapeHtml(cat)}</div>
+                <span class="badge badge-teal">${count}</span>
+              </div>`).join('')}
+      </div>
+
+      ${stats.topPolicies.length > 0 ? `
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">أعلى السياسات توليداً</h2>
+          </div>
+          ${stats.topPolicies.map(p => `
+            <div class="indicator-row">
+              <div class="indicator-name">${escapeHtml(p.title)}</div>
+              <span class="badge badge-gray">${p.count} مرة</span>
+            </div>`).join('')}
+        </div>
+      ` : ''}
+    `;
+
+    $('#dashboard-content').innerHTML = html;
+  } catch (err) {
+    $('#dashboard-content').innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: الحاسبة المالية (مؤشرات الأداء)
+// ═════════════════════════════════════════════════════════════════
+
+function loadFinancialInputs() {
+  try { return JSON.parse(localStorage.getItem('marjie_fin_inputs') || '{}'); }
+  catch (e) { return {}; }
+}
+
+function saveFinancialInputs(values) {
+  try { localStorage.setItem('marjie_fin_inputs', JSON.stringify(values)); }
+  catch (e) {}
+}
+
+function getFinancialValues() {
+  const values = {};
+  FIN_INPUTS.forEach(inp => {
+    const el = document.querySelector('input[data-fin-key="' + inp.key + '"]');
+    const v = el && el.value !== '' ? parseFloat(el.value) : null;
+    values[inp.key] = (v !== null && !isNaN(v)) ? v : null;
+  });
+  return values;
+}
+
+function renderFinancialCalculator(tabsHtml) {
+  const saved = loadFinancialInputs();
+
+  // بناء حقول المدخلات مجمّعة
+  let inputsHtml = '';
+  Object.keys(FIN_INPUT_GROUPS).forEach(g => {
+    const inputs = FIN_INPUTS.filter(i => i.group === g);
+    inputsHtml += `<div class="fin-input-section">
+      <h4>${escapeHtml(FIN_INPUT_GROUPS[g])}</h4>
+      <div class="fin-inputs-grid">`;
+    inputs.forEach(inp => {
+      const val = saved[inp.key] != null ? saved[inp.key] : '';
+      inputsHtml += `
+        <div class="form-group">
+          <label>${escapeHtml(inp.label)}</label>
+          <input type="number" step="any" min="0"
+                 data-fin-key="${inp.key}"
+                 oninput="updateFinancialResults()"
+                 value="${escapeHtml(String(val))}" placeholder="0" />
+        </div>
+      `;
+    });
+    inputsHtml += `</div></div>`;
+  });
+
+  $('#standards-content').innerHTML = tabsHtml + `
+    <div class="alert alert-info">
+      <strong>مؤشرات الأداء المالي موحّدة لكل التصنيفات الخمسة</strong> — من متناهية الصغر إلى متناهية الكبر.
+      أدخل أرقام جمعيتك (سنوياً) لتعرف موقعك من المستهدفات. لا تُحفظ بياناتك على أي خادم — تبقى في متصفحك فقط.
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">أرقام جمعيتك المالية</h2>
+          <p class="muted small" style="margin-top:0.25rem">من القوائم المالية السنوية</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="resetFinancialInputs()">مسح الأرقام</button>
+      </div>
+      ${inputsHtml}
+    </div>
+
+    <div id="fin-results"></div>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        <h2 class="card-title">مؤشرات التنظيم المالي</h2>
+        <span class="badge badge-gray">قيد الإكمال</span>
+      </div>
+      <p class="muted small">
+        المحور الثاني للمعيار: <strong>5 مؤشرات</strong> (الهيكل التنظيمي، السياسات والإجراءات،
+        التقارير، السجلات، الإجراءات المحاسبية).
+        تتدرّج عدد الأسئلة من 4 (متناهية الصغر) إلى 21 (الكبيرة ومتناهية الكبر).
+      </p>
+      <p class="muted small" style="margin-top:0.5rem">
+        ستتاح كقائمة تحقق تفاعلية بمجرد إضافة بيانات الممارسات التفصيلية.
+      </p>
+    </div>
+  `;
+
+  updateFinancialResults();
+}
+
+function updateFinancialResults() {
+  const v = getFinancialValues();
+  saveFinancialInputs(v);
+
+  let totalWeightedScore = 0;
+  let totalActiveWeight = 0;
+  let anyData = false;
+
+  let html = '<div class="card"><div class="card-header"><h2 class="card-title">النتائج التفصيلية</h2></div>';
+
+  FIN_INDICATORS.forEach(ind => {
+    let indWeightedScore = 0;
+    let indSubWeightSum = 0;
+    let indHasData = false;
+
+    let metricsHtml = '';
+    ind.metrics.forEach(m => {
+      const actual = m.compute(v);
+      let pass = null;
+      let actualText = '—';
+      const noData = (actual === null || isNaN(actual));
+
+      if (!noData) {
+        anyData = true;
+        indHasData = true;
+        if (m.type === 'less_than')          pass = actual < m.target;
+        else if (m.type === 'greater_than')  pass = actual > m.target;
+        else if (m.type === 'greater_or_equal') pass = actual >= m.target;
+        else if (m.type === 'between')       pass = actual >= m.target && actual <= m.targetMax;
+
+        const score = pass ? 100 : 0;
+        if (!m.informational) {
+          indWeightedScore += score * m.subWeight;
+          indSubWeightSum += m.subWeight;
+        }
+        actualText = (Math.round(actual * 10) / 10) + (m.unit ? ' ' + m.unit : '%');
+      }
+
+      const badge = noData ? '<span class="badge badge-gray">—</span>'
+                  : pass ? '<span class="badge badge-green">✓ مطابق</span>'
+                         : '<span class="badge badge-coral">✗ خارج المستهدف</span>';
+      const infoTag = m.informational ? '<span class="badge badge-amber">إعلامي</span>' : '';
+
+      metricsHtml += `
+        <div class="metric-row">
+          <div class="metric-name">
+            ${infoTag}${escapeHtml(m.name)}
+            <span class="metric-target">المستهدف: ${escapeHtml(m.targetText)}</span>
+          </div>
+          <div class="metric-actual ${noData ? 'no-data' : ''}">${actualText}</div>
+          <div>${badge}</div>
+        </div>
+      `;
+    });
+
+    let indPercent = null;
+    if (indSubWeightSum > 0) {
+      indPercent = indWeightedScore / indSubWeightSum;
+      totalWeightedScore += indPercent * ind.weight;
+      totalActiveWeight += ind.weight;
+    }
+
+    const indBadge = indPercent === null
+      ? '<span class="badge badge-gray">لا توجد بيانات</span>'
+      : indPercent >= 75 ? `<span class="badge badge-green">${Math.round(indPercent)}/100</span>`
+      : indPercent >= 50 ? `<span class="badge badge-amber">${Math.round(indPercent)}/100</span>`
+      : `<span class="badge badge-coral">${Math.round(indPercent)}/100</span>`;
+
+    html += `
+      <div class="indicator-section">
+        <div class="indicator-header">
+          <h3>${escapeHtml(ind.name)}</h3>
+          <div class="flex flex-gap-2 flex-wrap">
+            <span class="badge badge-teal">الوزن ${ind.weight}%</span>
+            ${indBadge}
+          </div>
+        </div>
+        ${metricsHtml}
+      </div>
+    `;
+  });
+
+  html += '</div>';
+
+  // النتيجة الكلية
+  if (anyData && totalActiveWeight > 0) {
+    const finalScore = totalWeightedScore / totalActiveWeight;
+    const subLabel = totalActiveWeight < 100
+      ? `محسوبة على ${totalActiveWeight}% من الوزن الكلي (أكمل بقية الأرقام لنتيجة شاملة)`
+      : 'محسوبة على كامل الوزن (100%)';
+    html += `
+      <div class="total-score-card">
+        <div>
+          <div class="label">النتيجة الكلية الموزونة لمؤشرات الأداء</div>
+          <span class="label-sub">${escapeHtml(subLabel)}</span>
+        </div>
+        <div class="total-score-value">${Math.round(finalScore)}<small>/100</small></div>
+      </div>
+    `;
+  } else {
+    html += `
+      <div class="alert alert-info mt-4">
+        ابدأ بإدخال أرقام جمعيتك أعلاه لتظهر النتائج تلقائياً.
+      </div>
+    `;
+  }
+
+  $('#fin-results').innerHTML = html;
+}
+
+function resetFinancialInputs() {
+  if (!confirm('هل تريد مسح جميع الأرقام المُدخلة؟')) return;
+  try { localStorage.removeItem('marjie_fin_inputs'); } catch (e) {}
+  document.querySelectorAll('input[data-fin-key]').forEach(i => i.value = '');
+  updateFinancialResults();
+  showToast('تم المسح ✓', 'info');
+}
+
+// ═════════════════════════════════════════════════════════════════
+// 404
+// ═════════════════════════════════════════════════════════════════
+
+function renderNotFound() {
+  $('#app').innerHTML = `
+    <div class="container container-narrow center" style="padding-top:4rem">
+      <h1>الصفحة غير موجودة</h1>
+      <p class="muted">الرابط الذي طلبته غير صحيح.</p>
+      <a href="#/" class="btn btn-primary mt-3">العودة للرئيسية</a>
+    </div>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// التشغيل
+// ═════════════════════════════════════════════════════════════════
+
+$('#year').textContent = new Date().getFullYear();
+handleRoute();
+</script>
+</body>
+</html>
