@@ -9,6 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
   <style>
     /* ═════════════════════════════════════════════════
        نظام التصميم
@@ -526,6 +532,8 @@ function handleRoute() {
       else renderStandards(); break;
     case 'transition':
       renderTransition(); break;
+    case 'calculator':
+      renderCalculator(); break;
     case 'policies':
       if (parts[1]) renderPolicyDetail(parts[1]);
       else renderPolicies(); break;
@@ -558,6 +566,7 @@ function renderNav() {
   let html = `
     <a href="#/standards" class="nav-link ${route === 'standards' ? 'active' : ''}">المعايير</a>
     <a href="#/policies" class="nav-link ${route === 'policies' ? 'active' : ''}">السياسات</a>
+    <a href="#/calculator" class="nav-link ${route === 'calculator' ? 'active' : ''}">الحاسبة المالية</a>
     <a href="#/transition" class="nav-link ${route === 'transition' ? 'active' : ''}">محاكي الانتقال</a>
   `;
 
@@ -597,7 +606,7 @@ function renderHome() {
         <div class="feature">
           <div class="feature-icon">📋</div>
           <h3>مستعرض المعايير</h3>
-          <p>ممارسات معيار الشفافية مع درجاتها لكل تصنيف، وحاسبة تفاعلية لمؤشرات الأداء المالي.</p>
+          <p>ممارسات معيار الشفافية بدرجاتها لكل تصنيف، وهيكل مؤشرات التنظيم المالي.</p>
           <div class="feature-action"><a href="#/standards" class="btn btn-secondary btn-sm">افتح المستعرض ←</a></div>
         </div>
         <div class="feature">
@@ -605,6 +614,12 @@ function renderHome() {
           <h3>مكتبة السياسات</h3>
           <p>سياسات ولوائح جاهزة قابلة للتخصيص باسم جمعيتك وبياناتها بضغطة زر.</p>
           <div class="feature-action"><a href="#/policies" class="btn btn-secondary btn-sm">افتح المكتبة ←</a></div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🧮</div>
+          <h3>الحاسبة المالية</h3>
+          <p>أدخل أرقام جمعيتك (أو ارفع قوائمك المالية PDF) لتعرف موقعك من مؤشرات الأداء المعتمدة.</p>
+          <div class="feature-action"><a href="#/calculator" class="btn btn-secondary btn-sm">افتح الحاسبة ←</a></div>
         </div>
         <div class="feature">
           <div class="feature-icon">🔁</div>
@@ -654,7 +669,7 @@ function renderStandardsContent(activeStd) {
   Object.keys(stds).forEach(key => {
     const std = stds[key];
     const isClickable = std.available || FRONTEND_ENABLED_STANDARDS.includes(key);
-    const countText = key === 'financial' ? 'حاسبة'
+    const countText = key === 'financial' ? 'تنظيم'
                     : std.available ? std.practiceCount
                     : 'قريباً';
     tabsHtml += `
@@ -667,9 +682,9 @@ function renderStandardsContent(activeStd) {
   });
   tabsHtml += `</div>`;
 
-  // المعالجة الخاصة لمعيار السلامة المالية → الحاسبة
+  // المعالجة الخاصة لمعيار السلامة المالية → مؤشرات التنظيم المالي
   if (activeStd === 'financial') {
-    renderFinancialCalculator(tabsHtml);
+    renderFinancialRegulation(tabsHtml);
     return;
   }
 
@@ -1562,7 +1577,103 @@ async function renderAdminDashboard() {
 }
 
 // ═════════════════════════════════════════════════════════════════
-// عرض: الحاسبة المالية (مؤشرات الأداء)
+// عرض: السلامة المالية ← مؤشرات التنظيم المالي (في تبويب المعايير)
+// ═════════════════════════════════════════════════════════════════
+
+const FIN_REGULATION = [
+  {
+    name: 'الهيكل التنظيمي',
+    description: 'هيكل وظيفي للوحدات المالية معتمد من المجلس، ووصف وظيفي للمسؤوليات.',
+    questions: { 'متناهية الصغر': 0, 'الصغيرة': 1, 'المتوسطة': 2, 'الكبيرة': 2, 'متناهية الكبر': 2 }
+  },
+  {
+    name: 'تفعيل السياسات والإجراءات',
+    description: 'لوائح الصلاحيات والسياسات والإجراءات المالية، المشتريات، الاستثمار، الصرف على البرامج.',
+    questions: { 'متناهية الصغر': 1, 'الصغيرة': 3, 'المتوسطة': 9, 'الكبيرة': 15, 'متناهية الكبر': 15 }
+  },
+  {
+    name: 'التقارير',
+    description: 'الموازنة التقديرية المعتمدة وفق الخطة التشغيلية.',
+    questions: { 'متناهية الصغر': 1, 'الصغيرة': 1, 'المتوسطة': 1, 'الكبيرة': 1, 'متناهية الكبر': 1 }
+  },
+  {
+    name: 'السجلات والمستندات',
+    description: 'السجلات والدفاتر الإدارية والمحاسبية وفق الأنظمة.',
+    questions: { 'متناهية الصغر': 1, 'الصغيرة': 1, 'المتوسطة': 1, 'الكبيرة': 1, 'متناهية الكبر': 1 }
+  },
+  {
+    name: 'الإجراءات المالية والمحاسبية',
+    description: 'وجود برنامج محاسبي وتفعيله الفعلي في العمل.',
+    questions: { 'متناهية الصغر': 1, 'الصغيرة': 1, 'المتوسطة': 2, 'الكبيرة': 2, 'متناهية الكبر': 2 }
+  }
+];
+
+function renderFinancialRegulation(tabsHtml) {
+  // إجمالي الأسئلة لكل تصنيف
+  const totals = {};
+  CLASSIFICATIONS.forEach(c => {
+    totals[c] = FIN_REGULATION.reduce((s, ind) => s + (ind.questions[c] || 0), 0);
+  });
+
+  // جدول الإجماليات
+  const totalsHtml = CLASSIFICATIONS.map(c => `
+    <div class="score-cell has-score">
+      <span class="score-cell-value">${totals[c]}</span>
+      <span class="score-cell-label">${escapeHtml(c)}</span>
+    </div>
+  `).join('');
+
+  // كل مؤشر
+  const indicatorsHtml = FIN_REGULATION.map((ind, i) => {
+    const cellsHtml = CLASSIFICATIONS.map(c => {
+      const q = ind.questions[c] || 0;
+      return q > 0
+        ? `<div class="score-cell has-score"><span class="score-cell-value">${q}</span><span class="score-cell-label">${escapeHtml(c)}</span></div>`
+        : `<div class="score-cell no-score"><span class="score-cell-value">—</span><span class="score-cell-label">${escapeHtml(c)}</span></div>`;
+    }).join('');
+
+    return `
+      <div class="practice-card">
+        <div class="practice-meta">
+          <span class="badge badge-gray">المؤشر ${i + 1}</span>
+        </div>
+        <div class="practice-title">${escapeHtml(ind.name)}</div>
+        <div class="practice-desc">${escapeHtml(ind.description)}</div>
+        <div class="small faint mb-2">عدد الأسئلة في كل تصنيف:</div>
+        <div class="scores-row">${cellsHtml}</div>
+      </div>
+    `;
+  }).join('');
+
+  $('#standards-content').innerHTML = tabsHtml + `
+    <div class="alert alert-info">
+      <strong>مؤشرات التنظيم المالي</strong> — هذا المحور يتدرّج بين التصنيفات الخمسة
+      (4 → 7 → 15 → 21 → 21 سؤالاً)، بخلاف <strong>مؤشرات الأداء المالي</strong> الموحّدة
+      لكل التصنيفات (متاحة في <a href="#/calculator">الحاسبة المالية</a>).
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">إجمالي عدد الأسئلة لكل تصنيف</h2>
+          <p class="muted small" style="margin-top:0.25rem">المجموع التراكمي عبر مؤشرات التنظيم الخمسة</p>
+        </div>
+      </div>
+      <div class="scores-row">${totalsHtml}</div>
+    </div>
+
+    <h2 class="mt-5 mb-3">المؤشرات الخمسة</h2>
+    ${indicatorsHtml}
+
+    <div class="alert alert-warning mt-4">
+      البيانات أعلاه تُظهر <strong>الهيكل وعدد الأسئلة</strong> لكل تصنيف.
+      الممارسات التفصيلية (نص كل سؤال، الشاهد، الدرجات) قيد الإكمال وستُضاف لاحقاً.
+    </div>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// عرض: الحاسبة المالية (صفحة مستقلة + رفع PDF)
 // ═════════════════════════════════════════════════════════════════
 
 function loadFinancialInputs() {
@@ -1585,7 +1696,7 @@ function getFinancialValues() {
   return values;
 }
 
-function renderFinancialCalculator(tabsHtml) {
+function renderCalculator() {
   const saved = loadFinancialInputs();
 
   // بناء حقول المدخلات مجمّعة
@@ -1610,42 +1721,208 @@ function renderFinancialCalculator(tabsHtml) {
     inputsHtml += `</div></div>`;
   });
 
-  $('#standards-content').innerHTML = tabsHtml + `
-    <div class="alert alert-info">
-      <strong>مؤشرات الأداء المالي موحّدة لكل التصنيفات الخمسة</strong> — من متناهية الصغر إلى متناهية الكبر.
-      أدخل أرقام جمعيتك (سنوياً) لتعرف موقعك من المستهدفات. لا تُحفظ بياناتك على أي خادم — تبقى في متصفحك فقط.
-    </div>
+  $('#app').innerHTML = `
+    <div class="container">
+      <a href="#/" class="btn btn-ghost btn-sm mb-3">← العودة للرئيسية</a>
+      <h1>الحاسبة المالية</h1>
+      <p class="muted mb-4">
+        احسب أداء جمعيتك وفق <strong>مؤشرات الأداء المالي الموحّدة</strong>
+        (5 مؤشرات + 10 نسب تحليلية، نفسها لكل التصنيفات الخمسة).
+      </p>
 
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <h2 class="card-title">أرقام جمعيتك المالية</h2>
-          <p class="muted small" style="margin-top:0.25rem">من القوائم المالية السنوية</p>
+      <div class="alert alert-info">
+        <strong>خيار سريع:</strong> ارفع ملف القوائم المالية (PDF) وستتم محاولة استخراج الأرقام تلقائياً.
+        أو املأ الحقول يدوياً في الأسفل. بياناتك تبقى في متصفحك ولا تُرسل لأي خادم.
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">📄 تحليل ملف القوائم المالية (PDF)</h2>
+            <p class="muted small" style="margin-top:0.25rem">تجريبي — يستخرج ما يستطيع، راجع النتائج قبل الاعتماد</p>
+          </div>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="resetFinancialInputs()">مسح الأرقام</button>
+        <div class="flex flex-gap-2 flex-wrap">
+          <input type="file" id="pdf-input" accept="application/pdf" style="display:none" onchange="handlePDFUpload(event)" />
+          <button class="btn btn-primary" onclick="document.getElementById('pdf-input').click()">
+            اختر ملف PDF
+          </button>
+          <button class="btn btn-secondary" onclick="togglePDFRawText()">عرض النص المستخرج</button>
+        </div>
+        <div id="pdf-status" class="mt-3"></div>
+        <div id="pdf-raw" style="display:none" class="mt-3">
+          <label>النص المستخرج (للمراجعة اليدوية):</label>
+          <textarea id="pdf-raw-text" readonly style="min-height:200px;font-family:monospace;font-size:0.78rem;direction:ltr;text-align:left"></textarea>
+        </div>
       </div>
-      ${inputsHtml}
-    </div>
 
-    <div id="fin-results"></div>
-
-    <div class="card mt-4">
-      <div class="card-header">
-        <h2 class="card-title">مؤشرات التنظيم المالي</h2>
-        <span class="badge badge-gray">قيد الإكمال</span>
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">أرقام جمعيتك المالية (سنوية)</h2>
+            <p class="muted small" style="margin-top:0.25rem">من القوائم المالية المُدققة</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="resetFinancialInputs()">مسح الأرقام</button>
+        </div>
+        ${inputsHtml}
       </div>
-      <p class="muted small">
-        المحور الثاني للمعيار: <strong>5 مؤشرات</strong> (الهيكل التنظيمي، السياسات والإجراءات،
-        التقارير، السجلات، الإجراءات المحاسبية).
-        تتدرّج عدد الأسئلة من 4 (متناهية الصغر) إلى 21 (الكبيرة ومتناهية الكبر).
-      </p>
-      <p class="muted small" style="margin-top:0.5rem">
-        ستتاح كقائمة تحقق تفاعلية بمجرد إضافة بيانات الممارسات التفصيلية.
-      </p>
+
+      <div id="fin-results"></div>
     </div>
   `;
 
   updateFinancialResults();
+}
+
+function togglePDFRawText() {
+  const el = $('#pdf-raw');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+// ═════════════════════════════════════════════════════════════════
+// محلّل PDF للقوائم المالية
+// ═════════════════════════════════════════════════════════════════
+
+// خريطة الأرقام (الترميز المخصّص في PDF عربية + الأرقام الهندية)
+const PDF_DIGIT_MAP = {
+  '\u02F9':'0','\u02FA':'1','\u02FB':'2','\u02FC':'3','\u02FD':'4',
+  '\u02FE':'5','\u02FF':'6','\u0300':'7','\u0301':'8','\u0302':'9',
+  '٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'
+};
+
+function normalizePDFDigits(text) {
+  let result = '';
+  for (const ch of text) {
+    result += PDF_DIGIT_MAP[ch] !== undefined ? PDF_DIGIT_MAP[ch] : ch;
+  }
+  return result;
+}
+
+// أنماط البحث عن الحقول (مع تسامح للتشويه في النص)
+// ملاحظة: PDFs عربية كثيراً ما تعكس ترتيب الكلمات في الاستخراج،
+// لذا التسميات هنا قد تظهر معكوسة الكلمات
+const PDF_FIELD_PATTERNS = [
+  { key: 'cashAndEquivalents',    tokens: ['حكمه', 'النقد وما', 'النمد وما'] },
+  { key: 'totalDonations',        tokens: ['العامة ةٌالنمد التبرعات', 'العامة النمدٌة التبرعات', 'التبرعات النقدية العامة', 'العامة التبرعات'] },
+  { key: 'programsExpenses',      tokens: ['واألنشطة البرامج', 'والأنشطة البرامج', 'البرامج والنشطة', 'مصروفات البرامج', 'البرامج'] },
+  { key: 'fundraisingExpenses',   tokens: ['االموال جمع', 'الأموال جمع', 'االموال جمع مصروفات', 'جمع الأموال', 'جمع الموال'] },
+  { key: 'adminExpenses',         tokens: ['وإدار', 'عمومية وإدارية', 'عمومٌة وإدارٌة'] },
+  { key: 'totalExpenses',         tokens: ['والخســــائر المصـــروفات إجمالى', 'والخسائر المصروفات إجمالى', 'إجمالى المصـــروفات', 'إجمالى المصروفات', 'إجمالي المصروفات', 'مجموع المصروفات'] },
+  { key: 'currentLiabilities',    tokens: ['المتداولة االلتــــزامـــــات إجمـــــــــالى', 'المتداولة الالتزامات إجمالى', 'المتداولة الالتزامات', 'إجمالى الالتزامات المتداولة'] },
+  { key: 'sustainabilityExpenses',tokens: ['االستثمار مصروفات', 'مصروفات الاستثمار', 'مصروفات الستثمار'] }
+];
+
+async function parsePDF(file) {
+  if (typeof pdfjsLib === 'undefined') {
+    throw new Error('مكتبة PDF.js لم تُحمَّل. تحقّق من اتصالك بالإنترنت.');
+  }
+  const buffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+
+  let allText = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    // اجمع كل العناصر، مرتّبة حسب موضعها العمودي ثم الأفقي (RTL)
+    const items = content.items.slice().sort((a, b) => {
+      const yDiff = (b.transform[5] || 0) - (a.transform[5] || 0);
+      if (Math.abs(yDiff) > 2) return yDiff;
+      return (b.transform[4] || 0) - (a.transform[4] || 0); // RTL: عكس X
+    });
+    const pageText = items.map(it => it.str || '').join(' ');
+    allText += pageText + '\n\n';
+  }
+
+  // طبّق خريطة الأرقام
+  const normalized = normalizePDFDigits(allText);
+
+  // استخرج الأرقام
+  const extracted = {};
+  const matchDetails = {};
+
+  PDF_FIELD_PATTERNS.forEach(field => {
+    for (const tok of field.tokens) {
+      let idx = normalized.indexOf(tok);
+      if (idx === -1) continue;
+
+      // ابحث في الـ300 حرف التالية
+      const slice = normalized.substring(idx + tok.length, Math.min(idx + tok.length + 300, normalized.length));
+      // اقبل فقط الأرقام التي تحتوي على فواصل آلاف (يستبعد أرقام الإيضاحات الصغيرة)
+      const numMatches = slice.match(/\d{1,3}(?:,\d{3})+(?:\.\d+)?/g);
+      if (numMatches && numMatches.length > 0) {
+        const v = parseFloat(numMatches[0].replace(/,/g, ''));
+        if (!isNaN(v) && v > 0) {
+          extracted[field.key] = v;
+          matchDetails[field.key] = { token: tok, raw: numMatches[0] };
+          break;
+        }
+      }
+    }
+  });
+
+  return { rawText: normalized, extracted, matchDetails };
+}
+
+async function handlePDFUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const status = $('#pdf-status');
+  status.innerHTML = '<div class="alert alert-info"><span class="loader"></span> جاري تحليل الملف...</div>';
+
+  try {
+    const result = await parsePDF(file);
+
+    // اعرض النص في الصندوق المخفي
+    $('#pdf-raw-text').value = result.rawText;
+
+    // طبّق القيم على الحقول
+    let appliedCount = 0;
+    Object.keys(result.extracted).forEach(key => {
+      const input = document.querySelector('input[data-fin-key="' + key + '"]');
+      if (input) {
+        input.value = result.extracted[key];
+        input.style.background = '#FAEEDA'; // برتقالي خفيف للمراجعة
+        appliedCount++;
+      }
+    });
+
+    updateFinancialResults();
+
+    const totalFields = FIN_INPUTS.length;
+    if (appliedCount === 0) {
+      status.innerHTML = `
+        <div class="alert alert-warning">
+          <strong>لم يتم استخراج أي أرقام تلقائياً.</strong>
+          الملف قد يستخدم تشفيراً غير معتاد. اضغط "عرض النص المستخرج"
+          لرؤية محتوى الملف وانقل الأرقام يدوياً للحقول أدناه.
+        </div>
+      `;
+    } else {
+      const fieldsList = Object.entries(result.matchDetails).map(([k, d]) => {
+        const inp = FIN_INPUTS.find(i => i.key === k);
+        return `<li>${escapeHtml(inp ? inp.label : k)}: <strong>${result.extracted[k].toLocaleString('en-US')}</strong></li>`;
+      }).join('');
+      status.innerHTML = `
+        <div class="alert alert-success">
+          <strong>تم استخراج ${appliedCount} من ${totalFields} حقلاً.</strong>
+          الحقول الملوّنة بالبرتقالي تحتاج مراجعتك للتأكد من صحتها.
+          <details class="mt-2"><summary>تفاصيل الاستخراج</summary>
+            <ul style="margin-top:0.5rem">${fieldsList}</ul>
+          </details>
+          <p class="small mt-2" style="margin-bottom:0">
+            ⚠️ أكمل بقية الحقول يدوياً للحصول على نتيجة كاملة.
+            استخدم "عرض النص المستخرج" إن احتجت للرجوع للأرقام الأصلية.
+          </p>
+        </div>
+      `;
+    }
+
+    // إعادة تعيين قيمة المدخل لتمكين رفع الملف نفسه مرة أخرى
+    event.target.value = '';
+  } catch (err) {
+    status.innerHTML = `<div class="alert alert-error">فشل التحليل: ${escapeHtml(err.message)}</div>`;
+  }
 }
 
 function updateFinancialResults() {
