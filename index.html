@@ -15,6 +15,15 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="application-name" content="مَرْجِع" />
   <meta name="description" content="منصة الحوكمة العملية للجمعيات الأهلية: معايير، سياسات، أدوات، ومحتوى تعليمي." />
+
+  <!-- Open Graph للمشاركة -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="مَرْجِع — منصّة الحوكمة العملية للجمعيات الأهلية" />
+  <meta property="og:description" content="13 أداة احترافية، 45+ سياسة جاهزة، معايير الحوكمة كاملة. بدون تسجيل، بدون تعقيد." />
+  <meta property="og:locale" content="ar_SA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="مَرْجِع — منصّة الحوكمة العملية للجمعيات" />
+  <meta name="twitter:description" content="13 أداة احترافية، 45+ سياسة جاهزة، معايير الحوكمة كاملة. بدون تسجيل." />
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230F6E56'/%3E%3Cg fill='white'%3E%3Crect x='40' y='49' width='100' height='28' rx='5'/%3E%3Crect x='40' y='49' width='28' height='82' rx='5'/%3E%3Crect x='112' y='49' width='28' height='68' rx='5'/%3E%3Crect x='61' y='93' width='58' height='18' rx='4'/%3E%3Crect x='76' y='117' width='28' height='25' rx='4'/%3E%3C/g%3E%3C/svg%3E" />
   <link rel="manifest" id="app-manifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,24 +40,99 @@
        نظام التصميم
        ═════════════════════════════════════════════════ */
     :root {
-      --teal-50:#E1F5EE; --teal-100:#9FE1CB; --teal-500:#1D9E75; --teal-700:#0F6E56; --teal-900:#04342C;
-      --coral-50:#FAECE7; --coral-500:#D85A30; --coral-700:#993C1D;
-      --amber-100:#FAC775; --amber-500:#BA7517;
-      --green-100:#C0DD97; --green-500:#639922;
+      /* ── الألوان الأساسية ── */
+      --teal-50:#E1F5EE; --teal-100:#9FE1CB; --teal-300:#5DCAA5; --teal-500:#1D9E75; --teal-700:#0F6E56; --teal-900:#04342C;
+
+      /* ── لون ثانوي جديد: الرمل الذهبي (Sand) — للحظات الإبهار ── */
+      --sand-50:#FAF4E8; --sand-100:#F0E0BD; --sand-300:#DEBE7D; --sand-500:#C9A574; --sand-700:#9B7A45; --sand-900:#5A4524;
+
+      --coral-50:#FAECE7; --coral-300:#F0997B; --coral-500:#D85A30; --coral-700:#993C1D;
+      --amber-50:#FEF6E5; --amber-100:#FAC775; --amber-500:#BA7517; --amber-700:#854F0B;
+      --green-100:#C0DD97; --green-500:#639922; --green-700:#3B6D11;
       --red-100:#F7C1C1; --red-500:#E24B4A;
-      --gray-50:#FAF8F3; --gray-100:#F1EFE8; --gray-200:#D3D1C7;
-      --gray-300:#B4B2A9; --gray-500:#888780; --gray-700:#444441; --gray-900:#2C2C2A;
-      --bg:var(--gray-50); --bg-card:#FFFFFF; --border:rgba(0,0,0,0.08); --border-strong:rgba(0,0,0,0.15);
-      --text:var(--gray-900); --text-muted:var(--gray-700); --text-faint:var(--gray-500);
-      --radius-sm:6px; --radius-md:10px; --radius-lg:14px;
-      --shadow-sm:0 1px 2px rgba(0,0,0,0.04); --shadow-md:0 4px 12px rgba(0,0,0,0.06);
+
+      /* ── الحياد المدفّأ (Stone بدل Gray) ── */
+      --stone-50:#FAF8F3; --stone-100:#F1EFE8; --stone-200:#E5E2D8; --stone-300:#D3D1C7;
+      --stone-400:#B4B2A9; --stone-500:#888780; --stone-600:#666561; --stone-700:#444441;
+      --stone-800:#2C2C2A; --stone-900:#1A2922;
+
+      /* alias للتوافق الخلفي */
+      --gray-50:var(--stone-50); --gray-100:var(--stone-100); --gray-200:var(--stone-200);
+      --gray-300:var(--stone-300); --gray-500:var(--stone-500); --gray-700:var(--stone-700); --gray-900:var(--stone-800);
+
+      /* ── الأسطح والنصوص ── */
+      --bg:var(--stone-50); --bg-card:#FFFFFF; --bg-elevated:#FFFFFF;
+      --border:rgba(20,30,28,0.08); --border-strong:rgba(20,30,28,0.15); --border-soft:rgba(20,30,28,0.04);
+      --text:var(--stone-800); --text-muted:var(--stone-700); --text-faint:var(--stone-500); --text-soft:var(--stone-600);
+
+      /* ── أنصاف الأقطار ── */
+      --radius-xs:4px; --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-xl:22px; --radius-2xl:28px;
+
+      /* ── الظلال (مدروسة بعمق) ── */
+      --shadow-xs:0 1px 2px rgba(20,30,28,0.04);
+      --shadow-sm:0 2px 4px rgba(20,30,28,0.04), 0 1px 2px rgba(20,30,28,0.03);
+      --shadow-md:0 6px 16px rgba(20,30,28,0.06), 0 2px 4px rgba(20,30,28,0.04);
+      --shadow-lg:0 12px 28px rgba(20,30,28,0.08), 0 4px 10px rgba(20,30,28,0.04);
+      --shadow-xl:0 20px 48px rgba(20,30,28,0.10), 0 6px 16px rgba(20,30,28,0.06);
+      --shadow-glow-teal:0 0 0 4px rgba(29,158,117,0.12);
+      --shadow-glow-sand:0 0 0 4px rgba(201,165,116,0.18);
+
+      /* ── التدرّجات ── */
+      --gradient-hero:linear-gradient(135deg,#0F6E56 0%,#04342C 60%,#1A2922 100%);
+      --gradient-hero-warm:linear-gradient(135deg,#0F6E56 0%,#1D9E75 50%,#C9A574 100%);
+      --gradient-sand:linear-gradient(135deg,#FAF4E8 0%,#DEBE7D 100%);
+      --gradient-teal:linear-gradient(135deg,#5DCAA5 0%,#0F6E56 100%);
+      --gradient-soft:linear-gradient(180deg,#FFFFFF 0%,#FAF8F3 100%);
+      --gradient-card:linear-gradient(135deg,#FFFFFF 0%,#FAF8F3 100%);
+
+      /* ── الانتقالات والـ easing ── */
+      --ease-out:cubic-bezier(.22,1,.36,1);
+      --ease-spring:cubic-bezier(.34,1.56,.64,1);
+      --ease-smooth:cubic-bezier(.4,0,.2,1);
+      --duration-fast:.15s; --duration-base:.25s; --duration-slow:.4s;
+
+      /* ── نظام الطباعة (Type Scale) ── */
+      --font-heading:'Reem Kufi','IBM Plex Sans Arabic',system-ui,sans-serif;
+      --font-body:'IBM Plex Sans Arabic',system-ui,sans-serif;
+
+      /* أحجام مرنة (responsive via clamp) */
+      --text-display:clamp(2.5rem, 5vw + 1rem, 4.25rem);
+      --text-h1:clamp(1.875rem, 3vw + 0.8rem, 2.75rem);
+      --text-h2:clamp(1.4rem, 2vw + 0.6rem, 1.85rem);
+      --text-h3:1.25rem;
+      --text-h4:1.05rem;
+      --text-base:1rem;
+      --text-small:0.875rem;
+      --text-tiny:0.78rem;
+      --text-micro:0.72rem;
+
+      /* line-heights */
+      --lh-tight:1.2; --lh-snug:1.4; --lh-normal:1.6; --lh-relaxed:1.75; --lh-loose:1.85;
+
+      /* letter-spacings */
+      --ls-tight:-0.02em; --ls-snug:-0.01em; --ls-normal:0; --ls-wide:0.025em;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{font-size:16px;scroll-behavior:smooth}
-    body{font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;font-weight:400;line-height:1.65;color:var(--text);background:var(--bg);min-height:100vh;direction:rtl;text-align:right}
+    body{font-family:var(--font-body);font-weight:400;line-height:var(--lh-normal);color:var(--text);background:var(--bg);min-height:100vh;direction:rtl;text-align:right;font-feature-settings:"kern","liga","calt";-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 
-    /* خط العناوين الكوفي المعاصر */
-    h1, h2, h3, .heading-display { font-family: 'Reem Kufi', 'IBM Plex Sans Arabic', sans-serif; letter-spacing: -0.005em; }
+    /* ═════════════════════════════════════════
+       نظام الطباعة المحكم
+       ═════════════════════════════════════════ */
+    h1, h2, h3, .heading-display { font-family:var(--font-heading); }
+    .heading-display{font-size:var(--text-display);font-weight:700;line-height:var(--lh-tight);letter-spacing:var(--ls-tight);color:var(--text)}
+    h1{font-size:var(--text-h1);font-weight:600;line-height:var(--lh-tight);letter-spacing:var(--ls-tight);margin-bottom:0.85rem;color:var(--text)}
+    h2{font-size:var(--text-h2);font-weight:600;line-height:var(--lh-snug);letter-spacing:var(--ls-snug);margin-bottom:0.7rem;color:var(--text)}
+    h3{font-size:var(--text-h3);font-weight:500;line-height:var(--lh-snug);margin-bottom:0.5rem;color:var(--text)}
+    h4{font-family:var(--font-body);font-size:var(--text-h4);font-weight:600;line-height:var(--lh-snug);margin-bottom:0.5rem;color:var(--text)}
+    p{margin-bottom:0.75rem;line-height:var(--lh-relaxed)}
+    .muted{color:var(--text-muted)} .faint{color:var(--text-faint)} .soft{color:var(--text-soft)}
+    .small{font-size:var(--text-small);line-height:var(--lh-normal)}
+    .tiny{font-size:var(--text-tiny);line-height:var(--lh-normal)}
+    .text-light{font-weight:300}
+    .text-medium{font-weight:500}
+    .text-display{font-family:var(--font-heading);font-weight:600;letter-spacing:var(--ls-tight)}
+    .center{text-align:center}
 
     /* تخطيط */
     .container{width:100%;max-width:1180px;margin:0 auto;padding:0 1.25rem}
@@ -56,107 +140,164 @@
     main{padding:2.5rem 0;min-height:calc(100vh - 64px - 60px)}
 
     /* تنقل */
-    .navbar{background:var(--bg-card);border-bottom:1px solid var(--border);padding:0.7rem 0;position:sticky;top:0;z-index:50}
+    .navbar{background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:0.7rem 0;position:sticky;top:0;z-index:50}
     .navbar-content{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
-    .brand{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:var(--text);transition:.2s}
+    .brand{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:var(--text);transition:transform var(--duration-base) var(--ease-spring)}
     .brand:hover{transform:translateY(-1px)}
-    .brand-logo{width:40px;height:40px;background:var(--teal-700);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 1px 3px rgba(15,110,86,.25)}
+    .brand-logo{width:40px;height:40px;background:var(--teal-700);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(15,110,86,.25);transition:transform var(--duration-base) var(--ease-spring)}
+    .brand:hover .brand-logo{transform:rotate(-4deg) scale(1.05)}
     .brand-logo svg{width:26px;height:26px}
-    .brand-name{font-family:'Reem Kufi','IBM Plex Sans Arabic',sans-serif;font-weight:600;font-size:1.15rem;letter-spacing:-0.01em}
-    .brand-name small{display:block;font-family:'IBM Plex Sans Arabic',sans-serif;font-weight:400;font-size:0.72rem;color:var(--text-faint);margin-top:-2px;letter-spacing:0}
-    .nav-links{display:flex;align-items:center;gap:0.4rem}
-    .nav-link{color:var(--text-muted);text-decoration:none;padding:0.4rem 0.8rem;border-radius:6px;font-size:0.9rem;transition:.15s;background:none;border:none;font-family:inherit;cursor:pointer}
-    .nav-link:hover{background:var(--gray-100);color:var(--text)}
-    .nav-link.active{background:var(--teal-50);color:var(--teal-700)}
+    .brand-name{font-family:var(--font-heading);font-weight:600;font-size:1.18rem;letter-spacing:var(--ls-snug);line-height:1.1}
+    .brand-name small{display:block;font-family:var(--font-body);font-weight:300;font-size:var(--text-micro);color:var(--text-faint);margin-top:1px;letter-spacing:0;line-height:1.2}
+    .nav-links{display:flex;align-items:center;gap:0.25rem}
+    .nav-link{color:var(--text-muted);text-decoration:none;padding:0.45rem 0.85rem;border-radius:var(--radius-sm);font-size:var(--text-small);font-weight:500;transition:all var(--duration-fast) var(--ease-smooth);background:none;border:none;font-family:inherit;cursor:pointer;position:relative}
+    .nav-link:hover{background:var(--stone-100);color:var(--text)}
+    .nav-link.active{background:var(--teal-50);color:var(--teal-700);font-weight:500}
 
-    .footer{background:var(--bg-card);border-top:1px solid var(--border);padding:1.25rem 0;text-align:center;color:var(--text-faint);font-size:0.82rem}
+    .footer{background:var(--bg-card);border-top:1px solid var(--border);padding:1.25rem 0;text-align:center;color:var(--text-faint);font-size:var(--text-small)}
 
-    /* طباعة */
-    h1,h2,h3,h4{font-weight:600;line-height:1.3;color:var(--text)}
-    h1{font-size:2.25rem;margin-bottom:0.75rem;letter-spacing:-0.02em}
-    h2{font-size:1.6rem;margin-bottom:0.75rem;letter-spacing:-0.01em}
-    h3{font-size:1.2rem;margin-bottom:0.5rem}
-    h4{font-size:1.05rem;margin-bottom:0.5rem}
-    p{margin-bottom:0.75rem}
-    .muted{color:var(--text-muted)} .faint{color:var(--text-faint)}
-    .small{font-size:0.85rem} .tiny{font-size:0.75rem} .center{text-align:center}
-
-    /* أزرار */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.6rem 1.2rem;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--text);font-family:inherit;font-size:0.92rem;font-weight:500;cursor:pointer;text-decoration:none;transition:.15s;white-space:nowrap}
+    /* ═════════════════════════════════════════
+       الأزرار (مطوّرة)
+       ═════════════════════════════════════════ */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border:1px solid transparent;border-radius:var(--radius-md);background:transparent;color:var(--text);font-family:inherit;font-size:var(--text-small);font-weight:500;cursor:pointer;text-decoration:none;transition:all var(--duration-fast) var(--ease-smooth);white-space:nowrap;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}
+    .btn::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center, rgba(255,255,255,.3) 0%, transparent 70%);opacity:0;transition:opacity var(--duration-base) var(--ease-smooth);pointer-events:none}
+    .btn:hover::before{opacity:1}
     .btn:disabled{opacity:.5;cursor:not-allowed}
-    .btn-primary{background:var(--teal-700);color:#fff}
-    .btn-primary:hover:not(:disabled){background:var(--teal-900)}
+    .btn-primary{background:var(--teal-700);color:#fff;box-shadow:var(--shadow-sm)}
+    .btn-primary:hover:not(:disabled){background:var(--teal-900);box-shadow:var(--shadow-md), var(--shadow-glow-teal);transform:translateY(-1px)}
+    .btn-primary:active:not(:disabled){transform:translateY(0)}
+    .btn-accent{background:var(--gradient-sand);color:var(--sand-900);box-shadow:var(--shadow-sm);border:1px solid var(--sand-300)}
+    .btn-accent:hover:not(:disabled){box-shadow:var(--shadow-md), var(--shadow-glow-sand);transform:translateY(-1px)}
     .btn-secondary{background:var(--bg-card);color:var(--text);border-color:var(--border-strong)}
-    .btn-secondary:hover:not(:disabled){background:var(--gray-100)}
+    .btn-secondary:hover:not(:disabled){background:var(--stone-100);border-color:var(--stone-400)}
     .btn-ghost{color:var(--text-muted)}
-    .btn-ghost:hover:not(:disabled){background:var(--gray-100)}
+    .btn-ghost:hover:not(:disabled){background:var(--stone-100);color:var(--text)}
     .btn-danger{background:transparent;color:var(--coral-700);border-color:var(--coral-500)}
     .btn-danger:hover:not(:disabled){background:var(--coral-50)}
-    .btn-lg{padding:0.8rem 1.4rem;font-size:0.97rem}
-    .btn-sm{padding:0.35rem 0.75rem;font-size:0.83rem}
+    .btn-lg{padding:0.85rem 1.6rem;font-size:1rem;border-radius:var(--radius-md)}
+    .btn-sm{padding:0.4rem 0.8rem;font-size:var(--text-tiny);border-radius:var(--radius-sm)}
+    .btn-xl{padding:1rem 2rem;font-size:1.05rem;border-radius:var(--radius-lg);font-weight:600}
     .btn-block{display:flex;width:100%}
 
-    /* بطاقات */
-    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
-    .card-header{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
-    .card-title{font-size:1.15rem;font-weight:600;margin:0}
+    /* ═════════════════════════════════════════
+       البطاقات (مطوّرة)
+       ═════════════════════════════════════════ */
+    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem;box-shadow:var(--shadow-xs);transition:box-shadow var(--duration-base) var(--ease-smooth)}
+    .card:hover{box-shadow:var(--shadow-sm)}
+    .card-elevated{box-shadow:var(--shadow-md);border-color:transparent}
+    .card-flat{box-shadow:none;border-color:var(--border)}
+    .card-header{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:1.1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+    .card-title{font-family:var(--font-heading);font-size:1.18rem;font-weight:500;margin:0;letter-spacing:var(--ls-snug)}
     .card-tight{padding:1rem}
 
     /* نماذج */
-    .form-group{margin-bottom:1rem}
-    label{display:block;margin-bottom:0.4rem;font-weight:500;font-size:0.88rem;color:var(--text)}
+    .form-group{margin-bottom:1.1rem}
+    label{display:block;margin-bottom:0.45rem;font-weight:500;font-size:var(--text-small);color:var(--text)}
     label .required{color:var(--coral-500)}
-    input[type=text],input[type=email],input[type=tel],input[type=password],input[type=url],input[type=number],input[type=date],select,textarea{width:100%;padding:0.65rem 0.85rem;border:1px solid var(--border-strong);border-radius:10px;background:var(--bg-card);color:var(--text);font-family:inherit;font-size:0.93rem;transition:.15s}
-    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal-500);box-shadow:0 0 0 3px rgba(29,158,117,.12)}
-    textarea{min-height:140px;resize:vertical;line-height:1.6;font-family:inherit}
-    .form-help{margin-top:0.4rem;font-size:0.78rem;color:var(--text-faint)}
+    input[type=text],input[type=email],input[type=tel],input[type=password],input[type=url],input[type=number],input[type=date],input[type=time],select,textarea{width:100%;padding:0.7rem 0.9rem;border:1px solid var(--border-strong);border-radius:var(--radius-md);background:var(--bg-card);color:var(--text);font-family:inherit;font-size:0.93rem;transition:all var(--duration-fast) var(--ease-smooth)}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal-500);box-shadow:var(--shadow-glow-teal)}
+    input:hover:not(:focus),select:hover:not(:focus),textarea:hover:not(:focus){border-color:var(--stone-400)}
+    textarea{min-height:140px;resize:vertical;line-height:var(--lh-normal);font-family:inherit}
+    .form-help{margin-top:0.4rem;font-size:var(--text-tiny);color:var(--text-faint);font-weight:300}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
     @media(max-width:600px){.form-row{grid-template-columns:1fr}}
 
-    /* تنبيهات */
-    .alert{padding:0.9rem 1rem;border-radius:10px;margin-bottom:1rem;border:1px solid;font-size:0.9rem}
+    /* ═════════════════════════════════════════
+       التنبيهات (مطوّرة)
+       ═════════════════════════════════════════ */
+    .alert{padding:1rem 1.1rem;border-radius:var(--radius-md);margin-bottom:1rem;border:1px solid;font-size:var(--text-small);line-height:var(--lh-relaxed);position:relative}
     .alert-info{background:var(--teal-50);border-color:var(--teal-100);color:var(--teal-900)}
     .alert-success{background:#EAF3DE;border-color:var(--green-100);color:#173404}
-    .alert-warning{background:#FAEEDA;border-color:var(--amber-100);color:#633806}
+    .alert-warning{background:var(--sand-50);border-color:var(--sand-100);color:var(--sand-900)}
     .alert-error{background:#FCEBEB;border-color:var(--red-100);color:#501313}
 
-    /* شارات */
-    .badge{display:inline-flex;align-items:center;gap:0.25rem;padding:0.18rem 0.6rem;border-radius:999px;font-size:0.72rem;font-weight:500;line-height:1.5}
+    /* ═════════════════════════════════════════
+       الشارات (مطوّرة + شارة جديدة sand)
+       ═════════════════════════════════════════ */
+    .badge{display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.65rem;border-radius:99px;font-size:var(--text-tiny);font-weight:500;line-height:1.5;letter-spacing:var(--ls-snug)}
     .badge-teal{background:var(--teal-50);color:var(--teal-900)}
     .badge-coral{background:var(--coral-50);color:var(--coral-700)}
     .badge-amber{background:#FAEEDA;color:#633806}
     .badge-green{background:#EAF3DE;color:#173404}
-    .badge-gray{background:var(--gray-100);color:var(--gray-700)}
+    .badge-gray{background:var(--stone-100);color:var(--stone-700)}
+    .badge-sand{background:var(--sand-50);color:var(--sand-900);border:1px solid var(--sand-100)}
+    .badge-glow{background:var(--gradient-sand);color:var(--sand-900);font-weight:500;box-shadow:0 1px 3px rgba(201,165,116,.2)}
 
-    /* صفحة الهبوط */
-    .hero{padding:4rem 0 2.5rem;text-align:center}
-    .hero h1{font-size:2.7rem;margin-bottom:1rem;letter-spacing:-0.025em;max-width:900px;margin-inline:auto;line-height:1.2}
-    .hero-tagline{display:inline-block;padding:0.3rem 0.9rem;background:var(--teal-50);color:var(--teal-700);border-radius:999px;font-size:0.85rem;font-weight:500;margin-bottom:1.5rem}
-    .hero-subtitle{font-size:1.1rem;color:var(--text-muted);max-width:680px;margin:0 auto 1.5rem}
-    .hero-actions{display:flex;justify-content:center;gap:0.75rem;flex-wrap:wrap}
-    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin:2.5rem 0}
-    .feature{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column}
-    .feature-icon{width:46px;height:46px;background:var(--teal-50);color:var(--teal-700);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem;font-weight:600}
-    .feature h3{font-size:1.1rem;margin-bottom:0.4rem}
-    .feature p{color:var(--text-muted);font-size:0.92rem;margin:0;flex:1}
-    .feature-action{margin-top:1rem}
+    /* ═════════════════════════════════════════
+       صفحة الهبوط — Hero (مطوّر)
+       ═════════════════════════════════════════ */
+    .hero{padding:5rem 0 3rem;text-align:center;position:relative;overflow:hidden}
+    .hero h1{font-family:var(--font-heading);font-size:var(--text-display);font-weight:700;margin-bottom:1.2rem;letter-spacing:var(--ls-tight);max-width:920px;margin-inline:auto;line-height:var(--lh-tight);background:linear-gradient(135deg,var(--text) 0%,var(--teal-700) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-tagline{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:var(--teal-50);color:var(--teal-700);border:1px solid var(--teal-100);border-radius:99px;font-size:var(--text-small);font-weight:500;margin-bottom:1.6rem;box-shadow:var(--shadow-xs)}
+    .hero-tagline-dot{width:6px;height:6px;background:var(--teal-500);border-radius:50%;animation:pulse 2s infinite}
+    .hero-subtitle{font-size:1.15rem;color:var(--text-muted);max-width:680px;margin:0 auto 2rem;line-height:var(--lh-relaxed);font-weight:300}
+    .hero-actions{display:flex;justify-content:center;gap:0.85rem;flex-wrap:wrap;margin-bottom:2.5rem}
 
-    /* مستعرض المعايير */
-    .standards-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0}
-    .std-tab{padding:0.7rem 1.2rem;background:none;border:none;font-family:inherit;font-size:0.95rem;color:var(--text-muted);cursor:pointer;position:relative;font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s}
+    /* تخطيط مع الإيلوستراشن (Desktop) */
+    .hero-layout{display:grid;grid-template-columns:1fr;gap:2rem;align-items:center;position:relative;z-index:1}
+    @media(min-width:992px){
+      .hero{padding:5rem 0 4rem;text-align:right}
+      .hero-layout{grid-template-columns:1.1fr 1fr;gap:3rem}
+      .hero h1{margin-inline:0}
+      .hero-tagline{margin-bottom:1.4rem}
+      .hero-subtitle{margin:0 0 2rem}
+      .hero-actions{justify-content:flex-start}
+      .hero-stats{justify-content:flex-start;text-align:right}
+    }
+
+    /* الإيلوستراشن (يظهر فقط في الديسكتوب) */
+    .hero-illustration{display:none;position:relative;animation:fadeInUp .8s var(--ease-out) backwards;animation-delay:.2s}
+    @media(min-width:992px){.hero-illustration{display:block}}
+    .hero-illustration svg{width:100%;height:auto;max-width:560px;margin-inline:auto;display:block}
+
+    /* رموز طافية حول الإيلوستراشن */
+    @keyframes float-slow { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-12px) rotate(2deg)} }
+    @keyframes float-med { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-8px) rotate(-3deg)} }
+    .float-icon{animation:float-slow 4.5s ease-in-out infinite}
+    .float-icon-2{animation:float-med 3.8s ease-in-out infinite;animation-delay:-1.5s}
+    .float-icon-3{animation:float-slow 5.2s ease-in-out infinite;animation-delay:-2.8s}
+
+    /* إحصائيات Hero */
+    .hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--border)}
+    .hero-stat{text-align:center}
+    .hero-stat-value{font-family:var(--font-heading);font-size:2rem;font-weight:600;color:var(--teal-700);line-height:1;letter-spacing:var(--ls-tight)}
+    .hero-stat-label{font-size:var(--text-tiny);color:var(--text-faint);margin-top:0.3rem;font-weight:400}
+
+    /* خلفية زخرفية */
+    .hero-bg-pattern{position:absolute;inset:0;pointer-events:none;opacity:0.4;z-index:-1}
+    .hero-bg-pattern svg{width:100%;height:100%}
+
+    /* ═════════════════════════════════════════
+       شبكة الميزات (مطوّرة)
+       ═════════════════════════════════════════ */
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem;margin:3rem 0 2rem}
+    .feature{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.6rem 1.4rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:all var(--duration-base) var(--ease-out)}
+    .feature::after{content:'';position:absolute;top:0;right:0;width:60%;height:60%;background:radial-gradient(circle at top right,var(--teal-50) 0%,transparent 70%);opacity:0.6;pointer-events:none;transition:opacity var(--duration-base) var(--ease-smooth);z-index:0}
+    .feature:hover::after{opacity:1}
+    .feature > *{position:relative;z-index:1}
+    .feature-icon{width:48px;height:48px;background:var(--teal-50);color:var(--teal-700);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem;font-weight:600}
+    .feature h3{font-size:1.12rem;margin-bottom:0.45rem;font-weight:500}
+    .feature p{color:var(--text-muted);font-size:var(--text-small);margin:0;flex:1;line-height:var(--lh-relaxed)}
+    .feature-action{margin-top:1.1rem}
+
+    /* ═════════════════════════════════════════
+       تبويبات المعايير (مطوّرة)
+       ═════════════════════════════════════════ */
+    .standards-tabs{display:flex;gap:0.4rem;margin-bottom:1.5rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0}
+    .std-tab{padding:0.75rem 1.2rem;background:none;border:none;font-family:inherit;font-size:var(--text-small);color:var(--text-muted);cursor:pointer;position:relative;font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all var(--duration-fast) var(--ease-smooth)}
     .std-tab:hover:not(:disabled){color:var(--text)}
     .std-tab.active{color:var(--teal-700);border-bottom-color:var(--teal-700)}
     .std-tab:disabled{color:var(--text-faint);cursor:not-allowed}
-    .std-tab .count{display:inline-block;background:var(--gray-100);color:var(--text-muted);font-size:0.7rem;padding:0.05rem 0.45rem;border-radius:999px;margin-right:0.4rem;font-weight:400;vertical-align:1px}
+    .std-tab .count{display:inline-block;background:var(--stone-100);color:var(--text-muted);font-size:var(--text-micro);padding:0.1rem 0.5rem;border-radius:99px;margin-right:0.45rem;font-weight:500;vertical-align:1px}
     .std-tab.active .count{background:var(--teal-100);color:var(--teal-900)}
 
-    .filters-bar{display:flex;gap:0.75rem;flex-wrap:wrap;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:1.25rem}
-    .filter-group{display:flex;flex-direction:column;gap:0.25rem;flex:1;min-width:180px}
-    .filter-group label{font-size:0.78rem;color:var(--text-muted);margin-bottom:0;font-weight:500}
-    .filter-group select{padding:0.45rem 0.7rem;font-size:0.88rem}
+    .filters-bar{display:flex;gap:0.85rem;flex-wrap:wrap;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem;margin-bottom:1.5rem;box-shadow:var(--shadow-xs)}
+    .filter-group{display:flex;flex-direction:column;gap:0.3rem;flex:1;min-width:180px}
+    .filter-group label{font-size:var(--text-tiny);color:var(--text-muted);margin-bottom:0;font-weight:500}
+    .filter-group select{padding:0.5rem 0.75rem;font-size:var(--text-small)}
 
-    .practice-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:0.75rem;transition:.15s}
-    .practice-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-sm)}
+    .practice-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.3rem;margin-bottom:0.85rem;transition:all var(--duration-base) var(--ease-out)}
+    .practice-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-sm);transform:translateY(-1px)}
     .practice-meta{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;font-size:0.78rem;color:var(--text-faint);margin-bottom:0.5rem}
     .practice-title{font-size:1rem;font-weight:500;margin-bottom:0.4rem;line-height:1.5}
     .practice-desc{color:var(--text-muted);font-size:0.88rem;margin-bottom:0.75rem}
@@ -352,15 +493,51 @@
     .tour-skip:hover{color:var(--text);background:var(--gray-100)}
 
     /* ═════════════════════════════════════════
-       صفحات الأدوات
+       صفحات الأدوات (الإصدار الجديد)
        ═════════════════════════════════════════ */
-    .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-top:1.5rem}
-    .tool-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-decoration:none;color:inherit;transition:all .25s cubic-bezier(.22,1,.36,1);display:block}
-    .tool-card:hover{border-color:var(--teal-500);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.06)}
-    .tool-card .icon-tile{width:48px;height:48px;margin-bottom:1rem}
-    .tool-card h3{font-size:1.1rem;margin-bottom:0.4rem}
-    .tool-card p{color:var(--text-muted);font-size:0.9rem;margin:0;line-height:1.6}
-    .tool-card-arrow{display:inline-flex;align-items:center;gap:0.3rem;color:var(--teal-700);font-size:0.85rem;margin-top:1rem;font-weight:500}
+    .tools-hero{padding:1.5rem 0 2.5rem;text-align:right}
+    .tools-hero-content{max-width:780px;margin-bottom:2rem}
+
+    .tools-search-wrap{position:relative;max-width:680px;display:flex;align-items:center;background:var(--bg-card);border:1.5px solid var(--border-strong);border-radius:99px;padding:0.4rem 0.4rem 0.4rem 1.1rem;transition:all var(--duration-fast) var(--ease-smooth);box-shadow:var(--shadow-xs)}
+    .tools-search-wrap:focus-within{border-color:var(--teal-500);box-shadow:var(--shadow-sm), var(--shadow-glow-teal)}
+    .tools-search-icon{flex-shrink:0;color:var(--text-faint)}
+    .tools-search-input{flex:1;border:none;outline:none;background:transparent;padding:0.85rem 0.85rem;font-family:inherit;font-size:1rem;color:var(--text)}
+    .tools-search-input::placeholder{color:var(--text-faint);font-weight:300}
+    .tools-search-clear{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:none;background:var(--stone-100);color:var(--text-muted);cursor:pointer;font-size:1.3rem;display:none;align-items:center;justify-content:center;font-family:inherit;transition:.15s;line-height:1}
+    .tools-search-clear:hover{background:var(--stone-200);color:var(--text)}
+
+    .tools-section{margin-bottom:3rem;animation:fadeInUp .4s var(--ease-out) backwards}
+    .tools-section:nth-child(2){animation-delay:.05s}
+    .tools-section:nth-child(3){animation-delay:.10s}
+    .tools-section:nth-child(4){animation-delay:.15s}
+    .tools-section:nth-child(5){animation-delay:.20s}
+
+    .tools-section-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border)}
+    .tools-section-icon{flex-shrink:0;width:48px;height:48px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+    .tools-section-title{font-family:var(--font-heading);font-size:1.3rem;font-weight:600;margin:0 0 0.15rem;letter-spacing:var(--ls-snug)}
+    .tools-section-desc{font-size:var(--text-small);color:var(--text-muted);margin:0;font-weight:300}
+
+    .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem}
+
+    /* بطاقة الأداة (مطوّرة) */
+    .tool-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;text-decoration:none;color:inherit;transition:all var(--duration-base) var(--ease-out);display:block;position:relative;overflow:hidden}
+    .tool-card::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle,var(--teal-50),transparent 70%);opacity:0;transition:opacity var(--duration-base) var(--ease-smooth);pointer-events:none}
+    .tool-card:hover{border-color:var(--teal-500);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+    .tool-card:hover::before{opacity:1}
+    .tool-card .icon-tile{width:52px;height:52px;margin-bottom:1.1rem;transition:transform var(--duration-base) var(--ease-spring)}
+    .tool-card:hover .icon-tile{transform:rotate(-4deg) scale(1.05);background:var(--teal-100)}
+    .tool-card h3{font-size:1.08rem;margin-bottom:0.4rem;font-weight:500;font-family:var(--font-heading)}
+    .tool-card p{color:var(--text-muted);font-size:var(--text-small);margin:0;line-height:var(--lh-relaxed);font-weight:300}
+    .tool-card-arrow{display:inline-flex;align-items:center;gap:0.3rem;color:var(--teal-700);font-size:var(--text-small);margin-top:1rem;font-weight:500;transition:transform var(--duration-base) var(--ease-out)}
+    .tool-card:hover .tool-card-arrow{transform:translateX(-4px)}
+
+    /* شارة "شائع" على البطاقة */
+    .tool-popular-badge{position:absolute;top:0.85rem;left:0.85rem;display:inline-flex;align-items:center;gap:0.25rem;padding:0.2rem 0.65rem;background:var(--gradient-sand);color:var(--sand-900);border-radius:99px;font-size:var(--text-micro);font-weight:500;letter-spacing:var(--ls-snug);box-shadow:var(--shadow-xs);z-index:1}
+
+    /* Empty state */
+    .empty-state{text-align:center;padding:3rem 1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg)}
+    .empty-state-icon{font-size:3.5rem;margin-bottom:1rem;opacity:0.5}
+    .empty-state h3{font-size:1.15rem;margin-bottom:0.5rem;font-weight:500}
 
     /* قسم بنود في الأدوات */
     .agenda-item{border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:0.75rem;background:var(--gray-50);position:relative}
@@ -642,6 +819,131 @@
     .hero{position:relative;overflow:hidden}
     .hero > *:not(.hero-decoration){position:relative;z-index:1}
 
+    /* ═════════════════════════════════════════
+       حقن الحيوية — Phase C
+       ═════════════════════════════════════════ */
+
+    /* انتقال الصفحات */
+    @keyframes pageEnter { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    main { animation: pageEnter .35s var(--ease-out) }
+
+    /* Scroll-triggered animations */
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease-out), transform .7s var(--ease-out)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal.delay-1{transition-delay:.05s}
+    .reveal.delay-2{transition-delay:.10s}
+    .reveal.delay-3{transition-delay:.15s}
+    .reveal.delay-4{transition-delay:.20s}
+
+    /* Tilt 3D للبطاقات (subtle, performance-friendly) */
+    .tilt-card{transform-style:preserve-3d;transition:transform var(--duration-base) var(--ease-out)}
+    @media (hover:hover) {
+      .tilt-card:hover{transform:perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(4px)}
+    }
+
+    /* Shimmer effect للعناصر الجديدة */
+    @keyframes shimmer-flow { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    .shimmer-badge{background:linear-gradient(90deg,var(--sand-100) 0%,var(--sand-300) 50%,var(--sand-100) 100%);background-size:200% 100%;animation:shimmer-flow 2.5s linear infinite;color:var(--sand-900);font-weight:500}
+
+    /* Gradient breathing للخلفيات */
+    @keyframes gradient-breathe { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+    .gradient-breathing{background-size:200% 200%;animation:gradient-breathe 12s ease-in-out infinite}
+
+    /* SVG path drawing animation */
+    @keyframes draw-path { from{stroke-dashoffset:1000} to{stroke-dashoffset:0} }
+    .animate-draw{stroke-dasharray:1000;stroke-dashoffset:1000;animation:draw-path 2s var(--ease-out) forwards}
+
+    /* Loading skeleton */
+    .skeleton{background:linear-gradient(90deg,var(--stone-100) 0%,var(--stone-200) 50%,var(--stone-100) 100%);background-size:200% 100%;animation:shimmer-flow 1.6s linear infinite;border-radius:var(--radius-md)}
+    .skeleton-text{height:14px;margin-bottom:0.5rem;border-radius:var(--radius-xs)}
+    .skeleton-text.w-half{width:50%}
+    .skeleton-text.w-3-4{width:75%}
+    .skeleton-text.w-full{width:100%}
+    .skeleton-card{padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-card)}
+    .skeleton-line{height:14px;background:var(--stone-100);border-radius:var(--radius-xs);margin-bottom:0.6rem;background:linear-gradient(90deg,var(--stone-100) 0%,var(--stone-200) 50%,var(--stone-100) 100%);background-size:200% 100%;animation:shimmer-flow 1.6s linear infinite}
+
+    /* Toast محسّن */
+    .toast-enhanced{display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1.1rem;border-radius:var(--radius-md);background:var(--bg-card);box-shadow:var(--shadow-lg);border:1px solid var(--border);max-width:380px;animation:slideInToast .4s var(--ease-spring)}
+    @keyframes slideInToast { from{opacity:0;transform:translateX(40px) scale(.95)} to{opacity:1;transform:translateX(0) scale(1)} }
+    .toast-icon{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.92rem;font-weight:600;color:#fff}
+    .toast-icon.success{background:var(--green-500)}
+    .toast-icon.error{background:var(--red-500)}
+    .toast-icon.warning{background:var(--amber-500)}
+    .toast-icon.info{background:var(--teal-700)}
+    .toast-body{flex:1;font-size:var(--text-small);line-height:1.5}
+
+    /* Confetti */
+    @keyframes confetti-fall {
+      0%{transform:translateY(-10vh) rotate(0);opacity:1}
+      100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+    }
+    .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden}
+    .confetti-piece{position:absolute;top:-10vh;width:10px;height:14px;animation:confetti-fall 3.5s linear forwards}
+
+    /* Smooth scroll snap للأقسام */
+    .scroll-snap-x{scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+    .scroll-snap-x > *{scroll-snap-align:start}
+
+    /* Background gradient breathing for hero */
+    .hero{background:linear-gradient(135deg,var(--bg) 0%,var(--teal-50) 50%,var(--bg) 100%);background-size:200% 200%;animation:gradient-breathe 18s ease-in-out infinite}
+
+    /* Quick Action FAB */
+    .fab-container{position:fixed;bottom:1.5rem;left:1.5rem;z-index:99}
+    .fab-main{width:56px;height:56px;border-radius:50%;background:var(--teal-700);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-lg);transition:all var(--duration-base) var(--ease-spring);font-family:inherit}
+    .fab-main:hover{background:var(--teal-900);transform:scale(1.08)}
+    .fab-main svg{width:24px;height:24px;transition:transform var(--duration-base) var(--ease-out)}
+    .fab-container.open .fab-main svg{transform:rotate(45deg)}
+    .fab-menu{position:absolute;bottom:70px;left:0;display:flex;flex-direction:column;gap:0.5rem;opacity:0;pointer-events:none;transform:translateY(10px);transition:all var(--duration-base) var(--ease-out)}
+    .fab-container.open .fab-menu{opacity:1;pointer-events:auto;transform:translateY(0)}
+    .fab-item{display:flex;align-items:center;gap:0.6rem;padding:0.7rem 1rem 0.7rem 0.85rem;background:var(--bg-card);color:var(--text);border-radius:99px;text-decoration:none;font-size:var(--text-small);font-weight:500;box-shadow:var(--shadow-md);border:1px solid var(--border);white-space:nowrap;transition:all var(--duration-fast) var(--ease-smooth)}
+    .fab-item:hover{background:var(--teal-50);color:var(--teal-700);transform:translateX(-3px)}
+    .fab-item-icon{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--teal-50);color:var(--teal-700);display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700}
+
+    /* Personalization banner */
+    .personalize-banner{background:linear-gradient(135deg,var(--sand-50),var(--bg-card));border:1px solid var(--sand-100);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;animation:fadeInUp .5s var(--ease-out)}
+    .personalize-icon{flex-shrink:0;width:48px;height:48px;background:var(--gradient-sand);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+    .personalize-content{flex:1;min-width:200px}
+    .personalize-content strong{display:block;margin-bottom:0.2rem;font-size:0.98rem}
+    .personalize-content span{font-size:var(--text-small);color:var(--text-muted);font-weight:300}
+    .personalize-actions{display:flex;gap:0.4rem;flex-wrap:wrap}
+    .personalize-actions select{padding:0.4rem 0.7rem;font-size:var(--text-small);border-radius:var(--radius-sm)}
+
+    /* Decorative floating shapes */
+    .deco-shape{position:absolute;pointer-events:none;opacity:0.6;animation:float-slow 8s ease-in-out infinite}
+    .deco-shape svg{width:100%;height:100%}
+
+    /* Footer rich (Phase E) */
+    .footer-rich{background:linear-gradient(180deg,var(--bg-card) 0%,var(--stone-50) 100%);border-top:1px solid var(--border);padding:3rem 0 1.5rem;margin-top:4rem}
+    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+    @media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem}.footer-grid > *:first-child{grid-column:span 2}}
+    @media(max-width:480px){.footer-grid{grid-template-columns:1fr}.footer-grid > *:first-child{grid-column:span 1}}
+    .footer-col h4{font-size:var(--text-small);font-weight:600;color:var(--text);margin-bottom:0.85rem;letter-spacing:var(--ls-snug);font-family:var(--font-body);text-transform:uppercase;letter-spacing:0.05em}
+    .footer-col ul{list-style:none;padding:0}
+    .footer-col li{margin-bottom:0.5rem}
+    .footer-col a{color:var(--text-muted);text-decoration:none;font-size:var(--text-small);transition:color var(--duration-fast)}
+    .footer-col a:hover{color:var(--teal-700)}
+    .footer-brand{display:flex;align-items:center;gap:0.7rem;margin-bottom:0.85rem}
+    .footer-brand-logo{width:36px;height:36px;background:var(--teal-700);border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .footer-brand-logo svg{width:22px;height:22px}
+    .footer-brand-name{font-family:var(--font-heading);font-weight:600;font-size:1.1rem}
+    .footer-tagline{color:var(--text-muted);font-size:var(--text-small);line-height:var(--lh-relaxed);font-weight:300;margin-bottom:1rem;max-width:320px}
+    .footer-bottom{padding-top:1.25rem;border-top:1px solid var(--border);text-align:center;color:var(--text-faint);font-size:var(--text-tiny)}
+
+    /* Section illustration containers */
+    .section-illust{position:relative;padding:1.5rem 0;margin-bottom:1.5rem}
+    .section-illust-bg{position:absolute;left:0;right:0;top:0;height:100%;opacity:0.5;pointer-events:none}
+    .section-illust-bg svg{width:100%;height:100%}
+
+    /* Print styles مطوّر */
+    @media print{
+      .navbar,.footer,.footer-rich,.fab-container,.tour-overlay,.pwa-install-banner,#toasts,.personalize-banner{display:none !important}
+      body{background:#fff;color:#000}
+      main{padding:0}
+      .container{max-width:100%;padding:0}
+      a{color:inherit;text-decoration:none}
+      .btn{display:none}
+    }
+
     /* CSS للطباعة (PDF) — تقنية visibility الأكثر موثوقية */
     @media print {
       @page { margin: 2cm 1.8cm; size: A4; }
@@ -723,13 +1025,73 @@
     <div id="app"></div>
   </main>
 
-  <footer class="footer">
+  <footer class="footer-rich">
     <div class="container">
-      مَرْجِع — منصّة الحوكمة العملية للجمعيات الأهلية • © <span id="year"></span>
-      <span style="margin:0 0.5rem;opacity:0.4">•</span>
-      <a href="#" onclick="event.preventDefault();showTour(true)" style="color:var(--text-faint);text-decoration:none;font-size:0.82rem">إعادة الجولة التعريفية</a>
-      <span style="margin:0 0.5rem;opacity:0.4">•</span>
-      <a href="#" onclick="event.preventDefault();tryShowInstallFromMenu()" style="color:var(--text-faint);text-decoration:none;font-size:0.82rem">📱 تثبيت كتطبيق</a>
+      <div class="footer-grid">
+        <!-- العمود 1: العلامة + النبذة -->
+        <div>
+          <div class="footer-brand">
+            <div class="footer-brand-logo">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#FFFFFF">
+                  <rect x="22" y="27" width="56" height="16" rx="3"/>
+                  <rect x="22" y="27" width="16" height="46" rx="3"/>
+                  <rect x="62" y="27" width="16" height="38" rx="3"/>
+                  <rect x="34" y="52" width="32" height="10" rx="2"/>
+                  <rect x="42" y="65" width="16" height="14" rx="2"/>
+                </g>
+              </svg>
+            </div>
+            <div class="footer-brand-name">مَرْجِع</div>
+          </div>
+          <p class="footer-tagline">
+            منصّة الحوكمة العملية للجمعيات الأهلية في المملكة العربية السعودية. معايير، سياسات، أدوات، ومحتوى تعليمي — بدون تسجيل.
+          </p>
+          <div class="flex flex-gap-2 flex-wrap" style="margin-top:0.5rem">
+            <span class="badge badge-teal">مجاني بالكامل</span>
+            <span class="badge badge-sand">يعمل دون اتصال</span>
+          </div>
+        </div>
+
+        <!-- العمود 2: المعرفة -->
+        <div class="footer-col">
+          <h4>المنصة</h4>
+          <ul>
+            <li><a href="#/standards">المعايير</a></li>
+            <li><a href="#/policies">مكتبة السياسات</a></li>
+            <li><a href="#/tools">الأدوات الاحترافية</a></li>
+            <li><a href="#/calculator">الحاسبة المالية</a></li>
+            <li><a href="#/transition">محاكي الانتقال</a></li>
+          </ul>
+        </div>
+
+        <!-- العمود 3: المعرفة -->
+        <div class="footer-col">
+          <h4>المعرفة</h4>
+          <ul>
+            <li><a href="#/learn/blog">المدوّنة</a></li>
+            <li><a href="#/learn/faq">الأسئلة الشائعة</a></li>
+            <li><a href="#/learn/guest">ضيف الشهر</a></li>
+            <li><a href="#/learn/quiz">اختبر معرفتك</a></li>
+            <li><a href="#/learn/sector">حالة القطاع</a></li>
+          </ul>
+        </div>
+
+        <!-- العمود 4: المساعدة -->
+        <div class="footer-col">
+          <h4>مساعدة</h4>
+          <ul>
+            <li><a href="#" onclick="event.preventDefault();showTour(true)">إعادة الجولة التعريفية</a></li>
+            <li><a href="#" onclick="event.preventDefault();tryShowInstallFromMenu()">📱 تثبيت كتطبيق</a></li>
+            <li><a href="#/tools/chatbot">المساعد التفاعلي</a></li>
+            <li><a href="#/about">عن المنصّة</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> مَرْجِع — منصّة الحوكمة العملية للجمعيات الأهلية • كل المحتوى استرشادي ويتطلب اعتماد جهتك المختصة</span>
+      </div>
     </div>
   </footer>
 
@@ -919,11 +1281,20 @@ function escapeHtml(s) {
 
 function showToast(msg, type) {
   type = type || 'info';
+  const icons = { success: '✓', error: '✕', warning: '!', info: 'i' };
   const el = document.createElement('div');
-  el.className = 'alert alert-' + type;
-  el.textContent = msg;
+  el.className = 'toast-enhanced';
+  el.innerHTML = `
+    <div class="toast-icon ${type}">${icons[type] || 'i'}</div>
+    <div class="toast-body">${escapeHtml(msg)}</div>
+  `;
   $('#toasts').appendChild(el);
-  setTimeout(() => el.remove(), 4500);
+  setTimeout(() => {
+    el.style.transition = 'all .4s cubic-bezier(.4,0,.2,1)';
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(40px)';
+    setTimeout(() => el.remove(), 400);
+  }, 4000);
 }
 
 function showLoader() {
@@ -1101,21 +1472,277 @@ function renderNav() {
 }
 
 // ═════════════════════════════════════════════════════════════════
+// إيلوستراشن الـHero — مبنى الحوكمة (SVG)
+// ═════════════════════════════════════════════════════════════════
+
+function getHeroIllustration() {
+  return `
+    <svg viewBox="0 0 560 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="مبنى الحوكمة">
+      <defs>
+        <linearGradient id="bldg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="#E1F5EE" stop-opacity="0.85"/>
+        </linearGradient>
+        <linearGradient id="floor-1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#5DCAA5"/>
+          <stop offset="100%" stop-color="#0F6E56"/>
+        </linearGradient>
+        <linearGradient id="floor-2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#DEBE7D"/>
+          <stop offset="100%" stop-color="#9B7A45"/>
+        </linearGradient>
+        <linearGradient id="floor-3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F0997B"/>
+          <stop offset="100%" stop-color="#993C1D"/>
+        </linearGradient>
+        <radialGradient id="ground-shadow" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#0F6E56" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#0F6E56" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+          <feOffset dy="6"/>
+          <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+          <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ظل أرضي -->
+      <ellipse cx="280" cy="430" rx="200" ry="22" fill="url(#ground-shadow)"/>
+
+      <!-- خط الأرض الزخرفي -->
+      <g opacity="0.5">
+        <line x1="40" y1="430" x2="520" y2="430" stroke="#0F6E56" stroke-width="1" stroke-dasharray="4,8"/>
+      </g>
+
+      <!-- ═══ المبنى الرئيسي ═══ -->
+      <g filter="url(#soft-shadow)">
+
+        <!-- القاعدة (الأرضية) -->
+        <rect x="120" y="410" width="320" height="20" rx="3" fill="#0F6E56"/>
+        <rect x="120" y="410" width="320" height="6" rx="3" fill="#085041"/>
+
+        <!-- الطابق الأول: السلامة المالية (أخضر) -->
+        <rect x="140" y="320" width="280" height="90" fill="url(#floor-1)"/>
+        <rect x="140" y="320" width="280" height="8" fill="#04342C" opacity="0.3"/>
+        <!-- نوافذ الطابق -->
+        <g opacity="0.85">
+          <rect x="160" y="345" width="36" height="50" rx="3" fill="#FFFFFF"/>
+          <rect x="210" y="345" width="36" height="50" rx="3" fill="#FFFFFF"/>
+          <rect x="260" y="345" width="36" height="50" rx="3" fill="#FFFFFF"/>
+          <rect x="310" y="345" width="36" height="50" rx="3" fill="#FFFFFF"/>
+          <rect x="360" y="345" width="40" height="50" rx="3" fill="#FFFFFF"/>
+        </g>
+        <!-- خط فاصل النوافذ -->
+        <g stroke="#0F6E56" stroke-width="1" opacity="0.4">
+          <line x1="178" y1="345" x2="178" y2="395"/>
+          <line x1="228" y1="345" x2="228" y2="395"/>
+          <line x1="278" y1="345" x2="278" y2="395"/>
+          <line x1="328" y1="345" x2="328" y2="395"/>
+          <line x1="380" y1="345" x2="380" y2="395"/>
+        </g>
+        <!-- شعار الطابق: نمو -->
+        <g transform="translate(184,385)" opacity="0.4">
+          <path d="M0 8 L4 4 L8 6 L12 0" stroke="#0F6E56" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- الطابق الثاني: الامتثال (ذهبي رملي) -->
+        <rect x="155" y="225" width="250" height="95" fill="url(#floor-2)"/>
+        <rect x="155" y="225" width="250" height="8" fill="#5A4524" opacity="0.3"/>
+        <!-- نوافذ الطابق -->
+        <g opacity="0.92">
+          <rect x="175" y="250" width="32" height="55" rx="3" fill="#FFFFFF"/>
+          <rect x="220" y="250" width="32" height="55" rx="3" fill="#FFFFFF"/>
+          <rect x="265" y="250" width="32" height="55" rx="3" fill="#FFFFFF"/>
+          <rect x="310" y="250" width="32" height="55" rx="3" fill="#FFFFFF"/>
+          <rect x="355" y="250" width="32" height="55" rx="3" fill="#FFFFFF"/>
+        </g>
+        <!-- شعار الطابق: ميزان -->
+        <g transform="translate(280, 280)" opacity="0.45">
+          <line x1="-12" y1="0" x2="12" y2="0" stroke="#5A4524" stroke-width="1.5"/>
+          <line x1="0" y1="0" x2="0" y2="-8" stroke="#5A4524" stroke-width="1.5"/>
+          <circle cx="0" cy="-8" r="2" fill="#5A4524"/>
+        </g>
+
+        <!-- الطابق الثالث: الشفافية (أحمر مرجاني) -->
+        <rect x="170" y="135" width="220" height="95" fill="url(#floor-3)"/>
+        <rect x="170" y="135" width="220" height="8" fill="#5C2010" opacity="0.3"/>
+        <!-- نوافذ الطابق -->
+        <g opacity="0.92">
+          <rect x="190" y="160" width="32" height="55" rx="3" fill="#FFFFFF"/>
+          <rect x="235" y="160" width="32" height="55" rx="3" fill="#FFFFFF"/>
+          <rect x="280" y="160" width="32" height="55" rx="3" fill="#FFFFFF"/>
+          <rect x="325" y="160" width="32" height="55" rx="3" fill="#FFFFFF"/>
+        </g>
+        <!-- شعار الطابق: عين الشفافية -->
+        <g transform="translate(280, 188)" opacity="0.5">
+          <ellipse cx="0" cy="0" rx="10" ry="6" fill="none" stroke="#5C2010" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="3" fill="#5C2010"/>
+        </g>
+
+        <!-- القمة (سقف هرمي) -->
+        <polygon points="280,80 170,135 390,135" fill="#0F6E56"/>
+        <polygon points="280,80 280,135 390,135" fill="#04342C" opacity="0.4"/>
+        <!-- علم -->
+        <line x1="280" y1="80" x2="280" y2="50" stroke="#0F6E56" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M 280 50 L 305 56 L 280 64 Z" fill="#C9A574"/>
+        <!-- ميم كوفية على القمة (شعار مَرْجِع) -->
+        <g transform="translate(265, 100)" opacity="0.95">
+          <g fill="#FFFFFF">
+            <rect x="0" y="0" width="30" height="6" rx="1.5"/>
+            <rect x="0" y="0" width="6" height="22" rx="1.5"/>
+            <rect x="22" y="0" width="6" height="18" rx="1.5"/>
+            <rect x="6" y="11" width="16" height="5" rx="1"/>
+            <rect x="11" y="18" width="8" height="7" rx="1"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- ═══ شخصيات حول المبنى ═══ -->
+      <!-- شخص 1: متعاون يسار -->
+      <g transform="translate(85, 380)" filter="url(#soft-shadow)">
+        <circle cx="0" cy="0" r="10" fill="#1D9E75"/>
+        <path d="M -12 4 Q -12 18, 0 18 Q 12 18, 12 4" fill="#1D9E75"/>
+        <rect x="-9" y="14" width="18" height="20" rx="3" fill="#5DCAA5"/>
+      </g>
+
+      <!-- شخص 2: متعاون يمين -->
+      <g transform="translate(475, 380)" filter="url(#soft-shadow)">
+        <circle cx="0" cy="0" r="10" fill="#9B7A45"/>
+        <path d="M -12 4 Q -12 18, 0 18 Q 12 18, 12 4" fill="#9B7A45"/>
+        <rect x="-9" y="14" width="18" height="20" rx="3" fill="#DEBE7D"/>
+      </g>
+
+      <!-- ═══ رموز طافية ═══ -->
+      <!-- رمز: مستند -->
+      <g class="float-icon" transform="translate(60, 130)" filter="url(#soft-shadow)">
+        <rect x="-22" y="-25" width="44" height="50" rx="6" fill="#FFFFFF" stroke="#0F6E56" stroke-width="1.5"/>
+        <line x1="-14" y1="-12" x2="14" y2="-12" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="-14" y1="-4" x2="14" y2="-4" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="-14" y1="4" x2="6" y2="4" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="14" r="9" fill="#0F6E56"/>
+        <path d="M 9 14 L 13 18 L 19 11" stroke="#FFFFFF" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <!-- رمز: تقويم -->
+      <g class="float-icon-2" transform="translate(495, 165)" filter="url(#soft-shadow)">
+        <rect x="-22" y="-22" width="44" height="44" rx="6" fill="#FFFFFF" stroke="#9B7A45" stroke-width="1.5"/>
+        <rect x="-22" y="-22" width="44" height="12" rx="6 6 0 0" fill="#C9A574"/>
+        <line x1="-14" y1="-26" x2="-14" y2="-18" stroke="#9B7A45" stroke-width="2" stroke-linecap="round"/>
+        <line x1="14" y1="-26" x2="14" y2="-18" stroke="#9B7A45" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="-10" cy="-2" r="2" fill="#9B7A45"/>
+        <circle cx="0" cy="-2" r="2" fill="#9B7A45"/>
+        <circle cx="10" cy="-2" r="2" fill="#9B7A45"/>
+        <circle cx="-10" cy="8" r="2" fill="#9B7A45"/>
+        <circle cx="0" cy="8" r="2" fill="#C9A574"/>
+      </g>
+
+      <!-- رمز: مخطط أعمدة (نمو) -->
+      <g class="float-icon-3" transform="translate(60, 280)" filter="url(#soft-shadow)">
+        <circle cx="0" cy="0" r="26" fill="#FFFFFF" stroke="#0F6E56" stroke-width="1.5"/>
+        <rect x="-14" y="2" width="6" height="12" rx="1" fill="#5DCAA5"/>
+        <rect x="-4" y="-3" width="6" height="17" rx="1" fill="#1D9E75"/>
+        <rect x="6" y="-9" width="6" height="23" rx="1" fill="#0F6E56"/>
+      </g>
+
+      <!-- رمز: درع (حماية/امتثال) -->
+      <g class="float-icon" transform="translate(495, 295)" filter="url(#soft-shadow)">
+        <path d="M 0 -20 L 18 -12 L 18 4 Q 18 18, 0 24 Q -18 18, -18 4 L -18 -12 Z" fill="#FFFFFF" stroke="#993C1D" stroke-width="1.5"/>
+        <path d="M -7 0 L -2 5 L 8 -6" stroke="#993C1D" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <!-- نقاط زخرفية -->
+      <g opacity="0.5">
+        <circle cx="40" cy="60" r="3" fill="#C9A574"/>
+        <circle cx="520" cy="80" r="4" fill="#0F6E56"/>
+        <circle cx="30" cy="220" r="2" fill="#0F6E56"/>
+        <circle cx="540" cy="240" r="3" fill="#C9A574"/>
+        <circle cx="50" cy="370" r="2" fill="#993C1D"/>
+        <circle cx="510" cy="380" r="2" fill="#0F6E56"/>
+      </g>
+    </svg>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
 // عرض: الصفحة الرئيسية
 // ═════════════════════════════════════════════════════════════════
 
 function renderHome() {
   $('#app').innerHTML = `
-    <div class="container container-narrow hero">
-      <span class="hero-tagline">منصّة عملية لأخصائيي الحوكمة ومسؤولي الجمعيات</span>
-      <h1>كل ما تحتاجه لحوكمة جمعيتك في مكان واحد</h1>
-      <p class="hero-subtitle">
-        استعرض معايير الحوكمة بوضوح، حمّل السياسات الجاهزة باسم جمعيتك،
-        وافهم متطلبات الانتقال بين التصنيفات — بدون تسجيل، بدون تعقيد.
-      </p>
-      <div class="hero-actions">
-        <a href="#/standards" class="btn btn-primary btn-lg">استعرض المعايير</a>
-        <a href="#/policies" class="btn btn-secondary btn-lg">مكتبة السياسات</a>
+    <div class="hero">
+      <!-- خلفية زخرفية -->
+      <div class="hero-bg-pattern" aria-hidden="true">
+        <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="hexgrid" x="0" y="0" width="80" height="92" patternUnits="userSpaceOnUse">
+              <polygon points="40,4 76,24 76,68 40,88 4,68 4,24" fill="none" stroke="#0F6E56" stroke-width="0.5" opacity="0.18"/>
+            </pattern>
+            <radialGradient id="herofade" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#FAF8F3" stop-opacity="1"/>
+            </radialGradient>
+          </defs>
+          <rect width="1200" height="600" fill="url(#hexgrid)"/>
+          <rect width="1200" height="600" fill="url(#herofade)"/>
+          <!-- دوائر زخرفية -->
+          <circle cx="100" cy="100" r="80" fill="#C9A574" opacity="0.06"/>
+          <circle cx="1080" cy="120" r="120" fill="#0F6E56" opacity="0.05"/>
+          <circle cx="900" cy="500" r="100" fill="#C9A574" opacity="0.05"/>
+        </svg>
+      </div>
+
+      <div class="container">
+        <div class="hero-layout">
+          <!-- النص -->
+          <div>
+            <span class="hero-tagline">
+              <span class="hero-tagline-dot"></span>
+              منصّة عملية لأخصائيي الحوكمة ومسؤولي الجمعيات
+            </span>
+            <h1>حوكمة جمعيتك من البداية للاحتراف</h1>
+            <p class="hero-subtitle">
+              استعرض معايير الحوكمة، حمّل السياسات الجاهزة باسم جمعيتك،
+              واستخدم 13 أداة احترافية لإدارة العمليات اليومية.
+              <strong style="font-weight:500;color:var(--text)">بدون تسجيل، بدون تعقيد.</strong>
+            </p>
+            <div class="hero-actions">
+              <a href="#/standards" class="btn btn-primary btn-xl">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2 H6 A2 2 0 0 0 4 4 V20 A2 2 0 0 0 6 22 H18 A2 2 0 0 0 20 20 V8 Z"/><path d="M14 2 V8 H20"/></svg>
+                استعرض المعايير
+              </a>
+              <a href="#/tools" class="btn btn-secondary btn-xl">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3 a1 1 0 0 0 0 1.4 l1.6 1.6 a1 1 0 0 0 1.4 0 l3.77-3.77 a6 6 0 0 1-7.94 7.94 l-6.91 6.91 a2.12 2.12 0 0 1-3-3 l6.91-6.91 a6 6 0 0 1 7.94-7.94 l-3.76 3.76 z"/></svg>
+                13 أداة احترافية
+              </a>
+            </div>
+
+            <!-- إحصائيات Hero -->
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <div class="hero-stat-value" data-counter="3500">3,500+</div>
+                <div class="hero-stat-label">جمعية مرخّصة</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-value" data-counter="45">45+</div>
+                <div class="hero-stat-label">سياسة جاهزة</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-value" data-counter="13">13</div>
+                <div class="hero-stat-label">أداة احترافية</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-value" data-counter="42">42</div>
+                <div class="hero-stat-label">قرار نموذجي</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- الإيلوستراشن: مبنى الحوكمة -->
+          <div class="hero-illustration" aria-hidden="true">
+            ${getHeroIllustration()}
+          </div>
+        </div>
       </div>
     </div>
 
@@ -3406,231 +4033,129 @@ function sanitizeForFile(s) {
 // صفحة هبوط الأدوات
 // ═════════════════════════════════════════════════════════════════
 
+// ═════════════════════════════════════════════════════════════════
+// صفحة هبوط الأدوات (مُعاد هيكلتها)
+// ═════════════════════════════════════════════════════════════════
+
+// أيقونات الأدوات (موحّدة في مكان واحد لتنظيم أفضل)
+const TOOLS_ICONS = {
+  minutes: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="3" width="20" height="26" rx="2" class="icon-stroke"/><line x1="11" y1="9" x2="21" y2="9" class="icon-stroke"/><line x1="11" y1="14" x2="21" y2="14" class="icon-stroke"/><line x1="11" y1="19" x2="18" y2="19" class="icon-stroke"/><circle cx="22" cy="23" r="3" class="icon-stroke"/><path d="M 21 23 L 22 24 L 24 22" class="icon-stroke" stroke-width="1.4"/></svg>',
+  calendar: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="6" width="22" height="22" rx="2" class="icon-stroke"/><line x1="5" y1="12" x2="27" y2="12" class="icon-stroke"/><line x1="11" y1="3" x2="11" y2="9" class="icon-stroke" stroke-width="2"/><line x1="21" y1="3" x2="21" y2="9" class="icon-stroke" stroke-width="2"/><rect x="9" y="16" width="3" height="3" rx="0.5" class="icon-fill"/><rect x="14" y="16" width="3" height="3" rx="0.5" class="icon-fill"/><rect x="19" y="16" width="3" height="3" rx="0.5" class="icon-fill"/></svg>',
+  aga: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="9" r="3" class="icon-stroke"/><circle cx="21" cy="9" r="3" class="icon-stroke"/><circle cx="16" cy="20" r="3" class="icon-stroke"/><path d="M 7 17 Q 11 13, 13 16" class="icon-stroke"/><path d="M 25 17 Q 21 13, 19 16" class="icon-stroke"/><path d="M 16 23 L 16 27" class="icon-stroke"/><rect x="10" y="27" width="12" height="2" rx="1" class="icon-fill"/></svg>',
+  jd: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="11" r="4" class="icon-stroke"/><path d="M 8 25 Q 8 18, 16 18 Q 24 18, 24 25" class="icon-stroke"/><rect x="6" y="25" width="20" height="4" rx="1" class="icon-fill"/><rect x="22" y="3" width="6" height="8" rx="1" class="icon-stroke"/></svg>',
+  decisions: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="3" width="20" height="26" rx="2" class="icon-stroke"/><circle cx="11" cy="11" r="1.5" class="icon-fill"/><line x1="14" y1="11" x2="22" y2="11" class="icon-stroke"/><circle cx="11" cy="17" r="1.5" class="icon-fill"/><line x1="14" y1="17" x2="22" y2="17" class="icon-stroke"/><circle cx="11" cy="23" r="1.5" class="icon-fill"/><line x1="14" y1="23" x2="20" y2="23" class="icon-stroke"/></svg>',
+  risks: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 16 4 L 28 26 L 4 26 Z" class="icon-stroke"/><line x1="16" y1="13" x2="16" y2="19" class="icon-stroke" stroke-width="2"/><circle cx="16" cy="22" r="1" class="icon-fill"/></svg>',
+  stakeholders: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="3" class="icon-fill"/><circle cx="6" cy="10" r="2.5" class="icon-stroke"/><circle cx="26" cy="10" r="2.5" class="icon-stroke"/><circle cx="6" cy="22" r="2.5" class="icon-stroke"/><circle cx="26" cy="22" r="2.5" class="icon-stroke"/><line x1="9" y1="11" x2="13" y2="14" class="icon-stroke" stroke-width="1.2"/><line x1="23" y1="11" x2="19" y2="14" class="icon-stroke" stroke-width="1.2"/><line x1="9" y1="21" x2="13" y2="18" class="icon-stroke" stroke-width="1.2"/><line x1="23" y1="21" x2="19" y2="18" class="icon-stroke" stroke-width="1.2"/></svg>',
+  impact: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="11" class="icon-stroke"/><circle cx="16" cy="16" r="6" class="icon-stroke"/><circle cx="16" cy="16" r="2" class="icon-fill"/><line x1="16" y1="2" x2="16" y2="6" class="icon-stroke" stroke-width="2"/><line x1="16" y1="26" x2="16" y2="30" class="icon-stroke" stroke-width="2"/><line x1="2" y1="16" x2="6" y2="16" class="icon-stroke" stroke-width="2"/><line x1="26" y1="16" x2="30" y2="16" class="icon-stroke" stroke-width="2"/></svg>',
+  'policy-audit': '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="3" width="20" height="26" rx="2" class="icon-stroke"/><line x1="11" y1="9" x2="21" y2="9" class="icon-stroke"/><line x1="11" y1="14" x2="21" y2="14" class="icon-stroke"/><circle cx="22" cy="22" r="6" class="icon-stroke" fill="var(--bg-card)"/><path d="M 19 22 L 21 24 L 25 20" class="icon-stroke" stroke-width="1.6"/></svg>',
+  'regulation-audit': '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 8 6 L 24 6 L 24 28 L 8 28 Z" class="icon-stroke"/><line x1="11" y1="11" x2="21" y2="11" class="icon-stroke" stroke-width="1.4"/><line x1="11" y1="15" x2="21" y2="15" class="icon-stroke" stroke-width="1.4"/><line x1="11" y1="19" x2="18" y2="19" class="icon-stroke" stroke-width="1.4"/><circle cx="22" cy="6" r="3" class="icon-fill"/></svg>',
+  'decision-audit': '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 16 4 L 26 9 L 26 17 Q 26 25, 16 28 Q 6 25, 6 17 L 6 9 Z" class="icon-stroke"/><path d="M 11 16 L 14 19 L 21 12" class="icon-stroke" stroke-width="2"/></svg>',
+  chatbot: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 4 4, 8 4 L 24 4 Q 28 4, 28 8 L 28 18 Q 28 22, 24 22 L 14 22 L 8 28 L 8 22 Q 4 22, 4 18 Z" class="icon-stroke"/><circle cx="11" cy="13" r="1.5" class="icon-fill"/><circle cx="16" cy="13" r="1.5" class="icon-fill"/><circle cx="21" cy="13" r="1.5" class="icon-fill"/></svg>',
+  content: '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="24" height="20" rx="2" class="icon-stroke"/><line x1="8" y1="11" x2="20" y2="11" class="icon-stroke" stroke-width="1.4"/><line x1="8" y1="15" x2="24" y2="15" class="icon-stroke" stroke-width="1.4"/><line x1="8" y1="19" x2="18" y2="19" class="icon-stroke" stroke-width="1.4"/><circle cx="24" cy="10" r="3" class="icon-fill"/></svg>'
+};
+
+// كتالوج الأدوات الكامل (مع كلمات مفتاحية للبحث)
+const TOOLS_CATALOG = [
+  { id:'minutes', group:'generators', name:'مولّد محاضر الاجتماعات', desc:'صياغة محاضر مجلس الإدارة واللجان بصيغة احترافية جاهزة للتوقيع.', keywords:'محضر اجتماع مجلس لجنة جلسة قرار توقيع pdf word' },
+  { id:'calendar', group:'generators', name:'تقويم الحوكمة', desc:'استحقاقات جمعيتك النظامية مع تواريخها المحسوبة حسب تصنيفها.', keywords:'تقويم استحقاق نظامي مهلة تاريخ ical اجتماع تنبيه' },
+  { id:'aga', group:'generators', name:'مساعد الجمعية العمومية', desc:'قائمة تحقّق زمنية + 5 قوالب جاهزة (دعوة، جدول أعمال، محضر).', keywords:'جمعية عمومية اجتماع سنوي دعوة محضر تصويت نصاب' },
+  { id:'jd', group:'generators', name:'بطاقة الوصف الوظيفي', desc:'12 وظيفة نموذجية للجمعيات الأهلية — قابلة للتخصيص والتنزيل.', keywords:'وظيفة وصف وظيفي مهام مسؤوليات موظف توظيف hr' },
+
+  { id:'decisions', group:'registers', name:'مكتبة القرارات النموذجية', desc:'42 قرار جاهز للمجلس واللجان والجمعية العمومية.', keywords:'قرار محضر مجلس قرارات نموذجية اعتماد سياسة تعارض' },
+  { id:'risks', group:'registers', name:'سجل المخاطر', desc:'19 مخاطرة شائعة في الجمعيات وإجراءات التحكم المقترحة.', keywords:'مخاطر مخاطرة ضوابط تحكم رقابة تقييم احتمالية' },
+  { id:'stakeholders', group:'registers', name:'سجل أصحاب المصلحة', desc:'7 فئات رئيسية مع آليات التواصل المقترحة لكل فئة.', keywords:'أصحاب مصلحة مستفيدين متبرعين متطوعين شركاء جهات' },
+  { id:'impact', group:'registers', name:'تقرير الأثر الاجتماعي', desc:'قالب احترافي لقياس الأثر بنموذج Logic Model.', keywords:'أثر اجتماعي logic model مدخلات مخرجات نتائج تقرير' },
+
+  { id:'policy-audit', group:'auditors', name:'مدقّق السياسات', desc:'الصق نص سياستك واحصل على تقرير فوري بالعناصر الناقصة.', keywords:'تدقيق سياسة فحص مراجعة جودة عناصر مفقودة' },
+  { id:'regulation-audit', group:'auditors', name:'محرّر اللوائح الذكي', desc:'فحص شامل للوائح: المواد، التعريفات، الأحكام، الجزاءات.', keywords:'لائحة تدقيق فحص مواد فصول أبواب أحكام' },
+  { id:'decision-audit', group:'auditors', name:'مدقّق نظامية القرارات', desc:'تحقّق من امتثال نص القرار للمتطلبات النظامية.', keywords:'قرار تدقيق فحص نظامية صحة توقيع نصاب امتثال' },
+
+  { id:'chatbot', group:'interactive', name:'المساعد التفاعلي', desc:'اسأل المساعد عن أي شيء يخصّ حوكمة جمعيتك.', keywords:'محادثة مساعد سؤال إجابة chatbot دردشة بحث' },
+  { id:'content', group:'interactive', name:'مولّد محتوى التواصل', desc:'12 نوعاً من المنشورات لتويتر ولينكدإن وفيسبوك وواتساب.', keywords:'محتوى منشور تويتر لينكدإن فيسبوك واتساب إعلان' }
+];
+
+const TOOLS_GROUPS = [
+  { id:'generators', name:'المولّدات والمساعدات', desc:'أدوات تنتج لك وثائق احترافية في ثوانٍ',
+    icon:'✨', accent:'teal', tagBg:'var(--teal-50)', tagColor:'var(--teal-700)' },
+  { id:'registers', name:'السجلات والقوالب', desc:'محتوى مرجعي قابل للتخصيص والتنزيل',
+    icon:'📋', accent:'sand', tagBg:'var(--sand-50)', tagColor:'var(--sand-900)' },
+  { id:'auditors', name:'المدقّقون الذكيّون', desc:'فحص فوري لوثائقك مع تقارير قابلة للتنزيل',
+    icon:'🔍', accent:'coral', tagBg:'var(--coral-50)', tagColor:'var(--coral-700)' },
+  { id:'interactive', name:'المساعدات التفاعلية', desc:'محادثة وتوليد محتوى بالذكاء المحلي',
+    icon:'💬', accent:'green', tagBg:'#EAF3DE', tagColor:'#173404' }
+];
+
+// الأدوات الأكثر استخداماً (مرتبة بناءً على التحليل)
+const POPULAR_TOOLS_IDS = ['minutes', 'aga', 'decisions', 'calendar'];
+
 function renderToolsLanding() {
+  const popularTools = POPULAR_TOOLS_IDS
+    .map(id => TOOLS_CATALOG.find(t => t.id === id))
+    .filter(Boolean);
+
+  const groupsHtml = TOOLS_GROUPS.map(g => {
+    const groupTools = TOOLS_CATALOG.filter(t => t.group === g.id);
+    return `
+      <div class="tools-section" data-group="${g.id}">
+        <div class="tools-section-header">
+          <div class="tools-section-icon" style="background:${g.tagBg};color:${g.tagColor}">${g.icon}</div>
+          <div>
+            <h2 class="tools-section-title">${escapeHtml(g.name)}</h2>
+            <p class="tools-section-desc">${escapeHtml(g.desc)}</p>
+          </div>
+          <span class="badge badge-gray" style="margin-right:auto">${groupTools.length}</span>
+        </div>
+        <div class="tools-grid">
+          ${groupTools.map(t => renderToolCard(t)).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
   $('#app').innerHTML = `
     <div class="container">
-      <div class="mb-4">
-        <h1>الأدوات الاحترافية</h1>
-        <p class="muted">أدوات عملية لإنجاز المهام الإدارية المتكررة في الجمعيات الأهلية. كلها تعمل بدون حساب.</p>
+      <!-- Hero للأدوات -->
+      <div class="tools-hero">
+        <div class="tools-hero-content">
+          <span class="hero-tagline">
+            <span class="hero-tagline-dot"></span>
+            13 أداة احترافية في مكان واحد
+          </span>
+          <h1 class="text-display" style="font-size:clamp(1.75rem, 3vw + 0.5rem, 2.25rem);margin-bottom:0.6rem">الأدوات الاحترافية</h1>
+          <p class="muted" style="max-width:600px;font-size:1.05rem">أدوات عملية لإنجاز المهام الإدارية المتكررة. كلها تعمل بدون حساب وبدون اتصال.</p>
+        </div>
+
+        <!-- شريط بحث ذكي -->
+        <div class="tools-search-wrap">
+          <svg class="tools-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="tools-search" class="tools-search-input"
+            placeholder="ابحث عن أداة... (مثلاً: محضر، تقويم، مخاطر)"
+            oninput="filterTools(this.value)" autocomplete="off" />
+          <button id="tools-search-clear" class="tools-search-clear" onclick="clearToolsSearch()" style="display:none">×</button>
+        </div>
       </div>
 
-      <h2 class="mb-3" style="font-size:1.15rem;color:var(--text-muted);font-weight:500">المولّدات والمساعدات</h2>
-      <div class="tools-grid">
-        <a href="#/tools/minutes" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="3" width="20" height="26" rx="2" class="icon-stroke"/>
-              <line x1="11" y1="9" x2="21" y2="9" class="icon-stroke"/>
-              <line x1="11" y1="14" x2="21" y2="14" class="icon-stroke"/>
-              <line x1="11" y1="19" x2="18" y2="19" class="icon-stroke"/>
-              <circle cx="22" cy="23" r="3" class="icon-stroke"/>
-              <path d="M 21 23 L 22 24 L 24 22" class="icon-stroke" stroke-width="1.4"/>
-            </svg>
-          </div>
-          <h3>مولّد محاضر اجتماعات</h3>
-          <p>صياغة محاضر مجلس الإدارة واللجان بصيغة احترافية جاهزة للتوقيع.</p>
-          <div class="tool-card-arrow">ابدأ الآن ←</div>
-        </a>
+      <!-- نتائج البحث (تظهر عند البحث) -->
+      <div id="tools-search-results" style="display:none"></div>
 
-        <a href="#/tools/calendar" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <rect x="5" y="6" width="22" height="22" rx="2" class="icon-stroke"/>
-              <line x1="5" y1="12" x2="27" y2="12" class="icon-stroke"/>
-              <line x1="11" y1="3" x2="11" y2="9" class="icon-stroke" stroke-width="2"/>
-              <line x1="21" y1="3" x2="21" y2="9" class="icon-stroke" stroke-width="2"/>
-              <rect x="9" y="16" width="3" height="3" rx="0.5" class="icon-fill"/>
-              <rect x="14" y="16" width="3" height="3" rx="0.5" class="icon-fill"/>
-              <rect x="19" y="16" width="3" height="3" rx="0.5" class="icon-fill"/>
-              <rect x="9" y="21" width="3" height="3" rx="0.5" class="icon-fill"/>
-              <rect x="14" y="21" width="3" height="3" rx="0.5" class="icon-fill" opacity="0.4"/>
-            </svg>
+      <!-- المحتوى العادي (يختفي عند البحث) -->
+      <div id="tools-default-view">
+        <!-- الأكثر استخداماً -->
+        <div class="tools-section">
+          <div class="tools-section-header">
+            <div class="tools-section-icon" style="background:var(--gradient-sand);color:var(--sand-900)">🔥</div>
+            <div>
+              <h2 class="tools-section-title">الأكثر استخداماً</h2>
+              <p class="tools-section-desc">الأدوات الأشيع التي تنجز فيها أهم مهامك</p>
+            </div>
           </div>
-          <h3>تقويم الحوكمة</h3>
-          <p>استحقاقات جمعيتك النظامية السنوية مع تواريخها المحسوبة حسب تصنيفها.</p>
-          <div class="tool-card-arrow">عرض التقويم ←</div>
-        </a>
+          <div class="tools-grid">
+            ${popularTools.map(t => renderToolCard(t, true)).join('')}
+          </div>
+        </div>
 
-        <a href="#/tools/aga" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="11" cy="9" r="3" class="icon-stroke"/>
-              <circle cx="21" cy="9" r="3" class="icon-stroke"/>
-              <circle cx="16" cy="20" r="3" class="icon-stroke"/>
-              <path d="M 7 17 Q 11 13, 13 16" class="icon-stroke"/>
-              <path d="M 25 17 Q 21 13, 19 16" class="icon-stroke"/>
-              <path d="M 16 23 L 16 27" class="icon-stroke"/>
-              <rect x="10" y="27" width="12" height="2" rx="1" class="icon-fill"/>
-            </svg>
-          </div>
-          <h3>مساعد الجمعية العمومية</h3>
-          <p>قائمة تحقّق زمنية لتنظيم اجتماع العمومية + 5 قوالب جاهزة (دعوة، جدول أعمال، محضر).</p>
-          <div class="tool-card-arrow">ابدأ التحضير ←</div>
-        </a>
-
-        <a href="#/tools/jd" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="11" r="4" class="icon-stroke"/>
-              <path d="M 8 25 Q 8 18, 16 18 Q 24 18, 24 25" class="icon-stroke"/>
-              <rect x="6" y="25" width="20" height="4" rx="1" class="icon-fill"/>
-              <rect x="22" y="3" width="6" height="8" rx="1" class="icon-stroke"/>
-              <line x1="24" y1="6" x2="26" y2="6" class="icon-stroke" stroke-width="1.2"/>
-              <line x1="24" y1="8" x2="26" y2="8" class="icon-stroke" stroke-width="1.2"/>
-            </svg>
-          </div>
-          <h3>بطاقة الوصف الوظيفي</h3>
-          <p>12 وظيفة نموذجية للجمعيات الأهلية — قابلة للتخصيص والتنزيل بصيغة احترافية.</p>
-          <div class="tool-card-arrow">اختر الوظيفة ←</div>
-        </a>
-      </div>
-
-      <h2 class="mt-5 mb-3" style="font-size:1.15rem;color:var(--text-muted);font-weight:500">السجلات والقوالب</h2>
-      <div class="tools-grid">
-        <a href="#/tools/decisions" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="3" width="20" height="26" rx="2" class="icon-stroke"/>
-              <circle cx="11" cy="11" r="1.5" class="icon-fill"/>
-              <line x1="14" y1="11" x2="22" y2="11" class="icon-stroke"/>
-              <circle cx="11" cy="17" r="1.5" class="icon-fill"/>
-              <line x1="14" y1="17" x2="22" y2="17" class="icon-stroke"/>
-              <circle cx="11" cy="23" r="1.5" class="icon-fill"/>
-              <line x1="14" y1="23" x2="20" y2="23" class="icon-stroke"/>
-            </svg>
-          </div>
-          <h3>مكتبة القرارات النموذجية <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>40+ قرار جاهز للمجلس واللجان والجمعية العمومية، مصنّفة وقابلة للتخصيص.</p>
-          <div class="tool-card-arrow">تصفّح القرارات ←</div>
-        </a>
-
-        <a href="#/tools/risks" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 16 4 L 28 26 L 4 26 Z" class="icon-stroke"/>
-              <line x1="16" y1="13" x2="16" y2="19" class="icon-stroke" stroke-width="2"/>
-              <circle cx="16" cy="22" r="1" class="icon-fill"/>
-            </svg>
-          </div>
-          <h3>سجل المخاطر <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>قالب تفاعلي لتقييم المخاطر الشائعة في الجمعيات وتحديد إجراءات التحكم.</p>
-          <div class="tool-card-arrow">ابدأ التقييم ←</div>
-        </a>
-
-        <a href="#/tools/stakeholders" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="16" r="3" class="icon-fill"/>
-              <circle cx="6" cy="10" r="2.5" class="icon-stroke"/>
-              <circle cx="26" cy="10" r="2.5" class="icon-stroke"/>
-              <circle cx="6" cy="22" r="2.5" class="icon-stroke"/>
-              <circle cx="26" cy="22" r="2.5" class="icon-stroke"/>
-              <line x1="9" y1="11" x2="13" y2="14" class="icon-stroke" stroke-width="1.2"/>
-              <line x1="23" y1="11" x2="19" y2="14" class="icon-stroke" stroke-width="1.2"/>
-              <line x1="9" y1="21" x2="13" y2="18" class="icon-stroke" stroke-width="1.2"/>
-              <line x1="23" y1="21" x2="19" y2="18" class="icon-stroke" stroke-width="1.2"/>
-            </svg>
-          </div>
-          <h3>سجل أصحاب المصلحة <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>تحليل أصحاب المصلحة الـ7 الرئيسيين مع آليات التواصل المقترحة لكل فئة.</p>
-          <div class="tool-card-arrow">ابدأ التحليل ←</div>
-        </a>
-
-        <a href="#/tools/impact" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="16" r="11" class="icon-stroke"/>
-              <circle cx="16" cy="16" r="6" class="icon-stroke"/>
-              <circle cx="16" cy="16" r="2" class="icon-fill"/>
-              <line x1="16" y1="2" x2="16" y2="6" class="icon-stroke" stroke-width="2"/>
-              <line x1="16" y1="26" x2="16" y2="30" class="icon-stroke" stroke-width="2"/>
-              <line x1="2" y1="16" x2="6" y2="16" class="icon-stroke" stroke-width="2"/>
-              <line x1="26" y1="16" x2="30" y2="16" class="icon-stroke" stroke-width="2"/>
-            </svg>
-          </div>
-          <h3>تقرير الأثر الاجتماعي <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>قالب احترافي لقياس وعرض أثر برامج جمعيتك بنموذج (مدخلات → مخرجات → نتائج → أثر).</p>
-          <div class="tool-card-arrow">ابدأ التقرير ←</div>
-        </a>
-      </div>
-
-      <h2 class="mt-5 mb-3" style="font-size:1.15rem;color:var(--text-muted);font-weight:500">المدقّقون الذكيّون</h2>
-      <div class="tools-grid">
-        <a href="#/tools/policy-audit" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="3" width="20" height="26" rx="2" class="icon-stroke"/>
-              <line x1="11" y1="9" x2="21" y2="9" class="icon-stroke"/>
-              <line x1="11" y1="14" x2="21" y2="14" class="icon-stroke"/>
-              <circle cx="22" cy="22" r="6" class="icon-stroke" fill="var(--bg-card)"/>
-              <path d="M 19 22 L 21 24 L 25 20" class="icon-stroke" stroke-width="1.6"/>
-            </svg>
-          </div>
-          <h3>مدقّق السياسات <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>الصق نص سياستك واحصل على تقرير فوري بالعناصر الناقصة والتحسينات المقترحة.</p>
-          <div class="tool-card-arrow">ابدأ التدقيق ←</div>
-        </a>
-
-        <a href="#/tools/regulation-audit" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 8 6 L 24 6 L 24 28 L 8 28 Z" class="icon-stroke"/>
-              <line x1="11" y1="11" x2="21" y2="11" class="icon-stroke" stroke-width="1.4"/>
-              <line x1="11" y1="15" x2="21" y2="15" class="icon-stroke" stroke-width="1.4"/>
-              <line x1="11" y1="19" x2="18" y2="19" class="icon-stroke" stroke-width="1.4"/>
-              <circle cx="22" cy="6" r="3" class="icon-fill"/>
-              <text x="22" y="9" text-anchor="middle" font-size="5" fill="white" font-weight="bold">٢٦</text>
-            </svg>
-          </div>
-          <h3>محرّر اللوائح الذكي <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>فحص شامل للوائح الجمعية: المواد، التعريفات، الأحكام الانتقالية، الجزاءات، والمرجعيات.</p>
-          <div class="tool-card-arrow">ابدأ الفحص ←</div>
-        </a>
-
-        <a href="#/tools/decision-audit" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 16 4 L 26 9 L 26 17 Q 26 25, 16 28 Q 6 25, 6 17 L 6 9 Z" class="icon-stroke"/>
-              <path d="M 11 16 L 14 19 L 21 12" class="icon-stroke" stroke-width="2"/>
-            </svg>
-          </div>
-          <h3>مدقّق نظامية القرارات <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>تحقّق من امتثال نص القرار للمتطلبات النظامية: الصياغة، التواقيع، المراجع، النصاب.</p>
-          <div class="tool-card-arrow">ابدأ التحقّق ←</div>
-        </a>
-      </div>
-
-      <h2 class="mt-5 mb-3" style="font-size:1.15rem;color:var(--text-muted);font-weight:500">المساعدات التفاعلية</h2>
-      <div class="tools-grid">
-        <a href="#/tools/chatbot" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 4 8 Q 4 4, 8 4 L 24 4 Q 28 4, 28 8 L 28 18 Q 28 22, 24 22 L 14 22 L 8 28 L 8 22 Q 4 22, 4 18 Z" class="icon-stroke"/>
-              <circle cx="11" cy="13" r="1.5" class="icon-fill"/>
-              <circle cx="16" cy="13" r="1.5" class="icon-fill"/>
-              <circle cx="21" cy="13" r="1.5" class="icon-fill"/>
-            </svg>
-          </div>
-          <h3>المساعد التفاعلي <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>اسأل المساعد عن أي شيء يخصّ حوكمة جمعيتك — الجمعية العمومية، التصنيفات، السياسات، التقارير.</p>
-          <div class="tool-card-arrow">ابدأ المحادثة ←</div>
-        </a>
-
-        <a href="#/tools/content" class="tool-card">
-          <div class="icon-tile">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <rect x="4" y="6" width="24" height="20" rx="2" class="icon-stroke"/>
-              <line x1="8" y1="11" x2="20" y2="11" class="icon-stroke" stroke-width="1.4"/>
-              <line x1="8" y1="15" x2="24" y2="15" class="icon-stroke" stroke-width="1.4"/>
-              <line x1="8" y1="19" x2="18" y2="19" class="icon-stroke" stroke-width="1.4"/>
-              <circle cx="24" cy="10" r="3" class="icon-fill"/>
-              <path d="M 22.5 10 L 23.5 11 L 25.5 9" stroke="white" stroke-width="1.2" fill="none"/>
-            </svg>
-          </div>
-          <h3>مولّد محتوى التواصل <span class="badge badge-coral" style="font-size:0.65rem;vertical-align:middle">جديد</span></h3>
-          <p>أنشئ منشورات احترافية لتويتر ولينكدإن وفيسبوك من معلومات بسيطة، بـ12 نوعاً من المحتوى.</p>
-          <div class="tool-card-arrow">ابدأ التوليد ←</div>
-        </a>
+        <!-- جميع المجموعات -->
+        ${groupsHtml}
       </div>
 
       <div class="alert alert-warning mt-5 small">
@@ -3639,6 +4164,78 @@ function renderToolsLanding() {
     </div>
   `;
 }
+
+function renderToolCard(t, isPopular) {
+  const icon = TOOLS_ICONS[t.id] || '';
+  const popularBadge = isPopular ? '<span class="tool-popular-badge">⭐ شائع</span>' : '';
+  return `
+    <a href="#/tools/${escapeHtml(t.id)}" class="tool-card" data-tool="${escapeHtml(t.id)}" data-group="${escapeHtml(t.group)}">
+      ${popularBadge}
+      <div class="icon-tile">${icon}</div>
+      <h3>${escapeHtml(t.name)}</h3>
+      <p>${escapeHtml(t.desc)}</p>
+      <div class="tool-card-arrow">افتح ←</div>
+    </a>
+  `;
+}
+
+// البحث الذكي
+function filterTools(query) {
+  query = (query || '').trim().toLowerCase();
+  const clear = $('#tools-search-clear');
+  const defaultView = $('#tools-default-view');
+  const resultsView = $('#tools-search-results');
+
+  if (!query) {
+    if (clear) clear.style.display = 'none';
+    if (defaultView) defaultView.style.display = '';
+    if (resultsView) resultsView.style.display = 'none';
+    return;
+  }
+
+  if (clear) clear.style.display = 'flex';
+  if (defaultView) defaultView.style.display = 'none';
+
+  const matches = TOOLS_CATALOG.filter(t => {
+    const haystack = (t.name + ' ' + t.desc + ' ' + t.keywords).toLowerCase();
+    return haystack.includes(query);
+  });
+
+  if (resultsView) {
+    resultsView.style.display = '';
+    if (matches.length === 0) {
+      resultsView.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">🔍</div>
+          <h3>لم نجد أداة تطابق "${escapeHtml(query)}"</h3>
+          <p class="muted">جرّب كلمات أخرى مثل: محضر، تقويم، سياسة، مخاطر، أو محتوى</p>
+        </div>
+      `;
+    } else {
+      resultsView.innerHTML = `
+        <div class="tools-section">
+          <div class="tools-section-header">
+            <div class="tools-section-icon" style="background:var(--teal-50);color:var(--teal-700)">🎯</div>
+            <div>
+              <h2 class="tools-section-title">${matches.length} نتيجة لـ "${escapeHtml(query)}"</h2>
+              <p class="tools-section-desc">الأدوات الأكثر تطابقاً مع بحثك</p>
+            </div>
+          </div>
+          <div class="tools-grid">
+            ${matches.map(t => renderToolCard(t)).join('')}
+          </div>
+        </div>
+      `;
+    }
+  }
+}
+
+function clearToolsSearch() {
+  const input = $('#tools-search');
+  if (input) { input.value = ''; input.focus(); }
+  filterTools('');
+}
+
 
 // ═════════════════════════════════════════════════════════════════
 // الأداة 1: مولّد محاضر الاجتماعات
@@ -5120,7 +5717,11 @@ function filterDecisions() {
     (d.title + ' ' + d.text + ' ' + d.category).toLowerCase().includes(q));
 
   if (filtered.length === 0) {
-    $('#decisions-list').innerHTML = '<div class="alert alert-warning">لا توجد قرارات تطابق التصفية.</div>';
+    $('#decisions-list').innerHTML = renderEmptyState({
+      icon: 'search',
+      title: 'لا توجد قرارات تطابق التصفية',
+      desc: 'جرّب تغيير الجهة المُصدِرة أو الفئة، أو ابحث بكلمة مختلفة.'
+    });
     return;
   }
 
@@ -7609,7 +8210,11 @@ function filterFAQ() {
   if (q) filtered = filtered.filter(f => (f.q + ' ' + f.a + ' ' + f.cat).toLowerCase().includes(q));
 
   if (filtered.length === 0) {
-    $('#faq-list').innerHTML = '<div class="alert alert-warning">لا توجد أسئلة تطابق البحث.</div>';
+    $('#faq-list').innerHTML = renderEmptyState({
+      icon: 'search',
+      title: 'لا توجد أسئلة تطابق البحث',
+      desc: 'جرّب كلمة بحث أخرى، أو تصفّح الفئات الـ9 المتاحة.'
+    });
     return;
   }
 
@@ -8276,6 +8881,59 @@ function downloadSectorReport(title) {
 }
 
 // ═════════════════════════════════════════════════════════════════
+// المرافقات البصرية — العدّ التصاعدي + scroll observer
+// ═════════════════════════════════════════════════════════════════
+
+// عدّاد تصاعدي ناعم للأرقام
+function animateCounter(el, target, duration) {
+  duration = duration || 1400;
+  const start = 0;
+  const startTime = performance.now();
+  const formatter = new Intl.NumberFormat('en-US');
+  // الحفاظ على suffix الأصلي (مثل +)
+  const original = (el.textContent || '').trim();
+  const suffix = original.replace(/[\d,٫,]/g, '').trim();
+
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    // easeOutExpo
+    const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+    const value = Math.floor(start + (target - start) * eased);
+    el.textContent = formatter.format(value) + (suffix ? suffix : '');
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// تشغيل العدّ عند ظهور العنصر في viewport
+function initCounters() {
+  const counters = document.querySelectorAll('[data-counter]');
+  if (counters.length === 0) return;
+  if (!('IntersectionObserver' in window)) {
+    // fallback: تشغيل مباشر
+    counters.forEach(el => animateCounter(el, parseInt(el.dataset.counter)));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.dataset.counterDone) {
+        entry.target.dataset.counterDone = '1';
+        animateCounter(entry.target, parseInt(entry.target.dataset.counter));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(el => observer.observe(el));
+}
+
+// تشغيل العدادات بعد كل تغيير صفحة
+const _origHandleRoute = handleRoute;
+handleRoute = function() {
+  _origHandleRoute.apply(this, arguments);
+  setTimeout(initCounters, 150);
+};
+
+// ═════════════════════════════════════════════════════════════════
 // PWA — Service Worker + التثبيت
 // ═════════════════════════════════════════════════════════════════
 
@@ -8667,6 +9325,289 @@ handleRoute();
 
 // تشغيل PWA setup (manifest + service worker)
 setupPWA();
+
+// ═════════════════════════════════════════════════════════════════
+// نظام الحيوية الشامل — Phase C
+// ═════════════════════════════════════════════════════════════════
+
+// Scroll-triggered reveal
+function initScrollReveal() {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+}
+
+// تطبيق reveal تلقائياً على عناصر شائعة بعد كل تنقّل
+function autoApplyReveal() {
+  // تطبيق على الأقسام الكبيرة فقط، تجنّب البطاقات الصغيرة
+  document.querySelectorAll('.tools-section, .standard-cover, .blog-card, .trend-card, .chart-card').forEach((el, i) => {
+    if (!el.classList.contains('reveal')) {
+      el.classList.add('reveal');
+      const delay = (i % 4) + 1;
+      el.classList.add('delay-' + delay);
+    }
+  });
+  initScrollReveal();
+}
+
+// Confetti للحظات النجاح
+function showConfetti(count) {
+  count = count || 80;
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+  const colors = ['#0F6E56', '#1D9E75', '#C9A574', '#DEBE7D', '#D85A30', '#5DCAA5'];
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+    piece.style.animationDuration = (3 + Math.random() * 1.5) + 's';
+    piece.style.width = (8 + Math.random() * 6) + 'px';
+    piece.style.height = (10 + Math.random() * 8) + 'px';
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    if (Math.random() > 0.5) piece.style.borderRadius = '50%';
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 5000);
+}
+
+// Quick Actions FAB
+function setupFAB() {
+  if (document.getElementById('quick-fab')) return;
+  const fab = document.createElement('div');
+  fab.id = 'quick-fab';
+  fab.className = 'fab-container';
+  fab.innerHTML = `
+    <div class="fab-menu">
+      <a href="#/tools/chatbot" class="fab-item"><span class="fab-item-icon">💬</span> اسأل المساعد</a>
+      <a href="#/tools/minutes" class="fab-item"><span class="fab-item-icon">📝</span> مولّد محاضر</a>
+      <a href="#/tools/aga" class="fab-item"><span class="fab-item-icon">📅</span> مساعد العمومية</a>
+      <a href="#/tools" class="fab-item"><span class="fab-item-icon">🛠</span> كل الأدوات</a>
+    </div>
+    <button class="fab-main" onclick="toggleFAB()" aria-label="قائمة سريعة" title="قائمة الإجراءات السريعة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+    </button>
+  `;
+  document.body.appendChild(fab);
+
+  // إغلاق عند النقر خارجه
+  document.addEventListener('click', (e) => {
+    if (!fab.contains(e.target) && fab.classList.contains('open')) {
+      fab.classList.remove('open');
+    }
+  });
+}
+
+function toggleFAB() {
+  event.stopPropagation();
+  document.getElementById('quick-fab').classList.toggle('open');
+}
+
+// Personalization Banner
+function setupPersonalization() {
+  const homeContainer = document.querySelector('.hero');
+  if (!homeContainer) return;
+  // فقط في الصفحة الرئيسية
+  let saved = '';
+  try { saved = localStorage.getItem('marjie_user_classification') || ''; } catch (e) {}
+  if (saved || localStorage.getItem('marjie_personalize_dismissed')) return;
+
+  // إنشاء البانر بعد Hero (لا داخله)
+  const banner = document.createElement('div');
+  banner.className = 'container';
+  banner.id = 'personalize-wrap';
+  banner.style.marginTop = '0';
+  banner.innerHTML = `
+    <div class="personalize-banner">
+      <div class="personalize-icon">✨</div>
+      <div class="personalize-content">
+        <strong>خصّص تجربتك</strong>
+        <span>حدّد تصنيف جمعيتك لنُظهر لك المحتوى الأكثر صلة بحجم منظمتك.</span>
+      </div>
+      <div class="personalize-actions">
+        <select id="personalize-select">
+          <option value="">— اختر التصنيف —</option>
+          <option value="متناهية الصغر">متناهية الصغر</option>
+          <option value="الصغيرة">الصغيرة</option>
+          <option value="المتوسطة">المتوسطة</option>
+          <option value="الكبيرة">الكبيرة</option>
+          <option value="متناهية الكبر">متناهية الكبر</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="savePersonalization()">حفظ</button>
+        <button class="btn btn-ghost btn-sm" onclick="dismissPersonalization()">لاحقاً</button>
+      </div>
+    </div>
+  `;
+  homeContainer.parentElement.insertBefore(banner, homeContainer.nextElementSibling);
+}
+
+function savePersonalization() {
+  const sel = document.getElementById('personalize-select');
+  if (!sel || !sel.value) { showToast('اختر تصنيفاً أولاً', 'warning'); return; }
+  try { localStorage.setItem('marjie_user_classification', sel.value); } catch (e) {}
+  const banner = document.getElementById('personalize-wrap');
+  if (banner) {
+    banner.style.transition = 'all .4s ease';
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateY(-10px)';
+    setTimeout(() => banner.remove(), 400);
+  }
+  showToast('تم الحفظ ✓ سنخصّص التجربة بناءً على تصنيف "' + sel.value + '"', 'success');
+}
+
+function dismissPersonalization() {
+  try { localStorage.setItem('marjie_personalize_dismissed', '1'); } catch (e) {}
+  const banner = document.getElementById('personalize-wrap');
+  if (banner) banner.remove();
+}
+
+// Loading Skeleton (احترافي)
+function renderLoadingSkeleton(type) {
+  if (type === 'cards') {
+    return `
+      <div class="tools-grid">
+        ${[1,2,3,4].map(() => `
+          <div class="skeleton-card">
+            <div class="skeleton" style="width:48px;height:48px;border-radius:14px;margin-bottom:1rem"></div>
+            <div class="skeleton-line w-3-4"></div>
+            <div class="skeleton-line w-full"></div>
+            <div class="skeleton-line w-half"></div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+  return `
+    <div class="skeleton-card">
+      <div class="skeleton-line w-3-4"></div>
+      <div class="skeleton-line w-full"></div>
+      <div class="skeleton-line w-full"></div>
+      <div class="skeleton-line w-half"></div>
+    </div>
+  `;
+}
+
+// تشغيل كل التحسينات بعد كل تنقّل صفحة
+const _origHandleRouteVitality = handleRoute;
+handleRoute = function() {
+  _origHandleRouteVitality.apply(this, arguments);
+  setTimeout(() => {
+    autoApplyReveal();
+    setupFAB();
+    if (State.currentRoute === 'home' || State.currentRoute === '') {
+      setupPersonalization();
+    }
+  }, 100);
+};
+
+// تشغيل Confetti في finishQuiz عند النجاح
+const _origFinishQuiz = typeof finishQuiz === 'function' ? finishQuiz : null;
+if (_origFinishQuiz) {
+  finishQuiz = function() {
+    _origFinishQuiz.apply(this, arguments);
+    // تحقّق من النتيجة
+    setTimeout(() => {
+      const total = QUIZ_QUESTIONS.length;
+      const correct = QUIZ_QUESTIONS.filter((q, i) => QUIZ_STATE.answers[i] === q.correct).length;
+      const percent = Math.round((correct / total) * 100);
+      if (percent >= 80) showConfetti(120);
+    }, 200);
+  };
+}
+
+// ═════════════════════════════════════════════════════════════════
+// رسومات الأقسام (Section Illustrations) — Phase D
+// ═════════════════════════════════════════════════════════════════
+
+// رسم زخرفي يُضاف خلف عناوين الأقسام الكبيرة
+function getSectionDecoration(theme) {
+  theme = theme || 'teal';
+  const palettes = {
+    teal:    { c1: '#9FE1CB', c2: '#0F6E56' },
+    sand:    { c1: '#F0E0BD', c2: '#9B7A45' },
+    coral:   { c1: '#F0997B', c2: '#993C1D' },
+    multi:   { c1: '#5DCAA5', c2: '#C9A574' }
+  };
+  const p = palettes[theme] || palettes.teal;
+  return `
+    <div class="deco-shape" style="top:-30px;left:-20px;width:120px;height:120px;animation-delay:0s">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="55" fill="none" stroke="${p.c1}" stroke-width="1" opacity="0.4"/>
+        <circle cx="60" cy="60" r="40" fill="none" stroke="${p.c2}" stroke-width="1" opacity="0.3"/>
+        <circle cx="60" cy="60" r="25" fill="${p.c1}" opacity="0.15"/>
+      </svg>
+    </div>
+    <div class="deco-shape" style="top:30px;right:-30px;width:90px;height:90px;animation-delay:-2s">
+      <svg viewBox="0 0 90 90">
+        <polygon points="45,10 80,40 65,75 25,75 10,40" fill="none" stroke="${p.c2}" stroke-width="1" opacity="0.3"/>
+      </svg>
+    </div>
+  `;
+}
+
+// Empty State بـ SVG لطيف
+function renderEmptyState(opts) {
+  opts = opts || {};
+  const icon = opts.icon || 'search';
+  const title = opts.title || 'لا توجد نتائج';
+  const desc = opts.desc || '';
+  const action = opts.action || '';
+
+  const icons = {
+    search: `<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="148" rx="55" ry="6" fill="#0F6E56" opacity="0.08"/>
+      <circle cx="85" cy="70" r="42" fill="#FFFFFF" stroke="#0F6E56" stroke-width="3" opacity="0.85"/>
+      <circle cx="85" cy="70" r="32" fill="none" stroke="#0F6E56" stroke-width="1.5" opacity="0.4"/>
+      <line x1="118" y1="100" x2="148" y2="130" stroke="#0F6E56" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="85" cy="70" r="8" fill="#C9A574" opacity="0.7"/>
+      <circle cx="170" cy="40" r="4" fill="#C9A574" opacity="0.5"/>
+      <circle cx="30" cy="35" r="3" fill="#0F6E56" opacity="0.4"/>
+      <circle cx="30" cy="120" r="5" fill="#0F6E56" opacity="0.3"/>
+    </svg>`,
+    document: `<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="148" rx="55" ry="6" fill="#0F6E56" opacity="0.08"/>
+      <rect x="60" y="30" width="80" height="100" rx="6" fill="#FFFFFF" stroke="#0F6E56" stroke-width="2"/>
+      <line x1="75" y1="55" x2="125" y2="55" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+      <line x1="75" y1="70" x2="125" y2="70" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+      <line x1="75" y1="85" x2="115" y2="85" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="125" cy="105" r="14" fill="#C9A574"/>
+      <path d="M 119 105 L 124 110 L 132 100" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    sparkle: `<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="148" rx="55" ry="6" fill="#0F6E56" opacity="0.08"/>
+      <circle cx="100" cy="80" r="50" fill="#E1F5EE" opacity="0.5"/>
+      <path d="M 100 50 L 108 72 L 130 80 L 108 88 L 100 110 L 92 88 L 70 80 L 92 72 Z" fill="#C9A574"/>
+      <path d="M 100 60 L 105 76 L 120 80 L 105 84 L 100 100 L 95 84 L 80 80 L 95 76 Z" fill="#FFFFFF" opacity="0.6"/>
+      <circle cx="40" cy="60" r="3" fill="#0F6E56" opacity="0.5"/>
+      <circle cx="170" cy="100" r="4" fill="#C9A574" opacity="0.6"/>
+      <circle cx="30" cy="110" r="2" fill="#0F6E56" opacity="0.4"/>
+      <circle cx="160" cy="50" r="3" fill="#0F6E56" opacity="0.4"/>
+    </svg>`
+  };
+
+  return `
+    <div class="empty-state" style="padding:3rem 1.5rem;text-align:center">
+      <div style="max-width:200px;margin:0 auto 1.5rem">${icons[icon] || icons.search}</div>
+      <h3 style="font-size:1.2rem;margin-bottom:0.5rem">${escapeHtml(title)}</h3>
+      ${desc ? `<p class="muted" style="max-width:380px;margin:0 auto 1.25rem;line-height:1.7">${escapeHtml(desc)}</p>` : ''}
+      ${action || ''}
+    </div>
+  `;
+}
 
 // عرض الجولة التعريفية للزائر الأول (بعد تأخير قصير لتحميل الصفحة)
 setTimeout(() => showTour(false), 800);
