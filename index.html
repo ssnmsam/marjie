@@ -287,6 +287,173 @@
     .feature-action-text{margin-top:1rem;color:var(--teal-700);font-size:var(--text-small);font-weight:500;transition:transform var(--duration-base) var(--ease-out)}
     .feature.feature-link:hover .feature-action-text{transform:translateX(-4px)}
 
+    /* ═════════════════════════════════════════
+       لوحة الإدارة - Layout
+       ═════════════════════════════════════════ */
+    .admin-shell{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 64px);background:var(--stone-50)}
+    @media(max-width:900px){.admin-shell{grid-template-columns:1fr}}
+
+    /* السايد بار */
+    .admin-sidebar{background:var(--bg-card);border-left:1px solid var(--border);padding:1.5rem 0;display:flex;flex-direction:column;gap:0.25rem;position:sticky;top:64px;align-self:start;height:calc(100vh - 64px);overflow-y:auto}
+    @media(max-width:900px){.admin-sidebar{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:0.75rem 1rem;gap:0.5rem;border-left:none;border-bottom:1px solid var(--border)}}
+    .admin-side-header{padding:0 1.5rem 1rem;border-bottom:1px solid var(--border);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.75rem}
+    @media(max-width:900px){.admin-side-header{display:none}}
+    .admin-side-avatar{width:38px;height:38px;border-radius:50%;background:var(--gradient-teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-family:var(--font-heading);flex-shrink:0}
+    .admin-side-user{flex:1;min-width:0}
+    .admin-side-user strong{display:block;font-size:var(--text-small);font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .admin-side-user span{font-size:var(--text-tiny);color:var(--text-faint)}
+    .admin-side-link{display:flex;align-items:center;gap:0.7rem;padding:0.7rem 1.5rem;color:var(--text-muted);text-decoration:none;font-size:var(--text-small);font-weight:500;transition:all var(--duration-fast) var(--ease-smooth);border-right:3px solid transparent;white-space:nowrap}
+    @media(max-width:900px){.admin-side-link{padding:0.55rem 0.85rem;border-right:none;border-bottom:2px solid transparent;border-radius:var(--radius-sm)}}
+    .admin-side-link:hover{background:var(--stone-100);color:var(--text)}
+    .admin-side-link.active{background:var(--teal-50);color:var(--teal-700);border-right-color:var(--teal-700);font-weight:600}
+    @media(max-width:900px){.admin-side-link.active{border-right-color:transparent;border-bottom-color:var(--teal-700)}}
+    .admin-side-link svg{width:18px;height:18px;flex-shrink:0;opacity:0.85}
+    .admin-side-link.active svg{opacity:1}
+    .admin-side-divider{height:1px;background:var(--border);margin:0.75rem 1.5rem}
+    @media(max-width:900px){.admin-side-divider{display:none}}
+    .admin-side-logout{margin-top:auto;padding:0 1.5rem}
+    @media(max-width:900px){.admin-side-logout{margin-top:0;padding:0;margin-right:auto}}
+
+    /* المحتوى الرئيسي */
+    .admin-main{padding:2rem;overflow-x:hidden}
+    @media(max-width:600px){.admin-main{padding:1.25rem}}
+    .admin-page-header{margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .admin-page-header h1{font-size:1.65rem;margin:0}
+    .admin-page-header p{color:var(--text-muted);margin:0.3rem 0 0;font-size:var(--text-small)}
+
+    /* بطاقات الـ Dashboard */
+    .admin-dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.1rem;margin-bottom:2rem}
+    .admin-stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;position:relative;overflow:hidden;transition:all var(--duration-base) var(--ease-out)}
+    .admin-stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+    .admin-stat-card::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:var(--accent,var(--teal-50));opacity:0.4;border-radius:0 0 0 100%}
+    .admin-stat-icon{width:42px;height:42px;border-radius:var(--radius-md);background:var(--accent,var(--teal-50));color:var(--accent-color,var(--teal-700));display:flex;align-items:center;justify-content:center;margin-bottom:0.85rem;position:relative}
+    .admin-stat-icon svg{width:22px;height:22px}
+    .admin-stat-value{font-family:var(--font-heading);font-size:2rem;font-weight:700;line-height:1;color:var(--text);letter-spacing:var(--ls-tight);margin-bottom:0.3rem;position:relative}
+    .admin-stat-label{font-size:var(--text-small);color:var(--text-muted);font-weight:500;position:relative}
+    .admin-stat-trend{font-size:var(--text-tiny);color:var(--text-faint);margin-top:0.3rem;display:inline-flex;align-items:center;gap:0.25rem;position:relative}
+
+    /* قسم تحت Dashboard */
+    .admin-section{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem}
+    .admin-section-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
+    .admin-section-title{font-family:var(--font-heading);font-size:1.15rem;font-weight:600;margin:0}
+    .admin-section-desc{color:var(--text-muted);font-size:var(--text-small);margin:0.2rem 0 0;font-weight:300}
+
+    /* بطاقات التنقّل السريع */
+    .admin-quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.85rem}
+    .admin-quick-card{display:flex;align-items:center;gap:0.85rem;padding:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);text-decoration:none;color:inherit;transition:all var(--duration-fast) var(--ease-smooth)}
+    .admin-quick-card:hover{border-color:var(--teal-500);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+    .admin-quick-icon{width:38px;height:38px;border-radius:var(--radius-sm);background:var(--teal-50);color:var(--teal-700);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .admin-quick-icon svg{width:20px;height:20px}
+    .admin-quick-text strong{display:block;font-size:var(--text-small);font-weight:600;margin-bottom:0.1rem}
+    .admin-quick-text span{font-size:var(--text-tiny);color:var(--text-faint)}
+
+    /* إدارة السلايدر */
+    .slides-manager{display:grid;grid-template-columns:1fr;gap:1rem}
+    .slide-row{display:grid;grid-template-columns:auto 80px 1fr auto;gap:1rem;align-items:center;padding:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);transition:all var(--duration-fast)}
+    @media(max-width:700px){.slide-row{grid-template-columns:1fr;gap:0.6rem}}
+    .slide-row:hover{border-color:var(--border-strong)}
+    .slide-handle{color:var(--text-faint);font-size:1.3rem;cursor:grab;line-height:1}
+    .slide-thumb{width:80px;height:55px;border-radius:var(--radius-md);background:var(--gradient-teal);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-heading);font-size:1.4rem;font-weight:700;flex-shrink:0;overflow:hidden}
+    @media(max-width:700px){.slide-thumb{width:100%;height:80px}}
+    .slide-info h4{margin:0 0 0.2rem;font-size:var(--text-small);font-weight:600}
+    .slide-info p{margin:0;font-size:var(--text-tiny);color:var(--text-faint);font-weight:300;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .slide-actions{display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap}
+    .slide-status{display:inline-flex;align-items:center;gap:0.3rem;padding:0.18rem 0.55rem;border-radius:99px;font-size:var(--text-micro);font-weight:500;background:var(--green-100);color:var(--green-700)}
+    .slide-status.disabled{background:var(--stone-200);color:var(--stone-700)}
+
+    /* محرّر السلايد */
+    .slide-editor-preview{background:var(--bg);border:1px dashed var(--border-strong);border-radius:var(--radius-lg);padding:1rem;margin:1rem 0}
+    .slide-editor-preview-title{font-size:var(--text-tiny);color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
+
+    /* Placeholder للأقسام قيد التطوير */
+    .admin-placeholder{text-align:center;padding:3rem 1.5rem;background:var(--bg-card);border:1px dashed var(--border-strong);border-radius:var(--radius-lg)}
+    .admin-placeholder-icon{font-size:3.5rem;margin-bottom:1rem;opacity:0.4}
+    .admin-placeholder h3{font-size:1.25rem;margin-bottom:0.6rem}
+    .admin-placeholder p{color:var(--text-muted);max-width:480px;margin:0 auto 1rem;line-height:1.7}
+
+    /* لوحة الإعدادات (Phase 4) */
+    .settings-tabs{display:flex;gap:0.4rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;overflow-x:auto;padding-bottom:0.1rem}
+    .settings-tab{padding:0.7rem 1.1rem;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:inherit;font-size:0.92rem;font-weight:500;color:var(--text-muted);white-space:nowrap;transition:.15s;text-decoration:none}
+    .settings-tab:hover{color:var(--text)}
+    .settings-tab.active{color:var(--teal-700);border-bottom-color:var(--teal-700)}
+
+    /* الأدوار */
+    .roles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+    .role-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;transition:all var(--duration-fast)}
+    .role-card.is-current{border-color:var(--teal-500);background:linear-gradient(180deg,#FAFFF6 0%,#FFFFFF 100%)}
+    .role-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem}
+    .role-card-header h4{margin:0;font-size:1rem;font-weight:600}
+    .role-perms{margin-top:0.85rem;padding-top:0.85rem;border-top:1px solid var(--border)}
+    .role-perms strong{display:block;margin-bottom:0.4rem;font-size:var(--text-tiny);color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em}
+    .role-perms ul{list-style:none;padding:0;margin:0}
+    .role-perms li{font-size:var(--text-small);color:var(--text-muted);padding:0.2rem 0}
+
+    /* سجل التدقيق */
+    .audit-log{display:flex;flex-direction:column;gap:0.6rem}
+    .audit-entry{padding:0.85rem 1rem;background:var(--stone-50);border:1px solid var(--border);border-right:4px solid var(--teal-500);border-radius:var(--radius-md);transition:all var(--duration-fast)}
+    .audit-entry.audit-create{border-right-color:var(--green-500)}
+    .audit-entry.audit-update{border-right-color:var(--teal-500)}
+    .audit-entry.audit-delete{border-right-color:var(--coral-500)}
+    .audit-entry.audit-auth{border-right-color:var(--sand-500)}
+    .audit-entry:hover{background:#FFFFFF;box-shadow:var(--shadow-xs)}
+    .audit-meta{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;flex-wrap:wrap}
+    .audit-action{font-weight:600;font-size:var(--text-small);color:var(--text)}
+    .audit-entity{font-size:var(--text-tiny);color:var(--text-muted);background:var(--stone-100);padding:0.1rem 0.5rem;border-radius:99px}
+    .audit-id{font-family:monospace;font-size:var(--text-tiny);color:var(--text-faint)}
+    .audit-details{font-size:var(--text-small);color:var(--text-muted);font-weight:300;margin-bottom:0.3rem}
+    .audit-footer{display:flex;gap:0.85rem;flex-wrap:wrap;font-size:var(--text-tiny);color:var(--text-faint)}
+
+    /* منطقة الخطر */
+    .danger-section{border-color:var(--coral-500);background:linear-gradient(180deg,#FFFAF7 0%,#FFFFFF 100%)}
+    .danger-section h4{margin:0 0 0.4rem;font-size:1rem;font-weight:600;color:var(--text)}
+
+    /* قوائم محتوى الإدارة (المدوّنة + ضيف الشهر + FAQ) — Phase 3 */
+    .admin-content-list{display:flex;flex-direction:column;gap:0.8rem}
+    .content-row{display:grid;grid-template-columns:90px 1fr auto;gap:1rem;align-items:center;padding:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);transition:all var(--duration-fast)}
+    @media(max-width:700px){.content-row{grid-template-columns:1fr;gap:0.7rem}}
+    .content-row:hover{border-color:var(--border-strong);box-shadow:var(--shadow-xs)}
+    .content-row.is-current{border-color:var(--green-500);background:linear-gradient(180deg,#FAFFF6 0%,#FFFFFF 100%)}
+    .content-row-thumb{width:90px;height:60px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:#1A2922;font-size:var(--text-tiny);font-weight:600;flex-shrink:0;text-align:center;padding:0.3rem}
+    @media(max-width:700px){.content-row-thumb{width:100%;height:80px}}
+    .content-row-info h4{margin:0 0 0.25rem;font-size:1rem;font-weight:600;line-height:1.3}
+    .content-row-info p{margin:0;font-size:var(--text-small);color:var(--text-muted);font-weight:300;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .content-row-meta{font-size:var(--text-tiny);color:var(--text-faint);display:flex;flex-wrap:wrap;gap:0.7rem;margin-top:0.45rem}
+    .content-row-actions{display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap}
+
+    /* قائمة الأسئلة في الإدارة */
+    .faq-admin-list{display:flex;flex-direction:column;gap:0.6rem}
+    .faq-admin-row{display:grid;grid-template-columns:1fr auto;gap:0.85rem;padding:0.85rem 1rem;background:var(--stone-50);border:1px solid var(--border);border-radius:var(--radius-md);transition:all var(--duration-fast)}
+    .faq-admin-row:hover{background:#FFFFFF;border-color:var(--border-strong)}
+    .faq-admin-q{font-weight:600;font-size:var(--text-small);color:var(--text);margin-bottom:0.25rem}
+    .faq-admin-a{font-size:var(--text-tiny);color:var(--text-muted);line-height:1.5}
+    .faq-admin-actions{display:flex;gap:0.4rem;align-items:flex-start;flex-shrink:0}
+
+    /* لوحة التحليلات (Phase 2) */
+    .analytics-2col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+    @media(max-width:900px){.analytics-2col{grid-template-columns:1fr}}
+    .analytics-chart{margin:0.5rem 0}
+    .analytics-bars{display:flex;flex-direction:column;gap:0.6rem}
+    .analytics-bar-row{display:grid;grid-template-columns:140px 1fr 60px;gap:0.75rem;align-items:center;font-size:var(--text-small)}
+    @media(max-width:600px){.analytics-bar-row{grid-template-columns:1fr;gap:0.25rem}}
+    .analytics-bar-label{font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .analytics-bar-track{height:12px;background:var(--stone-100);border-radius:99px;overflow:hidden;position:relative}
+    .analytics-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal-500),var(--teal-700));border-radius:99px;transition:width .8s var(--ease-out)}
+    .analytics-bar-value{text-align:left;font-variant-numeric:tabular-nums;color:var(--text-muted);font-weight:600;font-size:var(--text-tiny);direction:ltr}
+    .device-chart{display:flex;flex-direction:column;gap:0.85rem}
+    .device-row{display:grid;grid-template-columns:130px 1fr 110px;gap:0.85rem;align-items:center;font-size:var(--text-small)}
+    @media(max-width:600px){.device-row{grid-template-columns:1fr;gap:0.3rem}}
+    .device-label{font-weight:500}
+    .device-bar-track{height:14px;background:var(--stone-100);border-radius:99px;overflow:hidden}
+    .device-bar-fill{height:100%;border-radius:99px;transition:width .8s var(--ease-out)}
+    .device-value{text-align:left;color:var(--text-muted);font-size:var(--text-tiny);direction:ltr}
+
+    /* أيقونة العين لإظهار/إخفاء كلمة المرور */
+    .password-input-wrap{position:relative}
+    .password-input-wrap input{padding-left:2.8rem}
+    .password-toggle{position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);width:34px;height:34px;border:none;background:transparent;color:var(--text-faint);cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);transition:all var(--duration-fast) var(--ease-smooth);font-family:inherit}
+    .password-toggle:hover{background:var(--stone-100);color:var(--text)}
+    .password-toggle:focus{outline:none;background:var(--stone-100);color:var(--teal-700)}
+
     /* قسم الأدوات الموحّد في الصفحة الرئيسية */
     .tools-on-home{margin:3.5rem 0 2rem;padding-top:2.5rem;border-top:1px solid var(--border)}
     .tools-on-home-header{margin-bottom:1.75rem;text-align:right}
@@ -1125,14 +1292,6 @@
 
       <div class="footer-bottom">
         <span>© <span id="year"></span> مَرْجِع — منصّة الحوكمة العملية للجمعيات الأهلية • كل المحتوى استرشادي ويتطلب اعتماد جهتك المختصة</span>
-        <span class="footer-admin-sep">·</span>
-        <a href="#/admin/login" class="footer-admin-link" title="دخول المدراء فقط">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="11" rx="2"/>
-            <path d="M 7 11 V 7 a5 5 0 0 1 10 0 v4"/>
-          </svg>
-          دخول الإدارة
-        </a>
       </div>
     </div>
   </footer>
@@ -1375,11 +1534,31 @@ function clearAdminSession() {
   localStorage.removeItem('marjie_admin_email');
 }
 
+// تبديل ظهور كلمة المرور
+function togglePasswordVisibility(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  const showIcon = btn.querySelector('.eye-show');
+  const hideIcon = btn.querySelector('.eye-hide');
+  if (input.type === 'password') {
+    input.type = 'text';
+    showIcon.style.display = 'none';
+    hideIcon.style.display = '';
+  } else {
+    input.type = 'password';
+    showIcon.style.display = '';
+    hideIcon.style.display = 'none';
+  }
+}
+
 function setAdminSession(token, email) {
   State.adminToken = token;
   State.adminEmail = email;
   localStorage.setItem('marjie_admin_token', token);
   localStorage.setItem('marjie_admin_email', email);
+  // Phase 4: تسجيل الدخول + تشغيل session timer
+  if (typeof logAudit === 'function') logAudit('login', 'auth', '', 'Admin login');
+  if (typeof startSessionTimer === 'function') startSessionTimer();
 }
 
 // ═════════════════════════════════════════════════════════════════
@@ -1435,6 +1614,7 @@ function handleRoute() {
       else renderLearnLanding();
       break;
     case 'tools':
+      if (parts[1]) Analytics.track('tool_open', parts[1]);
       if (parts[1] === 'minutes') renderMinutesGenerator();
       else if (parts[1] === 'calendar') renderGovernanceCalendar();
       else if (parts[1] === 'aga') renderAGAAssistant();
@@ -1451,15 +1631,45 @@ function handleRoute() {
       else renderToolsLanding();
       break;
     case 'policies':
-      if (parts[1]) renderPolicyDetail(parts[1]);
-      else renderPolicies(); break;
+      if (parts[1]) {
+        Analytics.track('policy_view', parts[1]);
+        renderPolicyDetail(parts[1]);
+      } else renderPolicies();
+      break;
     case 'admin':
       if (parts[1] === 'login' || !State.adminToken) renderAdminLogin();
+      else if (!isPINVerified()) renderPINPrompt();
       else if (parts[1] === 'policies') {
         if (parts[2] === 'new') renderAdminPolicyEditor(null);
         else if (parts[2]) renderAdminPolicyEditor(parts[2]);
         else renderAdminPolicies();
-      } else renderAdminDashboard();
+      }
+      else if (parts[1] === 'slides') {
+        if (parts[2] === 'new') renderAdminSlideEditor(null);
+        else if (parts[2]) renderAdminSlideEditor(parts[2]);
+        else renderAdminSlides();
+      }
+      else if (parts[1] === 'blog') {
+        if (parts[2] === 'new') renderAdminBlogEditor(null);
+        else if (parts[2]) renderAdminBlogEditor(parts[2]);
+        else renderAdminBlog();
+      }
+      else if (parts[1] === 'faq') {
+        if (parts[2] === 'new') renderAdminFAQEditor(null);
+        else if (parts[2]) renderAdminFAQEditor(decodeURIComponent(parts[2]));
+        else renderAdminFAQ();
+      }
+      else if (parts[1] === 'guest') {
+        if (parts[2] === 'new') renderAdminGuestEditor(null);
+        else if (parts[2]) renderAdminGuestEditor(decodeURIComponent(parts[2]));
+        else renderAdminGuests();
+      }
+      else if (parts[1] === 'analytics') renderAdminAnalytics();
+      else if (parts[1] === 'settings') {
+        if (parts[2]) renderAdminSettings(parts[2]);
+        else renderAdminSettings('general');
+      }
+      else renderAdminDashboard();
       break;
     case 'about':
       renderAbout(); break;
@@ -1512,6 +1722,247 @@ function renderNav() {
   //   • أو الكتابة المباشرة في URL: #/admin/login
 
   $('#nav-links').innerHTML = html;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// نظام تتبّع الزوار (Analytics) — المرحلة 2
+// ═════════════════════════════════════════════════════════════════
+// يُسجّل الأحداث محلياً (localStorage) ويُحاول الإرسال للخادم
+// لا يجمع بيانات شخصية - فقط visitorID مجهول
+
+const Analytics = {
+  STORAGE_KEY: 'marjie_analytics_events',
+  VISITOR_KEY: 'marjie_visitor_id',
+  MAX_LOCAL_EVENTS: 5000,
+
+  getOrCreateVisitorId() {
+    try {
+      let id = localStorage.getItem(this.VISITOR_KEY);
+      if (!id) {
+        id = 'v_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+        localStorage.setItem(this.VISITOR_KEY, id);
+      }
+      return id;
+    } catch (e) { return 'anon'; }
+  },
+
+  // تسجيل حدث
+  track(eventType, detail) {
+    const event = {
+      ts: Date.now(),
+      vid: this.getOrCreateVisitorId(),
+      type: eventType,
+      detail: typeof detail === 'object' ? JSON.stringify(detail) : (String(detail || '').substring(0, 200)),
+      page: (location.hash || '#/').substring(0, 100),
+      ref: (document.referrer || '').substring(0, 100),
+      ua: this.getDeviceType()
+    };
+    this.saveLocally(event);
+    this.sendToBackend(event);
+  },
+
+  // نوع الجهاز فقط (بدون UA كامل)
+  getDeviceType() {
+    const ua = navigator.userAgent || '';
+    if (/Mobile|Android|iPhone/i.test(ua)) return 'mobile';
+    if (/Tablet|iPad/i.test(ua)) return 'tablet';
+    return 'desktop';
+  },
+
+  saveLocally(event) {
+    try {
+      const events = this.getLocalEvents();
+      events.push(event);
+      if (events.length > this.MAX_LOCAL_EVENTS) {
+        events.splice(0, events.length - this.MAX_LOCAL_EVENTS);
+      }
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(events));
+    } catch (e) { /* storage full - تجاهل */ }
+  },
+
+  getLocalEvents() {
+    try {
+      const raw = localStorage.getItem(this.STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  },
+
+  clearLocalEvents() {
+    try { localStorage.removeItem(this.STORAGE_KEY); } catch (e) {}
+  },
+
+  // إرسال للخادم (best-effort، لا يفشل التطبيق إن فشل)
+  sendToBackend(event) {
+    try {
+      const endpoint = (typeof API !== 'undefined' && API.url) || '';
+      if (!endpoint) return;
+      const payload = JSON.stringify({ action: 'trackEvent', event });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(endpoint, payload);
+      } else {
+        fetch(endpoint, { method: 'POST', body: payload, keepalive: true }).catch(() => {});
+      }
+    } catch (e) {}
+  },
+
+  // حساب الإحصائيات للعرض في لوحة المدير
+  computeStats(events, periodDays) {
+    periodDays = periodDays || 30;
+    const cutoff = Date.now() - (periodDays * 24 * 60 * 60 * 1000);
+    const recent = (events || []).filter(e => e.ts >= cutoff);
+
+    // الأساسيات
+    const visitors = new Set(recent.map(e => e.vid));
+    const pageViews = recent.filter(e => e.type === 'page_view');
+    const todayCutoff = new Date(); todayCutoff.setHours(0,0,0,0);
+    const todayEvents = recent.filter(e => e.ts >= todayCutoff.getTime());
+    const todayVisitors = new Set(todayEvents.map(e => e.vid));
+
+    // الصفحات الأكثر زيارة
+    const pagesByCount = {};
+    pageViews.forEach(e => {
+      const page = e.page || '#/';
+      pagesByCount[page] = (pagesByCount[page] || 0) + 1;
+    });
+
+    // الأدوات الأكثر استخداماً
+    const toolEvents = recent.filter(e => e.type === 'tool_open');
+    const toolsByCount = {};
+    toolEvents.forEach(e => {
+      const tool = e.detail || 'unknown';
+      toolsByCount[tool] = (toolsByCount[tool] || 0) + 1;
+    });
+
+    // التنزيلات
+    const downloads = recent.filter(e => e.type === 'download');
+    const downloadsByItem = {};
+    downloads.forEach(e => {
+      const item = e.detail || 'unknown';
+      downloadsByItem[item] = (downloadsByItem[item] || 0) + 1;
+    });
+
+    // الأجهزة
+    const devices = { desktop: 0, mobile: 0, tablet: 0 };
+    const visitorDevice = {};
+    recent.forEach(e => {
+      if (!visitorDevice[e.vid]) {
+        visitorDevice[e.vid] = e.ua || 'desktop';
+        devices[e.ua || 'desktop'] = (devices[e.ua || 'desktop'] || 0) + 1;
+      }
+    });
+
+    // المصادر (referrers)
+    const referrers = { mباشر: 0 };
+    const refByVisitor = {};
+    recent.forEach(e => {
+      if (refByVisitor[e.vid]) return;
+      refByVisitor[e.vid] = true;
+      const ref = e.ref || '';
+      if (!ref) {
+        referrers['زيارة مباشرة'] = (referrers['زيارة مباشرة'] || 0) + 1;
+      } else {
+        try {
+          const host = new URL(ref).hostname.replace(/^www\./, '');
+          referrers[host] = (referrers[host] || 0) + 1;
+        } catch (e) {
+          referrers['أخرى'] = (referrers['أخرى'] || 0) + 1;
+        }
+      }
+    });
+    delete referrers.mباشر;
+
+    // خط زمني (يومي)
+    const timeline = [];
+    for (let i = periodDays - 1; i >= 0; i--) {
+      const d = new Date(Date.now() - i * 24 * 60 * 60 * 1000);
+      d.setHours(0, 0, 0, 0);
+      const start = d.getTime();
+      const end = start + 24 * 60 * 60 * 1000;
+      const dayEvents = recent.filter(e => e.ts >= start && e.ts < end);
+      const dayVisitors = new Set(dayEvents.map(e => e.vid));
+      timeline.push({
+        date: d.toISOString().substring(0, 10),
+        label: d.toLocaleDateString('ar-SA', { day: 'numeric', month: 'short' }),
+        visitors: dayVisitors.size,
+        events: dayEvents.length
+      });
+    }
+
+    return {
+      uniqueVisitors: visitors.size,
+      totalEvents: recent.length,
+      pageViews: pageViews.length,
+      todayVisitors: todayVisitors.size,
+      todayEvents: todayEvents.length,
+      topPages: Object.entries(pagesByCount).sort((a,b) => b[1] - a[1]).slice(0, 10),
+      topTools: Object.entries(toolsByCount).sort((a,b) => b[1] - a[1]).slice(0, 10),
+      downloadCount: downloads.length,
+      topDownloads: Object.entries(downloadsByItem).sort((a,b) => b[1] - a[1]).slice(0, 10),
+      devices,
+      referrers: Object.entries(referrers).sort((a,b) => b[1] - a[1]).slice(0, 8),
+      timeline
+    };
+  },
+
+  init() {
+    // تتبّع الزيارة الأولى
+    setTimeout(() => this.track('page_view'), 500);
+    // تتبّع كل تغيير صفحة
+    let lastHash = location.hash;
+    window.addEventListener('hashchange', () => {
+      if (location.hash !== lastHash) {
+        lastHash = location.hash;
+        this.track('page_view');
+      }
+    });
+  }
+};
+
+// ترجمة أسماء الصفحات للعربية
+function translatePagePath(path) {
+  const map = {
+    '#/': 'الصفحة الرئيسية',
+    '#': 'الصفحة الرئيسية',
+    '': 'الصفحة الرئيسية',
+    '#/standards': 'المعايير',
+    '#/policies': 'مكتبة السياسات',
+    '#/calculator': 'الحاسبة المالية',
+    '#/transition': 'محاكي الانتقال',
+    '#/tools': 'الأدوات',
+    '#/tools/minutes': 'مولّد المحاضر',
+    '#/tools/calendar': 'تقويم الحوكمة',
+    '#/tools/aga': 'مساعد العمومية',
+    '#/tools/jd': 'الوصف الوظيفي',
+    '#/tools/decisions': 'مكتبة القرارات',
+    '#/tools/risks': 'سجل المخاطر',
+    '#/tools/stakeholders': 'أصحاب المصلحة',
+    '#/tools/impact': 'تقرير الأثر',
+    '#/tools/policy-audit': 'مدقّق السياسات',
+    '#/tools/regulation-audit': 'مدقّق اللوائح',
+    '#/tools/decision-audit': 'مدقّق القرارات',
+    '#/tools/chatbot': 'المساعد التفاعلي',
+    '#/tools/content': 'مولّد المحتوى',
+    '#/learn': 'قسم المعرفة',
+    '#/learn/blog': 'المدوّنة',
+    '#/learn/faq': 'الأسئلة الشائعة',
+    '#/learn/guest': 'ضيف الشهر',
+    '#/learn/quiz': 'اختبر معرفتك',
+    '#/learn/sector': 'حالة القطاع'
+  };
+  // محاولة المطابقة المباشرة
+  if (map[path]) return map[path];
+  // مطابقة لمسارات السياسات /policies/[id]
+  if (path.startsWith('#/policies/')) return 'سياسة فردية';
+  if (path.startsWith('#/standards/')) return 'ممارسة فردية';
+  if (path.startsWith('#/learn/blog/')) return 'مقال مدوّنة';
+  if (path.startsWith('#/admin')) return 'لوحة الإدارة';
+  return path;
+}
+
+// ترجمة أسماء الأدوات
+function getToolNameById(id) {
+  const tool = (typeof TOOLS_CATALOG !== 'undefined') ? TOOLS_CATALOG.find(t => t.id === id) : null;
+  return tool ? tool.name : id;
 }
 
 // اختصار لوحة المفاتيح لفتح دخول المدير (مخفي عن المستخدم العادي)
@@ -2809,6 +3260,7 @@ function renderPolicyForm(p) {
 
     try {
       const result = await API.generatePolicy(p.id, associationName, data);
+      Analytics.track('download', p.id + ':' + format);
       if (format === 'pdf') {
         downloadAsPDF(result, p);
       } else if (format === 'docx') {
@@ -3034,16 +3486,28 @@ function renderAdminLogin() {
     <div class="container container-narrow" style="max-width:450px">
       <div class="card mt-6">
         <h1>دخول المدير</h1>
-        <p class="muted mb-4">للوصول إلى لوحة إدارة السياسات.</p>
+        <p class="muted mb-4">للوصول إلى لوحة إدارة المنصّة.</p>
         <form id="admin-login-form">
           <div class="form-group">
             <label>البريد الإلكتروني</label>
-            <input type="email" name="email" required autofocus
-                   value="admin@marjie.local" />
+            <input type="email" name="email" required autofocus autocomplete="username"
+                   placeholder="email@example.com" />
           </div>
           <div class="form-group">
             <label>كلمة المرور</label>
-            <input type="password" name="password" required />
+            <div class="password-input-wrap">
+              <input type="password" name="password" id="admin-password" required autocomplete="current-password" />
+              <button type="button" class="password-toggle" onclick="togglePasswordVisibility('admin-password', this)" aria-label="إظهار/إخفاء كلمة المرور">
+                <svg class="eye-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg class="eye-hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary btn-block btn-lg" id="admin-login-btn">دخول</button>
         </form>
@@ -3074,33 +3538,2375 @@ function renderAdminLogin() {
 }
 
 async function adminLogout() {
+  if (typeof logAudit === 'function') logAudit('logout', 'auth', '', 'Manual logout');
   try { await API.adminLogout(); } catch (e) {}
+  // مسح verification الـPIN عند الخروج
+  try { localStorage.removeItem('marjie_pin_verified_at'); } catch (e) {}
   clearAdminSession();
   showToast('تم تسجيل الخروج', 'info');
   navigate('#/');
 }
 
 // ═════════════════════════════════════════════════════════════════
-// عرض: لوحة المدير - السياسات
+// لوحة الإدارة — البنية الجديدة (Layout + Sidebar + Sections)
 // ═════════════════════════════════════════════════════════════════
 
-async function renderAdminPolicies() {
-  $('#app').innerHTML = `
-    <div class="container">
-      <div class="flex-between mb-4 flex-wrap flex-gap-3">
-        <div>
-          <h1>لوحة الإدارة — السياسات</h1>
-          <p class="muted">إدارة كل السياسات (الظاهرة والمخفية).</p>
+const ADMIN_NAV_ITEMS = [
+  { id:'dashboard', href:'#/admin', name:'لوحة المعلومات',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' },
+  { id:'policies', href:'#/admin/policies', name:'السياسات',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' },
+  { id:'slides', href:'#/admin/slides', name:'السلايدر',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>' },
+  { id:'blog', href:'#/admin/blog', name:'المدوّنة',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10l4 4v10a2 2 0 0 1-2 2z"/><polyline points="14 4 14 10 20 10"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>' },
+  { id:'faq', href:'#/admin/faq', name:'الأسئلة الشائعة',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' },
+  { id:'guest', href:'#/admin/guest', name:'ضيف الشهر',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' },
+  { id:'analytics', href:'#/admin/analytics', name:'الإحصائيات',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' },
+  { id:'settings', href:'#/admin/settings', name:'الإعدادات',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>' }
+];
+
+function renderAdminShell(activeId, contentHtml) {
+  const email = State.adminEmail || 'admin';
+  const initial = (email[0] || 'A').toUpperCase();
+  const sidebarHtml = `
+    <aside class="admin-sidebar">
+      <div class="admin-side-header">
+        <div class="admin-side-avatar">${escapeHtml(initial)}</div>
+        <div class="admin-side-user">
+          <strong>${escapeHtml(email)}</strong>
+          <span>مدير النظام</span>
         </div>
-        <div class="flex flex-gap-2">
-          <a href="#/admin/policies/new" class="btn btn-primary">+ إضافة سياسة</a>
-          <button class="btn btn-ghost" onclick="adminLogout()">خروج</button>
+      </div>
+      ${ADMIN_NAV_ITEMS.map(item => `
+        <a href="${item.href}" class="admin-side-link ${item.id === activeId ? 'active' : ''}">
+          ${item.icon}
+          <span>${escapeHtml(item.name)}</span>
+        </a>
+      `).join('')}
+      <div class="admin-side-divider"></div>
+      <div class="admin-side-logout">
+        <button class="btn btn-ghost btn-sm btn-block" onclick="adminLogout()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          خروج
+        </button>
+      </div>
+    </aside>
+  `;
+  $('#app').innerHTML = `
+    <div class="admin-shell">
+      ${sidebarHtml}
+      <main class="admin-main">${contentHtml}</main>
+    </div>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// لوحة المعلومات (Dashboard)
+// ═════════════════════════════════════════════════════════════════
+
+function renderAdminDashboard() {
+  const stats = computeHomeStats();
+  const slides = getSlides();
+  const activeSlides = slides.filter(s => s.enabled !== false).length;
+  const policiesCount = (State.policies && State.policies.length) || '...';
+
+  // إحصائيات الزوار من Analytics
+  const events = Analytics.getLocalEvents();
+  const analyticsStats = Analytics.computeStats(events, 30);
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>لوحة المعلومات</h1>
+        <p>نظرة عامة على المنصّة وأنشطتها • <span class="badge ${ROLES[getCurrentRole()].badge}">${ROLES[getCurrentRole()].label}</span></p>
+      </div>
+      <a href="#/" class="btn btn-secondary btn-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12L5 10L12 3L19 10L21 12"/><path d="M5 10V20H19V10"/></svg>
+        عرض الموقع العام
+      </a>
+    </div>
+
+    <!-- الإحصائيات الرئيسية -->
+    <div class="admin-dashboard-grid">
+      <div class="admin-stat-card" style="--accent:#EAF3DE;--accent-color:var(--green-700)">
+        <div class="admin-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="admin-stat-value">${analyticsStats.todayVisitors}</div>
+        <div class="admin-stat-label">زائر اليوم</div>
+        <div class="admin-stat-trend">
+          <a href="#/admin/analytics" style="color:var(--green-700);text-decoration:none">${analyticsStats.uniqueVisitors} زائر آخر 30 يوم ←</a>
         </div>
       </div>
 
-      <div id="admin-policies-content"><div class="card center"><div class="loader"></div></div></div>
+      <div class="admin-stat-card" style="--accent:var(--teal-50);--accent-color:var(--teal-700)">
+        <div class="admin-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="admin-stat-value">${policiesCount}</div>
+        <div class="admin-stat-label">سياسة منشورة</div>
+        <div class="admin-stat-trend">
+          <a href="#/admin/policies" style="color:var(--teal-700);text-decoration:none">إدارة ←</a>
+        </div>
+      </div>
+
+      <div class="admin-stat-card" style="--accent:var(--sand-50);--accent-color:var(--sand-700)">
+        <div class="admin-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="admin-stat-value">${activeSlides}/${slides.length}</div>
+        <div class="admin-stat-label">شريحة نشطة</div>
+        <div class="admin-stat-trend">
+          <a href="#/admin/slides" style="color:var(--sand-700);text-decoration:none">إدارة ←</a>
+        </div>
+      </div>
+
+      <div class="admin-stat-card" style="--accent:#FCEBEB;--accent-color:var(--coral-700)">
+        <div class="admin-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <div class="admin-stat-value">${analyticsStats.downloadCount}</div>
+        <div class="admin-stat-label">تنزيل سياسة (30 يوم)</div>
+        <div class="admin-stat-trend">
+          <a href="#/admin/analytics" style="color:var(--coral-700);text-decoration:none">عرض التفاصيل ←</a>
+        </div>
+      </div>
+    </div>
+
+    ${analyticsStats.totalEvents > 0 ? `
+      <!-- ملخّص نشاط الزوار -->
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <div>
+            <h3 class="admin-section-title">نشاط الزوار - آخر 30 يوم</h3>
+            <p class="admin-section-desc">${analyticsStats.totalEvents} حدث، ${analyticsStats.pageViews} مشاهدة صفحة</p>
+          </div>
+          <a href="#/admin/analytics" class="btn btn-ghost btn-sm">التفاصيل الكاملة ←</a>
+        </div>
+        ${renderAnalyticsLineChart(analyticsStats.timeline)}
+      </div>
+    ` : ''}
+
+    <!-- إحصائيات المحتوى -->
+    <div class="admin-section">
+      <div class="admin-section-header">
+        <div>
+          <h3 class="admin-section-title">إحصائيات المحتوى</h3>
+          <p class="admin-section-desc">نظرة سريعة على حجم محتوى المنصّة</p>
+        </div>
+      </div>
+      <div class="admin-quick-grid">
+        <div class="admin-quick-card">
+          <div class="admin-quick-icon">📝</div>
+          <div class="admin-quick-text"><strong>${stats.decisions}</strong><span>قرار نموذجي</span></div>
+        </div>
+        <div class="admin-quick-card">
+          <div class="admin-quick-icon">⚠️</div>
+          <div class="admin-quick-text"><strong>${stats.risks}</strong><span>مخاطرة موثّقة</span></div>
+        </div>
+        <div class="admin-quick-card">
+          <div class="admin-quick-icon">❓</div>
+          <div class="admin-quick-text"><strong>${stats.faq}</strong><span>سؤال شائع</span></div>
+        </div>
+        <div class="admin-quick-card">
+          <div class="admin-quick-icon">🔍</div>
+          <div class="admin-quick-text"><strong>${stats.auditRules}</strong><span>قاعدة فحص</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الإجراءات السريعة -->
+    <div class="admin-section">
+      <div class="admin-section-header">
+        <div>
+          <h3 class="admin-section-title">إجراءات سريعة</h3>
+          <p class="admin-section-desc">مهام مدير النظام الشائعة</p>
+        </div>
+      </div>
+      <div class="admin-quick-grid">
+        <a href="#/admin/policies/new" class="admin-quick-card">
+          <div class="admin-quick-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="admin-quick-text"><strong>إضافة سياسة</strong><span>سياسة جديدة</span></div>
+        </a>
+        <a href="#/admin/slides/new" class="admin-quick-card">
+          <div class="admin-quick-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <div class="admin-quick-text"><strong>شريحة جديدة</strong><span>أضف للسلايدر</span></div>
+        </a>
+        <a href="#/admin/analytics" class="admin-quick-card">
+          <div class="admin-quick-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="admin-quick-text"><strong>الإحصائيات</strong><span>تقارير الزوار</span></div>
+        </a>
+        <a href="#/admin/blog" class="admin-quick-card">
+          <div class="admin-quick-icon">📚</div>
+          <div class="admin-quick-text"><strong>المدوّنة</strong><span>إدارة المقالات</span></div>
+        </a>
+      </div>
     </div>
   `;
+
+  renderAdminShell('dashboard', content);
+}
+
+// ═════════════════════════════════════════════════════════════════
+// إدارة السلايدر
+// ═════════════════════════════════════════════════════════════════
+
+const SLIDES_STORAGE_KEY = 'marjie_slides_override';
+
+// قراءة الشرائح من localStorage أو إرجاع الافتراضي
+function getSlides() {
+  try {
+    const stored = localStorage.getItem(SLIDES_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {}
+  // الافتراضي مع id ثابت لكل شريحة
+  return HOME_SLIDES.map((s, i) => ({
+    id: 'slide-' + (i + 1),
+    enabled: true,
+    title: s.title,
+    subtitle: s.subtitle,
+    bg: s.bg,
+    accent: s.accent,
+    cta: s.cta,
+    illustration: s.illustration
+  }));
+}
+
+function saveSlides(slides) {
+  try {
+    localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(slides));
+    return true;
+  } catch (e) {
+    showToast('فشل الحفظ — مساحة التخزين ممتلئة', 'error');
+    return false;
+  }
+}
+
+function resetSlidesToDefault() {
+  if (!confirm('هل تريد استعادة الشرائح الافتراضية؟ ستفقد كل التعديلات.')) return;
+  try { localStorage.removeItem(SLIDES_STORAGE_KEY); } catch (e) {}
+  showToast('تمّت استعادة الشرائح الافتراضية', 'success');
+  renderAdminSlides();
+}
+
+function renderAdminSlides() {
+  const slides = getSlides();
+
+  const slidesHtml = slides.map((s, idx) => {
+    const isActive = s.enabled !== false;
+    return `
+      <div class="slide-row" data-slide-id="${escapeHtml(s.id)}">
+        <div class="slide-handle" title="السحب للترتيب">⋮⋮</div>
+        <div class="slide-thumb" style="background:${s.bg};">${idx + 1}</div>
+        <div class="slide-info">
+          <h4>${escapeHtml(s.title)}</h4>
+          <p>${escapeHtml(s.subtitle)}</p>
+          <div style="margin-top:0.4rem"><span class="slide-status ${isActive ? '' : 'disabled'}">${isActive ? '● نشطة' : '○ معطّلة'}</span></div>
+        </div>
+        <div class="slide-actions">
+          <button class="btn btn-ghost btn-sm" onclick="moveSlide('${escapeHtml(s.id)}', -1)" title="نقل للأعلى" ${idx === 0 ? 'disabled' : ''}>↑</button>
+          <button class="btn btn-ghost btn-sm" onclick="moveSlide('${escapeHtml(s.id)}', 1)" title="نقل للأسفل" ${idx === slides.length - 1 ? 'disabled' : ''}>↓</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleSlideEnabled('${escapeHtml(s.id)}')" title="${isActive ? 'تعطيل' : 'تفعيل'}">${isActive ? '👁 عرض' : '🚫 إخفاء'}</button>
+          <a href="#/admin/slides/${escapeHtml(s.id)}" class="btn btn-secondary btn-sm">تعديل</a>
+          <button class="btn btn-danger btn-sm" onclick="deleteSlide('${escapeHtml(s.id)}')">حذف</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>إدارة السلايدر</h1>
+        <p>الشرائح الترويجية في رأس الصفحة الرئيسية. الترتيب يظهر للزوار بنفس الترتيب هنا.</p>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="resetSlidesToDefault()">استعادة الافتراضي</button>
+        <a href="#/admin/slides/new" class="btn btn-primary">+ شريحة جديدة</a>
+      </div>
+    </div>
+
+    <div class="alert alert-info small mb-3">
+      💡 <strong>ملاحظة:</strong> الشرائح تُحفظ حالياً في تخزين المتصفح. في المرحلة 2 ستُنقل لقاعدة البيانات لتُشاهد عبر كل الأجهزة.
+    </div>
+
+    <div class="slides-manager">
+      ${slides.length === 0 ? '<div class="admin-placeholder"><div class="admin-placeholder-icon">🖼️</div><h3>لا توجد شرائح</h3><p>أضف شريحة جديدة لتظهر في الصفحة الرئيسية.</p><a href="#/admin/slides/new" class="btn btn-primary">+ إضافة شريحة</a></div>' : slidesHtml}
+    </div>
+  `;
+
+  renderAdminShell('slides', content);
+}
+
+function moveSlide(id, direction) {
+  const slides = getSlides();
+  const idx = slides.findIndex(s => s.id === id);
+  if (idx === -1) return;
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= slides.length) return;
+  [slides[idx], slides[newIdx]] = [slides[newIdx], slides[idx]];
+  if (saveSlides(slides)) {
+    showToast('تمّ تغيير الترتيب ✓', 'success');
+    renderAdminSlides();
+  }
+}
+
+function toggleSlideEnabled(id) {
+  const slides = getSlides();
+  const slide = slides.find(s => s.id === id);
+  if (!slide) return;
+  slide.enabled = slide.enabled === false;
+  if (saveSlides(slides)) {
+    showToast(slide.enabled ? 'تمّ تفعيل الشريحة ✓' : 'تمّ تعطيل الشريحة', 'success');
+    renderAdminSlides();
+  }
+}
+
+function deleteSlide(id) {
+  if (!confirm('هل تريد حذف هذه الشريحة؟ لا يمكن التراجع.')) return;
+  const slides = getSlides().filter(s => s.id !== id);
+  if (saveSlides(slides)) {
+    logAudit('delete', 'slide', id, '');
+    showToast('تمّ الحذف ✓', 'success');
+    renderAdminSlides();
+  }
+}
+
+// محرّر الشريحة (إضافة/تعديل)
+function renderAdminSlideEditor(slideId) {
+  const slides = getSlides();
+  const isNew = !slideId;
+  const slide = isNew ? {
+    id: 'slide-' + Date.now(),
+    enabled: true,
+    title: '',
+    subtitle: '',
+    bg: 'linear-gradient(135deg,#0F6E56 0%,#04342C 100%)',
+    accent: '#C9A574',
+    cta: { text: 'استكشف', href: '#/standards' },
+    illustration: 'platform'
+  } : slides.find(s => s.id === slideId);
+
+  if (!slide) {
+    showToast('الشريحة غير موجودة', 'error');
+    navigate('#/admin/slides');
+    return;
+  }
+
+  const bgPresets = [
+    { label:'أخضر داكن', value:'linear-gradient(135deg,#0F6E56 0%,#04342C 100%)' },
+    { label:'أخضر فاتح', value:'linear-gradient(135deg,#1D9E75 0%,#0F6E56 100%)' },
+    { label:'ذهبي', value:'linear-gradient(135deg,#9B7A45 0%,#5A4524 100%)' },
+    { label:'مرجاني', value:'linear-gradient(135deg,#D85A30 0%,#993C1D 100%)' },
+    { label:'أزرق هادئ', value:'linear-gradient(135deg,#3B82A6 0%,#1E4D6B 100%)' }
+  ];
+
+  const illustOptions = [
+    { value:'platform', label:'شاشة المنصّة' },
+    { value:'features', label:'شارات المميزات' },
+    { value:'services', label:'أيقونات الخدمات' }
+  ];
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>${isNew ? 'إضافة شريحة' : 'تعديل شريحة'}</h1>
+        <p>${isNew ? 'أنشئ شريحة جديدة للسلايدر' : 'عدّل تفاصيل الشريحة'}</p>
+      </div>
+      <a href="#/admin/slides" class="btn btn-ghost btn-sm">← العودة</a>
+    </div>
+
+    <div class="admin-section">
+      <form id="slide-form" onsubmit="saveSlideForm(event, '${escapeHtml(slide.id)}', ${isNew})">
+        <div class="form-row">
+          <div class="form-group">
+            <label>العنوان الرئيسي <span class="required">*</span></label>
+            <input type="text" name="title" required value="${escapeHtml(slide.title)}" maxlength="60" placeholder="مثلاً: حوكمة جمعيتك في مكان واحد" />
+          </div>
+          <div class="form-group">
+            <label>اللون المميّز للزر</label>
+            <input type="color" name="accent" value="${escapeHtml(slide.accent)}" style="height:42px;padding:0.3rem" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>الوصف <span class="required">*</span></label>
+          <textarea name="subtitle" required maxlength="180" rows="2" style="min-height:80px">${escapeHtml(slide.subtitle)}</textarea>
+          <div class="form-help">حتى 180 حرف. اكتب وصفاً جذّاباً يلخّص الشريحة.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>نص زر الـCTA</label>
+            <input type="text" name="ctaText" value="${escapeHtml(slide.cta.text)}" maxlength="30" placeholder="استكشف المنصّة" />
+          </div>
+          <div class="form-group">
+            <label>رابط الـCTA</label>
+            <input type="text" name="ctaHref" value="${escapeHtml(slide.cta.href)}" placeholder="#/standards أو https://..." />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>خلفية الشريحة</label>
+            <select name="bg">
+              ${bgPresets.map(p => `<option value="${escapeHtml(p.value)}" ${slide.bg === p.value ? 'selected' : ''}>${escapeHtml(p.label)}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>الرسم التوضيحي</label>
+            <select name="illustration">
+              ${illustOptions.map(o => `<option value="${o.value}" ${slide.illustration === o.value ? 'selected' : ''}>${escapeHtml(o.label)}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label style="display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer">
+            <input type="checkbox" name="enabled" ${slide.enabled !== false ? 'checked' : ''} style="width:auto" />
+            الشريحة نشطة (تظهر للزوار)
+          </label>
+        </div>
+
+        <div class="slide-editor-preview">
+          <div class="slide-editor-preview-title">معاينة سريعة</div>
+          <div id="slide-preview" style="background:${slide.bg};color:#fff;padding:2rem;border-radius:14px;text-align:center;min-height:140px;display:flex;flex-direction:column;justify-content:center;gap:0.5rem">
+            <div style="font-family:var(--font-heading);font-size:1.4rem;font-weight:700">${escapeHtml(slide.title || 'العنوان هنا')}</div>
+            <div style="opacity:0.85;font-size:0.92rem">${escapeHtml(slide.subtitle || 'الوصف هنا')}</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;justify-content:flex-end;flex-wrap:wrap">
+          <a href="#/admin/slides" class="btn btn-secondary">إلغاء</a>
+          <button type="submit" class="btn btn-primary">${isNew ? 'إضافة' : 'حفظ التعديلات'}</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  renderAdminShell('slides', content);
+
+  // معاينة فورية عند تغيير الحقول
+  setTimeout(() => {
+    const form = $('#slide-form');
+    if (!form) return;
+    form.addEventListener('input', () => {
+      const fd = new FormData(form);
+      const preview = $('#slide-preview');
+      if (!preview) return;
+      preview.style.background = fd.get('bg');
+      preview.innerHTML = `
+        <div style="font-family:var(--font-heading);font-size:1.4rem;font-weight:700">${escapeHtml(fd.get('title') || 'العنوان هنا')}</div>
+        <div style="opacity:0.85;font-size:0.92rem">${escapeHtml(fd.get('subtitle') || 'الوصف هنا')}</div>
+      `;
+    });
+  }, 100);
+}
+
+function saveSlideForm(event, slideId, isNew) {
+  event.preventDefault();
+  const fd = new FormData(event.target);
+  const slides = getSlides();
+
+  const newData = {
+    id: slideId,
+    enabled: fd.get('enabled') === 'on',
+    title: fd.get('title').trim(),
+    subtitle: fd.get('subtitle').trim(),
+    bg: fd.get('bg'),
+    accent: fd.get('accent'),
+    illustration: fd.get('illustration'),
+    cta: {
+      text: fd.get('ctaText').trim() || 'استكشف',
+      href: fd.get('ctaHref').trim() || '#/'
+    }
+  };
+
+  if (isNew) {
+    slides.push(newData);
+  } else {
+    const idx = slides.findIndex(s => s.id === slideId);
+    if (idx === -1) {
+      showToast('الشريحة غير موجودة', 'error');
+      return;
+    }
+    slides[idx] = newData;
+  }
+
+  if (saveSlides(slides)) {
+    logAudit(isNew ? 'create' : 'update', 'slide', newData.id, newData.title);
+    showToast(isNew ? 'تمّت إضافة الشريحة ✓' : 'تمّ الحفظ ✓', 'success');
+    navigate('#/admin/slides');
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════
+// لوحة الإحصائيات والتحليلات (Phase 2)
+// ═════════════════════════════════════════════════════════════════
+
+let _currentAnalyticsPeriod = 30;
+
+function renderAdminAnalytics() {
+  const events = Analytics.getLocalEvents();
+  const stats = Analytics.computeStats(events, _currentAnalyticsPeriod);
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>الإحصائيات والتحليلات</h1>
+        <p>تتبّع زوار المنصّة والأنشطة الأكثر شيوعاً</p>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <select onchange="changeAnalyticsPeriod(this.value)" style="padding:0.4rem 0.8rem">
+          <option value="7" ${_currentAnalyticsPeriod===7?'selected':''}>آخر 7 أيام</option>
+          <option value="30" ${_currentAnalyticsPeriod===30?'selected':''}>آخر 30 يوم</option>
+          <option value="90" ${_currentAnalyticsPeriod===90?'selected':''}>آخر 90 يوم</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="clearAnalyticsData()">مسح البيانات المحلية</button>
+      </div>
+    </div>
+
+    ${events.length === 0 ? `
+      <div class="admin-placeholder">
+        <div class="admin-placeholder-icon">📊</div>
+        <h3>لا توجد بيانات تتبّع بعد</h3>
+        <p>لم تُسجَّل أي زيارات حتى الآن. تصفّح المنصّة من علامة تبويب جديدة وسيبدأ النظام بالتسجيل تلقائياً.</p>
+      </div>
+    ` : `
+      <!-- بطاقات الإحصائيات الرئيسية -->
+      <div class="admin-dashboard-grid">
+        <div class="admin-stat-card" style="--accent:var(--teal-50);--accent-color:var(--teal-700)">
+          <div class="admin-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="admin-stat-value">${stats.uniqueVisitors}</div>
+          <div class="admin-stat-label">زائر فريد (${_currentAnalyticsPeriod} يوم)</div>
+          <div class="admin-stat-trend">+${stats.todayVisitors} اليوم</div>
+        </div>
+        <div class="admin-stat-card" style="--accent:var(--sand-50);--accent-color:var(--sand-700)">
+          <div class="admin-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="admin-stat-value">${stats.pageViews}</div>
+          <div class="admin-stat-label">مشاهدة صفحة</div>
+          <div class="admin-stat-trend">${(stats.pageViews / Math.max(stats.uniqueVisitors, 1)).toFixed(1)} لكل زائر</div>
+        </div>
+        <div class="admin-stat-card" style="--accent:#FCEBEB;--accent-color:var(--coral-700)">
+          <div class="admin-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <div class="admin-stat-value">${stats.downloadCount}</div>
+          <div class="admin-stat-label">تنزيل سياسة</div>
+        </div>
+        <div class="admin-stat-card" style="--accent:#EAF3DE;--accent-color:var(--green-700)">
+          <div class="admin-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="admin-stat-value">${stats.totalEvents}</div>
+          <div class="admin-stat-label">إجمالي الأحداث</div>
+        </div>
+      </div>
+
+      <!-- الخط الزمني للزوار -->
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <div>
+            <h3 class="admin-section-title">الزوار اليوميون</h3>
+            <p class="admin-section-desc">عدد الزوار الفريدين عبر الفترة المختارة</p>
+          </div>
+        </div>
+        ${renderAnalyticsLineChart(stats.timeline)}
+      </div>
+
+      <!-- صفّ من جدولين -->
+      <div class="analytics-2col">
+        <!-- الأدوات الأكثر استخداماً -->
+        <div class="admin-section">
+          <div class="admin-section-header">
+            <h3 class="admin-section-title">الأدوات الأكثر استخداماً</h3>
+          </div>
+          ${stats.topTools.length === 0
+            ? '<p class="muted small">لا توجد بيانات بعد</p>'
+            : renderAnalyticsBarList(stats.topTools.map(([id, count]) => [getToolNameById(id), count]))}
+        </div>
+
+        <!-- الصفحات الأكثر زيارة -->
+        <div class="admin-section">
+          <div class="admin-section-header">
+            <h3 class="admin-section-title">الصفحات الأكثر زيارة</h3>
+          </div>
+          ${stats.topPages.length === 0
+            ? '<p class="muted small">لا توجد بيانات بعد</p>'
+            : renderAnalyticsBarList(stats.topPages.map(([path, count]) => [translatePagePath(path), count]))}
+        </div>
+      </div>
+
+      <div class="analytics-2col">
+        <!-- التنزيلات الأكثر -->
+        <div class="admin-section">
+          <div class="admin-section-header">
+            <h3 class="admin-section-title">التنزيلات الأكثر</h3>
+          </div>
+          ${stats.topDownloads.length === 0
+            ? '<p class="muted small">لا توجد تنزيلات بعد</p>'
+            : renderAnalyticsBarList(stats.topDownloads.map(([item, count]) => [item, count]))}
+        </div>
+
+        <!-- مصادر الزوار -->
+        <div class="admin-section">
+          <div class="admin-section-header">
+            <h3 class="admin-section-title">مصادر الزوار</h3>
+          </div>
+          ${stats.referrers.length === 0
+            ? '<p class="muted small">لا توجد بيانات بعد</p>'
+            : renderAnalyticsBarList(stats.referrers)}
+        </div>
+      </div>
+
+      <!-- الأجهزة -->
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <h3 class="admin-section-title">توزيع الأجهزة</h3>
+        </div>
+        ${renderDevicesChart(stats.devices)}
+      </div>
+
+      <div class="alert alert-info small mt-3">
+        💡 <strong>ملاحظة:</strong> البيانات حالياً محفوظة محلياً في المتصفح فقط. لتجميعها من كل الزوار في مكان واحد، يجب تحديث ملف Code.gs (يأتي في تحديث منفصل).
+      </div>
+    `}
+  `;
+
+  renderAdminShell('analytics', content);
+}
+
+function changeAnalyticsPeriod(period) {
+  _currentAnalyticsPeriod = parseInt(period) || 30;
+  renderAdminAnalytics();
+}
+
+function clearAnalyticsData() {
+  if (!confirm('هل تريد مسح كل بيانات التتبّع المحلية؟ هذا الإجراء لا يمكن التراجع عنه.')) return;
+  Analytics.clearLocalEvents();
+  showToast('تمّ مسح البيانات ✓', 'success');
+  renderAdminAnalytics();
+}
+
+// ═════════════════════════════════════════════════════════════════
+// مولّدات الرسوم البيانية (SVG خفيف)
+// ═════════════════════════════════════════════════════════════════
+
+function renderAnalyticsLineChart(timeline) {
+  if (!timeline || timeline.length === 0) {
+    return '<p class="muted small">لا توجد بيانات</p>';
+  }
+  const W = 760;
+  const H = 220;
+  const pad = { top: 20, right: 30, bottom: 40, left: 40 };
+  const innerW = W - pad.left - pad.right;
+  const innerH = H - pad.top - pad.bottom;
+  const max = Math.max(...timeline.map(d => d.visitors), 1);
+
+  const points = timeline.map((d, i) => {
+    const x = pad.left + (i * innerW / Math.max(timeline.length - 1, 1));
+    const y = pad.top + innerH - (d.visitors / max) * innerH;
+    return { x, y, ...d };
+  });
+
+  const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+  const areaPath = `${linePath} L ${points[points.length-1].x} ${pad.top + innerH} L ${points[0].x} ${pad.top + innerH} Z`;
+
+  // عرض كل ~7 تواريخ فقط
+  const labelStep = Math.max(1, Math.floor(timeline.length / 7));
+
+  return `
+    <svg viewBox="0 0 ${W} ${H}" class="analytics-chart" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+      ${[0, 0.25, 0.5, 0.75, 1].map(p => {
+        const y = pad.top + innerH * p;
+        const v = Math.round(max * (1 - p));
+        return `
+          <line x1="${pad.left}" y1="${y}" x2="${pad.left + innerW}" y2="${y}" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="2,4"/>
+          <text x="${pad.left - 6}" y="${y + 4}" text-anchor="end" font-size="10" fill="var(--text-faint)" font-family="IBM Plex Sans Arabic">${v}</text>
+        `;
+      }).join('')}
+      <path d="${areaPath}" fill="rgba(15,110,86,0.12)"/>
+      <path d="${linePath}" fill="none" stroke="var(--teal-700)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      ${points.map((p, i) => `
+        <circle cx="${p.x}" cy="${p.y}" r="3.5" fill="var(--teal-700)" stroke="#fff" stroke-width="1.5">
+          <title>${p.label}: ${p.visitors} زائر</title>
+        </circle>
+      `).join('')}
+      ${points.map((p, i) => i % labelStep === 0 ? `
+        <text x="${p.x}" y="${pad.top + innerH + 18}" text-anchor="middle" font-size="10" fill="var(--text-muted)" font-family="IBM Plex Sans Arabic">${p.label}</text>
+      ` : '').join('')}
+    </svg>
+  `;
+}
+
+function renderAnalyticsBarList(items) {
+  if (!items || items.length === 0) {
+    return '<p class="muted small">لا توجد بيانات</p>';
+  }
+  const max = Math.max(...items.map(i => i[1]));
+  return `
+    <div class="analytics-bars">
+      ${items.map(([label, value]) => {
+        const w = Math.round((value / max) * 100);
+        return `
+          <div class="analytics-bar-row">
+            <div class="analytics-bar-label">${escapeHtml(String(label))}</div>
+            <div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:${w}%"></div></div>
+            <div class="analytics-bar-value">${value.toLocaleString('en-US')}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderDevicesChart(devices) {
+  const total = (devices.desktop || 0) + (devices.mobile || 0) + (devices.tablet || 0);
+  if (total === 0) return '<p class="muted small">لا توجد بيانات</p>';
+  const labels = { desktop: 'سطح المكتب 🖥️', mobile: 'الموبايل 📱', tablet: 'التابلت 📲' };
+  const colors = { desktop: 'var(--teal-700)', mobile: 'var(--sand-700)', tablet: 'var(--coral-500)' };
+  const items = ['desktop', 'mobile', 'tablet']
+    .filter(k => devices[k] > 0)
+    .map(k => ({ key: k, label: labels[k], value: devices[k], color: colors[k], pct: Math.round((devices[k] / total) * 100) }));
+
+  return `
+    <div class="device-chart">
+      ${items.map(item => `
+        <div class="device-row">
+          <span class="device-label">${item.label}</span>
+          <div class="device-bar-track">
+            <div class="device-bar-fill" style="width:${item.pct}%;background:${item.color}"></div>
+          </div>
+          <span class="device-value"><strong>${item.value}</strong> (${item.pct}%)</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// ═════════════════════════════════════════════════════════════════
+// الأمان والصلاحيات — Phase 4
+// ═════════════════════════════════════════════════════════════════
+
+// ─── الأدوار والصلاحيات ──────────────────────────────
+const ROLES = {
+  super_admin: {
+    label: 'مدير عام',
+    badge: 'badge-coral',
+    desc: 'صلاحية كاملة على كل شيء — بما فيها إدارة المستخدمين والإعدادات الحرجة',
+    permissions: ['*']
+  },
+  content_manager: {
+    label: 'مدير محتوى',
+    badge: 'badge-teal',
+    desc: 'إدارة كاملة للمحتوى (السياسات، السلايدر، المدوّنة، FAQ، ضيف الشهر) — بدون إعدادات الأمان',
+    permissions: [
+      'admin.dashboard.view',
+      'admin.policies.*',
+      'admin.slides.*',
+      'admin.blog.*',
+      'admin.faq.*',
+      'admin.guest.*',
+      'admin.analytics.view'
+    ]
+  },
+  viewer: {
+    label: 'مراجع',
+    badge: 'badge-gray',
+    desc: 'عرض كل شيء بدون إمكانية التعديل أو الحذف — مفيد للمراقبين والمراجعين الخارجيين',
+    permissions: [
+      'admin.dashboard.view',
+      'admin.policies.view',
+      'admin.slides.view',
+      'admin.blog.view',
+      'admin.faq.view',
+      'admin.guest.view',
+      'admin.analytics.view'
+    ]
+  }
+};
+
+// الـmaster admin من Code.gs دائماً super_admin
+function getCurrentRole() {
+  // سيُحدّث لاحقاً عند دعم مستخدمين متعددين
+  return State.adminRole || 'super_admin';
+}
+
+function hasPermission(perm) {
+  const role = getCurrentRole();
+  if (!role || !ROLES[role]) return false;
+  const perms = ROLES[role].permissions;
+  if (perms.includes('*')) return true;
+  return perms.some(p => {
+    if (p === perm) return true;
+    if (p.endsWith('.*')) return perm.startsWith(p.substring(0, p.length - 1));
+    return false;
+  });
+}
+
+// ─── سجل التدقيق ──────────────────────────────
+const AUDIT_LOG_KEY = 'marjie_audit_log';
+const MAX_AUDIT_ENTRIES = 1000;
+
+function logAudit(action, entity, entityId, details) {
+  try {
+    const entry = {
+      ts: Date.now(),
+      user: State.adminEmail || 'unknown',
+      action,
+      entity,
+      entityId: String(entityId || ''),
+      details: String(details || '').substring(0, 200)
+    };
+    const log = getAuditLog();
+    log.push(entry);
+    if (log.length > MAX_AUDIT_ENTRIES) {
+      log.splice(0, log.length - MAX_AUDIT_ENTRIES);
+    }
+    localStorage.setItem(AUDIT_LOG_KEY, JSON.stringify(log));
+  } catch (e) { /* تجاهل */ }
+}
+
+function getAuditLog() {
+  try {
+    const raw = localStorage.getItem(AUDIT_LOG_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) { return []; }
+}
+
+function clearAuditLog() {
+  try { localStorage.removeItem(AUDIT_LOG_KEY); } catch (e) {}
+}
+
+// ترجمة أسماء العمليات والكيانات
+const AUDIT_TRANSLATIONS = {
+  actions: {
+    create: 'إضافة', update: 'تعديل', delete: 'حذف',
+    toggle: 'تفعيل/تعطيل', login: 'تسجيل دخول', logout: 'خروج',
+    reset: 'استعادة افتراضي', settings_change: 'تغيير إعدادات',
+    pin_set: 'تعيين PIN', pin_change: 'تغيير PIN', pin_disable: 'تعطيل PIN'
+  },
+  entities: {
+    policy: 'سياسة', slide: 'شريحة سلايدر', article: 'مقال مدوّنة',
+    faq: 'سؤال شائع', guest: 'ضيف الشهر', settings: 'إعدادات',
+    auth: 'مصادقة', system: 'نظام'
+  }
+};
+
+// ─── PIN Lock ──────────────────────────────
+const PIN_HASH_KEY = 'marjie_admin_pin_hash';
+const PIN_VERIFIED_KEY = 'marjie_pin_verified_at';
+const PIN_VALIDITY_MS = 4 * 60 * 60 * 1000; // 4 ساعات
+
+// تجزئة بسيطة (SHA-256 fallback لـbtoa+salt إذا غير متاح)
+async function hashPIN(pin) {
+  const data = new TextEncoder().encode('marjie_v4_' + pin + '_salt_2026');
+  if (window.crypto && window.crypto.subtle) {
+    try {
+      const buf = await window.crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch (e) {}
+  }
+  // fallback ضعيف (للمتصفحات القديمة)
+  return btoa(unescape(encodeURIComponent('marjie_v4_' + pin + '_salt_2026')));
+}
+
+function hasPIN() {
+  try { return !!localStorage.getItem(PIN_HASH_KEY); } catch (e) { return false; }
+}
+
+async function setPIN(pin) {
+  const h = await hashPIN(pin);
+  try {
+    localStorage.setItem(PIN_HASH_KEY, h);
+    localStorage.setItem(PIN_VERIFIED_KEY, Date.now().toString());
+    return true;
+  } catch (e) { return false; }
+}
+
+async function verifyPIN(pin) {
+  const stored = localStorage.getItem(PIN_HASH_KEY);
+  if (!stored) return true;
+  const h = await hashPIN(pin);
+  if (h === stored) {
+    localStorage.setItem(PIN_VERIFIED_KEY, Date.now().toString());
+    return true;
+  }
+  return false;
+}
+
+function isPINVerified() {
+  if (!hasPIN()) return true;
+  try {
+    const verified = parseInt(localStorage.getItem(PIN_VERIFIED_KEY) || '0');
+    return verified > 0 && (Date.now() - verified) < PIN_VALIDITY_MS;
+  } catch (e) { return false; }
+}
+
+function clearPIN() {
+  try {
+    localStorage.removeItem(PIN_HASH_KEY);
+    localStorage.removeItem(PIN_VERIFIED_KEY);
+  } catch (e) {}
+}
+
+// شاشة طلب PIN
+function renderPINPrompt() {
+  $('#app').innerHTML = `
+    <div class="container container-narrow" style="max-width:420px">
+      <div class="card mt-6" style="text-align:center">
+        <div style="width:60px;height:60px;background:var(--teal-50);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal-700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M 7 11 V 7 a5 5 0 0 1 10 0 v4"/>
+          </svg>
+        </div>
+        <h1>أدخل رمز PIN</h1>
+        <p class="muted mb-4">رمز الحماية الإضافي للوصول للوحة الإدارة</p>
+        <form id="pin-form" onsubmit="submitPIN(event)">
+          <div class="form-group">
+            <input type="password" name="pin" id="pin-input" required maxlength="6"
+              inputmode="numeric" pattern="[0-9]{4,6}" autofocus
+              placeholder="••••••" style="text-align:center;letter-spacing:0.5em;font-size:1.5rem;font-family:monospace" />
+            <div id="pin-error" class="form-help" style="color:var(--coral-700);display:none">رمز غير صحيح</div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">دخول</button>
+          <button type="button" class="btn btn-ghost btn-sm btn-block mt-2" onclick="adminLogout()">خروج</button>
+        </form>
+      </div>
+    </div>
+  `;
+}
+
+async function submitPIN(event) {
+  event.preventDefault();
+  const input = document.getElementById('pin-input');
+  const errorEl = document.getElementById('pin-error');
+  const pin = (input.value || '').trim();
+  const ok = await verifyPIN(pin);
+  if (ok) {
+    logAudit('pin_verify', 'auth', '', 'PIN verified');
+    handleRoute(); // إعادة تحميل الـroute
+  } else {
+    errorEl.style.display = '';
+    input.value = '';
+    input.focus();
+    setTimeout(() => errorEl.style.display = 'none', 3000);
+  }
+}
+
+// ─── Session Timeout ──────────────────────────────
+const SESSION_TIMEOUT_KEY = 'marjie_session_timeout_min';
+let _sessionTimeoutTimer = null;
+let _lastActivityTs = Date.now();
+
+function getSessionTimeoutMinutes() {
+  try {
+    const v = parseInt(localStorage.getItem(SESSION_TIMEOUT_KEY));
+    return (v && v > 0) ? v : 60; // افتراضي ساعة
+  } catch (e) { return 60; }
+}
+
+function setSessionTimeoutMinutes(min) {
+  try { localStorage.setItem(SESSION_TIMEOUT_KEY, String(min)); } catch (e) {}
+}
+
+function startSessionTimer() {
+  if (_sessionTimeoutTimer) clearInterval(_sessionTimeoutTimer);
+  _lastActivityTs = Date.now();
+
+  // إعادة ضبط timer عند أي نشاط
+  ['click', 'keydown', 'scroll', 'mousemove', 'touchstart'].forEach(evt => {
+    document.addEventListener(evt, () => { _lastActivityTs = Date.now(); }, { passive: true, capture: true });
+  });
+
+  // فحص كل دقيقة
+  _sessionTimeoutTimer = setInterval(() => {
+    if (!State.adminToken) return;
+    const minutes = getSessionTimeoutMinutes();
+    const elapsed = (Date.now() - _lastActivityTs) / 60000;
+    if (elapsed >= minutes) {
+      clearInterval(_sessionTimeoutTimer);
+      logAudit('logout', 'auth', '', 'Session timeout');
+      adminLogout();
+      showToast('انتهت الجلسة بسبب عدم النشاط', 'warning');
+    }
+  }, 60000);
+}
+
+// ═════════════════════════════════════════════════════════════════
+// إدارة المحتوى — Phase 3 (المدوّنة + FAQ + ضيف الشهر)
+// ═════════════════════════════════════════════════════════════════
+
+const BLOG_STORAGE_KEY = 'marjie_blog_override';
+const FAQ_STORAGE_KEY = 'marjie_faq_override';
+const GUESTS_STORAGE_KEY = 'marjie_guests_override';
+
+// ─── Blog ──────────────────────────────
+function getBlogArticles() {
+  try {
+    const stored = localStorage.getItem(BLOG_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (e) {}
+  return BLOG_ARTICLES.map(a => ({ ...a }));
+}
+
+function saveBlogArticles(articles) {
+  try {
+    localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(articles));
+    return true;
+  } catch (e) {
+    showToast('فشل الحفظ — مساحة التخزين ممتلئة', 'error');
+    return false;
+  }
+}
+
+function resetBlogToDefault() {
+  if (!confirm('استعادة المقالات الافتراضية؟ ستفقد كل التعديلات.')) return;
+  try { localStorage.removeItem(BLOG_STORAGE_KEY); } catch (e) {}
+  showToast('تمّت الاستعادة', 'success');
+  renderAdminBlog();
+}
+
+// ─── FAQ ──────────────────────────────
+function getFAQ() {
+  try {
+    const stored = localStorage.getItem(FAQ_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (e) {}
+  // إضافة id لكل سؤال (لأن الأصلي بدون id)
+  return FAQ_DATA.map((f, i) => ({ ...f, id: f.id || ('faq-' + (i + 1)) }));
+}
+
+function saveFAQ(faqs) {
+  try {
+    localStorage.setItem(FAQ_STORAGE_KEY, JSON.stringify(faqs));
+    return true;
+  } catch (e) {
+    showToast('فشل الحفظ — مساحة التخزين ممتلئة', 'error');
+    return false;
+  }
+}
+
+function resetFAQToDefault() {
+  if (!confirm('استعادة الأسئلة الافتراضية؟ ستفقد كل التعديلات.')) return;
+  try { localStorage.removeItem(FAQ_STORAGE_KEY); } catch (e) {}
+  showToast('تمّت الاستعادة', 'success');
+  renderAdminFAQ();
+}
+
+// ─── Guests ──────────────────────────────
+function getGuests() {
+  try {
+    const stored = localStorage.getItem(GUESTS_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed && Array.isArray(parsed.guests)) return parsed;
+    }
+  } catch (e) {}
+  // الافتراضي: ضيف واحد، هو الحالي
+  const defaultGuest = {
+    id: 'guest-default',
+    isCurrent: true,
+    ...GUEST_OF_MONTH
+  };
+  return { currentId: defaultGuest.id, guests: [defaultGuest] };
+}
+
+function saveGuests(data) {
+  try {
+    localStorage.setItem(GUESTS_STORAGE_KEY, JSON.stringify(data));
+    return true;
+  } catch (e) {
+    showToast('فشل الحفظ — مساحة التخزين ممتلئة', 'error');
+    return false;
+  }
+}
+
+function getCurrentGuest() {
+  const data = getGuests();
+  return data.guests.find(g => g.id === data.currentId) || data.guests[0] || null;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// لوحة الإدارة - المدوّنة
+// ═════════════════════════════════════════════════════════════════
+
+function renderAdminBlog() {
+  const articles = getBlogArticles();
+
+  const rows = articles.length === 0
+    ? '<div class="admin-placeholder"><div class="admin-placeholder-icon">📚</div><h3>لا توجد مقالات</h3><p>أضف مقالاً جديداً للمدوّنة.</p><a href="#/admin/blog/new" class="btn btn-primary">+ مقال جديد</a></div>'
+    : `<div class="admin-content-list">
+        ${articles.map(a => `
+          <div class="content-row">
+            <div class="content-row-thumb" style="background:linear-gradient(135deg,${a.coverColor ? a.coverColor[0] : '#E1F5EE'},${a.coverColor ? a.coverColor[1] : '#9FE1CB'})">
+              <span>${escapeHtml(a.category || '')}</span>
+            </div>
+            <div class="content-row-info">
+              <h4>${escapeHtml(a.title)}</h4>
+              <p>${escapeHtml((a.excerpt || '').substring(0, 120))}${(a.excerpt || '').length > 120 ? '…' : ''}</p>
+              <div class="content-row-meta">
+                <span>📅 ${escapeHtml(a.date || '')}</span>
+                <span>✍️ ${escapeHtml(a.author || '')}</span>
+                <span>⏱ ${escapeHtml(a.readTime || '')}</span>
+              </div>
+            </div>
+            <div class="content-row-actions">
+              <a href="#/learn/blog/${escapeHtml(a.slug)}" target="_blank" class="btn btn-ghost btn-sm">معاينة</a>
+              <a href="#/admin/blog/${escapeHtml(a.slug)}" class="btn btn-secondary btn-sm">تعديل</a>
+              <button class="btn btn-danger btn-sm" onclick="deleteBlogArticle('${escapeHtml(a.slug)}')">حذف</button>
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>إدارة المدوّنة</h1>
+        <p>${articles.length} مقال — أضف، عدّل، احذف، أو استعد الافتراضي</p>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="resetBlogToDefault()">استعادة الافتراضي</button>
+        <a href="#/admin/blog/new" class="btn btn-primary">+ مقال جديد</a>
+      </div>
+    </div>
+
+    <div class="alert alert-info small mb-3">
+      💡 المقالات تُحفظ حالياً في تخزين المتصفح. التغييرات لن تظهر للزوار الآخرين قبل نقلها لقاعدة البيانات (المرحلة 4).
+    </div>
+
+    ${rows}
+  `;
+
+  renderAdminShell('blog', content);
+}
+
+function renderAdminBlogEditor(slug) {
+  const articles = getBlogArticles();
+  const isNew = !slug || slug === 'new';
+  const article = isNew ? {
+    slug: '',
+    title: '',
+    excerpt: '',
+    category: 'إدارة',
+    author: 'فريق مَرْجِع',
+    date: new Date().toISOString().substring(0, 10),
+    readTime: '5 دقائق',
+    coverColor: ['#E1F5EE', '#9FE1CB'],
+    content: ''
+  } : articles.find(a => a.slug === slug);
+
+  if (!isNew && !article) {
+    showToast('المقال غير موجود', 'error');
+    navigate('#/admin/blog');
+    return;
+  }
+
+  const categories = ['إدارة', 'حوكمة', 'مالية', 'استدامة', 'قيادة', 'تطوير', 'أخرى'];
+  const colorPresets = [
+    { label:'أخضر فاتح', val:['#E1F5EE', '#9FE1CB'] },
+    { label:'ذهبي', val:['#FAF4E8', '#F0E0BD'] },
+    { label:'مرجاني', val:['#FAECE7', '#F0997B'] },
+    { label:'أزرق هادئ', val:['#DCEEF8', '#9FCFEC'] },
+    { label:'بنفسجي ناعم', val:['#EFE8FA', '#C8B5E5'] }
+  ];
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>${isNew ? 'مقال جديد' : 'تعديل مقال'}</h1>
+        <p>${isNew ? 'اكتب مقالاً جديداً للمدوّنة' : 'تعديل: ' + escapeHtml(article.title)}</p>
+      </div>
+      <a href="#/admin/blog" class="btn btn-ghost btn-sm">← العودة</a>
+    </div>
+
+    <div class="admin-section">
+      <form id="blog-form" onsubmit="saveBlogForm(event, '${escapeHtml(article.slug)}', ${isNew})">
+        <div class="form-row">
+          <div class="form-group">
+            <label>العنوان <span class="required">*</span></label>
+            <input type="text" name="title" required value="${escapeHtml(article.title)}" maxlength="120" />
+          </div>
+          <div class="form-group">
+            <label>الـ Slug (المعرّف في الرابط) <span class="required">*</span></label>
+            <input type="text" name="slug" required value="${escapeHtml(article.slug)}" pattern="[a-z0-9-]+" maxlength="60" placeholder="my-article-slug" />
+            <div class="form-help">حروف إنجليزية صغيرة وأرقام وشرطات فقط</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>المُلخّص <span class="required">*</span></label>
+          <textarea name="excerpt" required maxlength="300" style="min-height:80px">${escapeHtml(article.excerpt || '')}</textarea>
+          <div class="form-help">حتى 300 حرف. سيظهر في قائمة المقالات.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>الفئة</label>
+            <select name="category">
+              ${categories.map(c => `<option value="${c}" ${article.category === c ? 'selected' : ''}>${c}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>الكاتب</label>
+            <input type="text" name="author" value="${escapeHtml(article.author || 'فريق مَرْجِع')}" maxlength="60" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>التاريخ</label>
+            <input type="date" name="date" value="${escapeHtml(article.date || '')}" />
+          </div>
+          <div class="form-group">
+            <label>وقت القراءة</label>
+            <input type="text" name="readTime" value="${escapeHtml(article.readTime || '5 دقائق')}" maxlength="30" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>لون الغلاف</label>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            ${colorPresets.map((p, i) => {
+              const matches = article.coverColor && article.coverColor[0] === p.val[0];
+              return `
+                <label style="display:flex;align-items:center;gap:0.4rem;padding:0.5rem 0.85rem;border:1.5px solid ${matches ? 'var(--teal-700)' : 'var(--border)'};border-radius:8px;cursor:pointer">
+                  <input type="radio" name="coverColor" value="${p.val.join(',')}" ${matches ? 'checked' : ''} style="width:auto" />
+                  <span style="display:inline-block;width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,${p.val[0]},${p.val[1]})"></span>
+                  <span style="font-size:0.85rem">${p.label}</span>
+                </label>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>محتوى المقال (HTML) <span class="required">*</span></label>
+          <textarea name="content" required style="min-height:340px;font-family:'Courier New',monospace;font-size:0.85rem;line-height:1.6">${escapeHtml(article.content || '')}</textarea>
+          <div class="form-help">
+            استخدم HTML بسيط: <code>&lt;p&gt;</code> للفقرات، <code>&lt;h2&gt;</code> للعناوين، <code>&lt;ul&gt;&lt;li&gt;</code> للقوائم، <code>&lt;strong&gt;</code> للتأكيد.
+          </div>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;justify-content:flex-end;flex-wrap:wrap">
+          <a href="#/admin/blog" class="btn btn-secondary">إلغاء</a>
+          <button type="submit" class="btn btn-primary">${isNew ? 'إضافة المقال' : 'حفظ التعديلات'}</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  renderAdminShell('blog', content);
+}
+
+function saveBlogForm(event, oldSlug, isNew) {
+  event.preventDefault();
+  const fd = new FormData(event.target);
+  const articles = getBlogArticles();
+  const newSlug = (fd.get('slug') || '').trim();
+
+  // التحقق من تكرار الـslug
+  if (isNew || newSlug !== oldSlug) {
+    if (articles.some(a => a.slug === newSlug)) {
+      showToast('الـSlug مستخدم بالفعل، اختر آخر', 'error');
+      return;
+    }
+  }
+
+  const coverColor = (fd.get('coverColor') || 'E1F5EE,9FE1CB').split(',');
+
+  const newArticle = {
+    slug: newSlug,
+    title: fd.get('title').trim(),
+    excerpt: fd.get('excerpt').trim(),
+    category: fd.get('category'),
+    author: fd.get('author').trim() || 'فريق مَرْجِع',
+    date: fd.get('date'),
+    readTime: fd.get('readTime').trim() || '5 دقائق',
+    coverColor,
+    content: fd.get('content').trim()
+  };
+
+  if (isNew) {
+    articles.unshift(newArticle); // الجديد في الأعلى
+  } else {
+    const idx = articles.findIndex(a => a.slug === oldSlug);
+    if (idx === -1) { showToast('المقال غير موجود', 'error'); return; }
+    articles[idx] = newArticle;
+  }
+
+  if (saveBlogArticles(articles)) {
+    logAudit(isNew ? 'create' : 'update', 'article', newSlug, newArticle.title);
+    showToast(isNew ? 'تمّت الإضافة ✓' : 'تمّ الحفظ ✓', 'success');
+    navigate('#/admin/blog');
+  }
+}
+
+function deleteBlogArticle(slug) {
+  if (!confirm('حذف هذا المقال؟ لا يمكن التراجع.')) return;
+  const articles = getBlogArticles().filter(a => a.slug !== slug);
+  if (saveBlogArticles(articles)) {
+    logAudit('delete', 'article', slug, '');
+    showToast('تمّ الحذف ✓', 'success');
+    renderAdminBlog();
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════
+// لوحة الإدارة - الأسئلة الشائعة
+// ═════════════════════════════════════════════════════════════════
+
+function renderAdminFAQ() {
+  const faqs = getFAQ();
+  const categories = [...new Set(faqs.map(f => f.cat))];
+
+  // تجميع حسب الفئة
+  const grouped = {};
+  faqs.forEach(f => {
+    if (!grouped[f.cat]) grouped[f.cat] = [];
+    grouped[f.cat].push(f);
+  });
+
+  const groupsHtml = categories.map(cat => {
+    const items = grouped[cat];
+    return `
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <h3 class="admin-section-title">${escapeHtml(cat)} <span class="badge badge-gray">${items.length}</span></h3>
+        </div>
+        <div class="faq-admin-list">
+          ${items.map(f => `
+            <div class="faq-admin-row" data-id="${escapeHtml(f.id)}">
+              <div class="faq-admin-q">${escapeHtml(f.q)}</div>
+              <div class="faq-admin-a">${escapeHtml(f.a.substring(0, 130))}${f.a.length > 130 ? '…' : ''}</div>
+              <div class="faq-admin-actions">
+                <a href="#/admin/faq/${encodeURIComponent(f.id)}" class="btn btn-ghost btn-sm">تعديل</a>
+                <button class="btn btn-danger btn-sm" onclick="deleteFAQItem('${escapeHtml(f.id)}')">حذف</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>إدارة الأسئلة الشائعة</h1>
+        <p>${faqs.length} سؤال موزّعة على ${categories.length} فئات</p>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="resetFAQToDefault()">استعادة الافتراضي</button>
+        <a href="#/admin/faq/new" class="btn btn-primary">+ سؤال جديد</a>
+      </div>
+    </div>
+
+    <div class="alert alert-info small mb-3">
+      💡 الأسئلة تُحفظ حالياً محلياً. التغييرات لن تظهر للزوار الآخرين قبل نقلها لقاعدة البيانات.
+    </div>
+
+    ${groupsHtml || '<div class="admin-placeholder"><div class="admin-placeholder-icon">❓</div><h3>لا توجد أسئلة</h3></div>'}
+  `;
+
+  renderAdminShell('faq', content);
+}
+
+function renderAdminFAQEditor(id) {
+  const faqs = getFAQ();
+  const isNew = !id || id === 'new';
+  const item = isNew ? {
+    id: 'faq-' + Date.now(),
+    cat: '',
+    q: '',
+    a: ''
+  } : faqs.find(f => f.id === id);
+
+  if (!isNew && !item) {
+    showToast('السؤال غير موجود', 'error');
+    navigate('#/admin/faq');
+    return;
+  }
+
+  const existingCats = [...new Set(faqs.map(f => f.cat))];
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>${isNew ? 'سؤال جديد' : 'تعديل سؤال'}</h1>
+      </div>
+      <a href="#/admin/faq" class="btn btn-ghost btn-sm">← العودة</a>
+    </div>
+
+    <div class="admin-section">
+      <form id="faq-form" onsubmit="saveFAQForm(event, '${escapeHtml(item.id)}', ${isNew})">
+        <div class="form-group">
+          <label>الفئة <span class="required">*</span></label>
+          <input type="text" name="cat" required value="${escapeHtml(item.cat)}" list="faq-cats" maxlength="60" placeholder="مثال: التأسيس والترخيص" />
+          <datalist id="faq-cats">
+            ${existingCats.map(c => `<option value="${escapeHtml(c)}">`).join('')}
+          </datalist>
+          <div class="form-help">اختر فئة موجودة أو أنشئ فئة جديدة</div>
+        </div>
+
+        <div class="form-group">
+          <label>السؤال <span class="required">*</span></label>
+          <textarea name="q" required maxlength="300" style="min-height:60px">${escapeHtml(item.q)}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>الإجابة <span class="required">*</span></label>
+          <textarea name="a" required maxlength="2000" style="min-height:160px">${escapeHtml(item.a)}</textarea>
+          <div class="form-help">يدعم تنسيق ماركداون بسيط: **تأكيد** و \\n لسطر جديد</div>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;justify-content:flex-end;flex-wrap:wrap">
+          <a href="#/admin/faq" class="btn btn-secondary">إلغاء</a>
+          <button type="submit" class="btn btn-primary">${isNew ? 'إضافة' : 'حفظ التعديلات'}</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  renderAdminShell('faq', content);
+}
+
+function saveFAQForm(event, oldId, isNew) {
+  event.preventDefault();
+  const fd = new FormData(event.target);
+  const faqs = getFAQ();
+
+  const newItem = {
+    id: oldId,
+    cat: fd.get('cat').trim(),
+    q: fd.get('q').trim(),
+    a: fd.get('a').trim()
+  };
+
+  if (isNew) {
+    faqs.push(newItem);
+  } else {
+    const idx = faqs.findIndex(f => f.id === oldId);
+    if (idx === -1) { showToast('السؤال غير موجود', 'error'); return; }
+    faqs[idx] = newItem;
+  }
+
+  if (saveFAQ(faqs)) {
+    logAudit(isNew ? 'create' : 'update', 'faq', newItem.id, newItem.q.substring(0, 60));
+    showToast(isNew ? 'تمّت الإضافة ✓' : 'تمّ الحفظ ✓', 'success');
+    navigate('#/admin/faq');
+  }
+}
+
+function deleteFAQItem(id) {
+  if (!confirm('حذف هذا السؤال؟ لا يمكن التراجع.')) return;
+  const faqs = getFAQ().filter(f => f.id !== id);
+  if (saveFAQ(faqs)) {
+    logAudit('delete', 'faq', id, '');
+    showToast('تمّ الحذف ✓', 'success');
+    renderAdminFAQ();
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════
+// لوحة الإدارة - ضيف الشهر
+// ═════════════════════════════════════════════════════════════════
+
+function renderAdminGuests() {
+  const data = getGuests();
+  const guests = data.guests || [];
+  const currentId = data.currentId;
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>إدارة ضيف الشهر</h1>
+        <p>${guests.length} ضيف — الحالي يظهر في قسم المعرفة</p>
+      </div>
+      <a href="#/admin/guest/new" class="btn btn-primary">+ ضيف جديد</a>
+    </div>
+
+    <div class="alert alert-info small mb-3">
+      💡 الضيف "الحالي" هو الذي يظهر في صفحة <code>#/learn/guest</code>. الباقون يبقون كأرشيف. بإمكانك تغيير الحالي بنقرة.
+    </div>
+
+    ${guests.length === 0
+      ? '<div class="admin-placeholder"><div class="admin-placeholder-icon">👤</div><h3>لا يوجد ضيوف</h3><a href="#/admin/guest/new" class="btn btn-primary">+ ضيف جديد</a></div>'
+      : `<div class="admin-content-list">
+          ${guests.map(g => `
+            <div class="content-row ${g.id === currentId ? 'is-current' : ''}">
+              <div class="content-row-thumb" style="background:linear-gradient(135deg,var(--teal-500),var(--teal-700));color:#fff;font-family:var(--font-heading);font-size:1.4rem;font-weight:600">
+                ${escapeHtml(g.initials || (g.name ? g.name[0] : '?'))}
+              </div>
+              <div class="content-row-info">
+                <h4>${escapeHtml(g.name || '')}${g.id === currentId ? ' <span class="badge badge-green">الحالي</span>' : ''}</h4>
+                <p>${escapeHtml(g.role || '')} — ${escapeHtml(g.org || '')}</p>
+                <div class="content-row-meta">
+                  <span>📅 ${escapeHtml(g.month || '')}</span>
+                  <span>💬 ${(g.quotes || []).length} اقتباس</span>
+                  <span>💡 ${(g.advice || []).length} نصيحة</span>
+                </div>
+              </div>
+              <div class="content-row-actions">
+                ${g.id !== currentId
+                  ? `<button class="btn btn-secondary btn-sm" onclick="setCurrentGuest('${escapeHtml(g.id)}')">جعله الحالي</button>`
+                  : ''}
+                <a href="#/admin/guest/${encodeURIComponent(g.id)}" class="btn btn-secondary btn-sm">تعديل</a>
+                <button class="btn btn-danger btn-sm" onclick="deleteGuest('${escapeHtml(g.id)}')">حذف</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>`}
+  `;
+
+  renderAdminShell('guest', content);
+}
+
+function renderAdminGuestEditor(id) {
+  const data = getGuests();
+  const isNew = !id || id === 'new';
+  const guest = isNew ? {
+    id: 'guest-' + Date.now(),
+    name: '',
+    initials: '',
+    role: '',
+    org: '',
+    month: '',
+    bio: '',
+    achievements: [''],
+    quotes: [''],
+    advice: [{ title: '', text: '' }]
+  } : data.guests.find(g => g.id === id);
+
+  if (!isNew && !guest) {
+    showToast('الضيف غير موجود', 'error');
+    navigate('#/admin/guest');
+    return;
+  }
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>${isNew ? 'ضيف جديد' : 'تعديل ضيف'}</h1>
+      </div>
+      <a href="#/admin/guest" class="btn btn-ghost btn-sm">← العودة</a>
+    </div>
+
+    <div class="admin-section">
+      <form id="guest-form" onsubmit="saveGuestForm(event, '${escapeHtml(guest.id)}', ${isNew})">
+        <div class="form-row">
+          <div class="form-group">
+            <label>الاسم الكامل <span class="required">*</span></label>
+            <input type="text" name="name" required value="${escapeHtml(guest.name || '')}" maxlength="80" />
+          </div>
+          <div class="form-group">
+            <label>الأحرف الأولى</label>
+            <input type="text" name="initials" value="${escapeHtml(guest.initials || '')}" maxlength="6" placeholder="مثل: ع.م" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>المنصب</label>
+            <input type="text" name="role" value="${escapeHtml(guest.role || '')}" maxlength="80" />
+          </div>
+          <div class="form-group">
+            <label>الجهة</label>
+            <input type="text" name="org" value="${escapeHtml(guest.org || '')}" maxlength="120" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>الشهر</label>
+          <input type="text" name="month" value="${escapeHtml(guest.month || '')}" maxlength="40" placeholder="مثل: مايو 2026" />
+        </div>
+
+        <div class="form-group">
+          <label>السيرة المختصرة</label>
+          <textarea name="bio" maxlength="800" style="min-height:120px">${escapeHtml(guest.bio || '')}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>الإنجازات (سطر لكل إنجاز)</label>
+          <textarea name="achievements" style="min-height:120px" placeholder="إنجاز 1\nإنجاز 2\nإنجاز 3">${escapeHtml((guest.achievements || []).join('\n'))}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>الاقتباسات (سطر لكل اقتباس)</label>
+          <textarea name="quotes" style="min-height:120px">${escapeHtml((guest.quotes || []).join('\n'))}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>النصائح (عنوان | نص — سطر لكل نصيحة)</label>
+          <textarea name="advice" style="min-height:160px" placeholder="ابدأ بالأساسيات | لا تحاول تطبيق كل ممارسات الحوكمة دفعة واحدة...">${escapeHtml((guest.advice || []).map(a => `${a.title} | ${a.text}`).join('\n'))}</textarea>
+          <div class="form-help">صيغة كل سطر: <code>العنوان | النص</code></div>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;justify-content:flex-end;flex-wrap:wrap">
+          <a href="#/admin/guest" class="btn btn-secondary">إلغاء</a>
+          <button type="submit" class="btn btn-primary">${isNew ? 'إضافة' : 'حفظ التعديلات'}</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  renderAdminShell('guest', content);
+}
+
+function saveGuestForm(event, oldId, isNew) {
+  event.preventDefault();
+  const fd = new FormData(event.target);
+  const data = getGuests();
+
+  const achievements = (fd.get('achievements') || '').split('\n').map(s => s.trim()).filter(s => s);
+  const quotes = (fd.get('quotes') || '').split('\n').map(s => s.trim()).filter(s => s);
+  const advice = (fd.get('advice') || '').split('\n')
+    .map(line => {
+      const parts = line.split('|');
+      return { title: (parts[0] || '').trim(), text: (parts.slice(1).join('|') || '').trim() };
+    })
+    .filter(a => a.title);
+
+  const newGuest = {
+    id: oldId,
+    name: fd.get('name').trim(),
+    initials: fd.get('initials').trim() || (fd.get('name').trim()[0] || '؟'),
+    role: fd.get('role').trim(),
+    org: fd.get('org').trim(),
+    month: fd.get('month').trim(),
+    bio: fd.get('bio').trim(),
+    achievements,
+    quotes,
+    advice
+  };
+
+  if (isNew) {
+    data.guests.unshift(newGuest);
+    if (data.guests.length === 1) data.currentId = newGuest.id; // الأول يصبح الحالي
+  } else {
+    const idx = data.guests.findIndex(g => g.id === oldId);
+    if (idx === -1) { showToast('الضيف غير موجود', 'error'); return; }
+    data.guests[idx] = newGuest;
+  }
+
+  if (saveGuests(data)) {
+    logAudit(isNew ? 'create' : 'update', 'guest', newGuest.id, newGuest.name);
+    showToast(isNew ? 'تمّت الإضافة ✓' : 'تمّ الحفظ ✓', 'success');
+    navigate('#/admin/guest');
+  }
+}
+
+function setCurrentGuest(id) {
+  const data = getGuests();
+  data.currentId = id;
+  if (saveGuests(data)) {
+    logAudit('settings_change', 'guest', id, 'Set as current');
+    showToast('تمّ تعيين الضيف الحالي ✓', 'success');
+    renderAdminGuests();
+  }
+}
+
+function deleteGuest(id) {
+  if (!confirm('حذف هذا الضيف؟ لا يمكن التراجع.')) return;
+  const data = getGuests();
+  data.guests = data.guests.filter(g => g.id !== id);
+  // إذا حُذف الضيف الحالي، اختر الأول من القائمة
+  if (data.currentId === id) {
+    data.currentId = data.guests.length > 0 ? data.guests[0].id : null;
+  }
+  if (saveGuests(data)) {
+    logAudit('delete', 'guest', id, '');
+    showToast('تمّ الحذف ✓', 'success');
+    renderAdminGuests();
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════
+// تحديث الواجهات العامة لقراءة البيانات من الـoverrides
+// ═════════════════════════════════════════════════════════════════
+
+// override للـ blog list (يستخدم getBlogArticles بدل BLOG_ARTICLES)
+const _origRenderBlogList = (typeof renderBlogList !== 'undefined') ? renderBlogList : null;
+
+// نُغيّر BLOG_ARTICLES, FAQ_DATA references في الـpublic views
+// النهج: نُلفّ الدوال الأصلية لتستخدم getX() قبل التنفيذ
+
+if (typeof renderBlogList === 'function') {
+  const _orig = renderBlogList;
+  renderBlogList = function() {
+    // نسخ احتياطي + استبدال مؤقت
+    const backup = BLOG_ARTICLES.slice();
+    const overridden = getBlogArticles();
+    BLOG_ARTICLES.length = 0;
+    overridden.forEach(a => BLOG_ARTICLES.push(a));
+    try { _orig.apply(this, arguments); } finally {
+      BLOG_ARTICLES.length = 0;
+      backup.forEach(a => BLOG_ARTICLES.push(a));
+    }
+  };
+}
+
+if (typeof renderBlogArticle === 'function') {
+  const _orig = renderBlogArticle;
+  renderBlogArticle = function(slug) {
+    const overridden = getBlogArticles();
+    const article = overridden.find(a => a.slug === slug);
+    if (article) {
+      // ضع المقال في BLOG_ARTICLES مؤقتاً
+      const backup = BLOG_ARTICLES.slice();
+      BLOG_ARTICLES.length = 0;
+      overridden.forEach(a => BLOG_ARTICLES.push(a));
+      try { _orig.apply(this, [slug]); } finally {
+        BLOG_ARTICLES.length = 0;
+        backup.forEach(a => BLOG_ARTICLES.push(a));
+      }
+    } else {
+      _orig.apply(this, [slug]);
+    }
+  };
+}
+
+if (typeof renderFAQ === 'function') {
+  const _orig = renderFAQ;
+  renderFAQ = function() {
+    const backup = FAQ_DATA.slice();
+    const overridden = getFAQ();
+    FAQ_DATA.length = 0;
+    overridden.forEach(f => FAQ_DATA.push(f));
+    try { _orig.apply(this, arguments); } finally {
+      FAQ_DATA.length = 0;
+      backup.forEach(f => FAQ_DATA.push(f));
+    }
+  };
+}
+
+if (typeof renderGuestOfMonth === 'function') {
+  const _orig = renderGuestOfMonth;
+  renderGuestOfMonth = function() {
+    const current = getCurrentGuest();
+    if (current) {
+      const backup = { ...GUEST_OF_MONTH };
+      Object.keys(GUEST_OF_MONTH).forEach(k => delete GUEST_OF_MONTH[k]);
+      Object.assign(GUEST_OF_MONTH, current);
+      try { _orig.apply(this, arguments); } finally {
+        Object.keys(GUEST_OF_MONTH).forEach(k => delete GUEST_OF_MONTH[k]);
+        Object.assign(GUEST_OF_MONTH, backup);
+      }
+    } else {
+      _orig.apply(this, arguments);
+    }
+  };
+}
+
+// ═════════════════════════════════════════════════════════════════
+// لوحة الإدارة - الإعدادات (Phase 4)
+// ═════════════════════════════════════════════════════════════════
+
+const SETTINGS_KEY = 'marjie_app_settings';
+
+function getAppSettings() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      return {
+        siteName: s.siteName || 'مَرْجِع',
+        siteTagline: s.siteTagline || 'منصّة الحوكمة العملية للجمعيات',
+        contactEmail: s.contactEmail || '',
+        contactPhone: s.contactPhone || '',
+        twitterUrl: s.twitterUrl || '',
+        linkedinUrl: s.linkedinUrl || '',
+        footerNote: s.footerNote || ''
+      };
+    }
+  } catch (e) {}
+  return {
+    siteName: 'مَرْجِع',
+    siteTagline: 'منصّة الحوكمة العملية للجمعيات',
+    contactEmail: '', contactPhone: '',
+    twitterUrl: '', linkedinUrl: '',
+    footerNote: ''
+  };
+}
+
+function saveAppSettings(s) {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+    return true;
+  } catch (e) { return false; }
+}
+
+const SETTINGS_TABS = [
+  { id:'general', name:'إعدادات عامة', icon:'⚙️' },
+  { id:'security', name:'الأمان', icon:'🔐' },
+  { id:'roles', name:'الأدوار والصلاحيات', icon:'👥' },
+  { id:'audit', name:'سجل التدقيق', icon:'📋' },
+  { id:'danger', name:'منطقة خطر', icon:'⚠️' }
+];
+
+function renderAdminSettings(tab) {
+  tab = tab || 'general';
+
+  // التحقق من الصلاحية للوصول لـSecurity/Roles/Danger
+  const isAdmin = getCurrentRole() === 'super_admin';
+  if (!isAdmin && (tab === 'security' || tab === 'danger' || tab === 'roles')) {
+    tab = 'general';
+    showToast('صلاحيتك لا تسمح بالوصول لهذا التبويب', 'warning');
+  }
+
+  const tabsHtml = SETTINGS_TABS.map(t => {
+    if (!isAdmin && (t.id === 'security' || t.id === 'danger' || t.id === 'roles')) return '';
+    return `
+      <a href="#/admin/settings/${t.id}" class="settings-tab ${tab === t.id ? 'active' : ''}">
+        ${t.icon} ${escapeHtml(t.name)}
+      </a>
+    `;
+  }).join('');
+
+  let bodyHtml = '';
+  if (tab === 'general') bodyHtml = renderSettingsGeneral();
+  else if (tab === 'security') bodyHtml = renderSettingsSecurity();
+  else if (tab === 'roles') bodyHtml = renderSettingsRoles();
+  else if (tab === 'audit') bodyHtml = renderSettingsAudit();
+  else if (tab === 'danger') bodyHtml = renderSettingsDanger();
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>الإعدادات</h1>
+        <p>إعدادات المنصّة العامة والأمان والصلاحيات</p>
+      </div>
+    </div>
+
+    <div class="settings-tabs">
+      ${tabsHtml}
+    </div>
+
+    <div class="settings-tab-content">
+      ${bodyHtml}
+    </div>
+  `;
+
+  renderAdminShell('settings', content);
+}
+
+// ─── تبويب 1: إعدادات عامة ──────────────────────────────
+function renderSettingsGeneral() {
+  const s = getAppSettings();
+  return `
+    <div class="admin-section">
+      <form id="settings-general-form" onsubmit="saveSettingsGeneralForm(event)">
+        <h3 style="margin-bottom:1.25rem">معلومات المنصّة</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>اسم المنصّة</label>
+            <input type="text" name="siteName" value="${escapeHtml(s.siteName)}" maxlength="60" />
+          </div>
+          <div class="form-group">
+            <label>الوصف القصير</label>
+            <input type="text" name="siteTagline" value="${escapeHtml(s.siteTagline)}" maxlength="120" />
+          </div>
+        </div>
+
+        <h3 style="margin:1.5rem 0 1.25rem">معلومات التواصل</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>البريد الإلكتروني</label>
+            <input type="email" name="contactEmail" value="${escapeHtml(s.contactEmail)}" />
+          </div>
+          <div class="form-group">
+            <label>رقم الهاتف</label>
+            <input type="tel" name="contactPhone" value="${escapeHtml(s.contactPhone)}" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>رابط تويتر/X</label>
+            <input type="url" name="twitterUrl" value="${escapeHtml(s.twitterUrl)}" placeholder="https://x.com/..." />
+          </div>
+          <div class="form-group">
+            <label>رابط لينكدإن</label>
+            <input type="url" name="linkedinUrl" value="${escapeHtml(s.linkedinUrl)}" placeholder="https://linkedin.com/..." />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>نص إضافي في التذييل</label>
+          <textarea name="footerNote" maxlength="400" style="min-height:80px">${escapeHtml(s.footerNote)}</textarea>
+          <div class="form-help">يظهر تحت حقوق النشر في تذييل الموقع</div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end">
+          <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+        </div>
+      </form>
+    </div>
+  `;
+}
+
+function saveSettingsGeneralForm(event) {
+  event.preventDefault();
+  const fd = new FormData(event.target);
+  const settings = {
+    siteName: fd.get('siteName').trim(),
+    siteTagline: fd.get('siteTagline').trim(),
+    contactEmail: fd.get('contactEmail').trim(),
+    contactPhone: fd.get('contactPhone').trim(),
+    twitterUrl: fd.get('twitterUrl').trim(),
+    linkedinUrl: fd.get('linkedinUrl').trim(),
+    footerNote: fd.get('footerNote').trim()
+  };
+  if (saveAppSettings(settings)) {
+    logAudit('settings_change', 'settings', 'general', 'Updated general settings');
+    showToast('تمّ الحفظ ✓', 'success');
+  } else {
+    showToast('فشل الحفظ', 'error');
+  }
+}
+
+// ─── تبويب 2: الأمان (PIN + Session) ──────────────────────────────
+function renderSettingsSecurity() {
+  const pinEnabled = hasPIN();
+  const sessionMin = getSessionTimeoutMinutes();
+
+  return `
+    <div class="admin-section">
+      <h3 style="margin-bottom:0.5rem">رمز PIN إضافي</h3>
+      <p class="muted small mb-3">طبقة حماية إضافية بعد كلمة المرور. مطلوب من 4-6 أرقام، ويُسأل مرة كل 4 ساعات.</p>
+
+      ${pinEnabled ? `
+        <div class="alert alert-success small">
+          ✓ <strong>PIN مفعّل</strong> — حماية إضافية للدخول للوحة الإدارة.
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" onclick="promptChangePIN()">تغيير الـPIN</button>
+          <button class="btn btn-danger btn-sm" onclick="promptDisablePIN()">تعطيل الـPIN</button>
+        </div>
+      ` : `
+        <div class="alert alert-warning small">
+          ⚠ <strong>PIN معطّل</strong> — أي شخص يحصل على كلمة المرور يستطيع الوصول للوحة الإدارة. ننصح بشدة بتفعيل PIN.
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="promptEnablePIN()">تفعيل PIN</button>
+      `}
+    </div>
+
+    <div class="admin-section">
+      <h3 style="margin-bottom:0.5rem">انتهاء الجلسة بعدم النشاط</h3>
+      <p class="muted small mb-3">تسجيل خروج تلقائي بعد فترة من عدم النشاط لحماية الحساب.</p>
+
+      <form onsubmit="saveSessionTimeout(event)">
+        <div class="form-group" style="max-width:300px">
+          <label>المدة بالدقائق</label>
+          <select name="minutes">
+            <option value="15" ${sessionMin===15?'selected':''}>15 دقيقة</option>
+            <option value="30" ${sessionMin===30?'selected':''}>30 دقيقة</option>
+            <option value="60" ${sessionMin===60?'selected':''}>ساعة (افتراضي)</option>
+            <option value="120" ${sessionMin===120?'selected':''}>ساعتان</option>
+            <option value="240" ${sessionMin===240?'selected':''}>4 ساعات</option>
+            <option value="0" ${sessionMin===0?'selected':''}>بدون انتهاء</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">حفظ</button>
+      </form>
+    </div>
+
+    <div class="admin-section">
+      <h3 style="margin-bottom:0.5rem">كلمة المرور</h3>
+      <p class="muted small mb-3">لتغيير كلمة المرور، استخدم واجهة API الخلفية (Code.gs).</p>
+      <a href="#/admin/login" class="btn btn-secondary btn-sm">تسجيل الخروج وإعادة الدخول</a>
+    </div>
+  `;
+}
+
+function saveSessionTimeout(event) {
+  event.preventDefault();
+  const fd = new FormData(event.target);
+  const min = parseInt(fd.get('minutes')) || 60;
+  setSessionTimeoutMinutes(min);
+  logAudit('settings_change', 'settings', 'session', `Timeout: ${min} min`);
+  showToast('تمّ الحفظ ✓', 'success');
+  startSessionTimer();
+}
+
+async function promptEnablePIN() {
+  const pin1 = prompt('أدخل رمز PIN جديد (4-6 أرقام):');
+  if (!pin1) return;
+  if (!/^\d{4,6}$/.test(pin1)) { showToast('PIN يجب أن يكون 4-6 أرقام', 'error'); return; }
+  const pin2 = prompt('أعد إدخال الـPIN للتأكيد:');
+  if (pin1 !== pin2) { showToast('الرمزان غير متطابقين', 'error'); return; }
+  if (await setPIN(pin1)) {
+    logAudit('pin_set', 'auth', '', 'PIN enabled');
+    showToast('تمّ تفعيل الـPIN ✓', 'success');
+    renderAdminSettings('security');
+  }
+}
+
+async function promptChangePIN() {
+  const oldPin = prompt('أدخل الـPIN الحالي:');
+  if (!oldPin) return;
+  if (!await verifyPIN(oldPin)) { showToast('PIN غير صحيح', 'error'); return; }
+  const newPin = prompt('PIN الجديد (4-6 أرقام):');
+  if (!newPin || !/^\d{4,6}$/.test(newPin)) { showToast('PIN يجب أن يكون 4-6 أرقام', 'error'); return; }
+  if (await setPIN(newPin)) {
+    logAudit('pin_change', 'auth', '', 'PIN changed');
+    showToast('تمّ تغيير الـPIN ✓', 'success');
+    renderAdminSettings('security');
+  }
+}
+
+async function promptDisablePIN() {
+  const pin = prompt('أدخل الـPIN الحالي لتعطيله:');
+  if (!pin) return;
+  if (!await verifyPIN(pin)) { showToast('PIN غير صحيح', 'error'); return; }
+  if (!confirm('هل تريد تعطيل الـPIN؟ ستفقد طبقة الحماية الإضافية.')) return;
+  clearPIN();
+  logAudit('pin_disable', 'auth', '', 'PIN disabled');
+  showToast('تمّ تعطيل الـPIN', 'success');
+  renderAdminSettings('security');
+}
+
+// ─── تبويب 3: الأدوار والصلاحيات ──────────────────────────────
+function renderSettingsRoles() {
+  const currentRole = getCurrentRole();
+  return `
+    <div class="alert alert-info small mb-3">
+      💡 <strong>دورك الحالي:</strong> ${ROLES[currentRole].label}.
+      نظام الأدوار جاهز ومُهيّأ. لتفعيل مستخدمين متعددين بأدوار مختلفة، يلزم تحديث ملف Code.gs ليدعم users متعددين.
+    </div>
+
+    <div class="admin-section">
+      <h3 style="margin-bottom:1rem">الأدوار المتاحة</h3>
+      <div class="roles-grid">
+        ${Object.entries(ROLES).map(([id, role]) => `
+          <div class="role-card ${currentRole === id ? 'is-current' : ''}">
+            <div class="role-card-header">
+              <h4>${escapeHtml(role.label)}</h4>
+              <span class="badge ${role.badge}">${currentRole === id ? 'دورك الحالي' : 'دور متاح'}</span>
+            </div>
+            <p class="muted small">${escapeHtml(role.desc)}</p>
+            <div class="role-perms">
+              <strong>الصلاحيات:</strong>
+              <ul>
+                ${role.permissions.includes('*')
+                  ? '<li>✅ كل الصلاحيات (وصول كامل)</li>'
+                  : role.permissions.map(p => `<li>✓ ${escapeHtml(translatePermission(p))}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function translatePermission(perm) {
+  const map = {
+    'admin.dashboard.view': 'عرض لوحة المعلومات',
+    'admin.policies.*': 'إدارة كاملة للسياسات',
+    'admin.policies.view': 'عرض السياسات (بدون تعديل)',
+    'admin.slides.*': 'إدارة كاملة للسلايدر',
+    'admin.slides.view': 'عرض السلايدر',
+    'admin.blog.*': 'إدارة كاملة للمدوّنة',
+    'admin.blog.view': 'عرض المدوّنة',
+    'admin.faq.*': 'إدارة الأسئلة الشائعة',
+    'admin.faq.view': 'عرض الأسئلة الشائعة',
+    'admin.guest.*': 'إدارة ضيف الشهر',
+    'admin.guest.view': 'عرض ضيف الشهر',
+    'admin.analytics.view': 'عرض الإحصائيات'
+  };
+  return map[perm] || perm;
+}
+
+// ─── تبويب 4: سجل التدقيق ──────────────────────────────
+function renderSettingsAudit() {
+  const log = getAuditLog();
+  const sorted = log.slice().reverse(); // الأحدث أولاً
+
+  if (sorted.length === 0) {
+    return `
+      <div class="admin-placeholder">
+        <div class="admin-placeholder-icon">📋</div>
+        <h3>لا توجد عمليات مسجّلة بعد</h3>
+        <p>سيُسجَّل هنا كل عملية إضافة أو تعديل أو حذف يقوم بها أي مدير، مع التاريخ والوقت ومن نفّذها.</p>
+      </div>
+    `;
+  }
+
+  // إحصائيات سريعة
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayCount = sorted.filter(e => e.ts >= today.getTime()).length;
+  const last7Days = sorted.filter(e => e.ts >= Date.now() - 7 * 24 * 60 * 60 * 1000).length;
+
+  return `
+    <div class="admin-dashboard-grid mb-3">
+      <div class="admin-stat-card" style="--accent:var(--teal-50);--accent-color:var(--teal-700)">
+        <div class="admin-stat-value">${sorted.length}</div>
+        <div class="admin-stat-label">إجمالي العمليات</div>
+      </div>
+      <div class="admin-stat-card" style="--accent:var(--sand-50);--accent-color:var(--sand-700)">
+        <div class="admin-stat-value">${last7Days}</div>
+        <div class="admin-stat-label">آخر 7 أيام</div>
+      </div>
+      <div class="admin-stat-card" style="--accent:#EAF3DE;--accent-color:var(--green-700)">
+        <div class="admin-stat-value">${todayCount}</div>
+        <div class="admin-stat-label">اليوم</div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-header">
+        <h3 class="admin-section-title">سجل العمليات الأخيرة</h3>
+        <button class="btn btn-ghost btn-sm" onclick="clearAuditLogConfirm()">مسح السجل</button>
+      </div>
+      <div class="audit-log">
+        ${sorted.slice(0, 200).map(entry => {
+          const date = new Date(entry.ts);
+          const dateStr = date.toLocaleString('ar-SA', { dateStyle: 'medium', timeStyle: 'short' });
+          const action = AUDIT_TRANSLATIONS.actions[entry.action] || entry.action;
+          const entity = AUDIT_TRANSLATIONS.entities[entry.entity] || entry.entity;
+          const actionClass = entry.action === 'delete' ? 'audit-delete'
+                            : entry.action === 'create' ? 'audit-create'
+                            : entry.action === 'login' || entry.action === 'logout' ? 'audit-auth'
+                            : 'audit-update';
+          return `
+            <div class="audit-entry ${actionClass}">
+              <div class="audit-meta">
+                <span class="audit-action">${escapeHtml(action)}</span>
+                <span class="audit-entity">${escapeHtml(entity)}</span>
+                ${entry.entityId ? `<span class="audit-id">${escapeHtml(entry.entityId)}</span>` : ''}
+              </div>
+              <div class="audit-details">${escapeHtml(entry.details || '—')}</div>
+              <div class="audit-footer">
+                <span>👤 ${escapeHtml(entry.user)}</span>
+                <span>📅 ${escapeHtml(dateStr)}</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+      ${sorted.length > 200 ? `<p class="small muted center mt-3">عُرض آخر 200 عملية (إجمالي: ${sorted.length})</p>` : ''}
+    </div>
+  `;
+}
+
+function clearAuditLogConfirm() {
+  if (!confirm('هل تريد مسح سجل التدقيق بالكامل؟ لا يمكن التراجع.')) return;
+  clearAuditLog();
+  showToast('تمّ مسح السجل ✓', 'success');
+  renderAdminSettings('audit');
+}
+
+// ─── تبويب 5: منطقة خطر ──────────────────────────────
+function renderSettingsDanger() {
+  return `
+    <div class="alert alert-error small mb-3">
+      ⚠ <strong>تحذير:</strong> هذه العمليات لا يمكن التراجع عنها. تأكّد قبل الإقدام.
+    </div>
+
+    <div class="admin-section danger-section">
+      <h4>مسح كل بيانات السلايدر المحلية</h4>
+      <p class="muted small mb-3">يحذف كل التعديلات على الشرائح ويعود للافتراضي.</p>
+      <button class="btn btn-danger btn-sm" onclick="dangerClearSlides()">مسح بيانات السلايدر</button>
+    </div>
+
+    <div class="admin-section danger-section">
+      <h4>مسح كل بيانات المدوّنة المحلية</h4>
+      <p class="muted small mb-3">يحذف كل المقالات المُضافة والتعديلات.</p>
+      <button class="btn btn-danger btn-sm" onclick="dangerClearBlog()">مسح بيانات المدوّنة</button>
+    </div>
+
+    <div class="admin-section danger-section">
+      <h4>مسح كل بيانات FAQ</h4>
+      <button class="btn btn-danger btn-sm" onclick="dangerClearFAQ()">مسح بيانات FAQ</button>
+    </div>
+
+    <div class="admin-section danger-section">
+      <h4>مسح بيانات ضيف الشهر</h4>
+      <button class="btn btn-danger btn-sm" onclick="dangerClearGuests()">مسح بيانات الضيوف</button>
+    </div>
+
+    <div class="admin-section danger-section">
+      <h4>مسح كل بيانات التتبّع (التحليلات)</h4>
+      <p class="muted small mb-3">يحذف كل أحداث الزوار المسجّلة محلياً.</p>
+      <button class="btn btn-danger btn-sm" onclick="dangerClearAnalytics()">مسح بيانات التتبّع</button>
+    </div>
+
+    <div class="admin-section danger-section">
+      <h4 style="color:var(--coral-700)">إعادة التهيئة الكاملة</h4>
+      <p class="muted small mb-3">يحذف <strong>كل</strong> البيانات المحلية: السلايدر، المدوّنة، FAQ، الضيوف، التحليلات، الإعدادات، PIN، سجل التدقيق. لا تتأثر السياسات (في قاعدة البيانات).</p>
+      <button class="btn btn-danger" onclick="dangerResetAll()">إعادة التهيئة الكاملة</button>
+    </div>
+  `;
+}
+
+function dangerClearSlides() {
+  if (!confirm('مسح كل بيانات السلايدر؟')) return;
+  try { localStorage.removeItem(SLIDES_STORAGE_KEY); } catch (e) {}
+  logAudit('reset', 'slide', 'all', 'Cleared all slides');
+  showToast('تمّ المسح ✓', 'success');
+}
+function dangerClearBlog() {
+  if (!confirm('مسح كل بيانات المدوّنة؟')) return;
+  try { localStorage.removeItem(BLOG_STORAGE_KEY); } catch (e) {}
+  logAudit('reset', 'article', 'all', 'Cleared all articles');
+  showToast('تمّ المسح ✓', 'success');
+}
+function dangerClearFAQ() {
+  if (!confirm('مسح كل بيانات FAQ؟')) return;
+  try { localStorage.removeItem(FAQ_STORAGE_KEY); } catch (e) {}
+  logAudit('reset', 'faq', 'all', 'Cleared all FAQ');
+  showToast('تمّ المسح ✓', 'success');
+}
+function dangerClearGuests() {
+  if (!confirm('مسح كل بيانات الضيوف؟')) return;
+  try { localStorage.removeItem(GUESTS_STORAGE_KEY); } catch (e) {}
+  logAudit('reset', 'guest', 'all', 'Cleared all guests');
+  showToast('تمّ المسح ✓', 'success');
+}
+function dangerClearAnalytics() {
+  if (!confirm('مسح كل بيانات التتبّع؟')) return;
+  Analytics.clearLocalEvents();
+  logAudit('reset', 'system', 'analytics', 'Cleared analytics');
+  showToast('تمّ المسح ✓', 'success');
+}
+function dangerResetAll() {
+  if (!confirm('⚠️ سيُحذف كل شيء محلياً. هل أنت متأكد؟')) return;
+  if (!confirm('تأكيد ثاني: لا يمكن التراجع. هل أنت متأكد؟')) return;
+  const keys = [SLIDES_STORAGE_KEY, BLOG_STORAGE_KEY, FAQ_STORAGE_KEY, GUESTS_STORAGE_KEY,
+                Analytics.STORAGE_KEY, SETTINGS_KEY, AUDIT_LOG_KEY, PIN_HASH_KEY,
+                PIN_VERIFIED_KEY, SESSION_TIMEOUT_KEY];
+  keys.forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+  showToast('تمّت إعادة التهيئة الكاملة', 'success');
+  setTimeout(() => navigate('#/admin'), 1000);
+}
+
+// ═════════════════════════════════════════════════════════════════
+// Placeholders للأقسام قيد التطوير
+// ═════════════════════════════════════════════════════════════════
+
+function renderAdminPlaceholder(title, sectionId) {
+  const phaseInfo = {
+    settings: { phase: 4, icon: '⚙️', desc: 'إدارة المستخدمين والصلاحيات، إعدادات أمان، شعار وألوان.' }
+  };
+
+  const info = phaseInfo[sectionId] || { phase: '?', icon: '🔧', desc: 'قسم قيد التطوير.' };
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>${escapeHtml(title)}</h1>
+        <p>${escapeHtml(info.desc)}</p>
+      </div>
+    </div>
+
+    <div class="admin-placeholder">
+      <div class="admin-placeholder-icon">${info.icon}</div>
+      <h3>قيد التطوير في المرحلة ${info.phase}</h3>
+      <p>هذا القسم محجوز ضمن خطة التطوير المتفق عليها. سيُفعَّل في المرحلة <strong>${info.phase}</strong>.</p>
+      <a href="#/admin" class="btn btn-secondary">العودة للوحة المعلومات</a>
+    </div>
+  `;
+
+  renderAdminShell(sectionId, content);
+}
+
+// ═════════════════════════════════════════════════════════════════
+// تحديث الصفحة الرئيسية لتستخدم السلايدر من localStorage
+// ═════════════════════════════════════════════════════════════════
+
+// تعديل renderHomeSlider لاستخدام getSlides()
+const _origRenderHomeSlider = renderHomeSlider;
+renderHomeSlider = function() {
+  // استبدل HOME_SLIDES مؤقتاً بالشرائح من المخزن (المفعّلة فقط)
+  const allSlides = getSlides();
+  const activeSlides = allSlides.filter(s => s.enabled !== false);
+
+  if (activeSlides.length === 0) {
+    return ''; // لا شرائح نشطة
+  }
+
+  // استخدم نفس قالب renderHomeSlider الأصلي
+  const slidesHtml = activeSlides.map((s, i) => `
+    <div class="hero-slide ${i === 0 ? 'active' : ''}" data-slide="${i}" style="background:${s.bg}">
+      <div class="hero-slide-content">
+        <div class="hero-slide-text">
+          <h1 class="hero-slide-title">${escapeHtml(s.title)}</h1>
+          <p class="hero-slide-subtitle">${escapeHtml(s.subtitle)}</p>
+          <div class="hero-slide-cta">
+            ${s.cta && s.cta.action === 'install'
+              ? `<button class="btn btn-xl" style="background:${s.accent};color:#1A2922" onclick="tryShowInstallFromMenu()">${escapeHtml(s.cta.text)} ←</button>`
+              : `<a href="${escapeHtml((s.cta && s.cta.href) || '#/')}" class="btn btn-xl" style="background:${s.accent};color:#1A2922">${escapeHtml((s.cta && s.cta.text) || 'استكشف')} ←</a>`}
+          </div>
+        </div>
+        <div class="hero-slide-illust">${getSlideIllustration(s.illustration)}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const dotsHtml = activeSlides.map((_, i) =>
+    `<button class="hero-slide-dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})" aria-label="الشريحة ${i+1}"></button>`
+  ).join('');
+
+  return `
+    <div class="hero-slider" id="hero-slider">
+      <div class="hero-slides-track">${slidesHtml}</div>
+      ${activeSlides.length > 1 ? `
+        <button class="hero-slide-arrow hero-slide-prev" onclick="prevSlide()" aria-label="السابق">‹</button>
+        <button class="hero-slide-arrow hero-slide-next" onclick="nextSlide()" aria-label="التالي">›</button>
+        <div class="hero-slide-dots">${dotsHtml}</div>
+      ` : ''}
+    </div>
+  `;
+};
+
+
+// ═════════════════════════════════════════════════════════════════
+// لوحة المدير - السياسات (مُحدَّث ليستخدم الـShell الجديد)
+// ═════════════════════════════════════════════════════════════════
+
+async function renderAdminPolicies() {
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>إدارة السياسات</h1>
+        <p>إدارة كل السياسات (الظاهرة والمخفية)</p>
+      </div>
+      <a href="#/admin/policies/new" class="btn btn-primary">+ إضافة سياسة</a>
+    </div>
+
+    <div id="admin-policies-content"><div class="card center"><div class="loader"></div></div></div>
+  `;
+  renderAdminShell('policies', content);
 
   try {
     const policies = await API.adminListPolicies();
@@ -3373,81 +6179,6 @@ function addCustomField(existing) {
   list.appendChild(row);
 }
 
-// ═════════════════════════════════════════════════════════════════
-// عرض: لوحة المدير - الرئيسية (لوحة الإحصائيات)
-// ═════════════════════════════════════════════════════════════════
-
-async function renderAdminDashboard() {
-  $('#app').innerHTML = `
-    <div class="container">
-      <div class="flex-between mb-4 flex-wrap flex-gap-3">
-        <div>
-          <h1>لوحة الإدارة</h1>
-          <p class="muted">مرحباً ${escapeHtml(State.adminEmail || '')}</p>
-        </div>
-        <div class="flex flex-gap-2">
-          <a href="#/admin/policies" class="btn btn-primary">إدارة السياسات</a>
-          <button class="btn btn-ghost" onclick="adminLogout()">خروج</button>
-        </div>
-      </div>
-      <div id="dashboard-content"><div class="card center"><div class="loader"></div></div></div>
-    </div>
-  `;
-
-  try {
-    const stats = await API.adminGetStats();
-    let html = `
-      <div class="transition-stats">
-        <div class="stat-card">
-          <div class="stat-label">إجمالي السياسات</div>
-          <div class="stat-value">${stats.totalPolicies}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">سياسات ظاهرة</div>
-          <div class="stat-value" style="color:var(--green-500)">${stats.visiblePolicies}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">سياسات مخفية</div>
-          <div class="stat-value" style="color:var(--text-faint)">${stats.hiddenPolicies}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">عدد التوليدات</div>
-          <div class="stat-value">${stats.totalGenerations}</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h2 class="card-title">السياسات حسب الفئة</h2>
-        </div>
-        ${Object.keys(stats.byCategory).length === 0
-          ? '<p class="muted">لا توجد سياسات بعد.</p>'
-          : Object.entries(stats.byCategory).map(([cat, count]) => `
-              <div class="indicator-row">
-                <div class="indicator-name">${escapeHtml(cat)}</div>
-                <span class="badge badge-teal">${count}</span>
-              </div>`).join('')}
-      </div>
-
-      ${stats.topPolicies.length > 0 ? `
-        <div class="card">
-          <div class="card-header">
-            <h2 class="card-title">أعلى السياسات توليداً</h2>
-          </div>
-          ${stats.topPolicies.map(p => `
-            <div class="indicator-row">
-              <div class="indicator-name">${escapeHtml(p.title)}</div>
-              <span class="badge badge-gray">${p.count} مرة</span>
-            </div>`).join('')}
-        </div>
-      ` : ''}
-    `;
-
-    $('#dashboard-content').innerHTML = html;
-  } catch (err) {
-    $('#dashboard-content').innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
-  }
-}
 
 // ═════════════════════════════════════════════════════════════════
 // عرض: الامتثال والالتزام ← هيكل المؤشرات وعدد الممارسات
@@ -9618,6 +12349,12 @@ handleRoute();
 
 // تشغيل PWA setup (manifest + service worker)
 setupPWA();
+
+// تشغيل نظام التحليلات (تتبّع الزوار)
+Analytics.init();
+
+// تشغيل Session Timer (Phase 4) إن كان المدير مُسجّل دخول
+if (State.adminToken) startSessionTimer();
 
 // ═════════════════════════════════════════════════════════════════
 // نظام الحيوية الشامل — Phase C
