@@ -151,10 +151,69 @@
     .brand-logo svg{width:26px;height:26px}
     .brand-name{font-family:var(--font-heading);font-weight:600;font-size:1.18rem;letter-spacing:var(--ls-snug);line-height:1.1}
     .brand-name small{display:block;font-family:var(--font-body);font-weight:300;font-size:var(--text-micro);color:var(--text-faint);margin-top:1px;letter-spacing:0;line-height:1.2}
-    .nav-links{display:flex;align-items:center;gap:0.25rem}
-    .nav-link{color:var(--text-muted);text-decoration:none;padding:0.45rem 0.85rem;border-radius:var(--radius-sm);font-size:var(--text-small);font-weight:500;transition:all var(--duration-fast) var(--ease-smooth);background:none;border:none;font-family:inherit;cursor:pointer;position:relative}
-    .nav-link:hover{background:var(--stone-100);color:var(--text)}
-    .nav-link.active{background:var(--teal-50);color:var(--teal-700);font-weight:500}
+    /* ═════════════════════════════════════════
+       Navbar احترافي مع Animations مبهرة
+       ═════════════════════════════════════════ */
+    .nav-links{display:flex;align-items:center;gap:0.5rem}
+
+    /* الحاوية الداخلية للروابط (للـindicator) */
+    .nav-links-inner{display:flex;align-items:center;gap:0.15rem;position:relative;background:var(--stone-50);padding:0.3rem;border-radius:99px;border:1px solid var(--border)}
+
+    /* الـIndicator الذي يتحرّك تحت الرابط النشط */
+    .nav-indicator{position:absolute;top:0.3rem;bottom:0.3rem;background:var(--bg-card);border-radius:99px;box-shadow:0 1px 3px rgba(15,110,86,0.12), 0 0 0 1px rgba(15,110,86,0.08);transition:right .45s cubic-bezier(.65,0,.35,1), width .45s cubic-bezier(.65,0,.35,1), opacity .25s ease;pointer-events:none;z-index:0;opacity:0}
+
+    /* الرابط الواحد */
+    .nav-link{color:var(--text-muted);text-decoration:none;padding:0.5rem 0.9rem;border-radius:99px;font-size:0.88rem;font-weight:500;transition:color .25s var(--ease-smooth), transform .35s var(--ease-spring);background:none;border:none;font-family:inherit;cursor:pointer;position:relative;display:inline-flex;align-items:center;gap:0.4rem;z-index:1;white-space:nowrap}
+
+    /* الأيقونة بجانب النص */
+    .nav-link-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;transition:transform .35s var(--ease-spring);flex-shrink:0}
+    .nav-link-icon svg{width:100%;height:100%;stroke-width:2}
+
+    /* hover تأثيرات */
+    .nav-link:hover{color:var(--text)}
+    .nav-link:hover .nav-link-icon{transform:rotate(-8deg) scale(1.15)}
+
+    /* الرابط النشط */
+    .nav-link.active{color:var(--teal-700);font-weight:600}
+    .nav-link.active .nav-link-icon{color:var(--teal-700);transform:scale(1.1)}
+
+    /* ضغطة (active state) */
+    .nav-link:active{transform:scale(0.96)}
+
+    /* إخفاء الأيقونة في الشاشات الضيّقة جداً */
+    @media(max-width:480px){
+      .nav-link{padding:0.45rem 0.7rem;font-size:0.82rem}
+      .nav-link-icon{width:14px;height:14px}
+    }
+
+    /* رابط لوحة الإدارة (منفصل) */
+    .nav-link-admin{background:linear-gradient(135deg,var(--teal-50),var(--teal-100));color:var(--teal-700);border:1px solid var(--teal-200);padding:0.4rem 0.85rem;font-weight:600}
+    .nav-link-admin:hover{background:linear-gradient(135deg,var(--teal-100),var(--teal-200))}
+    .nav-link-admin.active{background:var(--teal-700);color:#fff}
+
+    /* فاصل بين الـnav والـadmin link */
+    .nav-divider{width:1px;height:22px;background:var(--border);margin:0 0.3rem}
+
+    /* تجاوب: في الشاشات الضيّقة، أخفِ أيقونات */
+    @media(max-width:768px){
+      .nav-links-inner{padding:0.25rem;gap:0}
+      .nav-link{padding:0.4rem 0.65rem}
+    }
+    @media(max-width:560px){
+      .nav-link-icon{display:none}
+      .nav-link{padding:0.45rem 0.6rem;font-size:0.78rem}
+    }
+
+    /* Logo hover محسّن */
+    .brand{position:relative}
+    .brand:hover .brand-logo{transform:rotate(-8deg) scale(1.1)}
+    .brand-logo{transition:transform .5s var(--ease-spring)}
+    .brand:hover .brand-name{color:var(--teal-700);transition:color .3s var(--ease-smooth)}
+    .brand-name{transition:color .3s var(--ease-smooth)}
+
+    /* Glow effect عند الـhover على الـnavbar كاملاً */
+    .navbar::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) 0%, rgba(15,110,86,0.04), transparent 60%);pointer-events:none;opacity:0;transition:opacity .4s ease}
+    .navbar:hover::after{opacity:1}
 
     .footer{background:var(--bg-card);border-top:1px solid var(--border);padding:1.25rem 0;text-align:center;color:var(--text-faint);font-size:var(--text-small)}
 
@@ -582,8 +641,6 @@
 
     /* الجوال */
     @media(max-width:768px){
-      .nav-links{gap:0}
-      .nav-link{padding:0.4rem;font-size:0.82rem}
       h1{font-size:1.7rem} h2{font-size:1.3rem}
       .hero h1{font-size:2rem}
       .container{padding:0 1rem}
@@ -1698,31 +1755,115 @@ window.addEventListener('hashchange', handleRoute);
 // شريط التنقل
 // ═════════════════════════════════════════════════════════════════
 
-function renderNav() {
+// قائمة الـnavbar (5 عناصر مع أيقونات)
+const NAV_ITEMS = [
+  {
+    id:'about', href:'#/about', label:'عن المنصة',
+    matchRoutes: ['about'],
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+  },
+  {
+    id:'tools', href:'#/tools', label:'الأدوات',
+    matchRoutes: ['tools', 'standards', 'policies', 'calculator', 'transition'],
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
+  },
+  {
+    id:'learn', href:'#/learn', label:'المعرفة',
+    matchRoutes: ['learn'],
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
+  },
+  {
+    id:'quiz', href:'#/learn/quiz', label:'اختبر معلوماتك',
+    matchRoutes: [],
+    matchHash: '#/learn/quiz',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+  },
+  {
+    id:'chatbot', href:'#/tools/chatbot', label:'المساعد الذكي',
+    matchRoutes: [],
+    matchHash: '#/tools/chatbot',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r="0.8" fill="currentColor"/><circle cx="13" cy="10" r="0.8" fill="currentColor"/><circle cx="17" cy="10" r="0.8" fill="currentColor"/></svg>'
+  }
+];
+
+function isNavItemActive(item) {
+  const hash = window.location.hash || '#/';
+  if (item.matchHash && hash === item.matchHash) return true;
+  if (item.matchHash && hash.startsWith(item.matchHash + '/')) return true;
+  // المطابقة عبر route
   const route = State.currentRoute;
+  if (item.matchRoutes && item.matchRoutes.includes(route)) {
+    // استثناء: إذا الراوت `learn` و الهاش هو quiz، لا نُفعّل learn
+    if (item.id === 'learn' && hash.startsWith('#/learn/quiz')) return false;
+    // استثناء: إذا الراوت `tools` و الهاش هو chatbot، لا نُفعّل tools
+    if (item.id === 'tools' && hash.startsWith('#/tools/chatbot')) return false;
+    return true;
+  }
+  return false;
+}
+
+function renderNav() {
   const isAdmin = !!State.adminToken;
 
+  const linksHtml = NAV_ITEMS.map(item => {
+    const active = isNavItemActive(item);
+    return `
+      <a href="${item.href}" class="nav-link ${active ? 'active' : ''}" data-nav="${item.id}">
+        <span class="nav-link-icon">${item.icon}</span>
+        <span class="nav-link-label">${escapeHtml(item.label)}</span>
+      </a>
+    `;
+  }).join('');
+
   let html = `
-    <a href="#/standards" class="nav-link ${route === 'standards' ? 'active' : ''}">المعايير</a>
-    <a href="#/policies" class="nav-link ${route === 'policies' ? 'active' : ''}">السياسات</a>
-    <a href="#/tools" class="nav-link ${route === 'tools' ? 'active' : ''}">الأدوات</a>
-    <a href="#/learn" class="nav-link ${route === 'learn' ? 'active' : ''}">المعرفة</a>
-    <a href="#/calculator" class="nav-link ${route === 'calculator' ? 'active' : ''}">الحاسبة</a>
-    <a href="#/transition" class="nav-link ${route === 'transition' ? 'active' : ''}">المحاكي</a>
+    <div class="nav-links-inner">
+      ${linksHtml}
+      <span class="nav-indicator" id="nav-indicator"></span>
+    </div>
   `;
 
   if (isAdmin) {
     html += `
-      <span style="width:1px;background:var(--border);height:20px;margin:0 0.25rem"></span>
-      <a href="#/admin" class="nav-link ${route === 'admin' ? 'active' : ''}">لوحة الإدارة</a>
+      <span class="nav-divider"></span>
+      <a href="#/admin" class="nav-link nav-link-admin ${State.currentRoute === 'admin' ? 'active' : ''}">
+        <span class="nav-link-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </span>
+        <span class="nav-link-label">لوحة الإدارة</span>
+      </a>
     `;
   }
-  // رابط "دخول المدير" مُزال من الـnavbar — يُفتح بـ:
-  //   • اختصار لوحة المفاتيح: Ctrl+Shift+A (Cmd+Shift+A على ماك)
-  //   • أو الكتابة المباشرة في URL: #/admin/login
 
   $('#nav-links').innerHTML = html;
+
+  // تحريك المؤشّر للرابط النشط
+  requestAnimationFrame(() => moveNavIndicator());
 }
+
+// تحريك المؤشّر تحت الرابط النشط (slide animation)
+function moveNavIndicator() {
+  const indicator = document.getElementById('nav-indicator');
+  if (!indicator) return;
+  const activeLink = document.querySelector('.nav-links-inner .nav-link.active');
+  if (!activeLink) {
+    indicator.style.opacity = '0';
+    return;
+  }
+  const inner = indicator.parentElement;
+  const innerRect = inner.getBoundingClientRect();
+  const linkRect = activeLink.getBoundingClientRect();
+  // المسافة من يمين العنصر (لأن الواجهة RTL)
+  const right = (innerRect.right - linkRect.right);
+  const width = linkRect.width;
+  indicator.style.opacity = '1';
+  indicator.style.right = right + 'px';
+  indicator.style.width = width + 'px';
+}
+
+// إعادة تحريك المؤشر عند تغيير حجم النافذة
+window.addEventListener('resize', () => {
+  if (typeof moveNavIndicator === 'function') moveNavIndicator();
+});
 
 // ═════════════════════════════════════════════════════════════════
 // نظام تتبّع الزوار (Analytics) — المرحلة 2
@@ -2408,6 +2549,11 @@ function renderHome() {
   const allItems = buildAllHomeItems();
   const allCardsHtml = allItems.map(renderHomeCard).join('');
 
+  // تحميل عدد السياسات المنشورة من DB (عند الحاجة فقط)
+  if (State.publishedPoliciesCount === undefined) {
+    loadPublishedPoliciesCount();
+  }
+
   $('#app').innerHTML = `
     <!-- سلايدر الترويج -->
     ${renderHomeSlider()}
@@ -2420,7 +2566,7 @@ function renderHome() {
           <div class="hero-stat-label">أداة احترافية</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-value" data-counter="${stats.policies}">${stats.policies}</div>
+          <div class="hero-stat-value" data-stat="policies" data-counter="${typeof stats.policies === 'number' ? stats.policies : 0}">${stats.policies}</div>
           <div class="hero-stat-label">سياسة جاهزة</div>
         </div>
         <div class="hero-stat">
@@ -2476,16 +2622,38 @@ function renderHome() {
 
 // إحصائيات ديناميكية
 function computeHomeStats() {
+  // إحصائيات دقيقة 100% - تأخذ القيم من البيانات الفعلية في الموقع
   return {
-    tools: TOOLS_CATALOG.length,
-    policies: 45,
-    decisions: typeof DECISIONS_LIBRARY !== 'undefined' ? DECISIONS_LIBRARY.length : 42,
+    // الأدوات: 4 أساسية (معايير، سياسات، حاسبة، محاكي) + كل الأدوات في الكتالوج
+    tools: 4 + (typeof TOOLS_CATALOG !== 'undefined' ? TOOLS_CATALOG.length : 0),
+    // السياسات: عدد المنشورة فقط (visible) من قاعدة البيانات إن تمّ تحميلها
+    policies: (State.publishedPoliciesCount !== undefined && State.publishedPoliciesCount !== null)
+              ? State.publishedPoliciesCount
+              : '...',
+    // القرارات: العدد الفعلي
+    decisions: typeof DECISIONS_LIBRARY !== 'undefined' ? DECISIONS_LIBRARY.length : 0,
+    // قواعد فحص: مجموع الثلاث مدققين الفعلي
     auditRules: (typeof POLICY_RULES !== 'undefined' ? POLICY_RULES.length : 0)
                 + (typeof REGULATION_RULES !== 'undefined' ? REGULATION_RULES.length : 0)
                 + (typeof DECISION_RULES !== 'undefined' ? DECISION_RULES.length : 0),
-    faq: typeof FAQ_DATA !== 'undefined' ? FAQ_DATA.length : 42,
-    risks: typeof RISK_LIBRARY !== 'undefined' ? RISK_LIBRARY.length : 19
+    // FAQ: العدد الفعلي بعد أي تعديلات
+    faq: (typeof getFAQ === 'function' ? getFAQ() : (typeof FAQ_DATA !== 'undefined' ? FAQ_DATA : [])).length,
+    // المخاطر: العدد الفعلي
+    risks: typeof RISK_LIBRARY !== 'undefined' ? RISK_LIBRARY.length : 0
   };
+}
+
+// تحميل عدد السياسات المنشورة من API ثم إعادة عرض الإحصائيات
+async function loadPublishedPoliciesCount() {
+  try {
+    const list = await API.listPolicies();
+    State.publishedPoliciesCount = (list || []).length;
+    // إعادة تحديث الإحصائيات في الصفحة الرئيسية إن كانت مفتوحة
+    document.querySelectorAll('[data-stat="policies"]').forEach(el => {
+      el.textContent = State.publishedPoliciesCount + (State.publishedPoliciesCount > 0 ? '' : '');
+      el.removeAttribute('data-counter');
+    });
+  } catch (e) { /* ignore */ }
 }
 
 // بحث الصفحة الرئيسية (يفلتر كل الـ17 عنصر)
@@ -2538,19 +2706,6 @@ function clearHomeSearch() {
 }
 
 // إحصائيات ديناميكية محسوبة من البيانات الفعلية في الموقع
-function computeHomeStats() {
-  return {
-    tools: TOOLS_CATALOG.length, // 13
-    policies: 45, // عدد السياسات في الـbackend (يبقى ثابت إلى أن نُحضره من API)
-    decisions: typeof DECISIONS_LIBRARY !== 'undefined' ? DECISIONS_LIBRARY.length : 42,
-    auditRules: (typeof POLICY_RULES !== 'undefined' ? POLICY_RULES.length : 0)
-                + (typeof REGULATION_RULES !== 'undefined' ? REGULATION_RULES.length : 0)
-                + (typeof DECISION_RULES !== 'undefined' ? DECISION_RULES.length : 0),
-    faq: typeof FAQ_DATA !== 'undefined' ? FAQ_DATA.length : 42,
-    risks: typeof RISK_LIBRARY !== 'undefined' ? RISK_LIBRARY.length : 19
-  };
-}
-
 // بحث الأدوات في الصفحة الرئيسية (نسخة محلية للـhome)
 function filterToolsHome(query) {
   query = (query || '').trim().toLowerCase();
@@ -7159,30 +7314,32 @@ const TOOLS_GROUPS = [
 const POPULAR_TOOLS_IDS = ['minutes', 'aga', 'decisions', 'calendar'];
 
 function renderToolsLanding() {
-  const allToolsHtml = TOOLS_CATALOG.map(t => renderToolCard(t)).join('');
+  // 17 عنصر: 4 أساسية (المعايير، السياسات، الحاسبة، المحاكي) + 13 أداة احترافية
+  const allItems = buildAllHomeItems();
+  const allCardsHtml = allItems.map(renderHomeCard).join('');
 
   $('#app').innerHTML = `
     <div class="container">
       <div class="mb-4">
-        <h1>الأدوات الاحترافية</h1>
-        <p class="muted">${TOOLS_CATALOG.length} أداة جاهزة للاستخدام الفوري — ابحث عمّا تحتاجه</p>
+        <h1>الأدوات والخدمات</h1>
+        <p class="muted">${allItems.length} خدمة وأداة جاهزة للاستخدام الفوري — ابحث عمّا تحتاجه</p>
       </div>
 
-      <!-- شريط بحث ذكي -->
+      <!-- شريط بحث ذكي يفلتر كل الـ17 عنصر -->
       <div class="tools-search-wrap">
         <svg class="tools-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="tools-search" class="tools-search-input"
-          placeholder="ابحث عن أداة... (مثلاً: محضر، تقويم، مخاطر)"
-          oninput="filterToolsHome(this.value)" autocomplete="off" />
-        <button id="tools-search-clear" class="tools-search-clear" onclick="clearToolsSearchHome()" style="display:none">×</button>
+        <input type="text" id="home-search" class="tools-search-input"
+          placeholder="ابحث عن خدمة... (مثال: معايير، سياسة، محضر، تقويم)"
+          oninput="filterHomeItems(this.value)" autocomplete="off" />
+        <button id="home-search-clear" class="tools-search-clear" onclick="clearHomeSearch()" style="display:none">×</button>
       </div>
 
-      <!-- شبكة موحّدة بدون تقسيم -->
-      <div class="tools-grid" id="tools-unified-grid" style="margin-top:1.5rem">
-        ${allToolsHtml}
+      <!-- شبكة موحّدة لكل الـ17 عنصر -->
+      <div class="tools-grid" id="home-unified-grid" style="margin-top:1.5rem">
+        ${allCardsHtml}
       </div>
 
-      <div id="tools-no-results" style="display:none;margin-top:1.5rem"></div>
+      <div id="home-no-results" style="display:none;margin-top:1.5rem"></div>
 
       <div class="alert alert-warning mt-5 small">
         كل ما يُولَّد من هذه الأدوات استرشادي. يجب اعتماده من الجهة المختصة (مجلس الإدارة، الإدارة التنفيذية) ومراجعته قانونياً قبل العمل به.
@@ -12355,6 +12512,17 @@ Analytics.init();
 
 // تشغيل Session Timer (Phase 4) إن كان المدير مُسجّل دخول
 if (State.adminToken) startSessionTimer();
+
+// Navbar glow effect — يتبع الماوس
+(function setupNavbarGlow() {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+  navbar.addEventListener('mousemove', (e) => {
+    const rect = navbar.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    navbar.style.setProperty('--mx', x + '%');
+  });
+})();
 
 // ═════════════════════════════════════════════════════════════════
 // نظام الحيوية الشامل — Phase C
