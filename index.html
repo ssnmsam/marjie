@@ -609,9 +609,18 @@
     .tools-vis-stat-label{font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem}
 
     .tools-visibility-list{display:flex;flex-direction:column;gap:0.7rem}
-    .tool-vis-row{display:grid;grid-template-columns:1fr auto;gap:1.25rem;align-items:center;padding:0.85rem 1rem;background:#FFFFFF;border:1px solid var(--border);border-radius:10px;transition:all .15s ease}
-    @media(max-width:700px){.tool-vis-row{grid-template-columns:1fr}}
+    .tool-vis-row{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;padding:0.85rem 1rem;background:#FFFFFF;border:1px solid var(--border);border-radius:10px;transition:all .15s ease}
+    @media(max-width:700px){.tool-vis-row{grid-template-columns:auto 1fr;gap:0.6rem}.tool-vis-row .tool-vis-controls{grid-column:1/-1}}
     .tool-vis-row:hover{border-color:var(--border-strong);box-shadow:0 2px 6px rgba(0,0,0,0.04)}
+
+    /* أزرار الترتيب اليدوي */
+    .tool-vis-reorder{display:flex;flex-direction:column;align-items:center;gap:0.15rem;padding:0.2rem;border-radius:8px;background:var(--stone-50);min-width:36px}
+    .tool-vis-arrow{width:26px;height:22px;display:flex;align-items:center;justify-content:center;background:#FFFFFF;border:1px solid var(--border);border-radius:5px;cursor:pointer;color:var(--text-muted);transition:all .15s ease;padding:0}
+    .tool-vis-arrow:hover:not(:disabled){background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
+    .tool-vis-arrow:active:not(:disabled){transform:scale(0.92)}
+    .tool-vis-arrow:disabled{opacity:0.3;cursor:not-allowed}
+    .tool-vis-position{font-size:0.72rem;font-weight:700;color:var(--text-muted);font-variant-numeric:tabular-nums;line-height:1;padding:0.15rem 0}
+
     .tool-vis-info{display:flex;align-items:center;gap:0.85rem;min-width:0}
     .tool-vis-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--stone-50);border-radius:8px;padding:6px;transition:color .2s}
     .tool-vis-icon svg{width:100%;height:100%}
@@ -4100,7 +4109,49 @@ function renderToolBlocked(toolId) {
   `;
 }
 
-function buildAllHomeItems() {
+// ─── ترتيب الأدوات (يدوي من الإدارة + تلقائي بالحالة) ──
+const TOOLS_ORDER_KEY = 'marjie_tools_order';
+
+function getToolsOrder() {
+  try {
+    const stored = localStorage.getItem(TOOLS_ORDER_KEY);
+    if (stored) {
+      const arr = JSON.parse(stored);
+      if (Array.isArray(arr)) return arr;
+    }
+  } catch (e) {}
+  return [];
+}
+
+function saveToolsOrder(orderArr) {
+  try {
+    localStorage.setItem(TOOLS_ORDER_KEY, JSON.stringify(orderArr));
+    return true;
+  } catch (e) { return false; }
+}
+
+// تطبيق الترتيب: يحترم الـorder المحفوظ، الأدوات الجديدة تُلحق بالنهاية
+function applyToolsOrder(items) {
+  const savedOrder = getToolsOrder();
+  if (!savedOrder.length) return items;
+
+  // فهرس سريع للترتيب المحفوظ
+  const orderMap = {};
+  savedOrder.forEach((id, idx) => { orderMap[id] = idx; });
+
+  return items.slice().sort((a, b) => {
+    const ai = orderMap[a.id];
+    const bi = orderMap[b.id];
+    // الموجود في الـorder يأتي أولاً، الباقي بنفس ترتيبه الأصلي
+    if (ai !== undefined && bi !== undefined) return ai - bi;
+    if (ai !== undefined) return -1;
+    if (bi !== undefined) return 1;
+    return 0;
+  });
+}
+
+// قائمة العناصر الموحّدة (بدون أي تقسيم لفئات)
+function _allItemsUnified() {
   const mainItems = [
     { id:'standards', href:'#/standards', icon:HOME_MAIN_ICONS.standards,
       name:'المعايير', desc:'3 معايير حوكمة بـ30+ ممارسة عملية، مفصّلة حسب التصنيفات الخمسة.',
@@ -4125,31 +4176,37 @@ function buildAllHomeItems() {
     keywords: t.keywords
   }));
 
-  const allItems = [...mainItems, ...toolItems];
-
-  // أضف حالة كل أداة + فلتر الـhidden
-  const visibility = getToolsVisibility();
-  return allItems
-    .map(item => ({ ...item, state: visibility[item.id] || 'visible' }))
-    .filter(item => item.state !== 'hidden');
+  return [...mainItems, ...toolItems];
 }
 
-// كل الأدوات (بدون فلتر) — للاستخدام في صفحة الإدارة
-function buildAllHomeItemsRaw() {
-  const mainItems = [
-    { id:'standards', href:'#/standards', name:'المعايير', icon:HOME_MAIN_ICONS.standards, category:'أساسي' },
-    { id:'policies', href:'#/policies', name:'مكتبة السياسات', icon:HOME_MAIN_ICONS.policies, category:'أساسي' },
-    { id:'calculator', href:'#/calculator', name:'حاسبة القوائم المالية', icon:HOME_MAIN_ICONS.calculator, category:'أساسي' },
-    { id:'transition', href:'#/transition', name:'محاكي الانتقال', icon:HOME_MAIN_ICONS.transition, category:'أساسي' }
-  ];
-  const toolItems = TOOLS_CATALOG.map(t => ({
-    id: t.id,
-    href: '#/tools/' + t.id,
-    name: t.name,
-    icon: TOOLS_ICONS[t.id] || '',
-    category: 'أداة احترافية'
+function buildAllHomeItems() {
+  const allItems = _allItemsUnified();
+  const visibility = getToolsVisibility();
+
+  // أضف حالة كل أداة
+  const withState = allItems.map(item => ({
+    ...item,
+    state: visibility[item.id] || 'visible'
   }));
-  return [...mainItems, ...toolItems];
+
+  // فلتر الـhidden
+  const visible = withState.filter(item => item.state !== 'hidden');
+
+  // طبّق الترتيب المحفوظ
+  const ordered = applyToolsOrder(visible);
+
+  // الفرز التلقائي: الأدوات الفعّالة (visible) أولاً، ثم coming_soon
+  // مع الحفاظ على الترتيب اليدوي داخل كل مجموعة
+  return ordered.sort((a, b) => {
+    const order = { visible: 0, coming_soon: 1, hidden: 2 };
+    return (order[a.state] || 0) - (order[b.state] || 0);
+  });
+}
+
+// كل الأدوات (بدون فلتر الـhidden) — لاستخدام صفحة الإدارة
+function buildAllHomeItemsRaw() {
+  const allItems = _allItemsUnified();
+  return applyToolsOrder(allItems);
 }
 
 function renderHomeCard(item) {
@@ -7343,66 +7400,69 @@ function renderAdminToolsVisibility() {
     stats[s] = (stats[s] || 0) + 1;
   });
 
-  // تجميع حسب الفئة
-  const grouped = {};
-  allItems.forEach(item => {
-    if (!grouped[item.category]) grouped[item.category] = [];
-    grouped[item.category].push(item);
-  });
+  // قائمة موحّدة بدون تقسيم لفئات + أزرار ترتيب يدوي
+  const rowsHtml = allItems.map((item, idx) => {
+    const state = visibility[item.id] || 'visible';
+    const isFirst = idx === 0;
+    const isLast = idx === allItems.length - 1;
+    return `
+      <div class="tool-vis-row" data-tool-id="${escapeHtml(item.id)}" data-tool-idx="${idx}">
+        <!-- ترتيب يدوي -->
+        <div class="tool-vis-reorder" aria-label="تغيير الترتيب">
+          <button type="button" class="tool-vis-arrow"
+            onclick="moveToolUp('${escapeHtml(item.id)}')"
+            ${isFirst ? 'disabled' : ''}
+            aria-label="نقل لأعلى">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+          </button>
+          <span class="tool-vis-position">${idx + 1}</span>
+          <button type="button" class="tool-vis-arrow"
+            onclick="moveToolDown('${escapeHtml(item.id)}')"
+            ${isLast ? 'disabled' : ''}
+            aria-label="نقل لأسفل">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
 
-  const categoryHtml = Object.entries(grouped).map(([cat, items]) => `
-    <div class="admin-section">
-      <h3 class="admin-section-title" style="margin-bottom:1rem">
-        ${escapeHtml(cat)}
-        <span class="badge badge-gray">${items.length}</span>
-      </h3>
-      <div class="tools-visibility-list">
-        ${items.map(item => {
-          const state = visibility[item.id] || 'visible';
-          return `
-            <div class="tool-vis-row" data-tool-id="${escapeHtml(item.id)}">
-              <div class="tool-vis-info">
-                <div class="tool-vis-icon" style="color:${state === 'visible' ? 'var(--teal-700)' : state === 'coming_soon' ? '#C97A3A' : '#999'}">${item.icon || ''}</div>
-                <div class="tool-vis-name">
-                  <div class="tool-vis-title">${escapeHtml(item.name)}</div>
-                  <div class="tool-vis-id">
-                    <code>${escapeHtml(item.href)}</code>
-                  </div>
-                </div>
-              </div>
-              <div class="tool-vis-controls">
-                ${Object.entries(TOOL_STATES).map(([stateKey, stateInfo]) => `
-                  <label class="tool-vis-option ${state === stateKey ? 'active' : ''}"
-                    data-state="${stateKey}"
-                    style="--state-color:${stateInfo.color}">
-                    <input type="radio"
-                      name="state-${escapeHtml(item.id)}"
-                      value="${stateKey}"
-                      ${state === stateKey ? 'checked' : ''}
-                      onchange="updateToolState('${escapeHtml(item.id)}', '${stateKey}')" />
-                    <span class="tool-vis-option-icon">${stateInfo.icon}</span>
-                    <span class="tool-vis-option-label">${stateInfo.label}</span>
-                  </label>
-                `).join('')}
-              </div>
-            </div>
-          `;
-        }).join('')}
+        <div class="tool-vis-info">
+          <div class="tool-vis-icon" style="color:${state === 'visible' ? 'var(--teal-700)' : state === 'coming_soon' ? '#C97A3A' : '#999'}">${item.icon || ''}</div>
+          <div class="tool-vis-name">
+            <div class="tool-vis-title">${escapeHtml(item.name)}</div>
+            <div class="tool-vis-id"><code>${escapeHtml(item.href)}</code></div>
+          </div>
+        </div>
+
+        <div class="tool-vis-controls">
+          ${Object.entries(TOOL_STATES).map(([stateKey, stateInfo]) => `
+            <label class="tool-vis-option ${state === stateKey ? 'active' : ''}"
+              data-state="${stateKey}"
+              style="--state-color:${stateInfo.color}">
+              <input type="radio"
+                name="state-${escapeHtml(item.id)}"
+                value="${stateKey}"
+                ${state === stateKey ? 'checked' : ''}
+                onchange="updateToolState('${escapeHtml(item.id)}', '${stateKey}')" />
+              <span class="tool-vis-option-icon">${stateInfo.icon}</span>
+              <span class="tool-vis-option-label">${stateInfo.label}</span>
+            </label>
+          `).join('')}
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
   const content = `
     <div class="admin-page-header">
       <div>
-        <h1>إدارة حالات الأدوات</h1>
-        <p>تحكّم في ظهور كل أداة من الـ${allItems.length} للزوار</p>
+        <h1>إدارة الأدوات</h1>
+        <p>تحكّم في ظهور وترتيب كل أداة من الـ${allItems.length} للزوار</p>
       </div>
       <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
         <a href="#/" target="_blank" class="btn btn-ghost btn-sm">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           معاينة الصفحة الرئيسية
         </a>
+        <button class="btn btn-ghost btn-sm" onclick="resetToolsOrder()">إعادة الترتيب الافتراضي</button>
         <button class="btn btn-ghost btn-sm" onclick="resetAllToolsVisibility()">إعادة الكل لمرئي</button>
       </div>
     </div>
@@ -7435,17 +7495,64 @@ function renderAdminToolsVisibility() {
     <div class="alert alert-info small mb-3">
       💡 <strong>طريقة العمل:</strong>
       <ul style="margin:0.4rem 0 0;padding-right:1.2rem">
+        <li><strong>الترتيب:</strong> استخدم الأسهم (↑↓) لإعادة ترتيب الأدوات. الأدوات الفعّالة تظهر <strong>أولاً</strong> في الصفحة الرئيسية ثم "قريباً" تلقائياً.</li>
         <li><strong>إظهار:</strong> الأداة تعمل عادياً وتظهر للجميع</li>
-        <li><strong>قريباً:</strong> تظهر في القائمة بشارة "قريباً" مع كرت مُعطَّل (غير قابل للضغط)</li>
-        <li><strong>إخفاء:</strong> تختفي تماماً من كل الصفحات (لكنّك كمدير لا تزال تستطيع الوصول إليها)</li>
+        <li><strong>قريباً:</strong> تظهر بشارة "قريباً" مع كرت مُعطَّل (في آخر القائمة)</li>
+        <li><strong>إخفاء:</strong> تختفي تماماً (لكنّك كمدير لا تزال تستطيع الوصول إليها)</li>
       </ul>
-      <p class="small mt-2" style="margin:0.4rem 0 0">التغييرات تُحفظ تلقائياً عند كل اختيار.</p>
+      <p class="small mt-2" style="margin:0.4rem 0 0">كل التغييرات تُحفظ تلقائياً.</p>
     </div>
 
-    ${categoryHtml}
+    <div class="admin-section">
+      <h3 class="admin-section-title" style="margin-bottom:1rem">
+        كل الأدوات
+        <span class="badge badge-gray">${allItems.length}</span>
+      </h3>
+      <div class="tools-visibility-list">
+        ${rowsHtml}
+      </div>
+    </div>
   `;
 
   renderAdminShell('tools-visibility', content);
+}
+
+// تحريك أداة لأعلى
+function moveToolUp(toolId) {
+  const allItems = buildAllHomeItemsRaw();
+  const idx = allItems.findIndex(i => i.id === toolId);
+  if (idx <= 0) return;
+
+  // تبديل
+  const newOrder = allItems.map(i => i.id);
+  [newOrder[idx - 1], newOrder[idx]] = [newOrder[idx], newOrder[idx - 1]];
+
+  saveToolsOrder(newOrder);
+  if (typeof logAudit === 'function') logAudit('settings_change', 'system', toolId, 'Moved up');
+  renderAdminToolsVisibility();
+}
+
+// تحريك أداة لأسفل
+function moveToolDown(toolId) {
+  const allItems = buildAllHomeItemsRaw();
+  const idx = allItems.findIndex(i => i.id === toolId);
+  if (idx === -1 || idx === allItems.length - 1) return;
+
+  const newOrder = allItems.map(i => i.id);
+  [newOrder[idx], newOrder[idx + 1]] = [newOrder[idx + 1], newOrder[idx]];
+
+  saveToolsOrder(newOrder);
+  if (typeof logAudit === 'function') logAudit('settings_change', 'system', toolId, 'Moved down');
+  renderAdminToolsVisibility();
+}
+
+// إعادة الترتيب الافتراضي
+function resetToolsOrder() {
+  if (!confirm('استعادة الترتيب الافتراضي للأدوات؟')) return;
+  try { localStorage.removeItem(TOOLS_ORDER_KEY); } catch (e) {}
+  if (typeof logAudit === 'function') logAudit('reset', 'system', 'tools-order', 'Order reset to default');
+  showToast('تمّت استعادة الترتيب ✓', 'success');
+  renderAdminToolsVisibility();
 }
 
 // تحديث حالة أداة واحدة
