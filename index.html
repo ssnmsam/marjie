@@ -506,12 +506,78 @@
     .device-bar-fill{height:100%;border-radius:99px;transition:width .8s var(--ease-out)}
     .device-value{text-align:left;color:var(--text-muted);font-size:var(--text-tiny);direction:ltr}
 
+    /* صفحة "عن المنصة" */
+    .about-page{padding:0 0 3rem}
+    .about-hero{background:linear-gradient(135deg,var(--teal-700),var(--teal-900));color:#FFFFFF;padding:3.5rem 0 3rem;margin-bottom:2.5rem;position:relative;overflow:hidden}
+    .about-hero::before{content:'';position:absolute;top:-50%;right:-10%;width:60%;height:200%;background:radial-gradient(circle,rgba(201,165,116,0.15) 0%,transparent 60%);pointer-events:none}
+    .about-hero h1{font-family:var(--font-heading);font-size:clamp(1.8rem,3.5vw + 0.3rem,2.6rem);font-weight:700;margin-bottom:0.85rem;color:#FFFFFF;line-height:1.2;letter-spacing:var(--ls-tight)}
+    .about-hero p{font-size:1.05rem;line-height:1.7;color:rgba(255,255,255,0.92);max-width:700px;margin:0;font-weight:400}
+    .about-section{margin-bottom:2.5rem}
+    .about-section h2{font-family:var(--font-heading);font-size:1.55rem;font-weight:700;margin-bottom:1.1rem;color:var(--text);position:relative;padding-bottom:0.7rem}
+    .about-section h2::after{content:'';position:absolute;bottom:0;right:0;width:50px;height:3px;background:var(--gradient-teal);border-radius:99px}
+    .about-lead{font-size:1.05rem;line-height:1.85;color:var(--text);font-weight:400;max-width:800px}
+    .about-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2.5rem}
+    @media(max-width:700px){.about-grid-2{grid-template-columns:1fr}}
+    .about-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.6rem 1.4rem;transition:all var(--duration-base) var(--ease-out);position:relative;overflow:hidden}
+    .about-card:hover{border-color:var(--teal-500);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+    .about-card-icon{width:56px;height:56px;border-radius:var(--radius-md);background:var(--gradient-teal);color:#FFFFFF;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:0 4px 12px rgba(15,110,86,0.25)}
+    .about-card h3{font-family:var(--font-heading);font-size:1.2rem;margin-bottom:0.6rem;font-weight:600}
+    .about-card p{color:var(--text-muted);font-size:0.96rem;line-height:1.7;margin:0;font-weight:400}
+    .about-values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+    .about-value{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.3rem 1.1rem;text-align:right;transition:all var(--duration-base)}
+    .about-value:hover{border-color:var(--sand-500);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+    .about-value-icon{font-size:2.2rem;margin-bottom:0.5rem;display:block}
+    .about-value h4{font-size:1.05rem;margin-bottom:0.35rem;font-weight:600;color:var(--text)}
+    .about-value p{color:var(--text-muted);font-size:var(--text-small);line-height:1.6;margin:0;font-weight:400}
+    .about-features{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0.85rem}
+    .about-features li{display:flex;gap:0.6rem;align-items:flex-start;padding:1rem 1.1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);transition:all var(--duration-fast)}
+    .about-features li:hover{border-color:var(--teal-500);box-shadow:var(--shadow-xs)}
+    .about-features li span{flex:1;line-height:1.7;font-size:0.95rem}
+    .about-cta{background:linear-gradient(135deg,var(--teal-700),var(--teal-900));color:#FFFFFF;padding:2.5rem 2rem;border-radius:var(--radius-xl);text-align:center;margin-top:2rem}
+    .about-cta h2{color:#FFFFFF;font-family:var(--font-heading);font-size:1.6rem;margin-bottom:0.5rem;font-weight:700}
+    .about-cta h2::after{display:none}
+    .about-cta p{font-size:1.02rem;color:rgba(255,255,255,0.92);margin-bottom:1.4rem;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7}
+    .about-cta .btn{background:var(--sand-500);color:#1A2922;border:none;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+    .about-cta .btn:hover{background:var(--sand-400);transform:translateY(-2px)}
+
     /* أيقونة العين لإظهار/إخفاء كلمة المرور */
     .password-input-wrap{position:relative}
     .password-input-wrap input{padding-left:2.8rem}
     .password-toggle{position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);width:34px;height:34px;border:none;background:transparent;color:var(--text-faint);cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);transition:all var(--duration-fast) var(--ease-smooth);font-family:inherit}
     .password-toggle:hover{background:var(--stone-100);color:var(--text)}
     .password-toggle:focus{outline:none;background:var(--stone-100);color:var(--teal-700)}
+
+    /* منطقة رفع PDF (drop zone) */
+    .pdf-drop-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;padding:2rem 1.5rem;background:var(--stone-50);border:2px dashed var(--border-strong);border-radius:var(--radius-lg);cursor:pointer;transition:all .25s var(--ease-smooth);text-align:center}
+    .pdf-drop-zone:hover{background:var(--teal-50);border-color:var(--teal-500);transform:translateY(-1px)}
+    .pdf-drop-icon{color:var(--text-faint);margin-bottom:0.25rem;transition:color .25s var(--ease-smooth)}
+    .pdf-drop-zone:hover .pdf-drop-icon{color:var(--teal-700)}
+    .pdf-drop-zone strong{font-size:1rem;color:var(--text)}
+
+    /* بطاقة الملف المرفوع */
+    .pdf-uploaded-card{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:linear-gradient(135deg,#E1F5EE 0%,#FFFFFF 100%);border:1px solid var(--green-500);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+    .pdf-uploaded-icon{width:52px;height:52px;background:var(--coral-500);color:#FFFFFF;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(216,90,48,0.25)}
+    .pdf-uploaded-info{flex:1;min-width:0}
+    .pdf-uploaded-name{font-weight:600;font-size:0.95rem;color:var(--text);margin-bottom:0.2rem;word-break:break-all;line-height:1.4}
+    .pdf-uploaded-meta{font-size:var(--text-tiny);color:var(--text-muted);display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.4rem}
+    .pdf-uploaded-status{display:inline-flex;align-items:center;gap:0.35rem;font-size:var(--text-small);font-weight:600;color:var(--green-700)}
+    .pdf-uploaded-actions button{padding:0.4rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+
+    /* دليل API key — خطوات احترافية */
+    .api-step{display:flex;gap:0.85rem;padding:0.85rem 0;border-bottom:1px solid var(--border)}
+    .api-step:last-child{border-bottom:none}
+    .api-step-num{width:28px;height:28px;border-radius:50%;background:var(--gradient-teal);color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.95rem;flex-shrink:0;font-family:var(--font-heading)}
+    .api-step-body{flex:1;min-width:0}
+    .api-step-body strong{display:block;font-size:0.95rem;margin-bottom:0.15rem}
+    .api-step-body code{font-size:0.82rem;background:var(--stone-100);padding:0.1rem 0.35rem;border-radius:4px;color:var(--text)}
+    .api-step-illust{margin-top:0.7rem;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:#FFFFFF}
+
+    /* تأثير نبض للأزرار التوضيحية */
+    .pulse-highlight{animation:pulseHighlight 1.8s ease-in-out infinite}
+    @keyframes pulseHighlight{
+      0%, 100%{opacity:1;transform:translateY(0)}
+      50%{opacity:0.85;transform:translateY(-2px)}
+    }
 
     /* قسم الأدوات الموحّد في الصفحة الرئيسية */
     .tools-on-home{margin:3.5rem 0 2rem;padding-top:2.5rem;border-top:1px solid var(--border)}
@@ -2879,6 +2945,7 @@ function handleRoute() {
         else if (parts[2]) renderAdminGuestEditor(decodeURIComponent(parts[2]));
         else renderAdminGuests();
       }
+      else if (parts[1] === 'about') renderAdminAbout();
       else if (parts[1] === 'analytics') renderAdminAnalytics();
       else if (parts[1] === 'settings') {
         if (parts[2]) renderAdminSettings(parts[2]);
@@ -4879,6 +4946,8 @@ const ADMIN_NAV_ITEMS = [
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' },
   { id:'guest', href:'#/admin/guest', name:'ضيف الشهر',
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' },
+  { id:'about', href:'#/admin/about', name:'عن المنصة',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' },
   { id:'analytics', href:'#/admin/analytics', name:'الإحصائيات',
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' },
   { id:'settings', href:'#/admin/settings', name:'الإعدادات',
@@ -6658,6 +6727,369 @@ if (typeof renderGuestOfMonth === 'function') {
 }
 
 // ═════════════════════════════════════════════════════════════════
+// صفحة "عن المنصة" — محتوى افتراضي + قابل للتعديل من الإدارة
+// ═════════════════════════════════════════════════════════════════
+
+const ABOUT_STORAGE_KEY = 'marjie_about_override';
+
+const ABOUT_PAGE_DEFAULT = {
+  hero: {
+    title: 'عن منصّة مَرْجِع',
+    subtitle: 'منصّة الحوكمة العملية للجمعيات الأهلية في المملكة العربية السعودية'
+  },
+  intro: {
+    title: 'من نحن',
+    content: 'منصّة "مَرْجِع" مبادرة وطنية متخصّصة في تمكين الجمعيات الأهلية السعودية من تطبيق مبادئ الحوكمة والشفافية والامتثال بأساليب عملية وأدوات جاهزة للاستخدام الفوري. نهدف لرفع جودة الإدارة وكفاءة الأثر في القطاع غير الربحي، بما يتوافق مع رؤية المملكة 2030 ومُتطلبات المركز الوطني لتنمية القطاع غير الربحي.'
+  },
+  vision: {
+    title: 'رؤيتنا',
+    content: 'أن نكون المرجع التطبيقي الأوّل للجمعيات الأهلية في تطبيق معايير الحوكمة الرشيدة، عبر تقديم أدوات ذكية ومحتوى تعليمي مُحدَّث يُسهم في رفع تصنيف الجمعيات وكفاءتها التشغيلية.'
+  },
+  mission: {
+    title: 'رسالتنا',
+    content: 'تبسيط ممارسات الحوكمة عبر منصّة رقميّة شاملة تجمع المعايير الرسمية، السياسات الجاهزة، الأدوات العملية، والمحتوى التعليمي — في بيئة موحّدة ومجانية تخدم الجمعيات من جميع الأحجام والتصنيفات.'
+  },
+  values: {
+    title: 'قيمنا',
+    items: [
+      { icon: '🎯', title: 'الدقّة', desc: 'محتوى مبني على المراجع الرسمية ومُراجع باستمرار' },
+      { icon: '🌐', title: 'سهولة الوصول', desc: 'مجاني تماماً، يعمل على كل الأجهزة، بدون تسجيل إلزامي' },
+      { icon: '🔒', title: 'الخصوصية', desc: 'بياناتك تبقى في متصفحك — لا تُرسل لأي خادم خارجي' },
+      { icon: '⚡', title: 'الكفاءة', desc: 'وفّر وقت إعداد الوثائق من أسابيع إلى دقائق' },
+      { icon: '🤝', title: 'الشراكة', desc: 'نطوّر المنصّة بناء على ملاحظات الجمعيات الفعلية' },
+      { icon: '📈', title: 'التطوّر المستمر', desc: 'تحديثات دورية تواكب أحدث الأنظمة واللوائح' }
+    ]
+  },
+  whyUs: {
+    title: 'لماذا مَرْجِع؟',
+    items: [
+      'محتوى يغطّي <strong>3 معايير حوكمة</strong> رئيسية (الامتثال، الشفافية، السلامة المالية)',
+      'مكتبة <strong>45+ سياسة</strong> جاهزة قابلة للتخصيص بصيغة PDF أو Word',
+      '<strong>13 أداة احترافية</strong> لإدارة المهام اليومية: المحاضر، التقويم، الوصف الوظيفي، وغيرها',
+      '<strong>35 قاعدة فحص ذكية</strong> تُدقّق سياساتك وقراراتك تلقائياً',
+      '<strong>42 سؤال شائع</strong> مع إجابات تفصيلية + اختبار تفاعلي لقياس معرفتك',
+      'حاسبة <strong>الأداء المالي 2025</strong> مطابقة 100% للنموذج الرسمي'
+    ]
+  },
+  audience: {
+    title: 'الفئة المستهدفة',
+    content: 'منصّة مَرْجِع مصمّمة لتخدم جميع الجمعيات الأهلية السعودية بمختلف تصنيفاتها الخمسة (متناهية الصغر إلى متناهية الكبر)، مع أدوات مُكيَّفة لكل تصنيف. كذلك يستفيد منها المدراء التنفيذيون، أعضاء مجالس الإدارة، مسؤولو الحوكمة، والمراجعون الداخليون.'
+  },
+  cta: {
+    title: 'ابدأ رحلتك معنا',
+    subtitle: 'استكشف المعايير، حمّل السياسات، استخدم الأدوات — كل ذلك مجاناً وبدون أي تسجيل.',
+    buttonText: 'استكشف الأدوات الآن',
+    buttonLink: '#/tools'
+  }
+};
+
+function getAboutPage() {
+  try {
+    const stored = localStorage.getItem(ABOUT_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // دمج مع الافتراضي لضمان وجود كل الحقول
+      return Object.assign({}, ABOUT_PAGE_DEFAULT, parsed);
+    }
+  } catch (e) {}
+  return JSON.parse(JSON.stringify(ABOUT_PAGE_DEFAULT));
+}
+
+function saveAboutPage(data) {
+  try {
+    localStorage.setItem(ABOUT_STORAGE_KEY, JSON.stringify(data));
+    return true;
+  } catch (e) {
+    showToast('فشل الحفظ', 'error');
+    return false;
+  }
+}
+
+function resetAboutToDefault() {
+  if (!confirm('استعادة المحتوى الافتراضي؟ ستفقد كل التعديلات.')) return;
+  try { localStorage.removeItem(ABOUT_STORAGE_KEY); } catch (e) {}
+  showToast('تمّت الاستعادة', 'success');
+  renderAdminAbout();
+}
+
+// عرض الصفحة العامة "عن المنصة"
+function renderAbout() {
+  const about = getAboutPage();
+  $('#app').innerHTML = `
+    <div class="about-page">
+      <!-- Hero -->
+      <div class="about-hero">
+        <div class="container">
+          <h1>${escapeHtml(about.hero.title)}</h1>
+          <p>${escapeHtml(about.hero.subtitle)}</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- مقدّمة -->
+        <section class="about-section">
+          <h2>${escapeHtml(about.intro.title)}</h2>
+          <p class="about-lead">${escapeHtml(about.intro.content)}</p>
+        </section>
+
+        <!-- الرؤية والرسالة -->
+        <div class="about-grid-2">
+          <section class="about-card">
+            <div class="about-card-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <h3>${escapeHtml(about.vision.title)}</h3>
+            <p>${escapeHtml(about.vision.content)}</p>
+          </section>
+          <section class="about-card">
+            <div class="about-card-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>${escapeHtml(about.mission.title)}</h3>
+            <p>${escapeHtml(about.mission.content)}</p>
+          </section>
+        </div>
+
+        <!-- القيم -->
+        <section class="about-section">
+          <h2>${escapeHtml(about.values.title)}</h2>
+          <div class="about-values-grid">
+            ${about.values.items.map(v => `
+              <div class="about-value">
+                <div class="about-value-icon">${v.icon}</div>
+                <h4>${escapeHtml(v.title)}</h4>
+                <p>${escapeHtml(v.desc)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- لماذا نحن -->
+        <section class="about-section">
+          <h2>${escapeHtml(about.whyUs.title)}</h2>
+          <ul class="about-features">
+            ${about.whyUs.items.map(item => `
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal-700);flex-shrink:0;margin-top:3px"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>${item}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </section>
+
+        <!-- الجمهور المستهدف -->
+        <section class="about-section">
+          <h2>${escapeHtml(about.audience.title)}</h2>
+          <p class="about-lead">${escapeHtml(about.audience.content)}</p>
+        </section>
+
+        <!-- CTA -->
+        <section class="about-cta">
+          <h2>${escapeHtml(about.cta.title)}</h2>
+          <p>${escapeHtml(about.cta.subtitle)}</p>
+          <a href="${escapeHtml(about.cta.buttonLink)}" class="btn btn-primary btn-lg">${escapeHtml(about.cta.buttonText)} ←</a>
+        </section>
+      </div>
+    </div>
+  `;
+}
+
+// ─── إدارة صفحة "عن المنصة" من admin ──────────────────────────────
+function renderAdminAbout() {
+  const about = getAboutPage();
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>تعديل صفحة "عن المنصة"</h1>
+        <p>المحتوى الذي يظهر للزوار في صفحة <code>#/about</code></p>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <a href="#/about" target="_blank" class="btn btn-ghost btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          معاينة
+        </a>
+        <button class="btn btn-ghost btn-sm" onclick="resetAboutToDefault()">استعادة الافتراضي</button>
+      </div>
+    </div>
+
+    <div class="alert alert-info small mb-3">
+      💡 التغييرات تُحفظ محلياً في متصفحك. للنشر للزوار الآخرين تحتاج نقلها لـSheets لاحقاً.
+    </div>
+
+    <form id="about-form" onsubmit="saveAboutForm(event)">
+      <!-- Hero -->
+      <div class="admin-section">
+        <h3 style="margin-bottom:1rem">العنوان الرئيسي (Hero)</h3>
+        <div class="form-group">
+          <label>عنوان الصفحة</label>
+          <input type="text" name="hero_title" value="${escapeHtml(about.hero.title)}" maxlength="80" required />
+        </div>
+        <div class="form-group">
+          <label>العنوان الفرعي</label>
+          <input type="text" name="hero_subtitle" value="${escapeHtml(about.hero.subtitle)}" maxlength="200" />
+        </div>
+      </div>
+
+      <!-- المقدّمة -->
+      <div class="admin-section">
+        <h3 style="margin-bottom:1rem">من نحن</h3>
+        <div class="form-group">
+          <label>العنوان</label>
+          <input type="text" name="intro_title" value="${escapeHtml(about.intro.title)}" maxlength="60" />
+        </div>
+        <div class="form-group">
+          <label>المحتوى</label>
+          <textarea name="intro_content" maxlength="1000" style="min-height:140px">${escapeHtml(about.intro.content)}</textarea>
+        </div>
+      </div>
+
+      <!-- الرؤية والرسالة -->
+      <div class="admin-section">
+        <h3 style="margin-bottom:1rem">الرؤية والرسالة</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>عنوان الرؤية</label>
+            <input type="text" name="vision_title" value="${escapeHtml(about.vision.title)}" maxlength="40" />
+          </div>
+          <div class="form-group">
+            <label>عنوان الرسالة</label>
+            <input type="text" name="mission_title" value="${escapeHtml(about.mission.title)}" maxlength="40" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>نص الرؤية</label>
+          <textarea name="vision_content" maxlength="500" style="min-height:100px">${escapeHtml(about.vision.content)}</textarea>
+        </div>
+        <div class="form-group">
+          <label>نص الرسالة</label>
+          <textarea name="mission_content" maxlength="500" style="min-height:100px">${escapeHtml(about.mission.content)}</textarea>
+        </div>
+      </div>
+
+      <!-- القيم -->
+      <div class="admin-section">
+        <h3 style="margin-bottom:1rem">القيم (6 قيم)</h3>
+        <div class="form-group">
+          <label>عنوان القسم</label>
+          <input type="text" name="values_title" value="${escapeHtml(about.values.title)}" maxlength="40" />
+        </div>
+        ${about.values.items.map((v, i) => `
+          <div class="form-row" style="margin-bottom:0.85rem;padding:0.85rem;background:var(--stone-50);border-radius:var(--radius-md)">
+            <div class="form-group" style="max-width:80px">
+              <label>الرمز</label>
+              <input type="text" name="value_icon_${i}" value="${escapeHtml(v.icon)}" maxlength="4" style="text-align:center;font-size:1.3rem" />
+            </div>
+            <div class="form-group" style="max-width:200px">
+              <label>العنوان ${i+1}</label>
+              <input type="text" name="value_title_${i}" value="${escapeHtml(v.title)}" maxlength="40" />
+            </div>
+            <div class="form-group">
+              <label>الوصف</label>
+              <input type="text" name="value_desc_${i}" value="${escapeHtml(v.desc)}" maxlength="120" />
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- لماذا نحن -->
+      <div class="admin-section">
+        <h3 style="margin-bottom:1rem">لماذا مَرْجِع؟ (6 ميزات)</h3>
+        <div class="form-group">
+          <label>عنوان القسم</label>
+          <input type="text" name="whyus_title" value="${escapeHtml(about.whyUs.title)}" maxlength="40" />
+        </div>
+        ${about.whyUs.items.map((item, i) => `
+          <div class="form-group">
+            <label>الميزة ${i+1} (يدعم HTML بسيط: &lt;strong&gt;)</label>
+            <input type="text" name="whyus_item_${i}" value="${escapeHtml(item)}" maxlength="200" />
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- الجمهور -->
+      <div class="admin-section">
+        <h3 style="margin-bottom:1rem">الفئة المستهدفة</h3>
+        <div class="form-group">
+          <label>العنوان</label>
+          <input type="text" name="audience_title" value="${escapeHtml(about.audience.title)}" maxlength="60" />
+        </div>
+        <div class="form-group">
+          <label>المحتوى</label>
+          <textarea name="audience_content" maxlength="600" style="min-height:100px">${escapeHtml(about.audience.content)}</textarea>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="admin-section">
+        <h3 style="margin-bottom:1rem">دعوة للعمل (CTA)</h3>
+        <div class="form-group">
+          <label>العنوان</label>
+          <input type="text" name="cta_title" value="${escapeHtml(about.cta.title)}" maxlength="60" />
+        </div>
+        <div class="form-group">
+          <label>الوصف</label>
+          <input type="text" name="cta_subtitle" value="${escapeHtml(about.cta.subtitle)}" maxlength="200" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>نص الزرّ</label>
+            <input type="text" name="cta_buttonText" value="${escapeHtml(about.cta.buttonText)}" maxlength="40" />
+          </div>
+          <div class="form-group">
+            <label>رابط الزرّ</label>
+            <input type="text" name="cta_buttonLink" value="${escapeHtml(about.cta.buttonLink)}" />
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;flex-wrap:wrap">
+        <a href="#/admin" class="btn btn-secondary">إلغاء</a>
+        <button type="submit" class="btn btn-primary">💾 حفظ كل التغييرات</button>
+      </div>
+    </form>
+  `;
+
+  renderAdminShell('about', content);
+}
+
+function saveAboutForm(event) {
+  event.preventDefault();
+  const fd = new FormData(event.target);
+
+  const data = {
+    hero: { title: fd.get('hero_title').trim(), subtitle: fd.get('hero_subtitle').trim() },
+    intro: { title: fd.get('intro_title').trim(), content: fd.get('intro_content').trim() },
+    vision: { title: fd.get('vision_title').trim(), content: fd.get('vision_content').trim() },
+    mission: { title: fd.get('mission_title').trim(), content: fd.get('mission_content').trim() },
+    values: {
+      title: fd.get('values_title').trim(),
+      items: [0,1,2,3,4,5].map(i => ({
+        icon: (fd.get('value_icon_' + i) || '').trim(),
+        title: (fd.get('value_title_' + i) || '').trim(),
+        desc: (fd.get('value_desc_' + i) || '').trim()
+      }))
+    },
+    whyUs: {
+      title: fd.get('whyus_title').trim(),
+      items: [0,1,2,3,4,5].map(i => (fd.get('whyus_item_' + i) || '').trim()).filter(Boolean)
+    },
+    audience: { title: fd.get('audience_title').trim(), content: fd.get('audience_content').trim() },
+    cta: {
+      title: fd.get('cta_title').trim(),
+      subtitle: fd.get('cta_subtitle').trim(),
+      buttonText: fd.get('cta_buttonText').trim(),
+      buttonLink: fd.get('cta_buttonLink').trim() || '#/tools'
+    }
+  };
+
+  if (saveAboutPage(data)) {
+    if (typeof logAudit === 'function') logAudit('update', 'settings', 'about', 'Updated About page');
+    showToast('تمّ الحفظ ✓', 'success');
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════
 // لوحة الإدارة - الإعدادات (Phase 4)
 // ═════════════════════════════════════════════════════════════════
 
@@ -7939,7 +8371,27 @@ function renderCalculator() {
             النظام يستخرج الـ10 أرقام تلقائياً مع <strong>مؤشّر ثقة لكل قيمة</strong>.
             يعمل أفضل مع PDFs المولّدة آلياً.
           </p>
-          <input type="file" id="pdf-input" accept="application/pdf" onchange="handlePDFUpload(event)" />
+
+          <!-- منطقة الرفع - تظهر قبل اختيار ملف -->
+          <div id="pdf-upload-zone">
+            <label for="pdf-input" class="pdf-drop-zone">
+              <div class="pdf-drop-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="12" y1="18" x2="12" y2="12"/>
+                  <polyline points="9 15 12 12 15 15"/>
+                </svg>
+              </div>
+              <strong>اسحب ملف PDF هنا أو اضغط للاختيار</strong>
+              <span class="small muted">القوائم المالية المُدققة بصيغة PDF</span>
+            </label>
+            <input type="file" id="pdf-input" accept="application/pdf" onchange="handlePDFUpload(event)" style="display:none" />
+          </div>
+
+          <!-- معاينة الملف المرفوع - تظهر بعد الاختيار -->
+          <div id="pdf-uploaded-preview" style="display:none"></div>
+
           <div id="pdf-status" class="mt-3"></div>
           <div id="pdf-raw" style="display:none" class="mt-3">
             <label>النص المستخرج:</label>
@@ -7951,29 +8403,137 @@ function renderCalculator() {
             <button class="btn btn-ghost btn-sm" onclick="togglePDFAIMode()" type="button">
               ⚡ وضع AI المتقدّم (للملفات الصعبة)
             </button>
-            <div id="pdf-ai-panel" style="display:none;margin-top:0.85rem;padding:1rem;background:var(--stone-50);border-radius:var(--radius-md);border:1px dashed var(--border-strong)">
+            <div id="pdf-ai-panel" style="display:none;margin-top:0.85rem;padding:1.25rem;background:var(--stone-50);border-radius:var(--radius-lg);border:1px dashed var(--border-strong)">
+              <h4 style="margin:0 0 0.85rem;font-size:1.05rem;display:flex;align-items:center;gap:0.5rem">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal-700)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                وضع الذكاء الاصطناعي
+              </h4>
               <p class="small muted mb-3">
-                استخدام Google Gemini API لاستخراج القيم بدقّة أعلى من الملفات الصعبة (مسحوبة، تنسيق غير معتاد).
-                المفتاح يُحفظ محلياً في متصفحك فقط.
-                <br>احصل على مفتاح مجاني من
-                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a>
+                لاستخراج القيم بدقّة أعلى من الملفات الصعبة (مسحوبة، تنسيق غير معتاد). استخدم Google Gemini المجاني.
               </p>
+
+              <!-- زرّ "كيف أحصل على المفتاح" -->
+              <button type="button" class="btn btn-secondary btn-sm mb-3" onclick="toggleAPIKeyGuide()" id="api-key-guide-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                كيف أحصل على مفتاح Gemini API؟
+              </button>
+
+              <!-- الدليل التفصيلي (مخفي افتراضياً) -->
+              <div id="api-key-guide" style="display:none;margin-bottom:1rem">
+                <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:var(--radius-md);padding:1.25rem">
+                  <h4 style="margin:0 0 1rem;color:var(--teal-700);font-size:1rem">دليل سريع — 4 خطوات (دقيقتان)</h4>
+
+                  <!-- الخطوة 1 -->
+                  <div class="api-step">
+                    <div class="api-step-num">1</div>
+                    <div class="api-step-body">
+                      <strong>افتح Google AI Studio</strong>
+                      <p class="small muted">انتقل إلى الرابط أدناه وسجّل دخولك بحساب Google:</p>
+                      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="margin-top:0.4rem">
+                        فتح aistudio.google.com/apikey
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:0.3rem"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                      </a>
+                      <!-- رسم توضيحي للصفحة -->
+                      <div class="api-step-illust">
+                        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" width="100%">
+                          <rect x="2" y="2" width="316" height="76" rx="6" fill="#FFFFFF" stroke="#D6D2C8" stroke-width="1"/>
+                          <rect x="2" y="2" width="316" height="20" rx="6 6 0 0" fill="#F5F2EC"/>
+                          <circle cx="14" cy="12" r="3" fill="#E07B5A"/>
+                          <circle cx="24" cy="12" r="3" fill="#D9B772"/>
+                          <circle cx="34" cy="12" r="3" fill="#7EBE94"/>
+                          <rect x="50" y="9" width="200" height="6" rx="2" fill="#E6E2D9"/>
+                          <text x="60" y="44" font-size="10" fill="#2C2A26" font-family="IBM Plex Sans Arabic">aistudio.google.com/apikey</text>
+                          <rect x="60" y="52" width="80" height="18" rx="9" fill="#1A73E8"/>
+                          <text x="100" y="64" font-size="9" fill="#FFFFFF" font-family="IBM Plex Sans Arabic" text-anchor="middle" font-weight="600">تسجيل دخول</text>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- الخطوة 2 -->
+                  <div class="api-step">
+                    <div class="api-step-num">2</div>
+                    <div class="api-step-body">
+                      <strong>اضغط زرّ "Create API Key"</strong>
+                      <p class="small muted">ستجد الزرّ في أعلى الصفحة (باللون الأزرق).</p>
+                      <div class="api-step-illust">
+                        <svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" width="100%">
+                          <rect x="2" y="2" width="316" height="86" rx="6" fill="#FAFAFA" stroke="#D6D2C8"/>
+                          <text x="20" y="28" font-size="13" fill="#2C2A26" font-family="IBM Plex Sans Arabic" font-weight="700">API keys</text>
+                          <rect x="220" y="14" width="85" height="22" rx="4" fill="#1A73E8" class="pulse-highlight"/>
+                          <text x="262" y="29" font-size="11" fill="#FFFFFF" font-family="Arial" text-anchor="middle" font-weight="600">+ Create API key</text>
+                          <!-- سهم يشير للزرّ -->
+                          <path d="M 180 26 L 215 26" stroke="#D85A30" stroke-width="2" fill="none" stroke-linecap="round"/>
+                          <path d="M 208 22 L 215 26 L 208 30" stroke="#D85A30" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                          <text x="178" y="22" font-size="9" fill="#D85A30" font-family="IBM Plex Sans Arabic" font-weight="600" text-anchor="end">اضغط هنا</text>
+                          <rect x="20" y="45" width="280" height="30" rx="4" fill="#FFFFFF" stroke="#E6E2D9"/>
+                          <text x="30" y="63" font-size="10" fill="#79766B" font-family="IBM Plex Sans Arabic">لا توجد مفاتيح بعد...</text>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- الخطوة 3 -->
+                  <div class="api-step">
+                    <div class="api-step-num">3</div>
+                    <div class="api-step-body">
+                      <strong>اختر مشروعاً (أو أنشئ جديداً)</strong>
+                      <p class="small muted">إن لم يكن لديك مشروع، اضغط "Create API key in new project" — كله مجاني.</p>
+                      <div class="api-step-illust">
+                        <svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" width="100%">
+                          <rect x="2" y="2" width="316" height="86" rx="6" fill="#FAFAFA" stroke="#D6D2C8"/>
+                          <rect x="40" y="18" width="240" height="56" rx="8" fill="#FFFFFF" stroke="#E6E2D9" stroke-width="1.5"/>
+                          <text x="160" y="38" font-size="11" fill="#2C2A26" font-family="IBM Plex Sans Arabic" font-weight="600" text-anchor="middle">Select a project</text>
+                          <rect x="60" y="50" width="200" height="18" rx="4" fill="#E8F5E9"/>
+                          <text x="160" y="62" font-size="9" fill="#2E7D32" font-family="Arial" text-anchor="middle">Create API key in new project</text>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- الخطوة 4 -->
+                  <div class="api-step">
+                    <div class="api-step-num">4</div>
+                    <div class="api-step-body">
+                      <strong>انسخ المفتاح والصقه أدناه</strong>
+                      <p class="small muted">المفتاح يبدأ بـ <code>AIza</code> ويتكوّن من ~40 حرف. اضغط زرّ النسخ ثم الصقه في الحقل أدناه.</p>
+                      <div class="api-step-illust">
+                        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" width="100%">
+                          <rect x="2" y="2" width="316" height="76" rx="6" fill="#FAFAFA" stroke="#D6D2C8"/>
+                          <text x="20" y="22" font-size="11" fill="#2C2A26" font-family="IBM Plex Sans Arabic" font-weight="600">Your API key:</text>
+                          <rect x="20" y="30" width="240" height="28" rx="4" fill="#F5F2EC" stroke="#D6D2C8"/>
+                          <text x="30" y="48" font-size="9.5" fill="#2C2A26" font-family="monospace">AIzaSyDJQaZ60JcMXFqrppZOVHJEeTYMhlPTdOI</text>
+                          <rect x="270" y="30" width="35" height="28" rx="4" fill="#1A73E8" class="pulse-highlight"/>
+                          <text x="287" y="48" font-size="9" fill="#FFFFFF" font-family="IBM Plex Sans Arabic" text-anchor="middle" font-weight="600">نسخ</text>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="alert alert-info small mt-3" style="margin-bottom:0">
+                    🔒 المفتاح يُحفظ في متصفحك فقط — لا يصل لأي خادم آخر سوى Google Gemini API مباشرة.
+                  </div>
+                </div>
+              </div>
+
               <div class="form-group">
-                <label>Gemini API Key (سري)</label>
+                <label>Gemini API Key</label>
                 <div class="password-input-wrap">
-                  <input type="password" id="gemini-key-input" placeholder="AIza..." value="" autocomplete="off" />
+                  <input type="password" id="gemini-key-input" placeholder="AIzaSy..." value="" autocomplete="off" />
                   <button type="button" class="password-toggle" onclick="togglePasswordVisibility('gemini-key-input', this)" aria-label="إظهار">
                     <svg class="eye-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                     <svg class="eye-hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
+                <div class="form-help">يبدأ بـ <code>AIza</code> — احصل عليه مجاناً من الدليل أعلاه</div>
               </div>
+
               <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-                <button class="btn btn-secondary btn-sm" type="button" onclick="saveGeminiKeyFromInput()">حفظ المفتاح</button>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="saveGeminiKeyFromInput()">💾 حفظ المفتاح</button>
                 <button class="btn btn-primary btn-sm" type="button" onclick="extractWithGemini()">⚡ استخراج بالذكاء الاصطناعي</button>
               </div>
               <p class="small muted mt-2" style="margin-bottom:0">
-                💡 Gemini Flash مجاني لأول 1500 طلب يومياً. ملف PDF كامل = ~1 طلب.
+                💡 Gemini مجاني تماماً للاستخدام الشخصي ضمن حدود معقولة (1500 طلب يومياً). ملف PDF كامل = طلب واحد.
               </p>
             </div>
           </div>
@@ -8498,6 +9058,9 @@ async function handlePDFUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
 
+  // عرض معاينة الملف المرفوع
+  showPDFUploadedPreview(file);
+
   const status = $('#pdf-status');
   status.innerHTML = '<div class="alert alert-info"><span class="loader"></span> جاري تحليل الملف...</div>';
 
@@ -8587,7 +9150,74 @@ async function handlePDFUpload(event) {
 // وضع AI المتقدّم (Gemini API) — للملفات الصعبة
 // ═════════════════════════════════════════════════════════════════
 
+// قائمة نماذج Gemini مرتّبة من الأحدث للأقدم — نجرّبها بالترتيب
 const GEMINI_KEY_STORAGE = 'marjie_gemini_api_key';
+
+const GEMINI_MODELS_TO_TRY = [
+  'gemini-2.0-flash',
+  'gemini-2.0-flash-001',
+  'gemini-1.5-flash-latest',
+  'gemini-1.5-flash-002',
+  'gemini-flash-latest'
+];
+
+// نموذج Gemini الناجح يُحفظ ليُستخدم مباشرة في المرة التالية
+const GEMINI_WORKING_MODEL_KEY = 'marjie_gemini_working_model';
+
+function getGeminiWorkingModel() {
+  try { return localStorage.getItem(GEMINI_WORKING_MODEL_KEY) || ''; } catch (e) { return ''; }
+}
+
+function saveGeminiWorkingModel(model) {
+  try { localStorage.setItem(GEMINI_WORKING_MODEL_KEY, model); } catch (e) {}
+}
+
+// محاولة استدعاء Gemini مع fallback تلقائي بين النماذج
+async function callGeminiWithFallback(apiKey, payload, statusEl) {
+  // ابدأ بالنموذج الذي نجح سابقاً (إن وُجد)
+  const workingModel = getGeminiWorkingModel();
+  const modelsToTry = workingModel
+    ? [workingModel, ...GEMINI_MODELS_TO_TRY.filter(m => m !== workingModel)]
+    : GEMINI_MODELS_TO_TRY;
+
+  let lastError = '';
+
+  for (const model of modelsToTry) {
+    try {
+      if (statusEl) {
+        statusEl.innerHTML = `<div class="alert alert-info"><span class="loader"></span> جاري المحاولة مع <code>${model}</code>...</div>`;
+      }
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        // نجح — احفظ النموذج للمرات القادمة
+        saveGeminiWorkingModel(model);
+        return await response.json();
+      }
+
+      const errData = await response.json().catch(() => ({}));
+      lastError = errData.error?.message || `HTTP ${response.status}`;
+
+      // إذا كان الخطأ في API key نفسه (401/403)، لا تجرّب نماذج أخرى
+      if (response.status === 401 || response.status === 403) {
+        throw new Error('مفتاح API غير صالح أو منتهي. تحقّق من المفتاح في aistudio.google.com');
+      }
+
+      // إذا 404/400 (model not found)، استمر للنموذج التالي
+      console.log(`[Gemini] ${model} failed (${response.status}), trying next...`);
+    } catch (err) {
+      if (err.message.includes('مفتاح API غير صالح')) throw err;
+      lastError = err.message;
+    }
+  }
+
+  throw new Error(`فشل مع كل النماذج. آخر خطأ: ${lastError}`);
+}
 
 function getGeminiKey() {
   try { return localStorage.getItem(GEMINI_KEY_STORAGE) || ''; } catch (e) { return ''; }
@@ -8614,7 +9244,6 @@ async function extractWithGemini() {
   }
 
   const status = $('#pdf-status');
-  status.innerHTML = '<div class="alert alert-info"><span class="loader"></span> جاري التحليل بالذكاء الاصطناعي...</div>';
 
   try {
     // تحويل PDF إلى base64
@@ -8644,31 +9273,20 @@ async function extractWithGemini() {
 - الأرقام بدون فواصل، بدون عملة، رقم عشري صرف فقط.
 - لا تخمّن: إن لم تكن متأكداً، اتركها null.`;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+    const payload = {
+      contents: [{
+        parts: [
+          { text: prompt },
+          { inline_data: { mime_type: 'application/pdf', data: base64 } }
+        ]
+      }],
+      generationConfig: { temperature: 0.1, responseMimeType: 'application/json' }
+    };
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{
-          parts: [
-            { text: prompt },
-            { inline_data: { mime_type: 'application/pdf', data: base64 } }
-          ]
-        }],
-        generationConfig: { temperature: 0.1, responseMimeType: 'application/json' }
-      })
-    });
+    // استدعاء مع fallback تلقائي بين النماذج
+    const data = await callGeminiWithFallback(apiKey, payload, status);
 
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData.error?.message || `خطأ: ${response.status}`);
-    }
-
-    const data = await response.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-    // استخراج JSON
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('لم يُرجع AI استجابة بصيغة JSON');
 
@@ -8681,7 +9299,7 @@ async function extractWithGemini() {
       const input = document.querySelector('input[data-fin-key="' + key + '"]');
       if (input && typeof value === 'number' && !isNaN(value)) {
         input.value = value;
-        input.style.background = '#E1F5EE'; // أخضر = ثقة عالية من AI
+        input.style.background = '#E1F5EE';
         input.dataset.confidence = 'ai';
         appliedCount++;
       }
@@ -8689,16 +9307,17 @@ async function extractWithGemini() {
 
     updateFinancialResults();
 
+    const usedModel = getGeminiWorkingModel() || 'Gemini';
     status.innerHTML = `
       <div class="alert alert-success">
-        ✨ <strong>تم استخراج ${appliedCount} حقلاً بـAI</strong>
+        ✨ <strong>تم استخراج ${appliedCount} حقلاً بنجاح</strong>
         <p class="small" style="margin:0.5rem 0 0">
-          القيم الخضراء استُخرجت بـGemini. راجع الأرقام للتأكّد قبل الاعتماد.
+          استُخدم نموذج: <code>${escapeHtml(usedModel)}</code> • القيم الخضراء مستخرجة بالذكاء الاصطناعي • راجعها قبل الاعتماد.
         </p>
       </div>
     `;
   } catch (err) {
-    status.innerHTML = `<div class="alert alert-error">فشل AI: ${escapeHtml(err.message)}</div>`;
+    status.innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
   }
 }
 
@@ -8706,6 +9325,76 @@ function togglePDFAIMode() {
   const panel = $('#pdf-ai-panel');
   if (!panel) return;
   panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+// عرض معاينة الملف المرفوع
+function showPDFUploadedPreview(file) {
+  const zone = $('#pdf-upload-zone');
+  const preview = $('#pdf-uploaded-preview');
+  if (!zone || !preview) return;
+
+  zone.style.display = 'none';
+  preview.style.display = 'block';
+
+  const sizeKB = file.size / 1024;
+  const sizeText = sizeKB >= 1024 ? `${(sizeKB/1024).toFixed(2)} MB` : `${sizeKB.toFixed(0)} KB`;
+  const dateText = new Date().toLocaleString('ar-SA', { dateStyle: 'medium', timeStyle: 'short' });
+
+  preview.innerHTML = `
+    <div class="pdf-uploaded-card">
+      <div class="pdf-uploaded-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#FFFFFF"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <text x="12" y="17" text-anchor="middle" font-size="5" font-weight="bold" fill="currentColor" stroke="none">PDF</text>
+        </svg>
+      </div>
+      <div class="pdf-uploaded-info">
+        <div class="pdf-uploaded-name">${escapeHtml(file.name)}</div>
+        <div class="pdf-uploaded-meta">
+          <span>📊 ${sizeText}</span>
+          <span>•</span>
+          <span>📅 ${dateText}</span>
+        </div>
+        <div class="pdf-uploaded-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-700)"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>تم رفع الملف بنجاح</span>
+        </div>
+      </div>
+      <div class="pdf-uploaded-actions">
+        <button type="button" class="btn btn-ghost btn-sm" onclick="removePDFFile()" title="إزالة الملف">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div style="margin-top:0.6rem;display:flex;gap:0.5rem;flex-wrap:wrap">
+      <label for="pdf-input" class="btn btn-ghost btn-sm" style="cursor:pointer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        تغيير الملف
+      </label>
+    </div>
+  `;
+}
+
+function removePDFFile() {
+  const zone = $('#pdf-upload-zone');
+  const preview = $('#pdf-uploaded-preview');
+  const status = $('#pdf-status');
+  const input = $('#pdf-input');
+  if (zone) zone.style.display = '';
+  if (preview) { preview.style.display = 'none'; preview.innerHTML = ''; }
+  if (status) status.innerHTML = '';
+  if (input) input.value = '';
+  window._lastPDFFile = null;
+
+  // إعادة تعيين الحقول الملوّنة (اختياري - نتركها للمستخدم)
+  showToast('تمّت إزالة الملف', 'info');
+}
+
+function toggleAPIKeyGuide() {
+  const guide = $('#api-key-guide');
+  if (!guide) return;
+  guide.style.display = guide.style.display === 'none' ? 'block' : 'none';
 }
 
 function saveGeminiKeyFromInput() {
