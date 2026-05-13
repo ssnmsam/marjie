@@ -626,13 +626,15 @@
     .indicator-section:first-of-type{border-top:none;padding-top:0}
     .indicator-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.85rem}
     .indicator-header h3{margin:0;font-size:1.05rem}
-    .metric-row{display:grid;grid-template-columns:1.5fr auto auto;gap:0.5rem 1rem;padding:0.65rem 0;border-bottom:1px solid var(--border);align-items:center}
+    .metric-row{display:grid;grid-template-columns:1.5fr auto auto auto;gap:0.5rem 1rem;padding:0.65rem 0;border-bottom:1px solid var(--border);align-items:center}
+    @media(max-width:600px){.metric-row{grid-template-columns:1fr;gap:0.35rem;padding:0.85rem 0}}
     .metric-row:last-child{border-bottom:none}
     .metric-name{font-size:0.9rem;line-height:1.5}
     .metric-name .badge{margin-right:0.4rem;font-size:0.65rem}
     .metric-target{font-size:0.78rem;color:var(--text-faint);display:block;margin-top:0.2rem}
-    .metric-actual{font-weight:600;font-size:1rem;color:var(--teal-700);text-align:left;direction:ltr;font-variant-numeric:tabular-nums}
+    .metric-actual{font-weight:600;font-size:1rem;color:var(--teal-700);text-align:left;direction:ltr;font-variant-numeric:tabular-nums;min-width:65px}
     .metric-actual.no-data{color:var(--text-faint);font-weight:400}
+    .metric-score{font-weight:600;font-size:0.9rem;color:var(--sand-700);text-align:left;direction:ltr;font-variant-numeric:tabular-nums;min-width:85px;background:var(--sand-50);padding:0.25rem 0.55rem;border-radius:var(--radius-sm)}
     .total-score-card{background:linear-gradient(135deg,var(--teal-700),var(--teal-900));color:#fff;padding:1.5rem 1.75rem;border-radius:14px;margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem}
     .total-score-card .label{font-size:1rem;opacity:0.92}
     .total-score-card .label-sub{font-size:0.78rem;opacity:0.7;display:block;margin-top:0.1rem}
@@ -2448,90 +2450,174 @@ const STANDARDS_LABELS = {
 const FRONTEND_ENABLED_STANDARDS = ['transparency', 'financial', 'compliance'];
 
 // مدخلات الحاسبة المالية (مجمّعة حسب الفئة)
+// المدخلات المالية الـ10 (مطابقة لملف معيار الأداء المالي 2025)
 const FIN_INPUTS = [
-  { key: 'totalExpenses',         label: 'إجمالي المصاريف',                 group: 'expenses' },
-  { key: 'adminExpenses',         label: 'المصاريف الإدارية',               group: 'expenses' },
-  { key: 'programsExpenses',      label: 'مصاريف البرامج والأنشطة',         group: 'expenses' },
-  { key: 'sustainabilityExpenses',label: 'مصاريف الاستدامة',                group: 'expenses' },
-  { key: 'fundraisingExpenses',   label: 'مصاريف جمع الأموال',              group: 'expenses' },
-  { key: 'sustainabilityReturns', label: 'عوائد الاستدامة',                 group: 'income' },
-  { key: 'totalDonations',        label: 'إجمالي التبرعات',                 group: 'income' },
-  { key: 'cashAndEquivalents',    label: 'النقد وما في حكمه',               group: 'assets' },
-  { key: 'sustainabilityAssets',  label: 'إجمالي أصول الاستدامة',           group: 'assets' },
-  { key: 'restrictedAssets',      label: 'الأصول المقيدة',                  group: 'assets' },
-  { key: 'endowmentCash',         label: 'أصول الأوقاف النقدية',            group: 'assets' },
-  { key: 'netCashInvestments',    label: 'صافي النقد والاستثمارات المتداولة',group: 'assets' },
-  { key: 'currentLiabilities',    label: 'الالتزامات المتداولة',            group: 'liabilities' }
+  // C5
+  { key: 'totalExpenses',           label: 'إجمالي المصاريف',                       group: 'expenses' },
+  // C6
+  { key: 'adminExpenses',           label: 'المصاريف العمومية والإدارية',           group: 'expenses' },
+  // C9
+  { key: 'programsExpenses',        label: 'مصاريف البرامج والأنشطة',               group: 'expenses' },
+  // C8
+  { key: 'sustainabilityExpenses',  label: 'مصاريف الاستدامة',                      group: 'expenses' },
+  // C10
+  { key: 'fundraisingExpenses',     label: 'مصاريف جمع الأموال',                    group: 'expenses' },
+  // C7
+  { key: 'sustainabilityReturns',   label: 'عوائد الاستدامة',                       group: 'income' },
+  // C11
+  { key: 'totalDonations',          label: 'إجمالي التبرعات',                       group: 'income' },
+  // C12
+  { key: 'cashAndEquivalents',      label: 'النقد وما في حكمه',                     group: 'assets' },
+  // C14
+  { key: 'endowmentsAndRestricted', label: 'صافي أصول الأوقاف + الأصول المقيدة',     group: 'assets' },
+  // C13
+  { key: 'currentLiabilities',      label: 'الالتزامات المتداولة',                  group: 'liabilities' }
 ];
 
 const FIN_INPUT_GROUPS = {
   expenses: 'المصاريف',
   income: 'الإيرادات',
-  assets: 'الأصول والاستثمارات',
+  assets: 'الأصول',
   liabilities: 'الالتزامات'
 };
 
-// مؤشرات الأداء المالي (موحّدة لكل التصنيفات الخمسة)
+// أداة helper: ROUNDDOWN كما في Excel
+function _roundDown(value, decimals) {
+  const factor = Math.pow(10, decimals);
+  return Math.floor(value * factor) / factor;
+}
+
+// الـ8 مؤشرات بصيغ Excel الدقيقة 100%
+// كل مؤشر يُرجع: { ratio, score, max } — الـscore بصيغة ROUNDDOWN كما في Excel
 const FIN_INDICATORS = [
   {
-    id: 'admin', name: 'المصاريف الإدارية', weight: 20,
+    id: 'admin', name: 'المصاريف الإدارية', max: 20,
     metrics: [
-      { name: 'نسبة المصاريف الإدارية إلى إجمالي المصاريف',
-        compute: v => (v.totalExpenses > 0) ? (v.adminExpenses / v.totalExpenses) * 100 : null,
-        target: 15, type: 'less_than', subWeight: 80, targetText: 'أقل من 15%' },
-      { name: 'نسبة عوائد الاستدامة إلى المصاريف الإدارية',
-        compute: v => (v.adminExpenses > 0) ? (v.sustainabilityReturns / v.adminExpenses) * 100 : null,
-        target: 100, type: 'greater_or_equal', subWeight: 20, targetText: '100% فأكثر' }
-    ]
-  },
-  {
-    id: 'programs', name: 'مصاريف البرامج والأنشطة', weight: 45,
-    metrics: [
-      { name: 'نسبة مصاريف البرامج إلى إجمالي المصاريف',
-        compute: v => (v.totalExpenses > 0) ? (v.programsExpenses / v.totalExpenses) * 100 : null,
-        target: 80, type: 'greater_than', subWeight: 100, targetText: 'أكبر من 80%' }
-    ]
-  },
-  {
-    id: 'sustainability', name: 'الاستدامة المالية', weight: 10,
-    metrics: [
-      { name: 'نسبة مصاريف الاستدامة إلى إجمالي المصاريف',
-        compute: v => (v.totalExpenses > 0) ? (v.sustainabilityExpenses / v.totalExpenses) * 100 : null,
-        target: 5, type: 'less_than', subWeight: 50, targetText: 'أقل من 5%' },
-      { name: 'نسبة مصاريف الاستدامة إلى عوائد الاستدامة',
-        compute: v => (v.sustainabilityReturns > 0) ? (v.sustainabilityExpenses / v.sustainabilityReturns) * 100 : null,
-        target: 10, type: 'less_than', subWeight: 50, targetText: 'أقل من 10%' },
-      { name: 'نسبة عوائد الاستدامة إلى إجمالي أصول الاستدامة',
-        compute: v => (v.sustainabilityAssets > 0) ? (v.sustainabilityReturns / v.sustainabilityAssets) * 100 : null,
-        target: 7.5, type: 'greater_than', subWeight: 0, targetText: 'أعلى من 7.5%', informational: true }
-    ]
-  },
-  {
-    id: 'fundraising', name: 'جمع الأموال والتبرعات', weight: 10,
-    metrics: [
-      { name: 'نسبة مصاريف جمع الأموال إلى إجمالي المصاريف',
-        compute: v => (v.totalExpenses > 0) ? (v.fundraisingExpenses / v.totalExpenses) * 100 : null,
-        target: 5, type: 'less_than', subWeight: 50, targetText: 'أقل من 5%' },
-      { name: 'نسبة مصاريف جمع الأموال إلى إجمالي التبرعات',
-        compute: v => (v.totalDonations > 0) ? (v.fundraisingExpenses / v.totalDonations) * 100 : null,
-        target: 10, type: 'less_than', subWeight: 50, targetText: 'أقل من 10%' }
-    ]
-  },
-  {
-    id: 'coverage', name: 'تغطية الالتزامات المستقبلية', weight: 15,
-    metrics: [
-      { name: 'النقد إلى (المقيدة + الأوقاف النقدية + الالتزامات المتداولة)',
+      {
+        name: 'نسبة المصاريف الإدارية إلى إجمالي المصاريف',
+        targetText: 'أقل من 15%', max: 16,
         compute: v => {
-          const denom = (v.restrictedAssets || 0) + (v.endowmentCash || 0) + (v.currentLiabilities || 0);
-          return denom > 0 ? (v.cashAndEquivalents / denom) * 100 : null;
-        },
-        target: 100, type: 'greater_than', subWeight: 70, targetText: 'أكبر من 100%' },
-      { name: 'صافي النقد والاستثمارات / المصاريف الإدارية الشهرية',
+          if (!v.totalExpenses) return { ratio: null, score: null };
+          const r = v.adminExpenses / v.totalExpenses;
+          let score;
+          if (r <= 0.15) score = 16;
+          else if (r >= 0.25) score = 0;
+          else score = _roundDown((0.25 - r) / 0.01 * 1.6, 2);
+          return { ratio: r * 100, score };
+        }
+      },
+      {
+        name: 'نسبة عوائد الاستدامة الصافية إلى المصاريف الإدارية',
+        targetText: '100% فأكثر', max: 4,
         compute: v => {
-          const monthly = (v.adminExpenses > 0) ? v.adminExpenses / 12 : null;
-          return monthly ? v.netCashInvestments / monthly : null;
-        },
-        target: 12, targetMax: 18, type: 'between', subWeight: 30, targetText: '12 إلى 18 شهراً', unit: 'شهر' }
+          if (!v.adminExpenses || v.adminExpenses <= 0) return { ratio: null, score: null };
+          const r = (v.sustainabilityReturns - v.sustainabilityExpenses) / v.adminExpenses;
+          let score;
+          if (r >= 1) score = 4;
+          else if (r <= 0) score = 0;
+          else score = _roundDown(r * 4, 2);
+          return { ratio: r * 100, score };
+        }
+      }
+    ]
+  },
+  {
+    id: 'programs', name: 'مصاريف البرامج والأنشطة', max: 45,
+    metrics: [
+      {
+        name: 'نسبة مصاريف البرامج إلى إجمالي المصاريف',
+        targetText: 'أكبر من 80%', max: 45,
+        compute: v => {
+          if (!v.totalExpenses) return { ratio: null, score: null };
+          const r = v.programsExpenses / v.totalExpenses;
+          let score;
+          if (r > 0.8) score = 45;
+          else if (r <= 0.4) score = 0;
+          else score = _roundDown((r - 0.4) * 2.5 * 45, 2);
+          return { ratio: r * 100, score };
+        }
+      }
+    ]
+  },
+  {
+    id: 'sustainability', name: 'الاستدامة المالية', max: 10,
+    metrics: [
+      {
+        name: 'نسبة مصاريف الاستدامة إلى إجمالي المصاريف',
+        targetText: 'أقل من 5%', max: 5,
+        compute: v => {
+          if (!v.totalExpenses) return { ratio: null, score: null };
+          const r = v.sustainabilityExpenses / v.totalExpenses;
+          let score;
+          if (r <= 0.05) score = 5;
+          else if (r >= 0.1) score = 0;
+          else score = _roundDown((0.1 - r) * 20 * 10, 2);
+          return { ratio: r * 100, score };
+        }
+      },
+      {
+        name: 'نسبة مصاريف الاستدامة إلى عوائد الاستدامة',
+        targetText: 'أقل من 10%', max: 5,
+        compute: v => {
+          if (!v.sustainabilityReturns || v.sustainabilityReturns <= 0) return { ratio: null, score: 0 };
+          const r = v.sustainabilityExpenses / v.sustainabilityReturns;
+          let score;
+          if (r <= 0.1) score = 5;
+          else if (r >= 0.2) score = 0;
+          else score = _roundDown((0.2 - r) * 100, 2);
+          return { ratio: r * 100, score };
+        }
+      }
+    ]
+  },
+  {
+    id: 'fundraising', name: 'جمع الأموال والتبرعات', max: 10,
+    metrics: [
+      {
+        name: 'نسبة مصاريف جمع الأموال إلى إجمالي المصاريف',
+        targetText: 'أقل من 5%', max: 5,
+        compute: v => {
+          if (!v.totalExpenses) return { ratio: null, score: 0 };
+          const r = v.fundraisingExpenses / v.totalExpenses;
+          let score;
+          if (r <= 0.05) score = 5;
+          else if (r >= 0.1) score = 0;
+          else score = _roundDown((0.1 - r) * 20 * 0.5, 2);
+          return { ratio: r * 100, score };
+        }
+      },
+      {
+        name: 'نسبة مصاريف جمع الأموال إلى إجمالي التبرعات',
+        targetText: 'أقل من 10%', max: 5,
+        compute: v => {
+          if (!v.totalDonations || v.totalDonations <= 0) return { ratio: null, score: 0 };
+          const r = v.fundraisingExpenses / v.totalDonations;
+          let score;
+          if (r <= 0.1) score = 5;
+          else if (r >= 0.2) score = 0;
+          else score = _roundDown((0.2 - r) * 10 * 10, 2);
+          return { ratio: r * 100, score };
+        }
+      }
+    ]
+  },
+  {
+    id: 'coverage', name: 'القدرة على تغطية الالتزامات المستقبلية', max: 15,
+    metrics: [
+      {
+        name: 'نسبة النقد وما في حكمه إلى (الالتزامات + الأوقاف والأصول المقيدة)',
+        targetText: 'أكبر من 100%', max: 15,
+        compute: v => {
+          const denom = (v.currentLiabilities || 0) + (v.endowmentsAndRestricted || 0);
+          if (denom <= 0) return { ratio: null, score: 0 };
+          const r = v.cashAndEquivalents / denom;
+          let score;
+          if (r > 1) score = 15;
+          else if (r < 0.5) score = 0;
+          else score = _roundDown(r * 15, 2);
+          return { ratio: r * 100, score };
+        }
+      }
     ]
   }
 ];
@@ -7808,12 +7894,12 @@ function renderCalculator() {
       <a href="#/" class="btn btn-ghost btn-sm mb-3">← العودة للرئيسية</a>
       <h1>الحاسبة المالية</h1>
       <p class="muted mb-4">
-        احسب أداء جمعيتك وفق <strong>مؤشرات الأداء المالي الموحّدة</strong>
-        (5 مؤشرات + 10 نسب تحليلية، نفسها لكل التصنيفات الخمسة).
+        احسب درجة الأداء المالي لجمعيتك وفق <strong>معيار 2025 المعتمد</strong>
+        (10 مدخلات → 8 مؤشّرات → درجة من 100). الصيغ مطابقة 100% للنموذج الرسمي.
       </p>
 
       <div class="alert alert-info">
-        <strong>3 طرق لإدخال البيانات:</strong> اختر الأنسب لك. بياناتك تبقى في متصفحك ولا تُرسل لأي خادم.
+        <strong>3 طرق لإدخال البيانات:</strong> اختر الأنسب لك. بياناتك تبقى في متصفحك ولا تُرسل لأي خادم (إلا في وضع AI الاختياري).
       </div>
 
       <div class="card">
@@ -7823,7 +7909,7 @@ function renderCalculator() {
         <div class="standards-tabs" style="margin-bottom:0">
           <button class="std-tab active" onclick="switchInputMode('manual')" id="mode-manual">✍️ إدخال يدوي</button>
           <button class="std-tab" onclick="switchInputMode('ocr')" id="mode-ocr">📷 رفع صورة (OCR)</button>
-          <button class="std-tab" onclick="switchInputMode('pdf')" id="mode-pdf">📄 تحليل PDF (تجريبي)</button>
+          <button class="std-tab" onclick="switchInputMode('pdf')" id="mode-pdf">📄 تحليل PDF ذكي</button>
         </div>
       </div>
 
@@ -7848,10 +7934,10 @@ function renderCalculator() {
       <!-- وضع: تحليل PDF -->
       <div id="mode-content-pdf" class="mode-content" style="display:none">
         <div class="card">
-          <h3>ارفع ملف PDF للقوائم المالية</h3>
+          <h3>📄 ارفع ملف PDF للقوائم المالية</h3>
           <p class="muted small mb-3">
-            تجريبي. يعمل بشكل أفضل مع PDFs مولّدة آلياً (وليس مسحاً ضوئياً).
-            إن فشل التحليل، استخدم الإدخال اليدوي.
+            النظام يستخرج الـ10 أرقام تلقائياً مع <strong>مؤشّر ثقة لكل قيمة</strong>.
+            يعمل أفضل مع PDFs المولّدة آلياً.
           </p>
           <input type="file" id="pdf-input" accept="application/pdf" onchange="handlePDFUpload(event)" />
           <div id="pdf-status" class="mt-3"></div>
@@ -7859,6 +7945,42 @@ function renderCalculator() {
             <label>النص المستخرج:</label>
             <textarea id="pdf-raw-text" readonly style="min-height:200px;font-family:monospace;font-size:0.78rem;direction:ltr;text-align:left"></textarea>
           </div>
+
+          <!-- زرّ AI mode -->
+          <div class="mt-3" style="padding-top:1rem;border-top:1px solid var(--border)">
+            <button class="btn btn-ghost btn-sm" onclick="togglePDFAIMode()" type="button">
+              ⚡ وضع AI المتقدّم (للملفات الصعبة)
+            </button>
+            <div id="pdf-ai-panel" style="display:none;margin-top:0.85rem;padding:1rem;background:var(--stone-50);border-radius:var(--radius-md);border:1px dashed var(--border-strong)">
+              <p class="small muted mb-3">
+                استخدام Google Gemini API لاستخراج القيم بدقّة أعلى من الملفات الصعبة (مسحوبة، تنسيق غير معتاد).
+                المفتاح يُحفظ محلياً في متصفحك فقط.
+                <br>احصل على مفتاح مجاني من
+                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a>
+              </p>
+              <div class="form-group">
+                <label>Gemini API Key (سري)</label>
+                <div class="password-input-wrap">
+                  <input type="password" id="gemini-key-input" placeholder="AIza..." value="" autocomplete="off" />
+                  <button type="button" class="password-toggle" onclick="togglePasswordVisibility('gemini-key-input', this)" aria-label="إظهار">
+                    <svg class="eye-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="eye-hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+                <button class="btn btn-secondary btn-sm" type="button" onclick="saveGeminiKeyFromInput()">حفظ المفتاح</button>
+                <button class="btn btn-primary btn-sm" type="button" onclick="extractWithGemini()">⚡ استخراج بالذكاء الاصطناعي</button>
+              </div>
+              <p class="small muted mt-2" style="margin-bottom:0">
+                💡 Gemini Flash مجاني لأول 1500 طلب يومياً. ملف PDF كامل = ~1 طلب.
+              </p>
+            </div>
+          </div>
+
+          <button class="btn btn-ghost btn-sm mt-3" type="button" onclick="document.getElementById('pdf-raw').style.display = document.getElementById('pdf-raw').style.display === 'none' ? 'block' : 'none'">
+            عرض/إخفاء النص المستخرج
+          </button>
         </div>
       </div>
 
@@ -7879,6 +8001,12 @@ function renderCalculator() {
   `;
 
   updateFinancialResults();
+
+  // حمّل Gemini key المحفوظ إن وُجد
+  setTimeout(() => {
+    const keyInput = $('#gemini-key-input');
+    if (keyInput) keyInput.value = getGeminiKey();
+  }, 50);
 }
 
 function switchInputMode(mode) {
@@ -7912,17 +8040,132 @@ function normalizePDFDigits(text) {
 // أنماط البحث عن الحقول (مع تسامح للتشويه في النص)
 // ملاحظة: PDFs عربية كثيراً ما تعكس ترتيب الكلمات في الاستخراج،
 // لذا التسميات هنا قد تظهر معكوسة الكلمات
-const PDF_FIELD_PATTERNS = [
-  { key: 'cashAndEquivalents',    tokens: ['حكمه', 'النقد وما', 'النمد وما'] },
-  { key: 'totalDonations',        tokens: ['العامة ةٌالنمد التبرعات', 'العامة النمدٌة التبرعات', 'التبرعات النقدية العامة', 'العامة التبرعات'] },
-  { key: 'programsExpenses',      tokens: ['واألنشطة البرامج', 'والأنشطة البرامج', 'البرامج والنشطة', 'مصروفات البرامج', 'البرامج'] },
-  { key: 'fundraisingExpenses',   tokens: ['االموال جمع', 'الأموال جمع', 'االموال جمع مصروفات', 'جمع الأموال', 'جمع الموال'] },
-  { key: 'adminExpenses',         tokens: ['وإدار', 'عمومية وإدارية', 'عمومٌة وإدارٌة'] },
-  { key: 'totalExpenses',         tokens: ['والخســــائر المصـــروفات إجمالى', 'والخسائر المصروفات إجمالى', 'إجمالى المصـــروفات', 'إجمالى المصروفات', 'إجمالي المصروفات', 'مجموع المصروفات'] },
-  { key: 'currentLiabilities',    tokens: ['المتداولة االلتــــزامـــــات إجمـــــــــالى', 'المتداولة الالتزامات إجمالى', 'المتداولة الالتزامات', 'إجمالى الالتزامات المتداولة'] },
-  { key: 'sustainabilityExpenses',tokens: ['االستثمار مصروفات', 'مصروفات الاستثمار', 'مصروفات الستثمار'] }
-];
+// أنماط البحث عن الحقول الـ10 في PDF القوائم المالية
+// كل حقل له عدّة مرادفات (عربي + إنجليزي + كتابات بديلة) للتعامل مع:
+// - PDFs المُولّدة آلياً (Latin font over Arabic glyphs)
+// - PDFs المسحوبة (قد تُختلف الأحرف)
+// - تباين بين الجهات في تسميات البنود
+const PDF_FIELD_PATTERNS = {
+  totalExpenses: {
+    label: 'إجمالي المصاريف',
+    synonyms: [
+      'اجمالي المصاريف', 'اجمالي المصروفات', 'مجموع المصاريف', 'مجموع المصروفات',
+      'إجمالي المصروفات والخسائر', 'اجمالي مصاريف', 'صافي المصروفات',
+      'total expenses', 'total operating expenses'
+    ]
+  },
+  adminExpenses: {
+    label: 'المصاريف العمومية والإدارية',
+    synonyms: [
+      'المصاريف العمومية والادارية', 'مصاريف عمومية وادارية',
+      'مصاريف ادارية وعمومية', 'المصاريف الادارية', 'مصاريف ادارية',
+      'مصروفات عمومية وادارية', 'المصروفات العمومية والادارية',
+      'general and administrative', 'administrative expenses', 'g&a'
+    ]
+  },
+  sustainabilityReturns: {
+    label: 'عوائد الاستدامة',
+    synonyms: [
+      'عوائد الاستدامة', 'عوائد استدامة', 'ايرادات الاستدامة',
+      'عوائد الاستثمار', 'ايرادات الاستثمار', 'دخل الاستثمارات',
+      'investment income', 'investment returns', 'sustainability returns'
+    ]
+  },
+  sustainabilityExpenses: {
+    label: 'مصاريف الاستدامة',
+    synonyms: [
+      'مصاريف الاستدامة', 'مصروفات الاستدامة', 'مصاريف الاستثمار',
+      'مصروفات الاستثمار', 'تكاليف الاستثمار',
+      'investment expenses', 'sustainability expenses'
+    ]
+  },
+  programsExpenses: {
+    label: 'مصاريف البرامج والأنشطة',
+    synonyms: [
+      'مصاريف البرامج والانشطة', 'مصاريف البرامج', 'مصاريف الانشطة',
+      'مصروفات البرامج والانشطة', 'مصروفات البرامج', 'تكاليف البرامج',
+      'البرامج والانشطة', 'مصاريف انشطة وبرامج',
+      'program expenses', 'programs and activities'
+    ]
+  },
+  fundraisingExpenses: {
+    label: 'مصاريف جمع الأموال',
+    synonyms: [
+      'مصاريف جمع الاموال', 'مصاريف جمع التبرعات', 'تكاليف جمع الاموال',
+      'مصروفات جمع الاموال', 'مصروفات جمع التبرعات', 'تكاليف جمع التبرعات',
+      'fundraising', 'fundraising expenses'
+    ]
+  },
+  totalDonations: {
+    label: 'إجمالي التبرعات',
+    synonyms: [
+      'اجمالي التبرعات', 'مجموع التبرعات', 'التبرعات النقدية',
+      'تبرعات نقدية', 'الهبات والتبرعات', 'التبرعات العامة',
+      'donations', 'total donations'
+    ]
+  },
+  cashAndEquivalents: {
+    label: 'النقد وما في حكمه',
+    synonyms: [
+      'النقد وما في حكمه', 'النقد ومعادلاته', 'النقدية وما يعادلها',
+      'النقد وما يماثله', 'نقد وما في حكمه', 'نقد ومعادلاته',
+      'cash and cash equivalents', 'cash and equivalents'
+    ]
+  },
+  endowmentsAndRestricted: {
+    label: 'صافي أصول الأوقاف + الأصول المقيدة',
+    synonyms: [
+      'صافي اصول الاوقاف', 'اصول الاوقاف', 'الاصول المقيدة',
+      'صافي الاصول المقيدة', 'اصول مقيدة', 'الاوقاف',
+      'restricted assets', 'endowments', 'net endowment assets'
+    ]
+  },
+  currentLiabilities: {
+    label: 'الالتزامات المتداولة',
+    synonyms: [
+      'الالتزامات المتداولة', 'اجمالي الالتزامات المتداولة',
+      'مجموع الالتزامات المتداولة', 'التزامات متداولة',
+      'الخصوم المتداولة', 'اجمالي الخصوم المتداولة',
+      'current liabilities', 'total current liabilities'
+    ]
+  }
+};
 
+// تطبيع نص عربي للمقارنة (يُزيل التشكيل + يُوحّد الأحرف المتشابهة)
+function normalizeArabic(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/[\u064B-\u0652\u0670\u0640]/g, '') // تشكيل + تطويل
+    .replace(/[إأآا]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/ؤ/g, 'و')
+    .replace(/ئ/g, 'ي')
+    .replace(/ة/g, 'ه')
+    .replace(/[\s\u00A0]+/g, ' ')
+    .toLowerCase()
+    .trim();
+}
+
+// تحويل سلسلة لرقم (تدعم: أرقام عربية، فواصل آلاف، نقاط عشرية، أقواس للسالب)
+function parseFinancialNumber(s) {
+  if (!s) return null;
+  let str = String(s).trim();
+  // أزل أحرف لا علاقة لها بالأرقام (لكن احتفظ بالأقواس والنقطة والفاصلة والسالب)
+  str = str.replace(/[٠-٩]/g, c => String('٠١٢٣٤٥٦٧٨٩'.indexOf(c)));
+  // اقتطع أي نص قبل أو بعد الرقم
+  const match = str.match(/[(]?[-]?[\d,،.\s]+[)]?/);
+  if (!match) return null;
+  let num = match[0].trim();
+  // الأقواس = سالب
+  const isNegative = /^\(.+\)$/.test(num);
+  num = num.replace(/[()]/g, '').replace(/[,،\s]/g, '');
+  if (!/^-?\d+(\.\d+)?$/.test(num)) return null;
+  const value = parseFloat(num);
+  if (isNaN(value)) return null;
+  return isNegative ? -value : value;
+}
+
+// قراءة PDF واستخراج كل العناصر النصية مع إحداثياتها
 async function parsePDF(file) {
   if (typeof pdfjsLib === 'undefined') {
     throw new Error('مكتبة PDF.js لم تُحمَّل. تحقّق من اتصالك بالإنترنت.');
@@ -7930,48 +8173,165 @@ async function parsePDF(file) {
   const buffer = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
 
-  let allText = '';
+  // جمع كل العناصر من كل الصفحات مع coordinates
+  const allItems = [];
+  let allTextLinear = '';
+
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
-    // اجمع كل العناصر، مرتّبة حسب موضعها العمودي ثم الأفقي (RTL)
-    const items = content.items.slice().sort((a, b) => {
+    content.items.forEach(item => {
+      const str = (item.str || '').trim();
+      if (!str) return;
+      allItems.push({
+        text: str,
+        normalized: normalizeArabic(str),
+        x: item.transform[4] || 0,
+        y: item.transform[5] || 0,
+        width: item.width || 0,
+        height: item.height || 0,
+        page: i
+      });
+    });
+    // النص الخطي (للعرض كـbackup)
+    const sortedItems = content.items.slice().sort((a, b) => {
       const yDiff = (b.transform[5] || 0) - (a.transform[5] || 0);
       if (Math.abs(yDiff) > 2) return yDiff;
-      return (b.transform[4] || 0) - (a.transform[4] || 0); // RTL: عكس X
+      return (b.transform[4] || 0) - (a.transform[4] || 0);
     });
-    const pageText = items.map(it => it.str || '').join(' ');
-    allText += pageText + '\n\n';
+    allTextLinear += sortedItems.map(it => it.str || '').join(' ') + '\n\n';
   }
 
-  // طبّق خريطة الأرقام
-  const normalized = normalizePDFDigits(allText);
+  // بناء أسطر افتراضية (نفس الـY تقريباً = نفس السطر)
+  const lines = buildLinesFromItems(allItems);
 
-  // استخرج الأرقام
+  // استخراج لكل حقل
   const extracted = {};
   const matchDetails = {};
 
-  PDF_FIELD_PATTERNS.forEach(field => {
-    for (const tok of field.tokens) {
-      let idx = normalized.indexOf(tok);
+  Object.entries(PDF_FIELD_PATTERNS).forEach(([key, pattern]) => {
+    const result = findValueForField(lines, allItems, pattern);
+    if (result) {
+      extracted[key] = result.value;
+      matchDetails[key] = result;
+    }
+  });
+
+  return { rawText: allTextLinear, extracted, matchDetails, items: allItems, lines };
+}
+
+// تجميع العناصر في أسطر افتراضية حسب الـY
+function buildLinesFromItems(items) {
+  const lines = [];
+  const yTolerance = 4; // pixels - عناصر داخل هذا الفرق تُعتبر نفس السطر
+
+  // فرز بـY (الأعلى أولاً) ثم X (RTL: اليمين أولاً)
+  const sorted = items.slice().sort((a, b) => {
+    if (a.page !== b.page) return a.page - b.page;
+    if (Math.abs(b.y - a.y) > yTolerance) return b.y - a.y;
+    return b.x - a.x;
+  });
+
+  let currentLine = null;
+  sorted.forEach(item => {
+    if (!currentLine || currentLine.page !== item.page || Math.abs(currentLine.y - item.y) > yTolerance) {
+      currentLine = { y: item.y, page: item.page, items: [] };
+      lines.push(currentLine);
+    }
+    currentLine.items.push(item);
+  });
+
+  // لكل سطر، رتّب من اليمين لليسار (RTL) + ابني نص السطر الكامل
+  lines.forEach(line => {
+    line.items.sort((a, b) => b.x - a.x);
+    line.text = line.items.map(i => i.text).join(' ');
+    line.normalized = normalizeArabic(line.text);
+  });
+
+  return lines;
+}
+
+// البحث عن قيمة حقل معيّن
+function findValueForField(lines, allItems, pattern) {
+  const normalizedSynonyms = pattern.synonyms.map(s => normalizeArabic(s));
+
+  // المحاولة الأولى: سطر يحتوي على المرادف + رقم
+  let bestMatch = null;
+  for (let syn of normalizedSynonyms) {
+    for (let line of lines) {
+      if (!line.normalized.includes(syn)) continue;
+
+      // ابحث عن أرقام في نفس السطر
+      const numberItems = line.items.filter(it => {
+        const num = parseFinancialNumber(it.text);
+        return num !== null && Math.abs(num) >= 10; // تجاهل الأرقام الصغيرة (إيضاحات/أرقام صفحات)
+      });
+
+      if (numberItems.length === 0) continue;
+
+      // اختر الرقم الأكبر (عادة الإجمالي، وليس قيم وسيطة)
+      let chosenNum = null;
+      let chosenItem = null;
+      numberItems.forEach(it => {
+        const num = parseFinancialNumber(it.text);
+        if (num !== null && (chosenNum === null || Math.abs(num) > Math.abs(chosenNum))) {
+          chosenNum = num;
+          chosenItem = it;
+        }
+      });
+
+      if (chosenNum !== null) {
+        // مستوى الثقة:
+        // - عالية: المرادف يطابق نص السطر بنسبة عالية
+        // - متوسطة: المرادف موجود ضمن السطر
+        const synLen = syn.length;
+        const lineLen = line.normalized.length;
+        const confidence = synLen / Math.max(lineLen, 1);
+
+        const score = confidence + (synLen / 30); // المرادف الأطول = ثقة أكبر
+
+        if (!bestMatch || score > bestMatch.score) {
+          bestMatch = {
+            value: chosenNum,
+            score,
+            confidence: confidence >= 0.4 ? 'high' : confidence >= 0.2 ? 'medium' : 'low',
+            matchedLine: line.text,
+            matchedSynonym: syn,
+            rawNumber: chosenItem.text
+          };
+        }
+      }
+    }
+    if (bestMatch && bestMatch.confidence === 'high') break;
+  }
+
+  // المحاولة الثانية (fallback): البحث الخطي في النص الكامل
+  if (!bestMatch) {
+    const allTextNormalized = lines.map(l => l.normalized).join(' ');
+    for (let syn of normalizedSynonyms) {
+      const idx = allTextNormalized.indexOf(syn);
       if (idx === -1) continue;
 
-      // ابحث في الـ300 حرف التالية
-      const slice = normalized.substring(idx + tok.length, Math.min(idx + tok.length + 300, normalized.length));
-      // اقبل فقط الأرقام التي تحتوي على فواصل آلاف (يستبعد أرقام الإيضاحات الصغيرة)
-      const numMatches = slice.match(/\d{1,3}(?:,\d{3})+(?:\.\d+)?/g);
-      if (numMatches && numMatches.length > 0) {
-        const v = parseFloat(numMatches[0].replace(/,/g, ''));
-        if (!isNaN(v) && v > 0) {
-          extracted[field.key] = v;
-          matchDetails[field.key] = { token: tok, raw: numMatches[0] };
+      // ابحث في الـ150 حرف التالية
+      const slice = allTextNormalized.substring(idx + syn.length, idx + syn.length + 150);
+      const numMatch = slice.match(/-?\d{1,3}(?:[,،]\d{3})+(?:\.\d+)?|-?\d{2,}(?:\.\d+)?/);
+      if (numMatch) {
+        const value = parseFinancialNumber(numMatch[0]);
+        if (value !== null && Math.abs(value) >= 10) {
+          bestMatch = {
+            value,
+            score: 0,
+            confidence: 'low',
+            matchedSynonym: syn,
+            rawNumber: numMatch[0]
+          };
           break;
         }
       }
     }
-  });
+  }
 
-  return { rawText: normalized, extracted, matchDetails };
+  return bestMatch;
 }
 
 // تحميل Tesseract عند الطلب (لا نحمّله مع الصفحة لأنه ثقيل)
@@ -8144,16 +8504,21 @@ async function handlePDFUpload(event) {
   try {
     const result = await parsePDF(file);
 
-    // اعرض النص في الصندوق المخفي
+    // اعرض النص الكامل في الصندوق المساعد
     $('#pdf-raw-text').value = result.rawText;
 
-    // طبّق القيم على الحقول
+    // طبّق القيم على الحقول مع تلوين حسب مستوى الثقة
     let appliedCount = 0;
-    Object.keys(result.extracted).forEach(key => {
+    const colorMap = { high: '#E1F5EE', medium: '#FCEFD9', low: '#FCE4E0' };
+    const labelMap = { high: '🟢', medium: '🟡', low: '🔴' };
+
+    Object.entries(result.extracted).forEach(([key, value]) => {
       const input = document.querySelector('input[data-fin-key="' + key + '"]');
       if (input) {
-        input.value = result.extracted[key];
-        input.style.background = '#FAEEDA'; // برتقالي خفيف للمراجعة
+        input.value = value;
+        const confidence = result.matchDetails[key]?.confidence || 'low';
+        input.style.background = colorMap[confidence];
+        input.dataset.confidence = confidence;
         appliedCount++;
       }
     });
@@ -8161,117 +8526,269 @@ async function handlePDFUpload(event) {
     updateFinancialResults();
 
     const totalFields = FIN_INPUTS.length;
+    const missingFields = FIN_INPUTS.filter(i => !result.extracted[i.key]).map(i => i.label);
+
     if (appliedCount === 0) {
       status.innerHTML = `
         <div class="alert alert-warning">
-          <strong>لم يتم استخراج أي أرقام تلقائياً.</strong>
-          الملف قد يستخدم تشفيراً غير معتاد. اضغط "عرض النص المستخرج"
-          لرؤية محتوى الملف وانقل الأرقام يدوياً للحقول أدناه.
+          <strong>لم يتم استخراج أي أرقام تلقائياً.</strong><br>
+          الملف قد يكون مسحاً ضوئياً (صور بدون نص محسوس) أو يستخدم خطّاً غير معتاد.
+          <details class="mt-2">
+            <summary style="cursor:pointer">جرّب الحلول البديلة</summary>
+            <ol style="margin-top:0.5rem;padding-right:1.5rem">
+              <li>اضغط <strong>"عرض النص المستخرج"</strong> وانقل الأرقام يدوياً</li>
+              <li>إذا كان PDF مسحوبة (صور)، حوّلها لـPDF نصّي بأداة مثل Adobe Acrobat</li>
+              <li>أو فعّل <strong>وضع AI المتقدّم</strong> أدناه (يستخدم Gemini API)</li>
+            </ol>
+          </details>
         </div>
       `;
     } else {
       const fieldsList = Object.entries(result.matchDetails).map(([k, d]) => {
         const inp = FIN_INPUTS.find(i => i.key === k);
-        return `<li>${escapeHtml(inp ? inp.label : k)}: <strong>${result.extracted[k].toLocaleString('en-US')}</strong></li>`;
+        const icon = labelMap[d.confidence] || '🔴';
+        const confText = d.confidence === 'high' ? 'ثقة عالية' : d.confidence === 'medium' ? 'تحقّق' : 'ثقة منخفضة';
+        return `<li>${icon} <strong>${escapeHtml(inp ? inp.label : k)}:</strong> ${result.extracted[k].toLocaleString('en-US')} <span style="color:#777;font-size:0.85em">(${confText})</span></li>`;
       }).join('');
+
+      const missingList = missingFields.length > 0
+        ? `<details class="mt-2"><summary style="cursor:pointer;color:var(--coral-700)">حقول لم نجدها (${missingFields.length})</summary><ul style="margin-top:0.5rem">${missingFields.map(f => `<li>🔴 ${escapeHtml(f)}</li>`).join('')}</ul></details>`
+        : '';
+
       status.innerHTML = `
-        <div class="alert alert-success">
-          <strong>تم استخراج ${appliedCount} من ${totalFields} حقلاً.</strong>
-          الحقول الملوّنة بالبرتقالي تحتاج مراجعتك للتأكد من صحتها.
-          <details class="mt-2"><summary>تفاصيل الاستخراج</summary>
-            <ul style="margin-top:0.5rem">${fieldsList}</ul>
+        <div class="alert ${appliedCount === totalFields ? 'alert-success' : 'alert-info'}">
+          <strong>تم استخراج ${appliedCount} من ${totalFields} حقلاً</strong>
+          <p class="small" style="margin:0.5rem 0">
+            🟢 ثقة عالية (تطابق دقيق) — 🟡 تحقّق منها — 🔴 ثقة منخفضة
+          </p>
+          <details class="mt-2"><summary style="cursor:pointer">تفاصيل الحقول المستخرجة</summary>
+            <ul style="margin-top:0.5rem;padding-right:1.2rem">${fieldsList}</ul>
           </details>
+          ${missingList}
           <p class="small mt-2" style="margin-bottom:0">
-            ⚠️ أكمل بقية الحقول يدوياً للحصول على نتيجة كاملة.
-            استخدم "عرض النص المستخرج" إن احتجت للرجوع للأرقام الأصلية.
+            ⚠️ راجع الحقول الملوّنة قبل الاعتماد على النتائج.
+            استخدم "عرض النص المستخرج" للرجوع للأرقام الأصلية.
           </p>
         </div>
       `;
     }
 
-    // إعادة تعيين قيمة المدخل لتمكين رفع الملف نفسه مرة أخرى
+    // إعادة تعيين قيمة المدخل لتمكين رفع نفس الملف مرة أخرى
     event.target.value = '';
+
+    // احفظ الملف للاستخدام في Gemini mode
+    window._lastPDFFile = file;
   } catch (err) {
     status.innerHTML = `<div class="alert alert-error">فشل التحليل: ${escapeHtml(err.message)}</div>`;
   }
+}
+
+// ═════════════════════════════════════════════════════════════════
+// وضع AI المتقدّم (Gemini API) — للملفات الصعبة
+// ═════════════════════════════════════════════════════════════════
+
+const GEMINI_KEY_STORAGE = 'marjie_gemini_api_key';
+
+function getGeminiKey() {
+  try { return localStorage.getItem(GEMINI_KEY_STORAGE) || ''; } catch (e) { return ''; }
+}
+
+function saveGeminiKey(key) {
+  try {
+    if (key) localStorage.setItem(GEMINI_KEY_STORAGE, key);
+    else localStorage.removeItem(GEMINI_KEY_STORAGE);
+  } catch (e) {}
+}
+
+async function extractWithGemini() {
+  const file = window._lastPDFFile;
+  if (!file) {
+    showToast('ارفع ملف PDF أولاً', 'warning');
+    return;
+  }
+
+  const apiKey = getGeminiKey();
+  if (!apiKey) {
+    showToast('أدخل Gemini API key أولاً', 'warning');
+    return;
+  }
+
+  const status = $('#pdf-status');
+  status.innerHTML = '<div class="alert alert-info"><span class="loader"></span> جاري التحليل بالذكاء الاصطناعي...</div>';
+
+  try {
+    // تحويل PDF إلى base64
+    const buffer = await file.arrayBuffer();
+    const base64 = btoa(new Uint8Array(buffer).reduce((s, b) => s + String.fromCharCode(b), ''));
+
+    // الـprompt المُصمّم بدقّة
+    const prompt = `أنت محلّل مالي خبير. هذا ملف PDF يحتوي قوائم مالية لجمعية أهلية سعودية.
+استخرج القيم الرقمية بدقّة للحقول التالية، وأرجِع JSON فقط (بدون أي نص آخر):
+
+{
+  "totalExpenses": <رقم - إجمالي المصاريف/المصروفات>,
+  "adminExpenses": <رقم - المصاريف العمومية والإدارية>,
+  "programsExpenses": <رقم - مصاريف البرامج والأنشطة>,
+  "sustainabilityExpenses": <رقم - مصاريف الاستدامة/الاستثمار>,
+  "fundraisingExpenses": <رقم - مصاريف جمع الأموال/التبرعات>,
+  "sustainabilityReturns": <رقم - عوائد الاستدامة/الاستثمار>,
+  "totalDonations": <رقم - إجمالي التبرعات>,
+  "cashAndEquivalents": <رقم - النقد وما في حكمه>,
+  "endowmentsAndRestricted": <رقم - صافي أصول الأوقاف + الأصول المقيدة>,
+  "currentLiabilities": <رقم - إجمالي الالتزامات المتداولة>
+}
+
+قواعد:
+- استخدم القيمة المُجمَّعة الإجمالية، ليس قيماً وسيطة.
+- إن لم تجد قيمة، ضع null.
+- الأرقام بدون فواصل، بدون عملة، رقم عشري صرف فقط.
+- لا تخمّن: إن لم تكن متأكداً، اتركها null.`;
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          parts: [
+            { text: prompt },
+            { inline_data: { mime_type: 'application/pdf', data: base64 } }
+          ]
+        }],
+        generationConfig: { temperature: 0.1, responseMimeType: 'application/json' }
+      })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `خطأ: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+    // استخراج JSON
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('لم يُرجع AI استجابة بصيغة JSON');
+
+    const extracted = JSON.parse(jsonMatch[0]);
+
+    // طبّق على الحقول
+    let appliedCount = 0;
+    Object.entries(extracted).forEach(([key, value]) => {
+      if (value === null || value === undefined) return;
+      const input = document.querySelector('input[data-fin-key="' + key + '"]');
+      if (input && typeof value === 'number' && !isNaN(value)) {
+        input.value = value;
+        input.style.background = '#E1F5EE'; // أخضر = ثقة عالية من AI
+        input.dataset.confidence = 'ai';
+        appliedCount++;
+      }
+    });
+
+    updateFinancialResults();
+
+    status.innerHTML = `
+      <div class="alert alert-success">
+        ✨ <strong>تم استخراج ${appliedCount} حقلاً بـAI</strong>
+        <p class="small" style="margin:0.5rem 0 0">
+          القيم الخضراء استُخرجت بـGemini. راجع الأرقام للتأكّد قبل الاعتماد.
+        </p>
+      </div>
+    `;
+  } catch (err) {
+    status.innerHTML = `<div class="alert alert-error">فشل AI: ${escapeHtml(err.message)}</div>`;
+  }
+}
+
+function togglePDFAIMode() {
+  const panel = $('#pdf-ai-panel');
+  if (!panel) return;
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function saveGeminiKeyFromInput() {
+  const input = $('#gemini-key-input');
+  if (!input) return;
+  const key = input.value.trim();
+  saveGeminiKey(key);
+  showToast(key ? 'حُفظ API key محلياً ✓' : 'تمّ مسح المفتاح', 'success');
 }
 
 function updateFinancialResults() {
   const v = getFinancialValues();
   saveFinancialInputs(v);
 
-  let totalWeightedScore = 0;
-  let totalActiveWeight = 0;
+  let totalScore = 0;
   let anyData = false;
 
   let html = '<div class="card"><div class="card-header"><h2 class="card-title">النتائج التفصيلية</h2></div>';
 
   FIN_INDICATORS.forEach(ind => {
-    let indWeightedScore = 0;
-    let indSubWeightSum = 0;
+    let indScore = 0;
+    let indMax = 0;
     let indHasData = false;
 
     let metricsHtml = '';
     ind.metrics.forEach(m => {
-      const actual = m.compute(v);
-      let pass = null;
-      let actualText = '—';
-      const noData = (actual === null || isNaN(actual));
+      const result = m.compute(v);
+      const ratio = result.ratio;
+      const score = result.score;
+      const hasRatio = (ratio !== null && !isNaN(ratio));
 
-      if (!noData) {
+      indMax += m.max;
+      if (score !== null && !isNaN(score)) {
         anyData = true;
         indHasData = true;
-        if (m.type === 'less_than')          pass = actual < m.target;
-        else if (m.type === 'greater_than')  pass = actual > m.target;
-        else if (m.type === 'greater_or_equal') pass = actual >= m.target;
-        else if (m.type === 'between')       pass = actual >= m.target && actual <= m.targetMax;
-
-        const score = pass ? 100 : 0;
-        if (!m.informational) {
-          indWeightedScore += score * m.subWeight;
-          indSubWeightSum += m.subWeight;
-        }
-        actualText = (Math.round(actual * 10) / 10) + (m.unit ? ' ' + m.unit : '%');
+        indScore += score;
       }
 
-      const badge = noData ? '<span class="badge badge-gray">—</span>'
-                  : pass ? '<span class="badge badge-green">✓ مطابق</span>'
-                         : '<span class="badge badge-coral">✗ خارج المستهدف</span>';
-      const infoTag = m.informational ? '<span class="badge badge-amber">إعلامي</span>' : '';
+      // عرض النسبة
+      const ratioText = hasRatio
+        ? (Math.round(ratio * 100) / 100).toLocaleString('en-US') + '%'
+        : '—';
+
+      // عرض الدرجة
+      const scoreText = (score !== null && !isNaN(score))
+        ? `${score.toLocaleString('en-US')} / ${m.max}`
+        : '—';
+
+      // الحالة (شارة)
+      let badge;
+      if (score === null || isNaN(score)) {
+        badge = '<span class="badge badge-gray">—</span>';
+      } else {
+        const pct = m.max > 0 ? (score / m.max) * 100 : 0;
+        if (pct >= 80) badge = `<span class="badge badge-green">${Math.round(pct)}%</span>`;
+        else if (pct >= 50) badge = `<span class="badge badge-amber">${Math.round(pct)}%</span>`;
+        else badge = `<span class="badge badge-coral">${Math.round(pct)}%</span>`;
+      }
 
       metricsHtml += `
         <div class="metric-row">
           <div class="metric-name">
-            ${infoTag}${escapeHtml(m.name)}
+            ${escapeHtml(m.name)}
             <span class="metric-target">المستهدف: ${escapeHtml(m.targetText)}</span>
           </div>
-          <div class="metric-actual ${noData ? 'no-data' : ''}">${actualText}</div>
+          <div class="metric-actual ${!hasRatio ? 'no-data' : ''}">${ratioText}</div>
+          <div class="metric-score">${scoreText}</div>
           <div>${badge}</div>
         </div>
       `;
     });
 
-    let indPercent = null;
-    if (indSubWeightSum > 0) {
-      indPercent = indWeightedScore / indSubWeightSum;
-      totalWeightedScore += indPercent * ind.weight;
-      totalActiveWeight += ind.weight;
-    }
+    if (indHasData) totalScore += indScore;
 
-    const indBadge = indPercent === null
+    const indBadge = !indHasData
       ? '<span class="badge badge-gray">لا توجد بيانات</span>'
-      : indPercent >= 75 ? `<span class="badge badge-green">${Math.round(indPercent)}/100</span>`
-      : indPercent >= 50 ? `<span class="badge badge-amber">${Math.round(indPercent)}/100</span>`
-      : `<span class="badge badge-coral">${Math.round(indPercent)}/100</span>`;
+      : `<span class="badge badge-teal">${Math.round(indScore * 100) / 100} / ${ind.max}</span>`;
 
     html += `
       <div class="indicator-section">
         <div class="indicator-header">
           <h3>${escapeHtml(ind.name)}</h3>
-          <div class="flex flex-gap-2 flex-wrap">
-            <span class="badge badge-teal">الوزن ${ind.weight}%</span>
-            ${indBadge}
-          </div>
+          <div class="flex flex-gap-2 flex-wrap">${indBadge}</div>
         </div>
         ${metricsHtml}
       </div>
@@ -8280,19 +8797,23 @@ function updateFinancialResults() {
 
   html += '</div>';
 
-  // النتيجة الكلية
-  if (anyData && totalActiveWeight > 0) {
-    const finalScore = totalWeightedScore / totalActiveWeight;
-    const subLabel = totalActiveWeight < 100
-      ? `محسوبة على ${totalActiveWeight}% من الوزن الكلي (أكمل بقية الأرقام لنتيجة شاملة)`
-      : 'محسوبة على كامل الوزن (100%)';
+  // النتيجة الكلية (من 100)
+  if (anyData) {
+    const finalScore = Math.round(totalScore * 100) / 100;
+    let categoryText, categoryColor;
+    if (finalScore >= 95) { categoryText = 'الفئة الذهبية — تميّز'; categoryColor = '#9B7A45'; }
+    else if (finalScore >= 85) { categoryText = 'الفئة الفضية — أداء قوي'; categoryColor = '#6B7280'; }
+    else if (finalScore >= 75) { categoryText = 'الفئة البرونزية — أداء جيد'; categoryColor = '#A0623A'; }
+    else if (finalScore >= 60) { categoryText = 'تحت المتوسط — يحتاج تطويراً'; categoryColor = '#C97A3A'; }
+    else { categoryText = 'ضعيف — يستلزم خطة تصحيحية'; categoryColor = '#C44545'; }
+
     html += `
       <div class="total-score-card">
         <div>
-          <div class="label">النتيجة الكلية الموزونة لمؤشرات الأداء</div>
-          <span class="label-sub">${escapeHtml(subLabel)}</span>
+          <div class="label">درجة الأداء المالي</div>
+          <span class="label-sub" style="color:${categoryColor};font-weight:600">${escapeHtml(categoryText)}</span>
         </div>
-        <div class="total-score-value">${Math.round(finalScore)}<small>/100</small></div>
+        <div class="total-score-value">${finalScore}<small>/100</small></div>
       </div>
     `;
   } else {
