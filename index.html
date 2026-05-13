@@ -547,6 +547,183 @@
     .password-toggle:hover{background:var(--stone-100);color:var(--text)}
     .password-toggle:focus{outline:none;background:var(--stone-100);color:var(--teal-700)}
 
+    /* ═════════════════════════════════════════
+       صفحة "قريباً" — كرت معطّل للأدوات
+       ═════════════════════════════════════════ */
+    .mj-tool-card.mj-tool-coming-soon{position:relative;cursor:not-allowed;opacity:0.85;background:linear-gradient(135deg,#FAF6EF 0%,#FFFFFF 100%);border-style:dashed;border-color:#D9B772}
+    .mj-tool-card.mj-tool-coming-soon:hover{transform:none;box-shadow:none;border-color:#C97A3A}
+    .mj-tool-card.mj-tool-coming-soon .mj-tool-icon{filter:grayscale(40%);opacity:0.7}
+    .mj-tool-coming-badge{position:absolute;top:0.85rem;left:0.85rem;background:linear-gradient(135deg,#D9B772,#C97A3A);color:#FFFFFF;padding:0.3rem 0.7rem;border-radius:99px;font-size:0.72rem;font-weight:700;letter-spacing:0.02em;box-shadow:0 2px 6px rgba(201,122,58,0.25);z-index:2}
+    .mj-tool-arrow-disabled{color:#C97A3A !important;font-style:italic;opacity:0.8}
+
+    /* صفحة "الأداة غير متاحة" */
+    .tool-blocked-card{max-width:560px;margin:3rem auto;padding:2.5rem 2rem;background:#FFFFFF;border:1px solid var(--border);border-radius:16px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.04)}
+    .tool-blocked-icon{width:90px;height:90px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.25rem}
+    .tool-blocked-card h1{font-size:1.6rem;margin-bottom:0.5rem}
+    .tool-blocked-card p{color:var(--text-muted);font-size:1rem;line-height:1.7;max-width:440px;margin:0 auto}
+
+    /* ═════════════════════════════════════════
+       لوحة إدارة حالات الأدوات
+       ═════════════════════════════════════════ */
+    .tools-vis-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.85rem;margin-bottom:1.25rem}
+    .tools-vis-stat{display:flex;align-items:center;gap:0.85rem;padding:1rem 1.1rem;background:#FFFFFF;border:1px solid var(--border);border-right:3px solid var(--c);border-radius:10px}
+    .tools-vis-stat-icon{font-size:1.8rem;line-height:1}
+    .tools-vis-stat-num{font-size:1.6rem;font-weight:700;color:var(--c);line-height:1;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif}
+    .tools-vis-stat-label{font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem}
+
+    .tools-visibility-list{display:flex;flex-direction:column;gap:0.7rem}
+    .tool-vis-row{display:grid;grid-template-columns:1fr auto;gap:1.25rem;align-items:center;padding:0.85rem 1rem;background:#FFFFFF;border:1px solid var(--border);border-radius:10px;transition:all .15s ease}
+    @media(max-width:700px){.tool-vis-row{grid-template-columns:1fr}}
+    .tool-vis-row:hover{border-color:var(--border-strong);box-shadow:0 2px 6px rgba(0,0,0,0.04)}
+    .tool-vis-info{display:flex;align-items:center;gap:0.85rem;min-width:0}
+    .tool-vis-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--stone-50);border-radius:8px;padding:6px;transition:color .2s}
+    .tool-vis-icon svg{width:100%;height:100%}
+    .tool-vis-name{flex:1;min-width:0}
+    .tool-vis-title{font-weight:600;font-size:0.95rem;color:var(--text);margin-bottom:0.15rem}
+    .tool-vis-id{font-size:0.75rem;color:var(--text-faint)}
+    .tool-vis-id code{font-family:monospace;background:var(--stone-50);padding:0.1rem 0.4rem;border-radius:3px;color:var(--text-muted)}
+
+    .tool-vis-controls{display:flex;gap:0.4rem;flex-wrap:nowrap}
+    @media(max-width:500px){.tool-vis-controls{flex-wrap:wrap}}
+    .tool-vis-option{display:flex;align-items:center;gap:0.35rem;padding:0.45rem 0.75rem;background:var(--stone-50);border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s ease;font-size:0.82rem;font-weight:500;color:var(--text-muted);white-space:nowrap;user-select:none}
+    .tool-vis-option:hover{border-color:var(--state-color);color:var(--state-color);background:#FFFFFF}
+    .tool-vis-option.active{background:var(--state-color);color:#FFFFFF;border-color:var(--state-color);font-weight:600;box-shadow:0 2px 6px color-mix(in srgb,var(--state-color) 30%,transparent)}
+    .tool-vis-option input{display:none}
+    .tool-vis-option-icon{font-size:0.95rem}
+
+    /* ═════════════════════════════════════════
+       حقول الإدخال المالية (بأيقونات وأرقام إنجليزية)
+       ═════════════════════════════════════════ */
+    .fin-input-card{position:relative}
+    .fin-input-label{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.45rem;font-size:0.88rem;font-weight:500;color:var(--text);line-height:1.4}
+    .fin-input-icon{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;color:var(--teal-700);flex-shrink:0;background:var(--teal-50);border-radius:7px;padding:4px;transition:all var(--duration-fast)}
+    .fin-input-icon svg{width:100%;height:100%}
+    .fin-input-card:focus-within .fin-input-icon{background:var(--teal-100);transform:scale(1.05)}
+    .fin-input-card input{font-variant-numeric:tabular-nums;font-weight:600;font-size:1.02rem;letter-spacing:0.02em;text-align:left;direction:ltr;padding:0.6rem 0.85rem}
+    .fin-input-card input:focus{border-color:var(--teal-500);box-shadow:0 0 0 3px rgba(15,110,86,0.1)}
+    .fin-input-card input::placeholder{color:var(--text-faint);font-weight:400}
+
+    /* ═════════════════════════════════════════
+       شريط تقدم AI الاحترافي
+       ═════════════════════════════════════════ */
+    .ai-progress-card{background:linear-gradient(135deg,#F5F2EC 0%,#FFFFFF 100%);border:1px solid #C9E5DC;border-radius:14px;padding:1.25rem 1.4rem;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+    .ai-progress-card.success{background:linear-gradient(135deg,#E1F5EE 0%,#FFFFFF 100%);border-color:#7EBE94}
+    .ai-progress-card.error{background:linear-gradient(135deg,#FFEDED 0%,#FFFFFF 100%);border-color:#FBD3D3}
+    .ai-progress-header{display:flex;align-items:center;gap:0.9rem;margin-bottom:1rem}
+    .ai-progress-sparkle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#3A8B7A,#0F6E56);color:#FFFFFF;flex-shrink:0;animation:aiPulse 1.5s ease-in-out infinite;box-shadow:0 4px 14px rgba(15,110,86,0.3)}
+    .ai-progress-sparkle.success{background:linear-gradient(135deg,#52A877,#3A8B57);animation:none;box-shadow:0 4px 14px rgba(58,139,87,0.3)}
+    .ai-progress-sparkle.error{background:linear-gradient(135deg,#E07B5A,#C44545);animation:none}
+    @keyframes aiPulse{0%,100%{transform:scale(1);box-shadow:0 4px 14px rgba(15,110,86,0.3)}50%{transform:scale(1.08);box-shadow:0 6px 20px rgba(15,110,86,0.5)}}
+    .ai-progress-info{flex:1;min-width:0}
+    .ai-progress-title{font-weight:600;font-size:1rem;color:var(--text);margin-bottom:0.2rem}
+    .ai-progress-message{font-size:0.85rem;color:var(--text-muted);font-weight:400;animation:fadeInMsg .5s ease}
+    @keyframes fadeInMsg{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+    .ai-progress-percent{font-weight:700;font-size:1.4rem;color:#0F6E56;font-variant-numeric:tabular-nums;flex-shrink:0;direction:ltr;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif;letter-spacing:-0.02em}
+    .ai-progress-percent.success{color:#3A8B57}
+    .ai-progress-bar{position:relative;height:10px;background:#F0EDE6;border-radius:99px;overflow:hidden;margin-bottom:0.6rem}
+    .ai-progress-bar-fill{height:100%;background:linear-gradient(90deg,#3A8B7A,#0F6E56);border-radius:99px;transition:width .8s cubic-bezier(0.4, 0, 0.2, 1);box-shadow:0 0 10px rgba(15,110,86,0.4)}
+    .ai-progress-bar-fill.success{background:linear-gradient(90deg,#52A877,#3A8B57);box-shadow:0 0 10px rgba(58,139,87,0.4)}
+    .ai-progress-bar-glow{position:absolute;top:50%;transform:translate(50%,-50%);width:30px;height:30px;background:radial-gradient(circle,rgba(255,255,255,0.6),transparent);pointer-events:none;transition:left .8s cubic-bezier(0.4, 0, 0.2, 1)}
+    .ai-progress-eta{font-size:0.78rem;color:var(--text-faint);text-align:left;direction:ltr;font-variant-numeric:tabular-nums}
+    .ai-progress-eta.success{color:#3A8B57;text-align:right;direction:rtl;font-weight:500}
+    .ai-progress-eta code{font-family:monospace;background:var(--stone-100);padding:0.1rem 0.4rem;border-radius:3px;color:var(--text)}
+
+    /* ═════════════════════════════════════════
+       أزرار إدارة ملف PDF
+       ═════════════════════════════════════════ */
+    .pdf-actions-row{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.85rem}
+    .btn-pdf-action{display:inline-flex;align-items:center;gap:0.45rem;padding:0.6rem 1.1rem;border-radius:8px;font-family:inherit;font-size:0.9rem;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .2s ease;text-decoration:none}
+    .btn-pdf-change{background:var(--teal-50);color:var(--teal-700);border-color:#9FCEC3}
+    .btn-pdf-change:hover{background:var(--teal-100);border-color:var(--teal-500);transform:translateY(-1px)}
+    .btn-pdf-remove{background:#FFEDED;color:#C44545;border-color:#F5C8C8}
+    .btn-pdf-remove:hover{background:#C44545;color:#FFFFFF;border-color:#C44545;transform:translateY(-1px);box-shadow:0 4px 12px rgba(196,69,69,0.25)}
+
+    /* ═════════════════════════════════════════
+       Mockups دليل API Key (HTML بدل SVG)
+       ═════════════════════════════════════════ */
+    .api-mockup{margin-top:0.85rem;background:#FFFFFF;border:1px solid var(--border);border-radius:8px;overflow:hidden;position:relative}
+    .api-mockup-browser{display:flex;align-items:center;gap:0.6rem;padding:0.5rem 0.8rem;background:#F5F2EC;border-bottom:1px solid var(--border)}
+    .api-mockup-dots{display:flex;gap:0.3rem}
+    .api-mockup-dots span{width:9px;height:9px;border-radius:50%;display:block}
+    .api-mockup-url{font-family:monospace;font-size:0.78rem;color:#5A5A5A;background:#FFFFFF;padding:0.2rem 0.6rem;border-radius:99px;border:1px solid var(--border);flex:1;direction:ltr;text-align:center}
+    .api-mockup-body{padding:1.5rem 1rem;text-align:center}
+    .api-mockup-login-btn{display:inline-block;padding:0.6rem 1.5rem;background:#1A73E8;color:#FFFFFF;border-radius:99px;font-size:0.9rem;font-weight:600}
+    .api-mockup-toolbar{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;background:#F9F9F9;position:relative;gap:0.5rem}
+    .api-mockup-page-title{font-weight:700;font-size:0.95rem;color:#2C2A26;font-family:Arial,sans-serif}
+    .api-mockup-create-btn{padding:0.5rem 1rem;background:#1A73E8;color:#FFFFFF;border-radius:6px;font-size:0.85rem;font-weight:600;font-family:Arial,sans-serif;white-space:nowrap}
+    .api-mockup-empty{padding:1.2rem 1rem;color:#999;font-size:0.82rem;text-align:center;background:#FAFAFA;margin:0.6rem 1rem;border-radius:6px;border:1px dashed #DDD}
+    .api-mockup-arrow{position:absolute;top:50%;right:42%;transform:translateY(-50%);font-size:0.82rem;color:#D85A30;font-weight:600;animation:arrowBounce 1.5s ease-in-out infinite;pointer-events:none}
+    @keyframes arrowBounce{0%,100%{transform:translateY(-50%) translateX(0)}50%{transform:translateY(-50%) translateX(-6px)}}
+    .api-mockup-modal{margin:1rem;padding:1rem;background:#FFFFFF;border:1.5px solid var(--border);border-radius:8px}
+    .api-mockup-modal-title{font-weight:600;font-size:0.92rem;color:#2C2A26;margin-bottom:0.75rem;text-align:center;font-family:Arial,sans-serif}
+    .api-mockup-modal-option{display:flex;align-items:center;justify-content:center;gap:0.4rem;padding:0.6rem 1rem;background:linear-gradient(135deg,#E8F5E9,#C8E6C9);color:#2E7D32;border-radius:6px;font-size:0.85rem;font-weight:600;font-family:Arial,sans-serif}
+    .api-mockup-key-label{padding:0.7rem 1rem 0;font-size:0.82rem;color:#666;font-family:Arial,sans-serif;font-weight:500}
+    .api-mockup-key-row{display:flex;gap:0.5rem;padding:0.6rem 1rem 1rem;align-items:center}
+    .api-mockup-key-value{flex:1;padding:0.55rem 0.75rem;background:#F5F2EC;border:1px solid var(--border);border-radius:6px;font-family:monospace;font-size:0.78rem;color:#2C2A26;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr}
+    .api-mockup-copy-btn{padding:0.55rem 0.9rem;background:#1A73E8;color:#FFFFFF;border:none;border-radius:6px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;white-space:nowrap}
+
+    /* ═════════════════════════════════════════
+       نتائج الأداء المالي الجديدة
+       ═════════════════════════════════════════ */
+    .fin-hero-result{display:flex;align-items:center;gap:1.5rem;padding:1.75rem 1.5rem;background:linear-gradient(135deg,#FFFFFF 0%,#FAFBFC 100%);border:1px solid var(--border);border-radius:18px;margin-bottom:1.25rem;box-shadow:0 4px 16px rgba(0,0,0,0.04);flex-wrap:wrap;position:relative;overflow:hidden}
+    .fin-hero-result::before{content:'';position:absolute;top:-40%;left:-10%;width:60%;height:180%;background:radial-gradient(ellipse,rgba(15,110,86,0.04) 0%,transparent 60%);pointer-events:none}
+    @media(max-width:600px){.fin-hero-result{padding:1.2rem;gap:1rem;justify-content:center;text-align:center}}
+    .fin-hero-content{flex:1;min-width:200px;position:relative;z-index:1}
+    .fin-hero-label{font-size:0.85rem;color:var(--text-muted);font-weight:500;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.05em}
+    .fin-hero-score{display:flex;align-items:baseline;gap:0.4rem;direction:ltr;margin-bottom:0.85rem;flex-wrap:wrap;justify-content:flex-start}
+    @media(max-width:600px){.fin-hero-score{justify-content:center}}
+    .fin-hero-score-num{font-family:'Cairo','IBM Plex Sans Arabic',sans-serif;font-size:3.8rem;font-weight:700;line-height:1;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-0.03em}
+    @media(max-width:600px){.fin-hero-score-num{font-size:3rem}}
+    .fin-hero-score-max{font-size:1.3rem;color:var(--text-faint);font-weight:500;font-variant-numeric:tabular-nums}
+    .fin-hero-category{display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.1rem;border-radius:99px;font-size:0.95rem;font-weight:600;border:1.5px solid;line-height:1}
+    .fin-hero-donut{flex-shrink:0;position:relative;z-index:1}
+
+    /* شريط ملخّص لكل مؤشّر (تحت hero) */
+    .fin-indicators-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0.7rem;margin-bottom:1.75rem}
+    .fin-ind-pill{display:flex;align-items:center;gap:0.7rem;padding:0.85rem 0.95rem;background:#FFFFFF;border:1px solid var(--border);border-right:3px solid var(--ind-color);border-radius:12px;transition:all .2s ease;position:relative;overflow:hidden}
+    .fin-ind-pill:hover{box-shadow:0 4px 12px rgba(0,0,0,0.06);transform:translateX(-2px)}
+    .fin-ind-pill-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--ind-color);flex-shrink:0;background:color-mix(in srgb,var(--ind-color) 12%,transparent);border-radius:8px;padding:5px}
+    .fin-ind-pill-icon svg{width:100%;height:100%}
+    .fin-ind-pill-info{flex:1;min-width:0}
+    .fin-ind-pill-name{font-size:0.78rem;color:var(--text-muted);font-weight:500;margin-bottom:0.15rem;line-height:1.3;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+    .fin-ind-pill-score{display:flex;align-items:baseline;gap:0.2rem;direction:ltr}
+    .fin-ind-pill-num{font-size:1.1rem;font-weight:700;color:var(--ind-color);font-variant-numeric:tabular-nums;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif}
+    .fin-ind-pill-max{font-size:0.78rem;color:var(--text-faint);font-variant-numeric:tabular-nums}
+    .fin-ind-pill-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:#F0EDE6;overflow:hidden}
+    .fin-ind-pill-bar-fill{height:100%;transition:width 1s cubic-bezier(0.4, 0, 0.2, 1)}
+
+    /* النتائج التفصيلية */
+    .fin-section-heading{font-family:'Cairo','IBM Plex Sans Arabic',sans-serif;font-size:1.35rem;font-weight:700;margin:0 0 1.25rem;color:var(--text);position:relative;padding-bottom:0.6rem}
+    .fin-section-heading::after{content:'';position:absolute;bottom:0;right:0;width:48px;height:3px;background:linear-gradient(90deg,var(--teal-700),var(--teal-500));border-radius:99px}
+
+    .fin-indicator-card{background:#FFFFFF;border:1px solid var(--border);border-right:4px solid var(--ind-color);border-radius:14px;padding:1.2rem;margin-bottom:1rem;transition:all .2s ease}
+    .fin-indicator-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.05)}
+    .fin-indicator-header{display:flex;align-items:center;gap:0.85rem;margin-bottom:1.1rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border)}
+    .fin-indicator-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:8px}
+    .fin-indicator-icon svg{width:100%;height:100%}
+    .fin-indicator-title{flex:1;min-width:0}
+    .fin-indicator-title h3{margin:0 0 0.15rem;font-size:1.05rem;font-weight:600;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif}
+    .fin-indicator-meta{font-size:0.78rem;color:var(--text-faint);font-variant-numeric:tabular-nums}
+    .fin-indicator-score{padding:0.5rem 1rem;border-radius:99px;font-size:0.92rem;border:1.5px solid;direction:ltr;font-variant-numeric:tabular-nums;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif;flex-shrink:0}
+    .fin-indicator-score strong{font-size:1.15rem;font-weight:700}
+    .fin-indicator-score span{opacity:0.7}
+
+    .fin-indicator-metrics{display:flex;flex-direction:column;gap:0.85rem}
+    .fin-metric{background:var(--stone-50);border-radius:10px;padding:0.95rem 1rem}
+    .fin-metric-header{margin-bottom:0.65rem}
+    .fin-metric-name{font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:0.2rem;line-height:1.5}
+    .fin-metric-target{font-size:0.78rem;color:var(--text-faint)}
+    .fin-metric-body{display:grid;grid-template-columns:130px 1fr;gap:1rem;align-items:center}
+    @media(max-width:600px){.fin-metric-body{grid-template-columns:1fr;gap:0.7rem}}
+    .fin-metric-ratio{text-align:center;padding:0.5rem 0.65rem;background:#FFFFFF;border:1px solid var(--border);border-radius:8px}
+    .fin-metric-ratio-label{font-size:0.7rem;color:var(--text-faint);margin-bottom:0.2rem}
+    .fin-metric-ratio-value{font-size:1.15rem;font-weight:700;color:var(--teal-700);font-variant-numeric:tabular-nums;direction:ltr;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif}
+    .fin-metric-ratio-value.no-data{color:var(--text-faint);font-weight:400}
+    .fin-metric-bar-wrap{display:flex;align-items:center;gap:0.7rem}
+    .fin-metric-bar{flex:1;height:12px;background:#F0EDE6;border-radius:99px;overflow:hidden}
+    .fin-metric-bar-fill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(0.4, 0, 0.2, 1)}
+    .fin-metric-score{font-size:0.95rem;font-weight:700;font-variant-numeric:tabular-nums;direction:ltr;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif;min-width:55px;text-align:left}
+
     /* منطقة رفع PDF (drop zone) */
     .pdf-drop-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;padding:2rem 1.5rem;background:var(--stone-50);border:2px dashed var(--border-strong);border-radius:var(--radius-lg);cursor:pointer;transition:all .25s var(--ease-smooth);text-align:center}
     .pdf-drop-zone:hover{background:var(--teal-50);border-color:var(--teal-500);transform:translateY(-1px)}
@@ -2516,28 +2693,38 @@ const STANDARDS_LABELS = {
 const FRONTEND_ENABLED_STANDARDS = ['transparency', 'financial', 'compliance'];
 
 // مدخلات الحاسبة المالية (مجمّعة حسب الفئة)
-// المدخلات المالية الـ10 (مطابقة لملف معيار الأداء المالي 2025)
+// المدخلات المالية الـ10 (مطابقة لملف معيار الأداء المالي 2025) + أيقونات
 const FIN_INPUTS = [
   // C5
-  { key: 'totalExpenses',           label: 'إجمالي المصاريف',                       group: 'expenses' },
+  { key: 'totalExpenses',           label: 'إجمالي المصاريف',                       group: 'expenses',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 12l4-4 4 4 5-5"/></svg>' },
   // C6
-  { key: 'adminExpenses',           label: 'المصاريف العمومية والإدارية',           group: 'expenses' },
+  { key: 'adminExpenses',           label: 'المصاريف العمومية والإدارية',           group: 'expenses',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 15h6"/></svg>' },
   // C9
-  { key: 'programsExpenses',        label: 'مصاريف البرامج والأنشطة',               group: 'expenses' },
+  { key: 'programsExpenses',        label: 'مصاريف البرامج والأنشطة',               group: 'expenses',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>' },
   // C8
-  { key: 'sustainabilityExpenses',  label: 'مصاريف الاستدامة',                      group: 'expenses' },
+  { key: 'sustainabilityExpenses',  label: 'مصاريف الاستدامة',                      group: 'expenses',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>' },
   // C10
-  { key: 'fundraisingExpenses',     label: 'مصاريف جمع الأموال',                    group: 'expenses' },
+  { key: 'fundraisingExpenses',     label: 'مصاريف جمع الأموال',                    group: 'expenses',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>' },
   // C7
-  { key: 'sustainabilityReturns',   label: 'عوائد الاستدامة',                       group: 'income' },
+  { key: 'sustainabilityReturns',   label: 'عوائد الاستدامة',                       group: 'income',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>' },
   // C11
-  { key: 'totalDonations',          label: 'إجمالي التبرعات',                       group: 'income' },
+  { key: 'totalDonations',          label: 'إجمالي التبرعات',                       group: 'income',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' },
   // C12
-  { key: 'cashAndEquivalents',      label: 'النقد وما في حكمه',                     group: 'assets' },
+  { key: 'cashAndEquivalents',      label: 'النقد وما في حكمه',                     group: 'assets',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></svg>' },
   // C14
-  { key: 'endowmentsAndRestricted', label: 'صافي أصول الأوقاف + الأصول المقيدة',     group: 'assets' },
+  { key: 'endowmentsAndRestricted', label: 'صافي أصول الأوقاف + الأصول المقيدة',     group: 'assets',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-4 7 4v13"/><path d="M10 21V13h4v8"/></svg>' },
   // C13
-  { key: 'currentLiabilities',      label: 'الالتزامات المتداولة',                  group: 'liabilities' }
+  { key: 'currentLiabilities',      label: 'الالتزامات المتداولة',                  group: 'liabilities',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>' }
 ];
 
 const FIN_INPUT_GROUPS = {
@@ -2553,11 +2740,12 @@ function _roundDown(value, decimals) {
   return Math.floor(value * factor) / factor;
 }
 
-// الـ8 مؤشرات بصيغ Excel الدقيقة 100%
-// كل مؤشر يُرجع: { ratio, score, max } — الـscore بصيغة ROUNDDOWN كما في Excel
+// الـ8 مؤشرات بصيغ Excel الدقيقة 100% + أيقونات
 const FIN_INDICATORS = [
   {
     id: 'admin', name: 'المصاريف الإدارية', max: 20,
+    icon: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16" y1="4" x2="16" y2="26" stroke-width="2.5"/><line x1="6" y1="26" x2="26" y2="26" stroke-width="2.5"/><line x1="6" y1="9" x2="26" y2="9" stroke-width="2"/><path d="M 6 9 L 3 16 Q 6 18, 9 16 Z"/><path d="M 26 9 L 23 16 Q 26 18, 29 16 Z"/></svg>',
+    color: '#9B7A45',
     metrics: [
       {
         name: 'نسبة المصاريف الإدارية إلى إجمالي المصاريف',
@@ -2589,6 +2777,8 @@ const FIN_INDICATORS = [
   },
   {
     id: 'programs', name: 'مصاريف البرامج والأنشطة', max: 45,
+    icon: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="13"/><circle cx="16" cy="16" r="8"/><circle cx="16" cy="16" r="3" fill="currentColor"/><path d="M 16 3 L 16 8 M 16 24 L 16 29 M 3 16 L 8 16 M 24 16 L 29 16"/></svg>',
+    color: '#0F6E56',
     metrics: [
       {
         name: 'نسبة مصاريف البرامج إلى إجمالي المصاريف',
@@ -2607,6 +2797,8 @@ const FIN_INDICATORS = [
   },
   {
     id: 'sustainability', name: 'الاستدامة المالية', max: 10,
+    icon: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M 16 3 Q 8 8, 6 16 Q 8 25, 16 28"/><path d="M 16 3 Q 24 8, 26 16 Q 24 25, 16 28"/><line x1="6" y1="16" x2="26" y2="16"/><circle cx="16" cy="16" r="2.5" fill="currentColor"/></svg>',
+    color: '#3A8B57',
     metrics: [
       {
         name: 'نسبة مصاريف الاستدامة إلى إجمالي المصاريف',
@@ -2638,6 +2830,8 @@ const FIN_INDICATORS = [
   },
   {
     id: 'fundraising', name: 'جمع الأموال والتبرعات', max: 10,
+    icon: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M 16 5 C 12 5, 9 8, 9 12 C 9 18, 16 23, 16 23 C 16 23, 23 18, 23 12 C 23 8, 20 5, 16 5 Z"/><circle cx="16" cy="13" r="3" fill="currentColor"/></svg>',
+    color: '#D85A30',
     metrics: [
       {
         name: 'نسبة مصاريف جمع الأموال إلى إجمالي المصاريف',
@@ -2669,6 +2863,8 @@ const FIN_INDICATORS = [
   },
   {
     id: 'coverage', name: 'القدرة على تغطية الالتزامات المستقبلية', max: 15,
+    icon: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M 16 3 L 27 8 L 27 17 Q 27 24, 16 28 Q 5 24, 5 17 L 5 8 Z"/><path d="M 11 16 L 14 19 L 21 12" stroke-width="2.5"/></svg>',
+    color: '#4A77A8',
     metrics: [
       {
         name: 'نسبة النقد وما في حكمه إلى (الالتزامات + الأوقاف والأصول المقيدة)',
@@ -2871,6 +3067,7 @@ function handleRoute() {
     case 'home':
       renderHome(); break;
     case 'standards':
+      if (isToolBlocked('standards')) { renderToolBlocked('standards'); break; }
       // /standards أو /standards/[transparency|compliance|financial] أو /standards/[std]/[practiceId]
       if (parts[1] && ['transparency','compliance','financial'].includes(parts[1])) {
         renderStandards(parts[1], parts[2] || null);
@@ -2881,8 +3078,10 @@ function handleRoute() {
       }
       break;
     case 'transition':
+      if (isToolBlocked('transition')) { renderToolBlocked('transition'); break; }
       renderTransition(); break;
     case 'calculator':
+      if (isToolBlocked('calculator')) { renderToolBlocked('calculator'); break; }
       renderCalculator(); break;
     case 'learn':
       if (parts[1] === 'blog') {
@@ -2895,7 +3094,11 @@ function handleRoute() {
       else renderLearnLanding();
       break;
     case 'tools':
-      if (parts[1]) Analytics.track('tool_open', parts[1]);
+      if (parts[1]) {
+        // فحص حالة الأداة (مرئية/مخفية/قريباً)
+        if (isToolBlocked(parts[1])) { renderToolBlocked(parts[1]); break; }
+        Analytics.track('tool_open', parts[1]);
+      }
       if (parts[1] === 'minutes') renderMinutesGenerator();
       else if (parts[1] === 'calendar') renderGovernanceCalendar();
       else if (parts[1] === 'aga') renderAGAAssistant();
@@ -2912,6 +3115,7 @@ function handleRoute() {
       else renderToolsLanding();
       break;
     case 'policies':
+      if (isToolBlocked('policies')) { renderToolBlocked('policies'); break; }
       if (parts[1]) {
         Analytics.track('policy_view', parts[1]);
         renderPolicyDetail(parts[1]);
@@ -2946,6 +3150,7 @@ function handleRoute() {
         else renderAdminGuests();
       }
       else if (parts[1] === 'about') renderAdminAbout();
+      else if (parts[1] === 'tools-visibility') renderAdminToolsVisibility();
       else if (parts[1] === 'analytics') renderAdminAnalytics();
       else if (parts[1] === 'settings') {
         if (parts[2]) renderAdminSettings(parts[2]);
@@ -3305,13 +3510,47 @@ function getToolNameById(id) {
   return tool ? tool.name : id;
 }
 
-// اختصار لوحة المفاتيح لفتح دخول المدير (مخفي عن المستخدم العادي)
+// اختصارات دخول المدير (مخفية، غير متعارضة مع المتصفح)
+// الاختصار الرئيسي: Ctrl+Alt+A (Cmd+Option+A على Mac) — A = Admin
+// الاختصار البديل: Ctrl+Shift+M (Cmd+Shift+M على Mac) — M = Marjie
 document.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+  // Ctrl+Alt+A أو Cmd+Option+A
+  const isShortcut1 = (e.ctrlKey || e.metaKey) && e.altKey && !e.shiftKey
+                     && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA');
+  // Ctrl+Shift+M أو Cmd+Shift+M
+  const isShortcut2 = (e.ctrlKey || e.metaKey) && e.shiftKey && !e.altKey
+                     && (e.key === 'M' || e.key === 'm' || e.code === 'KeyM');
+
+  if (isShortcut1 || isShortcut2) {
     e.preventDefault();
+    e.stopPropagation();
     location.hash = '#/admin/login';
   }
 });
+
+// طريقة إضافية للوصول السهل من الجوال: نقر سريع 5 مرات متتالية على شعار الموقع
+(function setupLogoTapShortcut() {
+  let tapCount = 0;
+  let tapTimer = null;
+  document.addEventListener('click', (e) => {
+    const brand = e.target.closest('.brand, .brand-name, .brand-logo');
+    if (!brand) {
+      // أي ضغط آخر يُلغي العدّ
+      tapCount = 0;
+      if (tapTimer) { clearTimeout(tapTimer); tapTimer = null; }
+      return;
+    }
+    tapCount++;
+    if (tapTimer) clearTimeout(tapTimer);
+    if (tapCount >= 5) {
+      tapCount = 0;
+      location.hash = '#/admin/login';
+      return;
+    }
+    // إعادة التصفير بعد ثانيتين بدون نقر
+    tapTimer = setTimeout(() => { tapCount = 0; }, 2000);
+  });
+})();
 
 // ═════════════════════════════════════════════════════════════════
 // إيلوستراشن الـHero — مبنى الحوكمة (SVG)
@@ -3707,6 +3946,77 @@ const HOME_MAIN_ICONS = {
 };
 
 // كل عناصر الصفحة الرئيسية في مصفوفة واحدة (4 أقسام أساسية + 13 أداة = 17)
+// ═════════════════════════════════════════════════════════════════
+// نظام إدارة حالات الأدوات (إظهار/إخفاء/قريباً)
+// ═════════════════════════════════════════════════════════════════
+
+const TOOLS_VISIBILITY_KEY = 'marjie_tools_visibility';
+
+// الحالات الممكنة لكل أداة
+const TOOL_STATES = {
+  visible: { label: 'إظهار', icon: '👁', color: '#3A8B57', desc: 'مرئية للجميع وتعمل عادياً' },
+  hidden: { label: 'إخفاء', icon: '🚫', color: '#999999', desc: 'لا تظهر للزوار نهائياً' },
+  coming_soon: { label: 'قريباً', icon: '⏳', color: '#C97A3A', desc: 'تظهر بشارة "قريباً" غير قابلة للضغط' }
+};
+
+function getToolsVisibility() {
+  try {
+    const stored = localStorage.getItem(TOOLS_VISIBILITY_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch (e) {}
+  return {}; // افتراضي: كل الأدوات مرئية
+}
+
+function saveToolsVisibility(obj) {
+  try {
+    localStorage.setItem(TOOLS_VISIBILITY_KEY, JSON.stringify(obj));
+    return true;
+  } catch (e) { return false; }
+}
+
+function getToolState(toolId) {
+  const v = getToolsVisibility();
+  return v[toolId] || 'visible';
+}
+
+// المدير دائماً يدخل أي صفحة (حتى المخفاة) لتجربتها
+function isToolBlocked(toolId) {
+  if (State.adminToken) return false; // المدير يستطيع رؤية كل شيء
+  const state = getToolState(toolId);
+  return state === 'hidden' || state === 'coming_soon';
+}
+
+// صفحة "الأداة غير متاحة" (لحالتي hidden و coming_soon)
+function renderToolBlocked(toolId) {
+  const state = getToolState(toolId);
+  const allItems = buildAllHomeItemsRaw();
+  const item = allItems.find(i => i.id === toolId);
+  const name = item ? item.name : 'هذه الأداة';
+
+  const isComing = state === 'coming_soon';
+  const icon = isComing ? '⏳' : '🚫';
+  const title = isComing ? 'هذه الأداة قيد التطوير' : 'هذه الأداة غير متاحة حالياً';
+  const desc = isComing
+    ? `أداة <strong>${escapeHtml(name)}</strong> ستكون متاحة قريباً. نعمل على إضافتها بأسرع وقت ممكن.`
+    : `أداة <strong>${escapeHtml(name)}</strong> غير متاحة في الوقت الحالي.`;
+
+  $('#app').innerHTML = `
+    <div class="container">
+      <div class="tool-blocked-card">
+        <div class="tool-blocked-icon" style="background:${isComing ? '#FCE9D6' : '#F0EDE6'};color:${isComing ? '#C97A3A' : '#79766B'}">
+          <span style="font-size:3rem">${icon}</span>
+        </div>
+        <h1>${escapeHtml(title)}</h1>
+        <p class="muted">${desc}</p>
+        <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+          <a href="#/" class="btn btn-primary">العودة للرئيسية</a>
+          <a href="#/tools" class="btn btn-secondary">استكشف الأدوات المتاحة</a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function buildAllHomeItems() {
   const mainItems = [
     { id:'standards', href:'#/standards', icon:HOME_MAIN_ICONS.standards,
@@ -3732,10 +4042,48 @@ function buildAllHomeItems() {
     keywords: t.keywords
   }));
 
+  const allItems = [...mainItems, ...toolItems];
+
+  // أضف حالة كل أداة + فلتر الـhidden
+  const visibility = getToolsVisibility();
+  return allItems
+    .map(item => ({ ...item, state: visibility[item.id] || 'visible' }))
+    .filter(item => item.state !== 'hidden');
+}
+
+// كل الأدوات (بدون فلتر) — للاستخدام في صفحة الإدارة
+function buildAllHomeItemsRaw() {
+  const mainItems = [
+    { id:'standards', href:'#/standards', name:'المعايير', icon:HOME_MAIN_ICONS.standards, category:'أساسي' },
+    { id:'policies', href:'#/policies', name:'مكتبة السياسات', icon:HOME_MAIN_ICONS.policies, category:'أساسي' },
+    { id:'calculator', href:'#/calculator', name:'الحاسبة المالية', icon:HOME_MAIN_ICONS.calculator, category:'أساسي' },
+    { id:'transition', href:'#/transition', name:'محاكي الانتقال', icon:HOME_MAIN_ICONS.transition, category:'أساسي' }
+  ];
+  const toolItems = TOOLS_CATALOG.map(t => ({
+    id: t.id,
+    href: '#/tools/' + t.id,
+    name: t.name,
+    icon: TOOLS_ICONS[t.id] || '',
+    category: 'أداة احترافية'
+  }));
   return [...mainItems, ...toolItems];
 }
 
 function renderHomeCard(item) {
+  // أداة "قريباً": كرت مُعطَّل بشارة
+  if (item.state === 'coming_soon') {
+    return `
+      <div class="mj-tool-card mj-tool-coming-soon" data-home-item="${escapeHtml(item.id)}">
+        <div class="mj-tool-coming-badge">⏳ قريباً</div>
+        <div class="mj-tool-icon">${item.icon}</div>
+        <h3 class="mj-tool-title">${escapeHtml(item.name)}</h3>
+        <p class="mj-tool-desc">${escapeHtml(item.desc)}</p>
+        <span class="mj-tool-arrow mj-tool-arrow-disabled">سيتوفّر قريباً</span>
+      </div>
+    `;
+  }
+
+  // الأداة العادية
   return `
     <a href="${escapeHtml(item.href)}" class="mj-tool-card" data-home-item="${escapeHtml(item.id)}">
       <div class="mj-tool-icon">${item.icon}</div>
@@ -3850,9 +4198,10 @@ function renderHome() {
 // إحصائيات ديناميكية
 function computeHomeStats() {
   // إحصائيات دقيقة 100% - تأخذ القيم من البيانات الفعلية في الموقع
+  // الأدوات المرئية للزوار فقط (بعد فلتر hidden)
+  const visibleItems = buildAllHomeItems();
   return {
-    // الأدوات: 4 أساسية (معايير، سياسات، حاسبة، محاكي) + كل الأدوات في الكتالوج
-    tools: 4 + (typeof TOOLS_CATALOG !== 'undefined' ? TOOLS_CATALOG.length : 0),
+    tools: visibleItems.length,
     // السياسات: عدد المنشورة فقط (visible) من قاعدة البيانات إن تمّ تحميلها
     policies: (State.publishedPoliciesCount !== undefined && State.publishedPoliciesCount !== null)
               ? State.publishedPoliciesCount
@@ -4946,6 +5295,8 @@ const ADMIN_NAV_ITEMS = [
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' },
   { id:'guest', href:'#/admin/guest', name:'ضيف الشهر',
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' },
+  { id:'tools-visibility', href:'#/admin/tools-visibility', name:'إدارة الأدوات',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>' },
   { id:'about', href:'#/admin/about', name:'عن المنصة',
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' },
   { id:'analytics', href:'#/admin/analytics', name:'الإحصائيات',
@@ -6895,6 +7246,171 @@ function renderAbout() {
 }
 
 // ─── إدارة صفحة "عن المنصة" من admin ──────────────────────────────
+// ═════════════════════════════════════════════════════════════════
+// لوحة الإدارة - إدارة حالات الأدوات الـ17 (إظهار/إخفاء/قريباً)
+// ═════════════════════════════════════════════════════════════════
+function renderAdminToolsVisibility() {
+  const allItems = buildAllHomeItemsRaw();
+  const visibility = getToolsVisibility();
+
+  // إحصائيات سريعة
+  const stats = { visible: 0, hidden: 0, coming_soon: 0 };
+  allItems.forEach(item => {
+    const s = visibility[item.id] || 'visible';
+    stats[s] = (stats[s] || 0) + 1;
+  });
+
+  // تجميع حسب الفئة
+  const grouped = {};
+  allItems.forEach(item => {
+    if (!grouped[item.category]) grouped[item.category] = [];
+    grouped[item.category].push(item);
+  });
+
+  const categoryHtml = Object.entries(grouped).map(([cat, items]) => `
+    <div class="admin-section">
+      <h3 class="admin-section-title" style="margin-bottom:1rem">
+        ${escapeHtml(cat)}
+        <span class="badge badge-gray">${items.length}</span>
+      </h3>
+      <div class="tools-visibility-list">
+        ${items.map(item => {
+          const state = visibility[item.id] || 'visible';
+          return `
+            <div class="tool-vis-row" data-tool-id="${escapeHtml(item.id)}">
+              <div class="tool-vis-info">
+                <div class="tool-vis-icon" style="color:${state === 'visible' ? 'var(--teal-700)' : state === 'coming_soon' ? '#C97A3A' : '#999'}">${item.icon || ''}</div>
+                <div class="tool-vis-name">
+                  <div class="tool-vis-title">${escapeHtml(item.name)}</div>
+                  <div class="tool-vis-id">
+                    <code>${escapeHtml(item.href)}</code>
+                  </div>
+                </div>
+              </div>
+              <div class="tool-vis-controls">
+                ${Object.entries(TOOL_STATES).map(([stateKey, stateInfo]) => `
+                  <label class="tool-vis-option ${state === stateKey ? 'active' : ''}"
+                    data-state="${stateKey}"
+                    style="--state-color:${stateInfo.color}">
+                    <input type="radio"
+                      name="state-${escapeHtml(item.id)}"
+                      value="${stateKey}"
+                      ${state === stateKey ? 'checked' : ''}
+                      onchange="updateToolState('${escapeHtml(item.id)}', '${stateKey}')" />
+                    <span class="tool-vis-option-icon">${stateInfo.icon}</span>
+                    <span class="tool-vis-option-label">${stateInfo.label}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  const content = `
+    <div class="admin-page-header">
+      <div>
+        <h1>إدارة حالات الأدوات</h1>
+        <p>تحكّم في ظهور كل أداة من الـ${allItems.length} للزوار</p>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <a href="#/" target="_blank" class="btn btn-ghost btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          معاينة الصفحة الرئيسية
+        </a>
+        <button class="btn btn-ghost btn-sm" onclick="resetAllToolsVisibility()">إعادة الكل لمرئي</button>
+      </div>
+    </div>
+
+    <!-- إحصائيات سريعة -->
+    <div class="tools-vis-stats">
+      <div class="tools-vis-stat" style="--c:#3A8B57">
+        <div class="tools-vis-stat-icon">👁</div>
+        <div class="tools-vis-stat-info">
+          <div class="tools-vis-stat-num">${stats.visible}</div>
+          <div class="tools-vis-stat-label">أداة مرئية</div>
+        </div>
+      </div>
+      <div class="tools-vis-stat" style="--c:#C97A3A">
+        <div class="tools-vis-stat-icon">⏳</div>
+        <div class="tools-vis-stat-info">
+          <div class="tools-vis-stat-num">${stats.coming_soon}</div>
+          <div class="tools-vis-stat-label">قريباً</div>
+        </div>
+      </div>
+      <div class="tools-vis-stat" style="--c:#999999">
+        <div class="tools-vis-stat-icon">🚫</div>
+        <div class="tools-vis-stat-info">
+          <div class="tools-vis-stat-num">${stats.hidden}</div>
+          <div class="tools-vis-stat-label">مخفية</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info small mb-3">
+      💡 <strong>طريقة العمل:</strong>
+      <ul style="margin:0.4rem 0 0;padding-right:1.2rem">
+        <li><strong>إظهار:</strong> الأداة تعمل عادياً وتظهر للجميع</li>
+        <li><strong>قريباً:</strong> تظهر في القائمة بشارة "قريباً" مع كرت مُعطَّل (غير قابل للضغط)</li>
+        <li><strong>إخفاء:</strong> تختفي تماماً من كل الصفحات (لكنّك كمدير لا تزال تستطيع الوصول إليها)</li>
+      </ul>
+      <p class="small mt-2" style="margin:0.4rem 0 0">التغييرات تُحفظ تلقائياً عند كل اختيار.</p>
+    </div>
+
+    ${categoryHtml}
+  `;
+
+  renderAdminShell('tools-visibility', content);
+}
+
+// تحديث حالة أداة واحدة
+function updateToolState(toolId, newState) {
+  const v = getToolsVisibility();
+
+  if (newState === 'visible') {
+    delete v[toolId]; // مرئي = الافتراضي، لا داعي لحفظه
+  } else {
+    v[toolId] = newState;
+  }
+
+  if (saveToolsVisibility(v)) {
+    if (typeof logAudit === 'function') {
+      logAudit('settings_change', 'system', toolId, `Tool state: ${newState}`);
+    }
+    showToast(`تمّ التحديث: ${TOOL_STATES[newState].label} ${TOOL_STATES[newState].icon}`, 'success');
+
+    // تحديث الـUI: لون الأيقونة + الحالة النشطة
+    const row = document.querySelector(`.tool-vis-row[data-tool-id="${toolId}"]`);
+    if (row) {
+      // تحديث الـactive class للخيارات
+      row.querySelectorAll('.tool-vis-option').forEach(opt => {
+        const state = opt.dataset.state;
+        opt.classList.toggle('active', state === newState);
+      });
+      // تحديث لون الأيقونة
+      const icon = row.querySelector('.tool-vis-icon');
+      if (icon) {
+        icon.style.color = newState === 'visible' ? 'var(--teal-700)' :
+                          newState === 'coming_soon' ? '#C97A3A' : '#999';
+      }
+    }
+
+    // إعادة بناء الإحصائيات في الأعلى
+    setTimeout(() => renderAdminToolsVisibility(), 100);
+  }
+}
+
+// إعادة كل الأدوات لـvisible
+function resetAllToolsVisibility() {
+  if (!confirm('إعادة كل الـ17 أداة لحالة "مرئي"؟')) return;
+  try { localStorage.removeItem(TOOLS_VISIBILITY_KEY); } catch (e) {}
+  if (typeof logAudit === 'function') logAudit('reset', 'system', 'tools-visibility', 'All tools reset to visible');
+  showToast('تمّت الاستعادة ✓', 'success');
+  renderAdminToolsVisibility();
+}
+
 function renderAdminAbout() {
   const about = getAboutPage();
 
@@ -8290,16 +8806,56 @@ function getFinancialValues() {
   const values = {};
   FIN_INPUTS.forEach(inp => {
     const el = document.querySelector('input[data-fin-key="' + inp.key + '"]');
-    const v = el && el.value !== '' ? parseFloat(el.value) : null;
-    values[inp.key] = (v !== null && !isNaN(v)) ? v : null;
+    if (!el || el.value === '') { values[inp.key] = null; return; }
+    // إزالة الفواصل (للأرقام بصيغة 1,234,567) + الأرقام العربية إن لُصقت
+    let raw = el.value.replace(/,/g, '').replace(/[٠-٩]/g, c => '٠١٢٣٤٥٦٧٨٩'.indexOf(c).toString());
+    const v = parseFloat(raw);
+    values[inp.key] = (!isNaN(v)) ? v : null;
   });
   return values;
+}
+
+// مُعالج إدخال — يُنسّق الرقم بفواصل وينفّذ الحساب
+function onFinInputChange(input) {
+  // احفظ موضع المؤشّر
+  const cursor = input.selectionStart;
+  const oldLen = input.value.length;
+
+  // استخرج الرقم النظيف (إزالة الفواصل والأرقام العربية)
+  let raw = input.value.replace(/,/g, '').replace(/[٠-٩]/g, c => '٠١٢٣٤٥٦٧٨٩'.indexOf(c).toString());
+
+  // اقبل فقط الأرقام والنقطة
+  raw = raw.replace(/[^\d.]/g, '');
+
+  // أعد التنسيق بفواصل
+  if (raw === '' || raw === '.') {
+    input.value = raw;
+  } else {
+    const num = parseFloat(raw);
+    if (!isNaN(num)) {
+      // احتفظ بالنقطة العشرية إذا كانت في النهاية
+      const hasDecimal = raw.endsWith('.');
+      const decimalPart = raw.split('.')[1];
+      const intPart = Math.floor(num).toLocaleString('en-US');
+      if (hasDecimal) input.value = intPart + '.';
+      else if (decimalPart !== undefined) input.value = intPart + '.' + decimalPart;
+      else input.value = intPart;
+    }
+  }
+
+  // أعد المؤشّر لمكان قريب من السابق
+  const newLen = input.value.length;
+  const newCursor = Math.max(0, cursor + (newLen - oldLen));
+  try { input.setSelectionRange(newCursor, newCursor); } catch (e) {}
+
+  // تحديث النتائج
+  updateFinancialResults();
 }
 
 function renderCalculator() {
   const saved = loadFinancialInputs();
 
-  // بناء حقول المدخلات مجمّعة (محاكاة شكل القوائم المالية)
+  // بناء حقول المدخلات مجمّعة مع أيقونات
   let inputsHtml = '';
   Object.keys(FIN_INPUT_GROUPS).forEach(g => {
     const inputs = FIN_INPUTS.filter(i => i.group === g);
@@ -8309,12 +8865,19 @@ function renderCalculator() {
     inputs.forEach(inp => {
       const val = saved[inp.key] != null ? saved[inp.key] : '';
       inputsHtml += `
-        <div class="form-group">
-          <label>${escapeHtml(inp.label)}</label>
-          <input type="number" step="any" min="0"
+        <div class="form-group fin-input-card">
+          <label class="fin-input-label">
+            <span class="fin-input-icon">${inp.icon || ''}</span>
+            <span>${escapeHtml(inp.label)}</span>
+          </label>
+          <input type="text"
+                 inputmode="numeric"
+                 dir="ltr"
+                 lang="en"
                  data-fin-key="${inp.key}"
-                 oninput="updateFinancialResults()"
-                 value="${escapeHtml(String(val))}" placeholder="0" />
+                 oninput="onFinInputChange(this)"
+                 value="${val !== '' ? Number(val).toLocaleString('en-US') : ''}"
+                 placeholder="0" />
         </div>
       `;
     });
@@ -8421,31 +8984,30 @@ function renderCalculator() {
               <!-- الدليل التفصيلي (مخفي افتراضياً) -->
               <div id="api-key-guide" style="display:none;margin-bottom:1rem">
                 <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:var(--radius-md);padding:1.25rem">
-                  <h4 style="margin:0 0 1rem;color:var(--teal-700);font-size:1rem">دليل سريع — 4 خطوات (دقيقتان)</h4>
+                  <h4 style="margin:0 0 1.2rem;color:var(--teal-700);font-size:1.05rem">📖 الدليل السريع — 4 خطوات (~2 دقيقة)</h4>
 
                   <!-- الخطوة 1 -->
                   <div class="api-step">
                     <div class="api-step-num">1</div>
                     <div class="api-step-body">
                       <strong>افتح Google AI Studio</strong>
-                      <p class="small muted">انتقل إلى الرابط أدناه وسجّل دخولك بحساب Google:</p>
-                      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="margin-top:0.4rem">
+                      <p class="small muted" style="margin:0.3rem 0">انتقل إلى الرابط أدناه وسجّل دخولك بحساب Google.</p>
+                      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:0.5rem">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         فتح aistudio.google.com/apikey
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:0.3rem"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                       </a>
-                      <!-- رسم توضيحي للصفحة -->
-                      <div class="api-step-illust">
-                        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" width="100%">
-                          <rect x="2" y="2" width="316" height="76" rx="6" fill="#FFFFFF" stroke="#D6D2C8" stroke-width="1"/>
-                          <rect x="2" y="2" width="316" height="20" rx="6 6 0 0" fill="#F5F2EC"/>
-                          <circle cx="14" cy="12" r="3" fill="#E07B5A"/>
-                          <circle cx="24" cy="12" r="3" fill="#D9B772"/>
-                          <circle cx="34" cy="12" r="3" fill="#7EBE94"/>
-                          <rect x="50" y="9" width="200" height="6" rx="2" fill="#E6E2D9"/>
-                          <text x="60" y="44" font-size="10" fill="#2C2A26" font-family="IBM Plex Sans Arabic">aistudio.google.com/apikey</text>
-                          <rect x="60" y="52" width="80" height="18" rx="9" fill="#1A73E8"/>
-                          <text x="100" y="64" font-size="9" fill="#FFFFFF" font-family="IBM Plex Sans Arabic" text-anchor="middle" font-weight="600">تسجيل دخول</text>
-                        </svg>
+                      <div class="api-mockup">
+                        <div class="api-mockup-browser">
+                          <div class="api-mockup-dots">
+                            <span style="background:#FF6B6B"></span>
+                            <span style="background:#FFD93D"></span>
+                            <span style="background:#6BCB77"></span>
+                          </div>
+                          <div class="api-mockup-url">aistudio.google.com/apikey</div>
+                        </div>
+                        <div class="api-mockup-body">
+                          <div class="api-mockup-login-btn">تسجيل دخول بحساب Google</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -8455,20 +9017,16 @@ function renderCalculator() {
                     <div class="api-step-num">2</div>
                     <div class="api-step-body">
                       <strong>اضغط زرّ "Create API Key"</strong>
-                      <p class="small muted">ستجد الزرّ في أعلى الصفحة (باللون الأزرق).</p>
-                      <div class="api-step-illust">
-                        <svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" width="100%">
-                          <rect x="2" y="2" width="316" height="86" rx="6" fill="#FAFAFA" stroke="#D6D2C8"/>
-                          <text x="20" y="28" font-size="13" fill="#2C2A26" font-family="IBM Plex Sans Arabic" font-weight="700">API keys</text>
-                          <rect x="220" y="14" width="85" height="22" rx="4" fill="#1A73E8" class="pulse-highlight"/>
-                          <text x="262" y="29" font-size="11" fill="#FFFFFF" font-family="Arial" text-anchor="middle" font-weight="600">+ Create API key</text>
-                          <!-- سهم يشير للزرّ -->
-                          <path d="M 180 26 L 215 26" stroke="#D85A30" stroke-width="2" fill="none" stroke-linecap="round"/>
-                          <path d="M 208 22 L 215 26 L 208 30" stroke="#D85A30" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                          <text x="178" y="22" font-size="9" fill="#D85A30" font-family="IBM Plex Sans Arabic" font-weight="600" text-anchor="end">اضغط هنا</text>
-                          <rect x="20" y="45" width="280" height="30" rx="4" fill="#FFFFFF" stroke="#E6E2D9"/>
-                          <text x="30" y="63" font-size="10" fill="#79766B" font-family="IBM Plex Sans Arabic">لا توجد مفاتيح بعد...</text>
-                        </svg>
+                      <p class="small muted" style="margin:0.3rem 0">ستجد الزرّ الأزرق في أعلى الصفحة (يمين/يسار حسب اللغة).</p>
+                      <div class="api-mockup">
+                        <div class="api-mockup-toolbar">
+                          <div class="api-mockup-page-title">API keys</div>
+                          <div class="api-mockup-create-btn pulse-highlight">+ Create API key</div>
+                        </div>
+                        <div class="api-mockup-empty">لا توجد مفاتيح بعد</div>
+                        <div class="api-mockup-arrow">
+                          <span>اضغط هنا 👆</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -8478,15 +9036,15 @@ function renderCalculator() {
                     <div class="api-step-num">3</div>
                     <div class="api-step-body">
                       <strong>اختر مشروعاً (أو أنشئ جديداً)</strong>
-                      <p class="small muted">إن لم يكن لديك مشروع، اضغط "Create API key in new project" — كله مجاني.</p>
-                      <div class="api-step-illust">
-                        <svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" width="100%">
-                          <rect x="2" y="2" width="316" height="86" rx="6" fill="#FAFAFA" stroke="#D6D2C8"/>
-                          <rect x="40" y="18" width="240" height="56" rx="8" fill="#FFFFFF" stroke="#E6E2D9" stroke-width="1.5"/>
-                          <text x="160" y="38" font-size="11" fill="#2C2A26" font-family="IBM Plex Sans Arabic" font-weight="600" text-anchor="middle">Select a project</text>
-                          <rect x="60" y="50" width="200" height="18" rx="4" fill="#E8F5E9"/>
-                          <text x="160" y="62" font-size="9" fill="#2E7D32" font-family="Arial" text-anchor="middle">Create API key in new project</text>
-                        </svg>
+                      <p class="small muted" style="margin:0.3rem 0">إن لم يكن لديك مشروع، اضغط <strong>"Create API key in new project"</strong> — كله مجاني.</p>
+                      <div class="api-mockup">
+                        <div class="api-mockup-modal">
+                          <div class="api-mockup-modal-title">Select a project</div>
+                          <div class="api-mockup-modal-option pulse-highlight">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Create API key in new project
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -8495,17 +9053,14 @@ function renderCalculator() {
                   <div class="api-step">
                     <div class="api-step-num">4</div>
                     <div class="api-step-body">
-                      <strong>انسخ المفتاح والصقه أدناه</strong>
-                      <p class="small muted">المفتاح يبدأ بـ <code>AIza</code> ويتكوّن من ~40 حرف. اضغط زرّ النسخ ثم الصقه في الحقل أدناه.</p>
-                      <div class="api-step-illust">
-                        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" width="100%">
-                          <rect x="2" y="2" width="316" height="76" rx="6" fill="#FAFAFA" stroke="#D6D2C8"/>
-                          <text x="20" y="22" font-size="11" fill="#2C2A26" font-family="IBM Plex Sans Arabic" font-weight="600">Your API key:</text>
-                          <rect x="20" y="30" width="240" height="28" rx="4" fill="#F5F2EC" stroke="#D6D2C8"/>
-                          <text x="30" y="48" font-size="9.5" fill="#2C2A26" font-family="monospace">AIzaSyDJQaZ60JcMXFqrppZOVHJEeTYMhlPTdOI</text>
-                          <rect x="270" y="30" width="35" height="28" rx="4" fill="#1A73E8" class="pulse-highlight"/>
-                          <text x="287" y="48" font-size="9" fill="#FFFFFF" font-family="IBM Plex Sans Arabic" text-anchor="middle" font-weight="600">نسخ</text>
-                        </svg>
+                      <strong>انسخ المفتاح والصقه في الحقل أدناه</strong>
+                      <p class="small muted" style="margin:0.3rem 0">المفتاح يبدأ بـ <code>AIza</code> ويتكوّن من ~40 حرف.</p>
+                      <div class="api-mockup">
+                        <div class="api-mockup-key-label">Your API key:</div>
+                        <div class="api-mockup-key-row">
+                          <div class="api-mockup-key-value">AIzaSyDJQaZ60JcMXFqrppZOVHJEeTYMhlPTdOI</div>
+                          <button type="button" class="api-mockup-copy-btn pulse-highlight">📋 نسخ</button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -9150,15 +9705,13 @@ async function handlePDFUpload(event) {
 // وضع AI المتقدّم (Gemini API) — للملفات الصعبة
 // ═════════════════════════════════════════════════════════════════
 
-// قائمة نماذج Gemini مرتّبة من الأحدث للأقدم — نجرّبها بالترتيب
+// قائمة نماذج Gemini المتاحة فعلياً (تم تنظيفها من القديم)
 const GEMINI_KEY_STORAGE = 'marjie_gemini_api_key';
 
 const GEMINI_MODELS_TO_TRY = [
   'gemini-2.0-flash',
   'gemini-2.0-flash-001',
-  'gemini-1.5-flash-latest',
-  'gemini-1.5-flash-002',
-  'gemini-flash-latest'
+  'gemini-2.0-flash-lite'
 ];
 
 // نموذج Gemini الناجح يُحفظ ليُستخدم مباشرة في المرة التالية
@@ -9173,20 +9726,20 @@ function saveGeminiWorkingModel(model) {
 }
 
 // محاولة استدعاء Gemini مع fallback تلقائي بين النماذج
-async function callGeminiWithFallback(apiKey, payload, statusEl) {
-  // ابدأ بالنموذج الذي نجح سابقاً (إن وُجد)
+async function callGeminiWithFallback(apiKey, payload, progressFn) {
   const workingModel = getGeminiWorkingModel();
   const modelsToTry = workingModel
     ? [workingModel, ...GEMINI_MODELS_TO_TRY.filter(m => m !== workingModel)]
     : GEMINI_MODELS_TO_TRY;
 
+  let last429 = false;
   let lastError = '';
 
-  for (const model of modelsToTry) {
+  for (let i = 0; i < modelsToTry.length; i++) {
+    const model = modelsToTry[i];
     try {
-      if (statusEl) {
-        statusEl.innerHTML = `<div class="alert alert-info"><span class="loader"></span> جاري المحاولة مع <code>${model}</code>...</div>`;
-      }
+      if (progressFn) progressFn(35 + i * 5, `جاري المحاولة مع ${model}...`);
+
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
       const response = await fetch(url, {
         method: 'POST',
@@ -9195,28 +9748,42 @@ async function callGeminiWithFallback(apiKey, payload, statusEl) {
       });
 
       if (response.ok) {
-        // نجح — احفظ النموذج للمرات القادمة
         saveGeminiWorkingModel(model);
         return await response.json();
       }
 
-      const errData = await response.json().catch(() => ({}));
-      lastError = errData.error?.message || `HTTP ${response.status}`;
-
-      // إذا كان الخطأ في API key نفسه (401/403)، لا تجرّب نماذج أخرى
+      // معالجة الأخطاء حسب الـstatus
       if (response.status === 401 || response.status === 403) {
-        throw new Error('مفتاح API غير صالح أو منتهي. تحقّق من المفتاح في aistudio.google.com');
+        throw new Error('🔑 مفتاح API غير صالح أو منتهي. تحقّق من المفتاح في aistudio.google.com');
       }
 
-      // إذا 404/400 (model not found)، استمر للنموذج التالي
-      console.log(`[Gemini] ${model} failed (${response.status}), trying next...`);
+      if (response.status === 429) {
+        last429 = true;
+        // تجاوز حد الطلبات - استمر في تجربة نماذج أخرى لكن سجّله
+        const errData = await response.json().catch(() => ({}));
+        lastError = errData.error?.message || 'تجاوز حد الطلبات';
+        continue;
+      }
+
+      if (response.status >= 500) {
+        // خطأ خادم - حاول النموذج التالي
+        lastError = `خطأ خادم Google (${response.status})`;
+        continue;
+      }
+
+      // 404 أو 400 - نموذج غير مدعوم
+      lastError = `النموذج ${model} غير متاح`;
     } catch (err) {
-      if (err.message.includes('مفتاح API غير صالح')) throw err;
+      if (err.message.includes('مفتاح API')) throw err;
       lastError = err.message;
     }
   }
 
-  throw new Error(`فشل مع كل النماذج. آخر خطأ: ${lastError}`);
+  // كل النماذج فشلت
+  if (last429) {
+    throw new Error('⏱️ تجاوزت الحد المجاني المسموح به (15 طلب/دقيقة). انتظر دقيقة ثم حاول مجدداً، أو ارتقِ بحسابك في Google AI Studio.');
+  }
+  throw new Error(`❌ فشل مع كل النماذج المتاحة. آخر خطأ: ${lastError}`);
 }
 
 function getGeminiKey() {
@@ -9228,6 +9795,56 @@ function saveGeminiKey(key) {
     if (key) localStorage.setItem(GEMINI_KEY_STORAGE, key);
     else localStorage.removeItem(GEMINI_KEY_STORAGE);
   } catch (e) {}
+}
+
+// رسائل ممتعة تتغيّر أثناء انتظار AI (لمنع الملل)
+const AI_PROGRESS_MESSAGES = [
+  'يقرأ الذكاء الاصطناعي الصفحات...',
+  'يحلّل البنود المحاسبية...',
+  'يفهم القوائم المالية بدقّة...',
+  'يربط البنود بالمعايير...',
+  'يستخرج الأرقام بحرص...',
+  'يتحقّق من المجاميع...',
+  'يقترب من الانتهاء...'
+];
+
+// عرض شريط التقدم في المنطقة المخصّصة
+function showAIProgress(percent, message) {
+  const status = $('#pdf-status');
+  if (!status) return;
+  const pct = Math.min(100, Math.max(0, percent));
+  status.innerHTML = `
+    <div class="ai-progress-card">
+      <div class="ai-progress-header">
+        <div class="ai-progress-sparkle">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z" fill="currentColor"/>
+            <path d="M19 14L19.7 16.3L22 17L19.7 17.7L19 20L18.3 17.7L16 17L18.3 16.3L19 14Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="ai-progress-info">
+          <div class="ai-progress-title">جاري التحليل بالذكاء الاصطناعي</div>
+          <div class="ai-progress-message" id="ai-progress-message">${escapeHtml(message || 'جاري التحضير...')}</div>
+        </div>
+        <div class="ai-progress-percent">${pct}%</div>
+      </div>
+      <div class="ai-progress-bar">
+        <div class="ai-progress-bar-fill" style="width:${pct}%"></div>
+        <div class="ai-progress-bar-glow" style="left:${pct}%"></div>
+      </div>
+      <div class="ai-progress-eta" id="ai-progress-eta">
+        ${pct < 100 ? 'الوقت المُتوقَّع: ' + estimateETA(pct) : '✓ تم بنجاح!'}
+      </div>
+    </div>
+  `;
+}
+
+function estimateETA(percent) {
+  // التقدير: ~25 ثانية للملف العادي
+  const remaining = Math.max(1, Math.round((100 - percent) * 0.25));
+  if (remaining > 30) return `~${Math.round(remaining/10)*10} ثانية`;
+  if (remaining > 5) return `~${remaining} ثانية`;
+  return 'لحظات...';
 }
 
 async function extractWithGemini() {
@@ -9243,14 +9860,37 @@ async function extractWithGemini() {
     return;
   }
 
-  const status = $('#pdf-status');
+  // بدء شريط التقدم
+  showAIProgress(5, 'تحضير الملف...');
+
+  // محاكاة تقدم تدريجي خلال انتظار AI
+  let simulatedProgress = 5;
+  let msgIndex = 0;
+  const progressTimer = setInterval(() => {
+    simulatedProgress = Math.min(88, simulatedProgress + (Math.random() * 3 + 1));
+    const msgEl = $('#ai-progress-message');
+    const etaEl = $('#ai-progress-eta');
+    const pctEl = document.querySelector('.ai-progress-percent');
+    const fillEl = document.querySelector('.ai-progress-bar-fill');
+    const glowEl = document.querySelector('.ai-progress-bar-glow');
+
+    if (msgEl) {
+      msgIndex = (msgIndex + 1) % AI_PROGRESS_MESSAGES.length;
+      msgEl.textContent = AI_PROGRESS_MESSAGES[msgIndex];
+    }
+    if (pctEl) pctEl.textContent = Math.round(simulatedProgress) + '%';
+    if (fillEl) fillEl.style.width = simulatedProgress + '%';
+    if (glowEl) glowEl.style.left = simulatedProgress + '%';
+    if (etaEl) etaEl.textContent = 'الوقت المُتوقَّع: ' + estimateETA(simulatedProgress);
+  }, 1800);
 
   try {
-    // تحويل PDF إلى base64
+    showAIProgress(10, 'قراءة الملف...');
     const buffer = await file.arrayBuffer();
     const base64 = btoa(new Uint8Array(buffer).reduce((s, b) => s + String.fromCharCode(b), ''));
 
-    // الـprompt المُصمّم بدقّة
+    showAIProgress(20, 'إرسال إلى Google Gemini...');
+
     const prompt = `أنت محلّل مالي خبير. هذا ملف PDF يحتوي قوائم مالية لجمعية أهلية سعودية.
 استخرج القيم الرقمية بدقّة للحقول التالية، وأرجِع JSON فقط (بدون أي نص آخر):
 
@@ -9283,14 +9923,23 @@ async function extractWithGemini() {
       generationConfig: { temperature: 0.1, responseMimeType: 'application/json' }
     };
 
-    // استدعاء مع fallback تلقائي بين النماذج
-    const data = await callGeminiWithFallback(apiKey, payload, status);
+    const data = await callGeminiWithFallback(apiKey, payload);
+    clearInterval(progressTimer);
+
+    showAIProgress(92, 'معالجة النتائج...');
 
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('لم يُرجع AI استجابة بصيغة JSON');
+    if (!jsonMatch) throw new Error('لم يُرجع AI استجابة بصيغة صحيحة. حاول مجدداً.');
 
-    const extracted = JSON.parse(jsonMatch[0]);
+    let extracted;
+    try {
+      extracted = JSON.parse(jsonMatch[0]);
+    } catch (parseErr) {
+      throw new Error('استجابة AI لم تكن JSON صالحاً. حاول مرة أخرى.');
+    }
+
+    showAIProgress(98, 'تطبيق القيم على الحقول...');
 
     // طبّق على الحقول
     let appliedCount = 0;
@@ -9308,16 +9957,47 @@ async function extractWithGemini() {
     updateFinancialResults();
 
     const usedModel = getGeminiWorkingModel() || 'Gemini';
+
+    // عرض النجاح
+    const status = $('#pdf-status');
     status.innerHTML = `
-      <div class="alert alert-success">
-        ✨ <strong>تم استخراج ${appliedCount} حقلاً بنجاح</strong>
-        <p class="small" style="margin:0.5rem 0 0">
-          استُخدم نموذج: <code>${escapeHtml(usedModel)}</code> • القيم الخضراء مستخرجة بالذكاء الاصطناعي • راجعها قبل الاعتماد.
-        </p>
+      <div class="ai-progress-card success">
+        <div class="ai-progress-header">
+          <div class="ai-progress-sparkle success">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="ai-progress-info">
+            <div class="ai-progress-title">✨ تمّ بنجاح!</div>
+            <div class="ai-progress-message">استخرج Gemini ${appliedCount} حقلاً من أصل 10</div>
+          </div>
+          <div class="ai-progress-percent success">100%</div>
+        </div>
+        <div class="ai-progress-bar"><div class="ai-progress-bar-fill success" style="width:100%"></div></div>
+        <div class="ai-progress-eta success">
+          استُخدم نموذج: <code>${escapeHtml(usedModel)}</code> • القيم الخضراء مستخرجة بالذكاء الاصطناعي
+        </div>
       </div>
     `;
   } catch (err) {
-    status.innerHTML = `<div class="alert alert-error">${escapeHtml(err.message)}</div>`;
+    clearInterval(progressTimer);
+    const status = $('#pdf-status');
+    status.innerHTML = `
+      <div class="ai-progress-card error">
+        <div class="ai-progress-header">
+          <div class="ai-progress-sparkle error">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <div class="ai-progress-info">
+            <div class="ai-progress-title">فشل التحليل</div>
+            <div class="ai-progress-message">${escapeHtml(err.message)}</div>
+          </div>
+        </div>
+      </div>
+    `;
   }
 }
 
@@ -9361,17 +10041,25 @@ function showPDFUploadedPreview(file) {
           <span>تم رفع الملف بنجاح</span>
         </div>
       </div>
-      <div class="pdf-uploaded-actions">
-        <button type="button" class="btn btn-ghost btn-sm" onclick="removePDFFile()" title="إزالة الملف">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
     </div>
-    <div style="margin-top:0.6rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-      <label for="pdf-input" class="btn btn-ghost btn-sm" style="cursor:pointer">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        تغيير الملف
+
+    <!-- أزرار الإجراءات أسفل البطاقة - واضحة ومُلوَّنة -->
+    <div class="pdf-actions-row">
+      <label for="pdf-input" class="btn-pdf-action btn-pdf-change">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <span>تغيير الملف</span>
       </label>
+      <button type="button" class="btn-pdf-action btn-pdf-remove" onclick="removePDFFile()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+        </svg>
+        <span>إزالة الملف</span>
+      </button>
     </div>
   `;
 }
@@ -9412,103 +10100,162 @@ function updateFinancialResults() {
   let totalScore = 0;
   let anyData = false;
 
-  let html = '<div class="card"><div class="card-header"><h2 class="card-title">النتائج التفصيلية</h2></div>';
-
-  FIN_INDICATORS.forEach(ind => {
+  // احسب درجة كل مؤشّر مسبقاً (لاحتياجها للنتيجة الإجمالية في الأعلى)
+  const indicatorResults = FIN_INDICATORS.map(ind => {
     let indScore = 0;
-    let indMax = 0;
     let indHasData = false;
-
-    let metricsHtml = '';
-    ind.metrics.forEach(m => {
-      const result = m.compute(v);
-      const ratio = result.ratio;
-      const score = result.score;
-      const hasRatio = (ratio !== null && !isNaN(ratio));
-
-      indMax += m.max;
-      if (score !== null && !isNaN(score)) {
+    const metricResults = ind.metrics.map(m => {
+      const r = m.compute(v);
+      if (r.score !== null && !isNaN(r.score)) {
         anyData = true;
         indHasData = true;
-        indScore += score;
+        indScore += r.score;
       }
+      return { metric: m, ...r };
+    });
+    if (indHasData) totalScore += indScore;
+    return { ind, indScore, indHasData, metricResults };
+  });
 
-      // عرض النسبة
-      const ratioText = hasRatio
-        ? (Math.round(ratio * 100) / 100).toLocaleString('en-US') + '%'
-        : '—';
+  const finalScore = Math.round(totalScore * 100) / 100;
 
-      // عرض الدرجة
-      const scoreText = (score !== null && !isNaN(score))
-        ? `${score.toLocaleString('en-US')} / ${m.max}`
-        : '—';
+  // الفئة + اللون
+  let categoryText, categoryColor, categoryEmoji;
+  if (finalScore >= 95) { categoryText = 'الفئة الذهبية — تميّز'; categoryColor = '#C9A574'; categoryEmoji = '🏆'; }
+  else if (finalScore >= 85) { categoryText = 'الفئة الفضية — أداء قوي'; categoryColor = '#9CA3AF'; categoryEmoji = '🥈'; }
+  else if (finalScore >= 75) { categoryText = 'الفئة البرونزية — أداء جيد'; categoryColor = '#A0623A'; categoryEmoji = '🥉'; }
+  else if (finalScore >= 60) { categoryText = 'تحت المتوسط — يحتاج تطويراً'; categoryColor = '#C97A3A'; categoryEmoji = '⚠️'; }
+  else { categoryText = 'ضعيف — يستلزم خطة تصحيحية'; categoryColor = '#C44545'; categoryEmoji = '🔴'; }
 
-      // الحالة (شارة)
-      let badge;
-      if (score === null || isNaN(score)) {
-        badge = '<span class="badge badge-gray">—</span>';
-      } else {
-        const pct = m.max > 0 ? (score / m.max) * 100 : 0;
-        if (pct >= 80) badge = `<span class="badge badge-green">${Math.round(pct)}%</span>`;
-        else if (pct >= 50) badge = `<span class="badge badge-amber">${Math.round(pct)}%</span>`;
-        else badge = `<span class="badge badge-coral">${Math.round(pct)}%</span>`;
-      }
+  let html = '';
+
+  // ═══════════════════════════════════════════════
+  // 1. النتيجة النهائية في الأعلى (Hero Score Card)
+  // ═══════════════════════════════════════════════
+  if (anyData) {
+    const pct = Math.min(100, finalScore);
+    const dashArray = 314.16; // 2*π*50
+    const dashOffset = dashArray - (pct / 100) * dashArray;
+
+    html += `
+      <div class="fin-hero-result">
+        <div class="fin-hero-content">
+          <div class="fin-hero-label">درجة الأداء المالي</div>
+          <div class="fin-hero-score">
+            <span class="fin-hero-score-num">${finalScore}</span>
+            <span class="fin-hero-score-max">/ 100</span>
+          </div>
+          <div class="fin-hero-category" style="background:${categoryColor}1A;color:${categoryColor};border-color:${categoryColor}40">
+            <span style="font-size:1.3rem">${categoryEmoji}</span>
+            <span>${escapeHtml(categoryText)}</span>
+          </div>
+        </div>
+        <div class="fin-hero-donut">
+          <svg viewBox="0 0 120 120" width="160" height="160">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#E6E2D9" stroke-width="10"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="${categoryColor}" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="${dashArray}"
+              stroke-dashoffset="${dashOffset}"
+              transform="rotate(-90 60 60)"
+              style="transition:stroke-dashoffset 1.2s var(--ease-out)"/>
+            <text x="60" y="58" text-anchor="middle" font-size="22" font-weight="700" fill="${categoryColor}" font-family="Cairo, sans-serif">${Math.round(pct)}%</text>
+            <text x="60" y="74" text-anchor="middle" font-size="9" fill="#79766B" font-family="IBM Plex Sans Arabic">من 100</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- شريط ملخّص لكل مؤشّر -->
+      <div class="fin-indicators-summary">
+        ${indicatorResults.map(({ind, indScore, indHasData}) => {
+          if (!indHasData) return '';
+          const indPct = ind.max > 0 ? (indScore / ind.max) * 100 : 0;
+          return `
+            <div class="fin-ind-pill" style="--ind-color:${ind.color}">
+              <div class="fin-ind-pill-icon">${ind.icon}</div>
+              <div class="fin-ind-pill-info">
+                <div class="fin-ind-pill-name">${escapeHtml(ind.name)}</div>
+                <div class="fin-ind-pill-score">
+                  <span class="fin-ind-pill-num">${Math.round(indScore * 100) / 100}</span>
+                  <span class="fin-ind-pill-max">/${ind.max}</span>
+                </div>
+              </div>
+              <div class="fin-ind-pill-bar">
+                <div class="fin-ind-pill-bar-fill" style="width:${Math.min(100, indPct)}%;background:${ind.color}"></div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  // ═══════════════════════════════════════════════
+  // 2. النتائج التفصيلية لكل مؤشّر
+  // ═══════════════════════════════════════════════
+  html += '<div class="fin-detailed-results"><h2 class="fin-section-heading">النتائج التفصيلية</h2>';
+
+  indicatorResults.forEach(({ind, indScore, indHasData, metricResults}) => {
+    const indPct = ind.max > 0 ? (indScore / ind.max) * 100 : 0;
+    const indBadgeColor = !indHasData ? '#999' :
+                          indPct >= 80 ? '#3A8B57' :
+                          indPct >= 50 ? '#C97A3A' : '#C44545';
+
+    let metricsHtml = '';
+    metricResults.forEach(({metric, ratio, score}) => {
+      const hasData = ratio !== null && !isNaN(ratio);
+      const ratioText = hasData ? `${(Math.round(ratio * 100) / 100).toLocaleString('en-US')}%` : '—';
+      const scoreNum = (score !== null && !isNaN(score)) ? score : null;
+      const scorePct = (scoreNum !== null && metric.max > 0) ? (scoreNum / metric.max) * 100 : 0;
+      const scoreText = scoreNum !== null ? `${scoreNum}/${metric.max}` : `—/${metric.max}`;
+
+      const fillColor = scoreNum === null ? '#D6D2C8' :
+                        scorePct >= 80 ? '#3A8B57' :
+                        scorePct >= 50 ? '#C97A3A' : '#C44545';
 
       metricsHtml += `
-        <div class="metric-row">
-          <div class="metric-name">
-            ${escapeHtml(m.name)}
-            <span class="metric-target">المستهدف: ${escapeHtml(m.targetText)}</span>
+        <div class="fin-metric">
+          <div class="fin-metric-header">
+            <div class="fin-metric-name">${escapeHtml(metric.name)}</div>
+            <div class="fin-metric-target">المستهدف: ${escapeHtml(metric.targetText)}</div>
           </div>
-          <div class="metric-actual ${!hasRatio ? 'no-data' : ''}">${ratioText}</div>
-          <div class="metric-score">${scoreText}</div>
-          <div>${badge}</div>
+          <div class="fin-metric-body">
+            <div class="fin-metric-ratio">
+              <div class="fin-metric-ratio-label">النسبة المحقّقة</div>
+              <div class="fin-metric-ratio-value ${!hasData?'no-data':''}">${ratioText}</div>
+            </div>
+            <div class="fin-metric-bar-wrap">
+              <div class="fin-metric-bar"><div class="fin-metric-bar-fill" style="width:${scorePct}%;background:${fillColor}"></div></div>
+              <div class="fin-metric-score" style="color:${fillColor}">${scoreText}</div>
+            </div>
+          </div>
         </div>
       `;
     });
 
-    if (indHasData) totalScore += indScore;
-
-    const indBadge = !indHasData
-      ? '<span class="badge badge-gray">لا توجد بيانات</span>'
-      : `<span class="badge badge-teal">${Math.round(indScore * 100) / 100} / ${ind.max}</span>`;
-
     html += `
-      <div class="indicator-section">
-        <div class="indicator-header">
-          <h3>${escapeHtml(ind.name)}</h3>
-          <div class="flex flex-gap-2 flex-wrap">${indBadge}</div>
+      <div class="fin-indicator-card" style="--ind-color:${ind.color}">
+        <div class="fin-indicator-header">
+          <div class="fin-indicator-icon" style="background:${ind.color}1A;color:${ind.color}">${ind.icon}</div>
+          <div class="fin-indicator-title">
+            <h3>${escapeHtml(ind.name)}</h3>
+            <div class="fin-indicator-meta">من ${ind.max} نقطة</div>
+          </div>
+          <div class="fin-indicator-score" style="background:${indBadgeColor}1A;color:${indBadgeColor};border-color:${indBadgeColor}40">
+            ${indHasData ? `<strong>${Math.round(indScore * 100) / 100}</strong>/<span>${ind.max}</span>` : '—'}
+          </div>
         </div>
-        ${metricsHtml}
+        <div class="fin-indicator-metrics">${metricsHtml}</div>
       </div>
     `;
   });
 
   html += '</div>';
 
-  // النتيجة الكلية (من 100)
-  if (anyData) {
-    const finalScore = Math.round(totalScore * 100) / 100;
-    let categoryText, categoryColor;
-    if (finalScore >= 95) { categoryText = 'الفئة الذهبية — تميّز'; categoryColor = '#9B7A45'; }
-    else if (finalScore >= 85) { categoryText = 'الفئة الفضية — أداء قوي'; categoryColor = '#6B7280'; }
-    else if (finalScore >= 75) { categoryText = 'الفئة البرونزية — أداء جيد'; categoryColor = '#A0623A'; }
-    else if (finalScore >= 60) { categoryText = 'تحت المتوسط — يحتاج تطويراً'; categoryColor = '#C97A3A'; }
-    else { categoryText = 'ضعيف — يستلزم خطة تصحيحية'; categoryColor = '#C44545'; }
-
-    html += `
-      <div class="total-score-card">
-        <div>
-          <div class="label">درجة الأداء المالي</div>
-          <span class="label-sub" style="color:${categoryColor};font-weight:600">${escapeHtml(categoryText)}</span>
-        </div>
-        <div class="total-score-value">${finalScore}<small>/100</small></div>
-      </div>
-    `;
-  } else {
-    html += `
+  if (!anyData) {
+    html = `
       <div class="alert alert-info mt-4">
-        ابدأ بإدخال أرقام جمعيتك أعلاه لتظهر النتائج تلقائياً.
+        <strong>📊 ابدأ بإدخال أرقام جمعيتك في الحقول أعلاه</strong>
+        <p class="small mt-2" style="margin-bottom:0">ستظهر النتائج تلقائياً مع شريط الدرجة الإجمالية أعلى هذا القسم.</p>
       </div>
     `;
   }
