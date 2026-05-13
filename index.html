@@ -3511,22 +3511,68 @@ function getToolNameById(id) {
 }
 
 // اختصارات دخول المدير (مخفية، غير متعارضة مع المتصفح)
-// الاختصار الرئيسي: Ctrl+Alt+A (Cmd+Option+A على Mac) — A = Admin
-// الاختصار البديل: Ctrl+Shift+M (Cmd+Shift+M على Mac) — M = Marjie
-document.addEventListener('keydown', (e) => {
-  // Ctrl+Alt+A أو Cmd+Option+A
-  const isShortcut1 = (e.ctrlKey || e.metaKey) && e.altKey && !e.shiftKey
-                     && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA');
-  // Ctrl+Shift+M أو Cmd+Shift+M
-  const isShortcut2 = (e.ctrlKey || e.metaKey) && e.shiftKey && !e.altKey
-                     && (e.key === 'M' || e.key === 'm' || e.code === 'KeyM');
+// ═══════════════════════════════════════════════════════════════════
+// اختصارات الوصول السرّي للوحة الإدارة
+// ═══════════════════════════════════════════════════════════════════
+// 1) الاختصار الرئيسي: اكتب "admin" بسرعة (خلال ثانيتين) من أي مكان — لا يتعارض مع أي متصفح
+// 2) الاختصار البديل: Alt+Shift+M (آمن في كل المتصفحات والأنظمة)
+// 3) للجوّال: 5 نقرات سريعة على شعار الموقع
 
-  if (isShortcut1 || isShortcut2) {
-    e.preventDefault();
-    e.stopPropagation();
-    location.hash = '#/admin/login';
-  }
-});
+(function setupAdminShortcuts() {
+  // ── اختصار 1: كتابة "admin" ──
+  let typedBuffer = '';
+  let typedTimer = null;
+  const SECRET_WORD = 'admin';
+
+  document.addEventListener('keydown', (e) => {
+    // ── اختصار 2: Alt+Shift+M (آمن — لا يتعارض مع Chrome/DevTools/AltGr) ──
+    if (e.altKey && e.shiftKey && !e.ctrlKey && !e.metaKey
+        && (e.key === 'M' || e.key === 'm' || e.code === 'KeyM')) {
+      e.preventDefault();
+      e.stopPropagation();
+      location.hash = '#/admin/login';
+      return;
+    }
+
+    // تجاهل عند الكتابة في حقول النصوص
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable) {
+      typedBuffer = '';
+      return;
+    }
+
+    // تجاهل عند وجود مفاتيح تعديل (يعني المستخدم يضغط اختصاراً آخر)
+    if (e.ctrlKey || e.metaKey || e.altKey) {
+      typedBuffer = '';
+      return;
+    }
+
+    // اقبل فقط حروف صغيرة a-z
+    const key = (e.key || '').toLowerCase();
+    if (!/^[a-z]$/.test(key)) {
+      typedBuffer = '';
+      return;
+    }
+
+    typedBuffer += key;
+
+    // اقتطع للطول المطلوب
+    if (typedBuffer.length > SECRET_WORD.length) {
+      typedBuffer = typedBuffer.slice(-SECRET_WORD.length);
+    }
+
+    // اضبط مؤقّت الإعادة (2 ثانية)
+    if (typedTimer) clearTimeout(typedTimer);
+    typedTimer = setTimeout(() => { typedBuffer = ''; }, 2000);
+
+    // إن طابق الكلمة السرّية
+    if (typedBuffer === SECRET_WORD) {
+      typedBuffer = '';
+      if (typedTimer) { clearTimeout(typedTimer); typedTimer = null; }
+      location.hash = '#/admin/login';
+    }
+  });
+})();
 
 // طريقة إضافية للوصول السهل من الجوال: نقر سريع 5 مرات متتالية على شعار الموقع
 (function setupLogoTapShortcut() {
