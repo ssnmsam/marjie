@@ -540,6 +540,43 @@
     .about-cta .btn{background:var(--sand-500);color:#1A2922;border:none;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
     .about-cta .btn:hover{background:var(--sand-400);transform:translateY(-2px)}
 
+    /* ═════════════════════════════════════════
+       حاسبة القوائم المالية - الإضافات الجديدة
+       ═════════════════════════════════════════ */
+
+    /* رأس الصفحة + زر "بدء جلسة جديدة" */
+    .fin-page-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+    .fin-page-header h1{margin-bottom:0.4rem}
+    .fin-page-header p{margin:0}
+    .fin-reset-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1rem;border:1.5px solid #F5C8C8;background:#FFEDED;color:#C44545;font-weight:600}
+    .fin-reset-btn:hover{background:#C44545;color:#FFFFFF;border-color:#C44545;transform:translateY(-1px);box-shadow:0 4px 12px rgba(196,69,69,0.2)}
+
+    /* شريط التنبيه للجلسة السابقة */
+    .fin-session-banner{display:flex;align-items:center;gap:0.85rem;padding:0.85rem 1.1rem;background:linear-gradient(135deg,#FFFBEE 0%,#FFFDF7 100%);border:1px solid #F0E0BD;border-right:4px solid #D9B772;border-radius:10px;margin-bottom:1rem}
+    .fin-session-banner.is-old{background:linear-gradient(135deg,#FFF5F0 0%,#FFFDF7 100%);border-right-color:#E07B5A;border-color:#F5D5C8}
+    .fin-session-banner-icon{font-size:1.5rem;line-height:1;flex-shrink:0}
+    .fin-session-banner-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:0.2rem}
+    .fin-session-banner-text strong{font-size:0.95rem;color:var(--text)}
+    .fin-session-banner-text .small{font-size:0.78rem;color:var(--text-muted)}
+
+    /* تحذيرات القيم الشاذة */
+    .fin-anomalies-alert{display:flex;align-items:flex-start;gap:0.85rem;padding:1rem 1.2rem;background:linear-gradient(135deg,#FFF5F0 0%,#FFFFFF 100%);border:1px solid #F5D5C8;border-right:4px solid #E07B5A;border-radius:12px;margin-bottom:1rem}
+    .fin-anomalies-icon{color:#C97A3A;flex-shrink:0;padding-top:2px}
+    .fin-anomalies-content{flex:1;min-width:0}
+    .fin-anomalies-content strong{display:block;color:#C97A3A;font-size:0.95rem;margin-bottom:0.4rem}
+    .fin-anomalies-content ul{margin:0;padding-right:1.2rem;list-style:disc}
+    .fin-anomalies-content li{font-size:0.88rem;color:var(--text);line-height:1.6;margin-bottom:0.2rem}
+
+    /* أزرار تصدير النتيجة */
+    .fin-export-buttons{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1.1rem}
+    .fin-export-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 0.95rem;background:#FFFFFF;color:var(--text);border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .2s ease}
+    .fin-export-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+    .fin-export-png:hover{border-color:#3A8B7A;color:#3A8B7A;background:#E1F5EE}
+    .fin-export-pdf:hover{border-color:#E07B5A;color:#C44545;background:#FFEDED}
+    .fin-export-share:hover{border-color:#4A77A8;color:#4A77A8;background:#E8F1F9}
+    .fin-export-btn:disabled{cursor:wait;opacity:0.5}
+    .fin-export-btn svg{flex-shrink:0}
+
     /* أيقونة العين لإظهار/إخفاء كلمة المرور */
     .password-input-wrap{position:relative}
     .password-input-wrap input{padding-left:2.8rem}
@@ -858,7 +895,7 @@
     #toasts .alert{box-shadow:var(--shadow-md);animation:slideDown .3s ease}
     @keyframes slideDown{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-    /* الحاسبة المالية */
+    /* حاسبة القوائم المالية */
     .fin-input-section{margin-bottom:1.25rem}
     .fin-input-section h4{font-size:0.92rem;color:var(--text-muted);margin-bottom:0.5rem;font-weight:500;padding-bottom:0.4rem;border-bottom:1px dashed var(--border)}
     .fin-inputs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.75rem}
@@ -2632,7 +2669,7 @@
               <li><a href="#/standards">المعايير</a></li>
               <li><a href="#/policies">مكتبة السياسات</a></li>
               <li><a href="#/tools">الأدوات الاحترافية</a></li>
-              <li><a href="#/calculator">الحاسبة المالية</a></li>
+              <li><a href="#/calculator">حاسبة القوائم المالية</a></li>
               <li><a href="#/transition">محاكي الانتقال</a></li>
             </ul>
           </div>
@@ -2692,7 +2729,7 @@ const STANDARDS_LABELS = {
 // المعايير التي تعمل في الواجهة حتى لو لم تتوفر بيانات الممارسات
 const FRONTEND_ENABLED_STANDARDS = ['transparency', 'financial', 'compliance'];
 
-// مدخلات الحاسبة المالية (مجمّعة حسب الفئة)
+// مدخلات حاسبة القوائم المالية (مجمّعة حسب الفئة)
 // المدخلات المالية الـ10 (مطابقة لملف معيار الأداء المالي 2025) + أيقونات
 const FIN_INPUTS = [
   // C5
@@ -3471,7 +3508,7 @@ function translatePagePath(path) {
     '': 'الصفحة الرئيسية',
     '#/standards': 'المعايير',
     '#/policies': 'مكتبة السياسات',
-    '#/calculator': 'الحاسبة المالية',
+    '#/calculator': 'حاسبة القوائم المالية',
     '#/transition': 'محاكي الانتقال',
     '#/tools': 'الأدوات',
     '#/tools/minutes': 'مولّد المحاضر',
@@ -4072,8 +4109,8 @@ function buildAllHomeItems() {
       name:'مكتبة السياسات', desc:'45+ سياسة ولائحة جاهزة للتخصيص باسم جمعيتك بصيغة PDF أو Word.',
       keywords:'سياسات لوائح تخصيص تنزيل pdf word جمعية' },
     { id:'calculator', href:'#/calculator', icon:HOME_MAIN_ICONS.calculator,
-      name:'الحاسبة المالية', desc:'احسب أداء جمعيتك مالياً وفق المؤشرات المعتمدة لتصنيف السلامة المالية.',
-      keywords:'حاسبة مالية مؤشرات سلامة أداء تقييم نسبة' },
+      name:'حاسبة القوائم المالية', desc:'احسب أداء جمعيتك مالياً وفق المؤشرات المعتمدة لتصنيف السلامة المالية.',
+      keywords:'حاسبة قوائم مالية مؤشرات سلامة أداء تقييم نسبة' },
     { id:'transition', href:'#/transition', icon:HOME_MAIN_ICONS.transition,
       name:'محاكي الانتقال', desc:'اعرف ما الذي يتغيّر عند انتقال جمعيتك لتصنيف أعلى — قبل أن يحدث.',
       keywords:'انتقال محاكي تصنيف ترقية تطوير متطلبات' }
@@ -4102,7 +4139,7 @@ function buildAllHomeItemsRaw() {
   const mainItems = [
     { id:'standards', href:'#/standards', name:'المعايير', icon:HOME_MAIN_ICONS.standards, category:'أساسي' },
     { id:'policies', href:'#/policies', name:'مكتبة السياسات', icon:HOME_MAIN_ICONS.policies, category:'أساسي' },
-    { id:'calculator', href:'#/calculator', name:'الحاسبة المالية', icon:HOME_MAIN_ICONS.calculator, category:'أساسي' },
+    { id:'calculator', href:'#/calculator', name:'حاسبة القوائم المالية', icon:HOME_MAIN_ICONS.calculator, category:'أساسي' },
     { id:'transition', href:'#/transition', name:'محاكي الانتقال', icon:HOME_MAIN_ICONS.transition, category:'أساسي' }
   ];
   const toolItems = TOOLS_CATALOG.map(t => ({
@@ -8811,7 +8848,7 @@ function renderFinancialRegulation(tabsHtml) {
     <div class="alert alert-info">
       <strong>مؤشرات التنظيم المالي</strong> — هذا المحور يتدرّج بين التصنيفات الخمسة
       (4 → 7 → 15 → 21 → 21 سؤالاً)، بخلاف <strong>مؤشرات الأداء المالي</strong> الموحّدة
-      لكل التصنيفات (متاحة في <a href="#/calculator">الحاسبة المالية</a>).
+      لكل التصنيفات (متاحة في <a href="#/calculator">حاسبة القوائم المالية</a>).
     </div>
 
     <div class="card">
@@ -8835,17 +8872,275 @@ function renderFinancialRegulation(tabsHtml) {
 }
 
 // ═════════════════════════════════════════════════════════════════
-// عرض: الحاسبة المالية (صفحة مستقلة + رفع PDF)
+// عرض: حاسبة القوائم المالية (صفحة مستقلة + رفع PDF)
 // ═════════════════════════════════════════════════════════════════
 
+// مفتاح بيانات الحاسبة + الـtimestamp لتتبع عمر الجلسة
+const FIN_STORAGE_KEY = 'marjie_fin_inputs';
+const FIN_TIMESTAMP_KEY = 'marjie_fin_inputs_ts';
+const FIN_SESSION_MAX_AGE_MS = 60 * 60 * 1000; // ساعة واحدة
+
 function loadFinancialInputs() {
-  try { return JSON.parse(localStorage.getItem('marjie_fin_inputs') || '{}'); }
-  catch (e) { return {}; }
+  try {
+    const data = JSON.parse(localStorage.getItem(FIN_STORAGE_KEY) || '{}');
+    return data;
+  } catch (e) { return {}; }
+}
+
+function getFinancialInputsAge() {
+  try {
+    const ts = parseInt(localStorage.getItem(FIN_TIMESTAMP_KEY) || '0');
+    if (!ts) return null;
+    return Date.now() - ts;
+  } catch (e) { return null; }
 }
 
 function saveFinancialInputs(values) {
-  try { localStorage.setItem('marjie_fin_inputs', JSON.stringify(values)); }
-  catch (e) {}
+  try {
+    // لا تحفظ إذا كل القيم فارغة (تنظيف تلقائي)
+    const hasAnyValue = Object.values(values).some(v => v !== null && v !== '');
+    if (!hasAnyValue) {
+      localStorage.removeItem(FIN_STORAGE_KEY);
+      localStorage.removeItem(FIN_TIMESTAMP_KEY);
+      return;
+    }
+    localStorage.setItem(FIN_STORAGE_KEY, JSON.stringify(values));
+    localStorage.setItem(FIN_TIMESTAMP_KEY, Date.now().toString());
+  } catch (e) {}
+}
+
+// مسح كل بيانات الحاسبة (حقول + تخزين + ملف PDF)
+function clearAllFinancialData() {
+  // مسح من localStorage
+  try {
+    localStorage.removeItem(FIN_STORAGE_KEY);
+    localStorage.removeItem(FIN_TIMESTAMP_KEY);
+  } catch (e) {}
+
+  // مسح الحقول في الـDOM
+  document.querySelectorAll('input[data-fin-key]').forEach(input => {
+    input.value = '';
+    input.style.background = '';
+    delete input.dataset.confidence;
+  });
+
+  // مسح الملف المرفوع
+  window._lastPDFFile = null;
+
+  // إعادة الـUI لحالته الأولى
+  const zone = document.getElementById('pdf-upload-zone');
+  const preview = document.getElementById('pdf-uploaded-preview');
+  const status = document.getElementById('pdf-status');
+  const pdfInput = document.getElementById('pdf-input');
+  if (zone) zone.style.display = '';
+  if (preview) { preview.style.display = 'none'; preview.innerHTML = ''; }
+  if (status) status.innerHTML = '';
+  if (pdfInput) pdfInput.value = '';
+
+  // إعادة عرض النتائج (ستظهر رسالة "ابدأ بالإدخال")
+  if (typeof updateFinancialResults === 'function') updateFinancialResults();
+}
+
+// تأكيد قبل المسح الكامل (يُستدعى من زرّ "ابدأ من جديد" والشريط العلوي)
+function confirmClearAllData() {
+  let hasData = false;
+  document.querySelectorAll('input[data-fin-key]').forEach(i => {
+    if (i.value && i.value.trim() !== '') hasData = true;
+  });
+  if (hasData || window._lastPDFFile) {
+    if (!confirm('سيتم مسح كل البيانات (الأرقام + الملف). هل أنت متأكد؟')) return;
+  }
+  clearAllFinancialData();
+  // إعادة تحميل الصفحة لإخفاء شريط الجلسة السابقة
+  renderCalculator();
+  showToast('تمّت إعادة التهيئة ✓', 'success');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// تصدير النتيجة (PNG / PDF / مشاركة) — توصية الفريق الاستشاري
+// ═══════════════════════════════════════════════════════════════════
+
+let _html2canvasLoaded = false;
+function loadHtml2Canvas() {
+  if (_html2canvasLoaded) return Promise.resolve();
+  if (window.html2canvas) { _html2canvasLoaded = true; return Promise.resolve(); }
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    s.onload = () => { _html2canvasLoaded = true; resolve(); };
+    s.onerror = () => reject(new Error('فشل تحميل مكتبة الالتقاط'));
+    document.head.appendChild(s);
+  });
+}
+
+let _jspdfLoaded = false;
+function loadJsPDF() {
+  if (_jspdfLoaded) return Promise.resolve();
+  if (window.jspdf) { _jspdfLoaded = true; return Promise.resolve(); }
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
+    s.onload = () => { _jspdfLoaded = true; resolve(); };
+    s.onerror = () => reject(new Error('فشل تحميل مكتبة PDF'));
+    document.head.appendChild(s);
+  });
+}
+
+// التقاط الـsnapshot من بطاقة النتيجة
+async function captureFinResult() {
+  const target = document.getElementById('fin-result-snapshot');
+  if (!target) { showToast('لا توجد نتيجة لحفظها', 'warning'); return null; }
+
+  await loadHtml2Canvas();
+
+  // إخفاء أزرار التصدير مؤقتاً (لا تظهر في الصورة)
+  const exportBtns = target.querySelectorAll('[data-export-skip]');
+  exportBtns.forEach(b => b.style.visibility = 'hidden');
+
+  try {
+    const canvas = await window.html2canvas(target, {
+      scale: 2,
+      backgroundColor: '#FFFFFF',
+      logging: false,
+      useCORS: true
+    });
+    return canvas;
+  } finally {
+    exportBtns.forEach(b => b.style.visibility = '');
+  }
+}
+
+// حفظ كصورة PNG
+async function exportFinResultPNG() {
+  const btn = event && event.currentTarget;
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.5'; }
+  try {
+    showToast('جاري إنشاء الصورة...', 'info');
+    const canvas = await captureFinResult();
+    if (!canvas) return;
+
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const ts = new Date().toISOString().substring(0, 10);
+      a.href = url;
+      a.download = `marjie-financial-score-${ts}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast('تمّ تحميل الصورة ✓', 'success');
+    }, 'image/png');
+  } catch (err) {
+    showToast('فشل الحفظ: ' + err.message, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+  }
+}
+
+// حفظ كـPDF
+async function exportFinResultPDF() {
+  const btn = event && event.currentTarget;
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.5'; }
+  try {
+    showToast('جاري إنشاء PDF...', 'info');
+    const canvas = await captureFinResult();
+    if (!canvas) return;
+
+    await loadJsPDF();
+    const { jsPDF } = window.jspdf;
+
+    const imgData = canvas.toDataURL('image/png');
+    // pdf بـA4 portrait مع margin
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const margin = 12;
+    const usableWidth = pageWidth - 2 * margin;
+    const imgRatio = canvas.height / canvas.width;
+    const imgHeight = usableWidth * imgRatio;
+
+    // العنوان (بسيط)
+    pdf.setFontSize(14);
+    pdf.text('Marjie - Financial Performance Score', pageWidth / 2, margin + 6, { align: 'center' });
+    pdf.setFontSize(9);
+    pdf.setTextColor(120);
+    const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+    pdf.text(date, pageWidth / 2, margin + 12, { align: 'center' });
+    pdf.setTextColor(0);
+
+    // الصورة
+    pdf.addImage(imgData, 'PNG', margin, margin + 18, usableWidth, imgHeight);
+
+    // footer
+    const footerY = pdf.internal.pageSize.getHeight() - 8;
+    pdf.setFontSize(8);
+    pdf.setTextColor(150);
+    pdf.text('Generated by Marjie - Practical Governance Platform | marjie.ssnmsam.workers.dev', pageWidth / 2, footerY, { align: 'center' });
+
+    const ts = new Date().toISOString().substring(0, 10);
+    pdf.save(`marjie-financial-score-${ts}.pdf`);
+    showToast('تمّ تحميل PDF ✓', 'success');
+  } catch (err) {
+    showToast('فشل الحفظ: ' + err.message, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+  }
+}
+
+// مشاركة النتيجة
+async function shareFinResult() {
+  const v = getFinancialValues();
+  const hasData = Object.values(v).some(val => val !== null && val !== '');
+  if (!hasData) { showToast('لا توجد نتيجة لمشاركتها', 'warning'); return; }
+
+  // احسب الدرجة الإجمالية للمشاركة
+  let totalScore = 0;
+  FIN_INDICATORS.forEach(ind => {
+    ind.metrics.forEach(m => {
+      const r = m.compute(v);
+      if (r.score !== null && !isNaN(r.score)) totalScore += r.score;
+    });
+  });
+  const finalScore = Math.round(totalScore * 100) / 100;
+
+  const shareText = `حصلت جمعيّتي على ${finalScore}/100 في معيار الأداء المالي 2025 وفق منصّة مَرْجِع للحوكمة.\n\nاحسب درجة جمعيتك:`;
+  const shareUrl = window.location.origin + '/#/calculator';
+
+  // استخدم Web Share API إن توفّرت (الجوّال)
+  if (navigator.share) {
+    try {
+      // محاولة مشاركة الصورة أيضاً
+      const canvas = await captureFinResult();
+      if (canvas) {
+        canvas.toBlob(async blob => {
+          const file = new File([blob], 'marjie-score.png', { type: 'image/png' });
+          try {
+            await navigator.share({
+              title: 'درجة الأداء المالي - مَرْجِع',
+              text: shareText,
+              url: shareUrl,
+              files: [file]
+            });
+          } catch (e) {
+            // fallback بدون ملف
+            try {
+              await navigator.share({ title: 'مَرْجِع', text: shareText, url: shareUrl });
+            } catch (e2) {}
+          }
+        }, 'image/png');
+      }
+    } catch (err) {
+      // المستخدم ألغى
+    }
+  } else {
+    // Desktop: نسخ للحافظة
+    try {
+      await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+      showToast('تمّ نسخ النتيجة للحافظة ✓', 'success');
+    } catch (err) {
+      showToast('متصفّحك لا يدعم النسخ. انسخ يدوياً.', 'warning');
+    }
+  }
 }
 
 function getFinancialValues() {
@@ -8930,14 +9225,53 @@ function renderCalculator() {
     inputsHtml += `</div></div>`;
   });
 
+  // الفريق الاستشاري (عبدالله الشمري + ريم الحربي):
+  // كشف الجلسة السابقة وعرض شريط تنبيه واضح للمستخدم
+  const sessionAge = getFinancialInputsAge();
+  const hasOldData = Object.keys(saved).length > 0 && Object.values(saved).some(v => v !== null && v !== '');
+  let sessionBannerHtml = '';
+  if (hasOldData && sessionAge !== null) {
+    const minutes = Math.floor(sessionAge / 60000);
+    const ageText = minutes < 1 ? 'الآن' :
+                    minutes < 60 ? `قبل ${minutes} دقيقة` :
+                    minutes < 1440 ? `قبل ${Math.floor(minutes/60)} ساعة` :
+                    `قبل ${Math.floor(minutes/1440)} يوم`;
+    const isOld = sessionAge > FIN_SESSION_MAX_AGE_MS;
+    sessionBannerHtml = `
+      <div class="fin-session-banner ${isOld ? 'is-old' : ''}">
+        <div class="fin-session-banner-icon">
+          ${isOld ? '⚠️' : '💾'}
+        </div>
+        <div class="fin-session-banner-text">
+          <strong>${isOld ? 'بيانات قديمة محفوظة' : 'استمرار من الجلسة السابقة'}</strong>
+          <span class="small">آخر تحديث: ${ageText} • ${Object.values(saved).filter(v => v !== null && v !== '').length} حقل مُدخَل</span>
+        </div>
+        <button class="btn btn-pdf-action btn-pdf-remove" onclick="confirmClearAllData()" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          ابدأ من جديد
+        </button>
+      </div>
+    `;
+  }
+
   $('#app').innerHTML = `
     <div class="container">
       <a href="#/" class="btn btn-ghost btn-sm mb-3">← العودة للرئيسية</a>
-      <h1>الحاسبة المالية</h1>
-      <p class="muted mb-4">
-        احسب درجة الأداء المالي لجمعيتك وفق <strong>معيار 2025 المعتمد</strong>
-        (10 مدخلات → 8 مؤشّرات → درجة من 100). الصيغ مطابقة 100% للنموذج الرسمي.
-      </p>
+      <div class="fin-page-header">
+        <div>
+          <h1>حاسبة القوائم المالية</h1>
+          <p class="muted">
+            احسب درجة الأداء المالي لجمعيتك وفق <strong>معيار 2025 المعتمد</strong>
+            (10 مدخلات → 8 مؤشّرات → درجة من 100). الصيغ مطابقة 100% للنموذج الرسمي.
+          </p>
+        </div>
+        <button class="btn btn-secondary btn-sm fin-reset-btn" onclick="confirmClearAllData()" type="button" aria-label="بدء جلسة جديدة">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.74 9.74 0 0 0-6.74 2.74L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+          <span>بدء جلسة جديدة</span>
+        </button>
+      </div>
+
+      ${sessionBannerHtml}
 
       <div class="alert alert-info">
         <strong>3 طرق لإدخال البيانات:</strong> اختر الأنسب لك. بياناتك تبقى في متصفحك ولا تُرسل لأي خادم (إلا في وضع AI الاختياري).
@@ -9659,6 +9993,19 @@ async function handlePDFUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
 
+  // الفريق الاستشاري (عبدالله الشمري — Data Engineer):
+  // مسح أي بيانات سابقة قبل تحميل ملف جديد لتجنّب الخلط
+  // امسح القيم القديمة من الحقول والـ localStorage (لكن احتفظ بـUI الملف الجديد)
+  try {
+    localStorage.removeItem(FIN_STORAGE_KEY);
+    localStorage.removeItem(FIN_TIMESTAMP_KEY);
+  } catch (e) {}
+  document.querySelectorAll('input[data-fin-key]').forEach(input => {
+    input.value = '';
+    input.style.background = '';
+    delete input.dataset.confidence;
+  });
+
   // عرض معاينة الملف المرفوع
   showPDFUploadedPreview(file);
 
@@ -10111,18 +10458,20 @@ function showPDFUploadedPreview(file) {
 }
 
 function removePDFFile() {
-  const zone = $('#pdf-upload-zone');
-  const preview = $('#pdf-uploaded-preview');
-  const status = $('#pdf-status');
-  const input = $('#pdf-input');
-  if (zone) zone.style.display = '';
-  if (preview) { preview.style.display = 'none'; preview.innerHTML = ''; }
-  if (status) status.innerHTML = '';
-  if (input) input.value = '';
-  window._lastPDFFile = null;
+  // الفريق الاستشاري (فهد الدوسري — أمن): إزالة الملف تستلزم مسح البيانات
+  // الـUX (ريم الحربي): سؤال المستخدم قبل المسح
+  const hasData = document.querySelectorAll('input[data-fin-key]').forEach;
+  let anyValue = false;
+  document.querySelectorAll('input[data-fin-key]').forEach(i => {
+    if (i.value && i.value.trim() !== '') anyValue = true;
+  });
 
-  // إعادة تعيين الحقول الملوّنة (اختياري - نتركها للمستخدم)
-  showToast('تمّت إزالة الملف', 'info');
+  if (anyValue) {
+    if (!confirm('سيتم مسح الملف وكل الأرقام المُستخرجة منه. متابعة؟')) return;
+  }
+
+  clearAllFinancialData();
+  showToast('تمّت إزالة الملف ومسح البيانات', 'info');
 }
 
 function toggleAPIKeyGuide() {
@@ -10142,6 +10491,33 @@ function saveGeminiKeyFromInput() {
 function updateFinancialResults() {
   const v = getFinancialValues();
   saveFinancialInputs(v);
+
+  // الفريق الاستشاري (د. خالد العتيبي - CPA): فحص القيم الشاذة
+  const anomalies = [];
+  if (v.totalExpenses !== null && v.adminExpenses !== null && v.adminExpenses > v.totalExpenses) {
+    anomalies.push('المصاريف الإدارية أكبر من إجمالي المصاريف — راجع الأرقام');
+  }
+  if (v.totalExpenses !== null && v.programsExpenses !== null && v.programsExpenses > v.totalExpenses) {
+    anomalies.push('مصاريف البرامج أكبر من إجمالي المصاريف — راجع الأرقام');
+  }
+  if (v.totalExpenses !== null && v.adminExpenses !== null && v.programsExpenses !== null
+      && v.sustainabilityExpenses !== null && v.fundraisingExpenses !== null) {
+    const sum = v.adminExpenses + v.programsExpenses + v.sustainabilityExpenses + v.fundraisingExpenses;
+    if (sum > v.totalExpenses * 1.05) {
+      anomalies.push(`مجموع المصاريف التفصيلية (${sum.toLocaleString('en-US')}) يتجاوز الإجمالي بأكثر من 5%`);
+    }
+  }
+  if (v.sustainabilityExpenses !== null && v.sustainabilityReturns !== null
+      && v.sustainabilityExpenses > 0 && v.sustainabilityReturns === 0) {
+    anomalies.push('توجد مصاريف استدامة بدون عوائد — تأكّد من إدخال العوائد');
+  }
+  // قيم سالبة (غير منطقية للأرقام المالية)
+  Object.entries(v).forEach(([k, val]) => {
+    if (val !== null && val < 0) {
+      const inp = FIN_INPUTS.find(i => i.key === k);
+      if (inp) anomalies.push(`قيمة "${inp.label}" سالبة — يجب أن تكون موجبة`);
+    }
+  });
 
   let totalScore = 0;
   let anyData = false;
@@ -10175,6 +10551,21 @@ function updateFinancialResults() {
 
   let html = '';
 
+  // عرض التحذيرات الشاذة (إن وجدت)
+  if (anomalies.length > 0) {
+    html += `
+      <div class="fin-anomalies-alert">
+        <div class="fin-anomalies-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="fin-anomalies-content">
+          <strong>تنبيهات على البيانات المُدخلة</strong>
+          <ul>${anomalies.map(a => `<li>${escapeHtml(a)}</li>`).join('')}</ul>
+        </div>
+      </div>
+    `;
+  }
+
   // ═══════════════════════════════════════════════
   // 1. النتيجة النهائية في الأعلى (Hero Score Card)
   // ═══════════════════════════════════════════════
@@ -10184,7 +10575,7 @@ function updateFinancialResults() {
     const dashOffset = dashArray - (pct / 100) * dashArray;
 
     html += `
-      <div class="fin-hero-result">
+      <div class="fin-hero-result" id="fin-result-snapshot">
         <div class="fin-hero-content">
           <div class="fin-hero-label">درجة الأداء المالي</div>
           <div class="fin-hero-score">
@@ -10194,6 +10585,21 @@ function updateFinancialResults() {
           <div class="fin-hero-category" style="background:${categoryColor}1A;color:${categoryColor};border-color:${categoryColor}40">
             <span style="font-size:1.3rem">${categoryEmoji}</span>
             <span>${escapeHtml(categoryText)}</span>
+          </div>
+          <!-- أزرار حفظ النتيجة (PNG / PDF) -->
+          <div class="fin-export-buttons" data-export-skip>
+            <button class="fin-export-btn fin-export-png" onclick="exportFinResultPNG()" type="button" aria-label="حفظ كصورة PNG">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span>حفظ كصورة</span>
+            </button>
+            <button class="fin-export-btn fin-export-pdf" onclick="exportFinResultPDF()" type="button" aria-label="حفظ كملف PDF">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+              <span>حفظ كـPDF</span>
+            </button>
+            <button class="fin-export-btn fin-export-share" onclick="shareFinResult()" type="button" aria-label="مشاركة النتيجة">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              <span>مشاركة</span>
+            </button>
           </div>
         </div>
         <div class="fin-hero-donut">
@@ -14032,7 +14438,7 @@ const CTX_SUGGESTION_TOPICS = {
     { type:'tool', tag:'أداة', title:'تقويم الحوكمة', desc:'موعد العمومية محسوب حسب تصنيفك.', href:'#/tools/calendar' }
   ],
   'مالي': [
-    { type:'tool', tag:'أداة', title:'الحاسبة المالية', desc:'احسب أداءك وفق المؤشرات المعتمدة.', href:'#/calculator' },
+    { type:'tool', tag:'أداة', title:'حاسبة القوائم المالية', desc:'احسب أداءك وفق المؤشرات المعتمدة.', href:'#/calculator' },
     { type:'standard', tag:'معيار', title:'معيار السلامة المالية', desc:'5 مؤشرات تنظيم مالي.', href:'#/standards' }
   ],
   'موظف': [
@@ -15646,7 +16052,7 @@ const TOUR_STEPS = [
     icon: `<svg viewBox="0 0 32 32"><rect x="5" y="5" width="14" height="22" rx="1.5" fill="none" stroke="#0F6E56" stroke-width="1.6"/><rect x="9" y="3" width="14" height="22" rx="1.5" fill="#FFFFFF" stroke="#0F6E56" stroke-width="1.6"/><rect x="13" y="1" width="14" height="22" rx="1.5" fill="#FFFFFF" stroke="#0F6E56" stroke-width="1.6"/><line x1="16" y1="6" x2="24" y2="6" stroke="#0F6E56" stroke-width="1.6"/><line x1="16" y1="11" x2="24" y2="11" stroke="#0F6E56" stroke-width="1.6"/></svg>`
   },
   {
-    title: 'الحاسبة المالية',
+    title: 'حاسبة القوائم المالية',
     body: 'أدخل أرقامك يدوياً، أو ارفع صورة من قوائمك المالية. ستحصل على تقييم فوري لمؤشرات الأداء المالي بالأوزان المعتمدة.',
     icon: `<svg viewBox="0 0 32 32"><rect x="5" y="3" width="22" height="26" rx="2" fill="none" stroke="#0F6E56" stroke-width="1.6"/><rect x="8" y="6" width="16" height="6" rx="1" fill="none" stroke="#0F6E56" stroke-width="1.6"/><circle cx="11" cy="17" r="1.5" fill="#0F6E56"/><circle cx="16" cy="17" r="1.5" fill="#0F6E56"/><circle cx="21" cy="17" r="1.5" fill="#0F6E56"/><circle cx="11" cy="22" r="1.5" fill="#0F6E56"/><rect x="19" y="20" width="4" height="6" rx="0.8" fill="#0F6E56"/></svg>`
   },
