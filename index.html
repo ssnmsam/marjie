@@ -657,6 +657,45 @@
     .founder-btn-email{background:linear-gradient(135deg,#EA4335,#C5221F);color:#FFFFFF;box-shadow:0 4px 12px rgba(234,67,53,0.3)}
     .founder-btn-email:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(234,67,53,0.4);color:#FFFFFF}
 
+    /* ═════════════════════════════════════════
+       Modal احترافي للتأكيد والتنبيه (بديل confirm/alert)
+       ═════════════════════════════════════════ */
+    .app-modal{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;padding:1rem;animation:appModalFadeIn .2s ease}
+    @keyframes appModalFadeIn{from{opacity:0}to{opacity:1}}
+    .app-modal.app-modal-closing{animation:appModalFadeOut .2s ease forwards}
+    @keyframes appModalFadeOut{to{opacity:0}}
+    .app-modal-backdrop{position:absolute;inset:0;background:rgba(15, 25, 30, 0.55);backdrop-filter:blur(3px)}
+    .app-modal-dialog{position:relative;background:#FFFFFF;border-radius:18px;width:100%;max-width:440px;padding:1.75rem 1.6rem 1.5rem;box-shadow:0 24px 64px rgba(0,0,0,0.22);text-align:center;animation:appModalSlideUp .25s cubic-bezier(0.34, 1.56, 0.64, 1)}
+    @keyframes appModalSlideUp{from{transform:translateY(20px) scale(0.96);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+    .app-modal-closing .app-modal-dialog{animation:appModalShrink .2s ease forwards}
+    @keyframes appModalShrink{to{transform:scale(0.96);opacity:0}}
+
+    .app-modal-icon{width:64px;height:64px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.1rem;animation:appModalIconPop .4s cubic-bezier(0.34, 1.56, 0.64, 1)}
+    @keyframes appModalIconPop{0%{transform:scale(0.5);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+    .app-modal-icon-default{background:linear-gradient(135deg,#E0F2EE,#C5E4DC);color:#0F6E56}
+    .app-modal-icon-danger{background:linear-gradient(135deg,#FFEDED,#FBD3D3);color:#C44545}
+    .app-modal-icon-warning{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);color:#C97A3A}
+    .app-modal-icon-info{background:linear-gradient(135deg,#E1F0FA,#C5E0F1);color:#4A77A8}
+    .app-modal-icon-success{background:linear-gradient(135deg,#E1F5EE,#C5E8D8);color:#3A8B57}
+    .app-modal-icon-error{background:linear-gradient(135deg,#FFEDED,#FBD3D3);color:#C44545}
+
+    .app-modal-title{font-size:1.2rem;font-weight:700;margin:0 0 0.6rem;color:var(--text);font-family:'Cairo','IBM Plex Sans Arabic',sans-serif;line-height:1.4}
+    .app-modal-message{font-size:0.95rem;color:var(--text-muted);line-height:1.7;margin:0 0 1.4rem;max-width:380px;margin-left:auto;margin-right:auto}
+    .app-modal-message strong{color:var(--text);font-weight:600}
+    .app-modal-message code{background:var(--stone-50);padding:0.1rem 0.4rem;border-radius:4px;font-size:0.85em;color:var(--text);font-family:monospace}
+
+    .app-modal-actions{display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap}
+    .app-modal-actions .btn{min-width:120px;padding:0.7rem 1.4rem;font-weight:600}
+    .app-modal-btn-danger{background:linear-gradient(135deg,#D85A50,#C44545);color:#FFFFFF;border:1.5px solid transparent}
+    .app-modal-btn-danger:hover{background:linear-gradient(135deg,#C44545,#A53636);transform:translateY(-1px);box-shadow:0 4px 12px rgba(196,69,69,0.3);color:#FFFFFF}
+
+    @media(max-width:480px){
+      .app-modal-dialog{padding:1.4rem 1.2rem 1.2rem;border-radius:16px}
+      .app-modal-title{font-size:1.08rem}
+      .app-modal-message{font-size:0.9rem}
+      .app-modal-actions .btn{min-width:0;flex:1}
+    }
+
     /* محرّر صورة المؤسس في admin */
     .founder-photo-editor{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
     .founder-photo-controls{flex:1;min-width:200px}
@@ -3390,6 +3429,155 @@ function showToast(msg, type) {
   }, 4000);
 }
 
+// ═══════════════════════════════════════════════════════════════════
+// Modal احترافي للتأكيد والتنبيه (بديل عن confirm() و alert() البدائية)
+// ═══════════════════════════════════════════════════════════════════
+
+/**
+ * عرض نافذة تأكيد احترافية
+ * @param {Object} options
+ * @param {string} options.title - العنوان
+ * @param {string} options.message - الرسالة (يدعم HTML بسيط)
+ * @param {string} [options.confirmText='تأكيد'] - نص زرّ التأكيد
+ * @param {string} [options.cancelText='إلغاء'] - نص زرّ الإلغاء
+ * @param {string} [options.variant='default'] - 'default' | 'danger' | 'warning' | 'info'
+ * @param {string} [options.icon] - رمز اختياري (emoji أو SVG)
+ * @returns {Promise<boolean>} - true إذا أكّد، false إذا ألغى
+ */
+function showConfirmDialog(options) {
+  return new Promise((resolve) => {
+    const opts = Object.assign({
+      title: 'تأكيد العملية',
+      message: 'هل أنت متأكد؟',
+      confirmText: 'تأكيد',
+      cancelText: 'إلغاء',
+      variant: 'default',
+      icon: null
+    }, options);
+
+    // أيقونات افتراضية حسب الـvariant
+    const defaultIcons = {
+      danger: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+      warning: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+      info: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+      default: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>'
+    };
+    const iconHtml = opts.icon || defaultIcons[opts.variant] || defaultIcons.default;
+
+    // إنشاء الـmodal
+    const modal = document.createElement('div');
+    modal.className = 'app-modal app-modal-confirm';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.innerHTML = `
+      <div class="app-modal-backdrop"></div>
+      <div class="app-modal-dialog app-modal-${opts.variant}">
+        <div class="app-modal-icon app-modal-icon-${opts.variant}">${iconHtml}</div>
+        <h3 class="app-modal-title">${escapeHtml(opts.title)}</h3>
+        <div class="app-modal-message">${opts.message}</div>
+        <div class="app-modal-actions">
+          <button type="button" class="btn btn-secondary app-modal-cancel">${escapeHtml(opts.cancelText)}</button>
+          <button type="button" class="btn ${opts.variant === 'danger' ? 'app-modal-btn-danger' : 'btn-primary'} app-modal-confirm-btn">${escapeHtml(opts.confirmText)}</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    // التركيز على زرّ الإلغاء للأمان
+    setTimeout(() => {
+      const cancelBtn = modal.querySelector('.app-modal-cancel');
+      if (cancelBtn) cancelBtn.focus();
+    }, 50);
+
+    const close = (result) => {
+      modal.classList.add('app-modal-closing');
+      setTimeout(() => {
+        modal.remove();
+        document.removeEventListener('keydown', onKey);
+      }, 200);
+      resolve(result);
+    };
+
+    const onKey = (e) => {
+      if (e.key === 'Escape') close(false);
+      else if (e.key === 'Enter') close(true);
+    };
+
+    modal.querySelector('.app-modal-cancel').addEventListener('click', () => close(false));
+    modal.querySelector('.app-modal-confirm-btn').addEventListener('click', () => close(true));
+    modal.querySelector('.app-modal-backdrop').addEventListener('click', () => close(false));
+    document.addEventListener('keydown', onKey);
+  });
+}
+
+// مُساعد: استعادة الإعدادات الافتراضية (يُستدعى من زرّ الإعدادات)
+async function resetAllAppSettings() {
+  const ok = await showConfirmDialog({
+    title: 'استعادة الإعدادات الافتراضية',
+    message: 'سيُمحى كل ما حفظته من تخصيصات (السلايدر، النصوص، الإعدادات...). هل أنت متأكد؟',
+    confirmText: 'نعم، استعد الافتراضي',
+    variant: 'danger'
+  });
+  if (!ok) return;
+  try { localStorage.removeItem('marjie_app_settings'); } catch (e) {}
+  location.reload();
+}
+
+function showAlertDialog(options) {
+  const opts = Object.assign({
+    title: 'تنبيه',
+    message: '',
+    buttonText: 'حسناً',
+    variant: 'info',
+    icon: null
+  }, options);
+
+  return new Promise((resolve) => {
+    const defaultIcons = {
+      success: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+      error: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+      warning: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+      info: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+    };
+    const iconHtml = opts.icon || defaultIcons[opts.variant] || defaultIcons.info;
+
+    const modal = document.createElement('div');
+    modal.className = 'app-modal app-modal-alert';
+    modal.setAttribute('role', 'alertdialog');
+    modal.innerHTML = `
+      <div class="app-modal-backdrop"></div>
+      <div class="app-modal-dialog app-modal-${opts.variant}">
+        <div class="app-modal-icon app-modal-icon-${opts.variant}">${iconHtml}</div>
+        <h3 class="app-modal-title">${escapeHtml(opts.title)}</h3>
+        <div class="app-modal-message">${opts.message}</div>
+        <div class="app-modal-actions">
+          <button type="button" class="btn btn-primary app-modal-ok-btn">${escapeHtml(opts.buttonText)}</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    setTimeout(() => modal.querySelector('.app-modal-ok-btn').focus(), 50);
+
+    const close = () => {
+      modal.classList.add('app-modal-closing');
+      setTimeout(() => {
+        modal.remove();
+        document.removeEventListener('keydown', onKey);
+      }, 200);
+      resolve(true);
+    };
+
+    const onKey = (e) => {
+      if (e.key === 'Escape' || e.key === 'Enter') close();
+    };
+
+    modal.querySelector('.app-modal-ok-btn').addEventListener('click', close);
+    modal.querySelector('.app-modal-backdrop').addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
+  });
+}
+
 function showLoader() {
   if ($('#global-loader')) return;
   const el = document.createElement('div');
@@ -3523,7 +3711,6 @@ function handleRoute() {
       else if (parts[1] === 'stakeholders') renderStakeholdersRegister();
       else if (parts[1] === 'impact') renderImpactReport();
       else if (parts[1] === 'policy-audit') renderAuditor('policy');
-      else if (parts[1] === 'regulation-audit') renderAuditor('regulation');
       else if (parts[1] === 'decision-audit') renderAuditor('decision');
       else if (parts[1] === 'chatbot') renderChatbot();
       else if (parts[1] === 'content') renderContentGenerator();
@@ -3901,8 +4088,7 @@ function translatePagePath(path) {
     '#/tools/risks': 'سجل المخاطر',
     '#/tools/stakeholders': 'أصحاب المصلحة',
     '#/tools/impact': 'تقرير الأثر',
-    '#/tools/policy-audit': 'مدقّق السياسات',
-    '#/tools/regulation-audit': 'مدقّق اللوائح',
+    '#/tools/policy-audit': 'مدقّق السياسات الذكي',
     '#/tools/decision-audit': 'مدقّق القرارات',
     '#/tools/chatbot': 'المساعد التفاعلي',
     '#/tools/content': 'مولّد المحتوى',
@@ -4723,7 +4909,6 @@ function computeHomeStats() {
     decisions: typeof DECISIONS_LIBRARY !== 'undefined' ? DECISIONS_LIBRARY.length : 0,
     // قواعد فحص: مجموع الثلاث مدققين الفعلي
     auditRules: (typeof POLICY_RULES !== 'undefined' ? POLICY_RULES.length : 0)
-                + (typeof REGULATION_RULES !== 'undefined' ? REGULATION_RULES.length : 0)
                 + (typeof DECISION_RULES !== 'undefined' ? DECISION_RULES.length : 0),
     // FAQ: العدد الفعلي بعد أي تعديلات
     faq: (typeof getFAQ === 'function' ? getFAQ() : (typeof FAQ_DATA !== 'undefined' ? FAQ_DATA : [])).length,
@@ -6048,8 +6233,8 @@ function saveSlides(slides) {
   }
 }
 
-function resetSlidesToDefault() {
-  if (!confirm('هل تريد استعادة الشرائح الافتراضية؟ ستفقد كل التعديلات.')) return;
+async function resetSlidesToDefault() {
+  if (!await showConfirmDialog({title: 'استعادة الافتراضي', message: `هل تريد استعادة الشرائح الافتراضية؟ ستفقد كل التعديلات.`, confirmText: 'استعادة', variant: 'danger'})) return;
   try { localStorage.removeItem(SLIDES_STORAGE_KEY); } catch (e) {}
   showToast('تمّت استعادة الشرائح الافتراضية', 'success');
   renderAdminSlides();
@@ -6128,8 +6313,8 @@ function toggleSlideEnabled(id) {
   }
 }
 
-function deleteSlide(id) {
-  if (!confirm('هل تريد حذف هذه الشريحة؟ لا يمكن التراجع.')) return;
+async function deleteSlide(id) {
+  if (!await showConfirmDialog({title: 'تأكيد الحذف', message: `هل تريد حذف هذه الشريحة؟ لا يمكن التراجع.`, confirmText: 'نعم، احذف', variant: 'danger'})) return;
   const slides = getSlides().filter(s => s.id !== id);
   if (saveSlides(slides)) {
     logAudit('delete', 'slide', id, '');
@@ -6469,8 +6654,8 @@ function changeAnalyticsPeriod(period) {
   renderAdminAnalytics();
 }
 
-function clearAnalyticsData() {
-  if (!confirm('هل تريد مسح كل بيانات التتبّع المحلية؟ هذا الإجراء لا يمكن التراجع عنه.')) return;
+async function clearAnalyticsData() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `هل تريد مسح كل بيانات التتبّع المحلية؟ هذا الإجراء لا يمكن التراجع عنه.`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   Analytics.clearLocalEvents();
   showToast('تمّ مسح البيانات ✓', 'success');
   renderAdminAnalytics();
@@ -6663,7 +6848,7 @@ function getAuditLog() {
   } catch (e) { return []; }
 }
 
-function clearAuditLog() {
+async function clearAuditLog() {
   try { localStorage.removeItem(AUDIT_LOG_KEY); } catch (e) {}
 }
 
@@ -6852,8 +7037,8 @@ function saveBlogArticles(articles) {
   }
 }
 
-function resetBlogToDefault() {
-  if (!confirm('استعادة المقالات الافتراضية؟ ستفقد كل التعديلات.')) return;
+async function resetBlogToDefault() {
+  if (!await showConfirmDialog({title: 'استعادة الافتراضي', message: `استعادة المقالات الافتراضية؟ ستفقد كل التعديلات.`, confirmText: 'استعادة', variant: 'danger'})) return;
   try { localStorage.removeItem(BLOG_STORAGE_KEY); } catch (e) {}
   showToast('تمّت الاستعادة', 'success');
   renderAdminBlog();
@@ -6882,8 +7067,8 @@ function saveFAQ(faqs) {
   }
 }
 
-function resetFAQToDefault() {
-  if (!confirm('استعادة الأسئلة الافتراضية؟ ستفقد كل التعديلات.')) return;
+async function resetFAQToDefault() {
+  if (!await showConfirmDialog({title: 'استعادة الافتراضي', message: `استعادة الأسئلة الافتراضية؟ ستفقد كل التعديلات.`, confirmText: 'استعادة', variant: 'danger'})) return;
   try { localStorage.removeItem(FAQ_STORAGE_KEY); } catch (e) {}
   showToast('تمّت الاستعادة', 'success');
   renderAdminFAQ();
@@ -7138,8 +7323,8 @@ function saveBlogForm(event, oldSlug, isNew) {
   }
 }
 
-function deleteBlogArticle(slug) {
-  if (!confirm('حذف هذا المقال؟ لا يمكن التراجع.')) return;
+async function deleteBlogArticle(slug) {
+  if (!await showConfirmDialog({title: 'تأكيد الحذف', message: `حذف هذا المقال؟ لا يمكن التراجع.`, confirmText: 'نعم، احذف', variant: 'danger'})) return;
   const articles = getBlogArticles().filter(a => a.slug !== slug);
   if (saveBlogArticles(articles)) {
     logAudit('delete', 'article', slug, '');
@@ -7294,8 +7479,8 @@ function saveFAQForm(event, oldId, isNew) {
   }
 }
 
-function deleteFAQItem(id) {
-  if (!confirm('حذف هذا السؤال؟ لا يمكن التراجع.')) return;
+async function deleteFAQItem(id) {
+  if (!await showConfirmDialog({title: 'تأكيد الحذف', message: `حذف هذا السؤال؟ لا يمكن التراجع.`, confirmText: 'نعم، احذف', variant: 'danger'})) return;
   const faqs = getFAQ().filter(f => f.id !== id);
   if (saveFAQ(faqs)) {
     logAudit('delete', 'faq', id, '');
@@ -7502,8 +7687,8 @@ function setCurrentGuest(id) {
   }
 }
 
-function deleteGuest(id) {
-  if (!confirm('حذف هذا الضيف؟ لا يمكن التراجع.')) return;
+async function deleteGuest(id) {
+  if (!await showConfirmDialog({title: 'تأكيد الحذف', message: `حذف هذا الضيف؟ لا يمكن التراجع.`, confirmText: 'نعم، احذف', variant: 'danger'})) return;
   const data = getGuests();
   data.guests = data.guests.filter(g => g.id !== id);
   // إذا حُذف الضيف الحالي، اختر الأول من القائمة
@@ -7673,8 +7858,8 @@ function saveAboutPage(data) {
   }
 }
 
-function resetAboutToDefault() {
-  if (!confirm('استعادة المحتوى الافتراضي؟ ستفقد كل التعديلات.')) return;
+async function resetAboutToDefault() {
+  if (!await showConfirmDialog({title: 'استعادة الافتراضي', message: `استعادة المحتوى الافتراضي؟ ستفقد كل التعديلات.`, confirmText: 'استعادة', variant: 'danger'})) return;
   try { localStorage.removeItem(ABOUT_STORAGE_KEY); } catch (e) {}
   showToast('تمّت الاستعادة', 'success');
   renderAdminAbout();
@@ -8085,8 +8270,8 @@ function moveToolDown(toolId) {
 }
 
 // إعادة الترتيب الافتراضي
-function resetToolsOrder() {
-  if (!confirm('استعادة الترتيب الافتراضي للأدوات؟')) return;
+async function resetToolsOrder() {
+  if (!await showConfirmDialog({title: 'استعادة الافتراضي', message: `استعادة الترتيب الافتراضي للأدوات؟`, confirmText: 'استعادة', variant: 'danger'})) return;
   try { localStorage.removeItem(TOOLS_ORDER_KEY); } catch (e) {}
   if (typeof logAudit === 'function') logAudit('reset', 'system', 'tools-order', 'Order reset to default');
   showToast('تمّت استعادة الترتيب ✓', 'success');
@@ -8131,8 +8316,8 @@ function updateToolState(toolId, newState) {
 }
 
 // إعادة كل الأدوات لـvisible
-function resetAllToolsVisibility() {
-  if (!confirm('إعادة كل الـ17 أداة لحالة "مرئي"؟')) return;
+async function resetAllToolsVisibility() {
+  if (!await showConfirmDialog({title: 'تأكيد العملية', message: `إعادة كل الـ17 أداة لحالة "مرئي"؟`, confirmText: 'متابعة', variant: 'default'})) return;
   try { localStorage.removeItem(TOOLS_VISIBILITY_KEY); } catch (e) {}
   if (typeof logAudit === 'function') logAudit('reset', 'system', 'tools-visibility', 'All tools reset to visible');
   showToast('تمّت الاستعادة ✓', 'success');
@@ -8599,8 +8784,8 @@ function cropperConfirm() {
   }
 }
 
-function removeFounderPhoto() {
-  if (!confirm('استعادة الصورة الافتراضية؟')) return;
+async function removeFounderPhoto() {
+  if (!await showConfirmDialog({title: 'استعادة الافتراضي', message: `استعادة الصورة الافتراضية؟`, confirmText: 'استعادة', variant: 'danger'})) return;
   saveFounderPhoto(null);
   // إعادة CSS variable للقيمة الافتراضية (محذوف override)
   document.documentElement.style.removeProperty('--founder-photo');
@@ -8635,8 +8820,8 @@ function saveFounderForm(event) {
   }
 }
 
-function resetFounderToDefault() {
-  if (!confirm('استعادة كل بيانات المؤسس للافتراضي؟')) return;
+async function resetFounderToDefault() {
+  if (!await showConfirmDialog({title: 'استعادة الافتراضي', message: `استعادة كل بيانات المؤسس للافتراضي؟`, confirmText: 'استعادة', variant: 'danger'})) return;
   try {
     localStorage.removeItem(FOUNDER_DATA_KEY);
     localStorage.removeItem(FOUNDER_PHOTO_KEY);
@@ -8784,8 +8969,8 @@ function saveContactForm(event) {
   }
 }
 
-function resetContactToDefault() {
-  if (!confirm('استعادة المحتوى الافتراضي لصفحة "اتصل بنا"؟')) return;
+async function resetContactToDefault() {
+  if (!await showConfirmDialog({title: 'استعادة الافتراضي', message: `استعادة المحتوى الافتراضي لصفحة "اتصل بنا"؟`, confirmText: 'استعادة', variant: 'danger'})) return;
   try { localStorage.removeItem(CONTACT_PAGE_KEY); } catch (e) {}
   if (typeof logAudit === 'function') logAudit('reset', 'settings', 'contact-page', 'Reset to default');
   showToast('تمّت الاستعادة ✓', 'success');
@@ -9222,7 +9407,7 @@ function renderSettingsGeneral() {
         </div>
 
         <div style="display:flex;justify-content:flex-end;margin-top:2rem;gap:0.75rem">
-          <button type="button" class="btn btn-ghost" onclick="if(confirm('استعادة كل القيم الافتراضية؟ سيُمحى ما حفظته.')) { localStorage.removeItem('marjie_app_settings'); location.reload(); }">استعادة الافتراضي</button>
+          <button type="button" class="btn btn-ghost" onclick="resetAllAppSettings()">استعادة الافتراضي</button>
           <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
         </div>
       </form>
@@ -9361,7 +9546,7 @@ async function promptDisablePIN() {
   const pin = prompt('أدخل الـPIN الحالي لتعطيله:');
   if (!pin) return;
   if (!await verifyPIN(pin)) { showToast('PIN غير صحيح', 'error'); return; }
-  if (!confirm('هل تريد تعطيل الـPIN؟ ستفقد طبقة الحماية الإضافية.')) return;
+  if (!await showConfirmDialog({title: 'تعطيل الميزة', message: `هل تريد تعطيل الـPIN؟ ستفقد طبقة الحماية الإضافية.`, confirmText: 'نعم، عطّل', variant: 'danger'})) return;
   clearPIN();
   logAudit('pin_disable', 'auth', '', 'PIN disabled');
   showToast('تمّ تعطيل الـPIN', 'success');
@@ -9493,8 +9678,8 @@ function renderSettingsAudit() {
   `;
 }
 
-function clearAuditLogConfirm() {
-  if (!confirm('هل تريد مسح سجل التدقيق بالكامل؟ لا يمكن التراجع.')) return;
+async function clearAuditLogConfirm() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `هل تريد مسح سجل التدقيق بالكامل؟ لا يمكن التراجع.`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   clearAuditLog();
   showToast('تمّ مسح السجل ✓', 'success');
   renderAdminSettings('audit');
@@ -9543,39 +9728,39 @@ function renderSettingsDanger() {
   `;
 }
 
-function dangerClearSlides() {
-  if (!confirm('مسح كل بيانات السلايدر؟')) return;
+async function dangerClearSlides() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح كل بيانات السلايدر؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem(SLIDES_STORAGE_KEY); } catch (e) {}
   logAudit('reset', 'slide', 'all', 'Cleared all slides');
   showToast('تمّ المسح ✓', 'success');
 }
-function dangerClearBlog() {
-  if (!confirm('مسح كل بيانات المدوّنة؟')) return;
+async function dangerClearBlog() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح كل بيانات المدوّنة؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem(BLOG_STORAGE_KEY); } catch (e) {}
   logAudit('reset', 'article', 'all', 'Cleared all articles');
   showToast('تمّ المسح ✓', 'success');
 }
-function dangerClearFAQ() {
-  if (!confirm('مسح كل بيانات FAQ؟')) return;
+async function dangerClearFAQ() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح كل بيانات FAQ؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem(FAQ_STORAGE_KEY); } catch (e) {}
   logAudit('reset', 'faq', 'all', 'Cleared all FAQ');
   showToast('تمّ المسح ✓', 'success');
 }
-function dangerClearGuests() {
-  if (!confirm('مسح كل بيانات الضيوف؟')) return;
+async function dangerClearGuests() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح كل بيانات الضيوف؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem(GUESTS_STORAGE_KEY); } catch (e) {}
   logAudit('reset', 'guest', 'all', 'Cleared all guests');
   showToast('تمّ المسح ✓', 'success');
 }
-function dangerClearAnalytics() {
-  if (!confirm('مسح كل بيانات التتبّع؟')) return;
+async function dangerClearAnalytics() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح كل بيانات التتبّع؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   Analytics.clearLocalEvents();
   logAudit('reset', 'system', 'analytics', 'Cleared analytics');
   showToast('تمّ المسح ✓', 'success');
 }
-function dangerResetAll() {
-  if (!confirm('⚠️ سيُحذف كل شيء محلياً. هل أنت متأكد؟')) return;
-  if (!confirm('تأكيد ثاني: لا يمكن التراجع. هل أنت متأكد؟')) return;
+async function dangerResetAll() {
+  if (!await showConfirmDialog({title: 'تأكيد الحذف', message: `⚠️ سيُحذف كل شيء محلياً. هل أنت متأكد؟`, confirmText: 'نعم، احذف', variant: 'danger'})) return;
+  if (!await showConfirmDialog({title: 'تأكيد العملية', message: `تأكيد ثاني: لا يمكن التراجع. هل أنت متأكد؟`, confirmText: 'متابعة', variant: 'danger'})) return;
   const keys = [SLIDES_STORAGE_KEY, BLOG_STORAGE_KEY, FAQ_STORAGE_KEY, GUESTS_STORAGE_KEY,
                 Analytics.STORAGE_KEY, SETTINGS_KEY, AUDIT_LOG_KEY, PIN_HASH_KEY,
                 PIN_VERIFIED_KEY, SESSION_TIMEOUT_KEY];
@@ -9741,7 +9926,7 @@ async function adminToggle(id) {
 }
 
 async function adminDelete(id, title) {
-  if (!confirm(`حذف السياسة "${title}"؟ لا يمكن التراجع.`)) return;
+  if (!await showConfirmDialog({title: 'تأكيد الحذف', message: `حذف السياسة "\${title}"؟ لا يمكن التراجع.`, confirmText: 'نعم، احذف', variant: 'danger'})) return;
   showLoader();
   try {
     await API.adminDeletePolicy(id);
@@ -10240,13 +10425,13 @@ function clearAllFinancialData() {
 }
 
 // تأكيد قبل المسح الكامل (يُستدعى من زرّ "ابدأ من جديد" والشريط العلوي)
-function confirmClearAllData() {
+async function confirmClearAllData() {
   let hasData = false;
   document.querySelectorAll('input[data-fin-key]').forEach(i => {
     if (i.value && i.value.trim() !== '') hasData = true;
   });
   if (hasData || window._lastPDFFile) {
-    if (!confirm('سيتم مسح كل البيانات (الأرقام + الملف). هل أنت متأكد؟')) return;
+    if (!await showConfirmDialog({title: 'تأكيد المسح', message: `سيتم مسح كل البيانات (الأرقام + الملف). هل أنت متأكد؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   }
   clearAllFinancialData();
   // إعادة تحميل الصفحة لإخفاء شريط الجلسة السابقة
@@ -11755,7 +11940,7 @@ function showPDFUploadedPreview(file) {
   `;
 }
 
-function removePDFFile() {
+async function removePDFFile() {
   // الفريق الاستشاري (فهد الدوسري — أمن): إزالة الملف تستلزم مسح البيانات
   // الـUX (ريم الحربي): سؤال المستخدم قبل المسح
   const hasData = document.querySelectorAll('input[data-fin-key]').forEach;
@@ -11765,7 +11950,7 @@ function removePDFFile() {
   });
 
   if (anyValue) {
-    if (!confirm('سيتم مسح الملف وكل الأرقام المُستخرجة منه. متابعة؟')) return;
+    if (!await showConfirmDialog({title: 'تأكيد المسح', message: `سيتم مسح الملف وكل الأرقام المُستخرجة منه. متابعة؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   }
 
   clearAllFinancialData();
@@ -12013,8 +12198,8 @@ function updateFinancialResults() {
   $('#fin-results').innerHTML = html;
 }
 
-function resetFinancialInputs() {
-  if (!confirm('هل تريد مسح جميع الأرقام المُدخلة؟')) return;
+async function resetFinancialInputs() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `هل تريد مسح جميع الأرقام المُدخلة؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem('marjie_fin_inputs'); } catch (e) {}
   document.querySelectorAll('input[data-fin-key]').forEach(i => i.value = '');
   updateFinancialResults();
@@ -12180,9 +12365,6 @@ const TOOLS_ICONS = {
   // مدقّق سياسات — وثيقة + عدسة مكبّرة بعلامة فحص
   'policy-audit': '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 5 3 L 19 3 L 23 7 L 23 22 L 5 22 Z" class="icon-stroke" stroke-linejoin="round"/><path d="M 19 3 L 19 7 L 23 7" class="icon-stroke"/><line x1="9" y1="11" x2="19" y2="11" class="icon-stroke" stroke-width="1.4"/><line x1="9" y1="15" x2="19" y2="15" class="icon-stroke" stroke-width="1.4"/><line x1="9" y1="19" x2="15" y2="19" class="icon-stroke" stroke-width="1.4"/><circle cx="22" cy="22" r="6" fill="var(--bg-card)" class="icon-stroke" stroke-width="1.6"/><path d="M 19 22 L 21.3 24.3 L 25.3 19.7" class="icon-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="26.5" y1="26.5" x2="29" y2="29" class="icon-stroke" stroke-width="2" stroke-linecap="round"/></svg>',
 
-  // محرّر اللوائح — كتاب مفتوح + علامة قانونية
-  'regulation-audit': '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 L 16 6 L 16 26 L 4 28 Z" class="icon-stroke" stroke-linejoin="round"/><path d="M 28 8 L 16 6 L 16 26 L 28 28 Z" class="icon-stroke" stroke-linejoin="round"/><line x1="7" y1="12" x2="13" y2="11" class="icon-stroke" stroke-width="1" opacity="0.55"/><line x1="7" y1="15" x2="13" y2="14" class="icon-stroke" stroke-width="1" opacity="0.55"/><line x1="7" y1="18" x2="13" y2="17" class="icon-stroke" stroke-width="1" opacity="0.55"/><line x1="19" y1="11" x2="25" y2="12" class="icon-stroke" stroke-width="1" opacity="0.55"/><line x1="19" y1="14" x2="25" y2="15" class="icon-stroke" stroke-width="1" opacity="0.55"/><line x1="19" y1="17" x2="25" y2="18" class="icon-stroke" stroke-width="1" opacity="0.55"/><circle cx="24" cy="6" r="3.5" class="icon-fill"/><text x="24" y="7.4" text-anchor="middle" font-size="3.5" fill="white" font-weight="700">§</text></svg>',
-
   // مدقّق نظامية القرارات — درع بعلامة صح + تفاصيل
   'decision-audit': '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 16 3 L 27 8 L 27 17 Q 27 25, 16 29 Q 5 25, 5 17 L 5 8 Z" class="icon-stroke" stroke-linejoin="round"/><path d="M 16 3 L 27 8 L 27 17 Q 27 25, 16 29 Z" class="icon-fill" opacity="0.18"/><path d="M 11 16 L 14.5 19.5 L 21.5 12.5" class="icon-stroke" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="16" cy="9" r="0.8" class="icon-fill" opacity="0.6"/></svg>',
 
@@ -12205,8 +12387,7 @@ const TOOLS_CATALOG = [
   { id:'stakeholders', group:'registers', name:'سجل أصحاب المصلحة', desc:'7 فئات رئيسية مع آليات التواصل المقترحة لكل فئة.', keywords:'أصحاب مصلحة مستفيدين متبرعين متطوعين شركاء جهات' },
   { id:'impact', group:'registers', name:'تقرير الأثر الاجتماعي', desc:'قالب احترافي لقياس الأثر بنموذج Logic Model.', keywords:'أثر اجتماعي logic model مدخلات مخرجات نتائج تقرير' },
 
-  { id:'policy-audit', group:'auditors', name:'مدقّق السياسات', desc:'الصق نص سياستك واحصل على تقرير فوري بالعناصر الناقصة.', keywords:'تدقيق سياسة فحص مراجعة جودة عناصر مفقودة' },
-  { id:'regulation-audit', group:'auditors', name:'محرّر اللوائح الذكي', desc:'فحص شامل للوائح: المواد، التعريفات، الأحكام، الجزاءات.', keywords:'لائحة تدقيق فحص مواد فصول أبواب أحكام' },
+  { id:'policy-audit', group:'auditors', name:'مدقّق السياسات الذكي', desc:'الصق نص سياستك واحصل على تقرير فوري بالعناصر الناقصة.', keywords:'تدقيق سياسة فحص مراجعة جودة عناصر مفقودة' },
   { id:'decision-audit', group:'auditors', name:'مدقّق نظامية القرارات', desc:'تحقّق من امتثال نص القرار للمتطلبات النظامية.', keywords:'قرار تدقيق فحص نظامية صحة توقيع نصاب امتثال' },
 
   { id:'chatbot', group:'interactive', name:'المساعد التفاعلي', desc:'اسأل المساعد عن أي شيء يخصّ حوكمة جمعيتك.', keywords:'محادثة مساعد سؤال إجابة chatbot دردشة بحث' },
@@ -13144,8 +13325,8 @@ function toggleAGATask(key, checked) {
     }
   }
 }
-function resetAGAState() {
-  if (!confirm('هل تريد مسح كل علامات التحقّق؟ لا يمكن التراجع.')) return;
+async function resetAGAState() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `هل تريد مسح كل علامات التحقّق؟ لا يمكن التراجع.`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem('marjie_aga_state'); } catch (e) {}
   renderAGAAssistant();
   showToast('تم المسح ✓', 'info');
@@ -14047,8 +14228,8 @@ function updateRiskNote(id, value) {
   s.notes[id] = value;
   saveRiskState(s);
 }
-function resetRiskRegister() {
-  if (!confirm('مسح كل اعتمادات المخاطر والملاحظات؟')) return;
+async function resetRiskRegister() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح كل اعتمادات المخاطر والملاحظات؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem('marjie_risks'); } catch (e) {}
   renderRiskRegister();
   showToast('تم المسح ✓', 'info');
@@ -14288,8 +14469,8 @@ function updateStakeholderNote(id, value) {
   s.notes[id] = value;
   saveStakeholdersState(s);
 }
-function resetStakeholders() {
-  if (!confirm('مسح كل البيانات والملاحظات؟')) return;
+async function resetStakeholders() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح كل البيانات والملاحظات؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem('marjie_stakeholders'); } catch (e) {}
   renderStakeholdersRegister();
   showToast('تم المسح ✓', 'info');
@@ -14499,8 +14680,8 @@ function saveImpactField(key, value) {
   s[key] = value;
   try { localStorage.setItem('marjie_impact', JSON.stringify(s)); } catch (e) {}
 }
-function resetImpactReport() {
-  if (!confirm('مسح كل بيانات التقرير؟')) return;
+async function resetImpactReport() {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح كل بيانات التقرير؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem('marjie_impact'); } catch (e) {}
   renderImpactReport();
   showToast('تم المسح ✓', 'info');
@@ -14595,18 +14776,11 @@ function generateImpactReport(format) {
 // ── الإعدادات العامة لكل وضع ──
 const AUDITOR_CONFIG = {
   policy: {
-    title: 'مدقّق السياسات',
+    title: 'مدقّق السياسات الذكي',
     description: 'الصق نص السياسة أو ارفع ملفاً، وسنفحص توفّر العناصر الجوهرية وجودة الصياغة.',
     placeholder: 'الصق هنا نص السياسة المراد فحصها...\n\nمثال: سياسة جمع التبرعات للجمعية...',
     minLength: 200,
     rules: 'POLICY_RULES'
-  },
-  regulation: {
-    title: 'محرّر اللوائح الذكي',
-    description: 'فحص متعمّق للوائح: الهيكل العام، المواد، التعريفات، الأحكام، الجزاءات، والمرجعيات النظامية.',
-    placeholder: 'الصق هنا نص اللائحة الكاملة...\n\nمثال: اللائحة الأساسية للجمعية...',
-    minLength: 500,
-    rules: 'REGULATION_RULES'
   },
   decision: {
     title: 'مدقّق نظامية القرارات',
@@ -14748,120 +14922,38 @@ const POLICY_RULES = [
       if (found.length <= 2) return { status:'warn', message:'تحتوي على عبارات غامضة: ' + found.join('، '), suggestion:'استبدل العبارات الغامضة بصياغة قاطعة (مثل "يجب"، "يلتزم"، "تتولّى").' };
       return { status:'fail', message:'كثرة العبارات الغامضة (' + found.length + '): ' + found.slice(0, 3).join('، '), suggestion:'السياسة يجب أن تكون إلزامية وقاطعة في صياغتها.' };
     }
+  },
+  // ── قواعد إضافية مدمجة من فحص اللوائح ──
+  {
+    id:'preamble', cat:'البنية الأساسية', name:'الديباجة / المرجعية النظامية',
+    check:(t) => {
+      const has = _hasAny(t, ['بناءً على', 'استناداً', 'بعد الاطلاع', 'تأسيساً', 'بموجب', 'وفقاً لنظام', 'وفق نظام']);
+      return has
+        ? { status:'pass', message:'تحتوي على ديباجة / مرجعية نظامية.' }
+        : { status:'warn', message:'لا توجد ديباجة أو مرجعية نظامية.', suggestion:'في الوثائق الرسمية يُفضّل البدء بـ "بناءً على نظام الجمعيات الأهلية..." لربط الوثيقة بمرجعيتها.' };
+    }
+  },
+  {
+    id:'articles', cat:'البنية الأساسية', name:'تقسيم لمواد/بنود مرقّمة',
+    check:(t) => {
+      const count = _hasNumberedArticles(t);
+      if (count >= 10) return { status:'pass', message:'الوثيقة منظّمة في ' + count + ' مادة/بند مرقّم.' };
+      if (count >= 3) return { status:'pass', message:'تحتوي على ' + count + ' مواد مرقّمة.' };
+      if (count >= 1) return { status:'warn', message:'تقسيم محدود (' + count + ' مادة).', suggestion:'الوثائق المنظّمة تستفيد من ترقيم البنود لسهولة الإحالة.' };
+      return { status:'warn', message:'لا يوجد ترقيم منظّم للبنود.', suggestion:'فكّر في تقسيم الوثيقة إلى مواد/بنود مرقّمة عند الحاجة لأحكام تفصيلية.' };
+    }
+  },
+  {
+    id:'transitional', cat:'الإجراءات', name:'الأحكام الانتقالية / الإلغاء',
+    check:(t) => {
+      const has = _hasAny(t, ['الأحكام الانتقالية', 'حكم انتقالي', 'فترة انتقالية', 'يحلّ محل', 'تُلغى', 'تلغى', 'يستبدل', 'تطبق اعتباراً']);
+      return has
+        ? { status:'pass', message:'تتضمّن أحكاماً انتقالية أو إلغاءً واضحاً.' }
+        : { status:'warn', message:'لا توجد أحكام انتقالية.', suggestion:'إن كانت الوثيقة تستبدل وثيقة سابقة أو لها فترة تطبيق تدريجية، أضف أحكاماً انتقالية تُوضّح ذلك.' };
+    }
   }
 ];
 
-// ── قواعد فحص اللوائح ──
-const REGULATION_RULES = [
-  {
-    id:'title', cat:'الهيكل العام', name:'عنوان اللائحة',
-    check:(t) => {
-      const firstLine = t.split('\n')[0].trim();
-      if (firstLine.length < 10) return { status:'fail', message:'لا يوجد عنوان كافٍ.', suggestion:'ابدأ بعنوان واضح، مثال: "اللائحة الأساسية لجمعية ___" أو "لائحة الموارد البشرية".' };
-      return { status:'pass', message:'العنوان: "' + firstLine.substring(0, 80) + '"' };
-    }
-  },
-  {
-    id:'preamble', cat:'الهيكل العام', name:'الديباجة (التمهيد)',
-    check:(t) => {
-      const has = _hasAny(t, ['بناءً على', 'استناداً', 'بعد الاطلاع', 'تأسيساً', 'بموجب']);
-      return has
-        ? { status:'pass', message:'تحتوي على ديباجة تمهيدية.' }
-        : { status:'warn', message:'لا توجد ديباجة في بداية اللائحة.', suggestion:'ابدأ اللائحة بـ "بناءً على نظام الجمعيات الأهلية الصادر بالمرسوم..."' };
-    }
-  },
-  {
-    id:'articles', cat:'الهيكل العام', name:'تقسيم اللائحة لمواد مرقّمة',
-    check:(t) => {
-      const count = _hasNumberedArticles(t);
-      if (count >= 10) return { status:'pass', message:'اللائحة منظّمة في ' + count + ' مادة/بند مرقّم.' };
-      if (count >= 3) return { status:'warn', message:'تحتوي على ' + count + ' مواد فقط.', suggestion:'اللوائح الجيدة عادة تحتوي على 10+ مواد.' };
-      return { status:'fail', message:'لا يوجد ترقيم منظّم للمواد.', suggestion:'قسّم اللائحة إلى "المادة الأولى"، "المادة الثانية"... لتنظيم أحكامها.' };
-    }
-  },
-  {
-    id:'chapters', cat:'الهيكل العام', name:'تقسيم لفصول/أبواب',
-    check:(t) => {
-      const chapters = _countOccurrences(t, /(الباب|الفصل)\s+(الأول|الثاني|الثالث|الرابع|الخامس|السادس|[\u0660-\u0669]+|\d+)/g);
-      if (chapters >= 3) return { status:'pass', message:'مقسّمة لـ ' + chapters + ' أبواب/فصول.' };
-      if (chapters >= 1) return { status:'warn', message:'تقسيم محدود (' + chapters + ' فصل).', suggestion:'فكّر في تقسيمها لأبواب موضوعية لسهولة الرجوع إليها.' };
-      const articles = _hasNumberedArticles(t);
-      if (articles >= 20) return { status:'warn', message:'لا يوجد تقسيم لأبواب رغم كثرة المواد.', suggestion:'اللوائح الكبيرة (20+ مادة) تستفيد من تقسيمها لأبواب.' };
-      return { status:'pass', message:'لا تحتاج لتقسيم أبواب (لائحة قصيرة).' };
-    }
-  },
-  {
-    id:'definitions', cat:'البنود الجوهرية', name:'فصل التعريفات',
-    check:(t) => {
-      const has = /المادة\s+(الأولى|١|1).*?(تعريف|يقصد|التعريفات)/s.test(t) || _hasAny(t, ['التعريفات', 'يُقصد بـ', 'يقصد بالعبارات', 'في تطبيق هذه اللائحة']);
-      return has
-        ? { status:'pass', message:'تحتوي على فصل التعريفات.' }
-        : { status:'fail', message:'لا يوجد فصل تعريفات.', suggestion:'كل لائحة جيدة تبدأ بمادة "تعريفات" تُعرّف المصطلحات الرئيسية.' };
-    }
-  },
-  {
-    id:'transitional', cat:'البنود الجوهرية', name:'الأحكام الانتقالية',
-    check:(t) => {
-      const has = _hasAny(t, ['الأحكام الانتقالية', 'حكم انتقالي', 'تطبيق المؤقت', 'حتى يتم', 'فترة انتقالية']);
-      return has
-        ? { status:'pass', message:'تتضمّن أحكاماً انتقالية.' }
-        : { status:'warn', message:'لا توجد أحكام انتقالية.', suggestion:'إن كانت اللائحة تستبدل لائحة سابقة، أضف أحكاماً انتقالية لحالات قيد التطبيق.' };
-    }
-  },
-  {
-    id:'penalties', cat:'البنود الجوهرية', name:'الجزاءات والعقوبات',
-    check:(t) => {
-      const has = _hasAny(t, ['جزاء', 'عقوبة', 'مخالفة', 'إنذار', 'إيقاف', 'فصل']);
-      return has
-        ? { status:'pass', message:'تتضمّن أحكام جزاءات.' }
-        : { status:'warn', message:'لا توجد جزاءات على المخالفات.', suggestion:'فكّر في إضافة فصل للجزاءات لتعزيز الالتزام (إنذار، إيقاف، إنهاء، إلخ).' };
-    }
-  },
-  {
-    id:'final', cat:'البنود الجوهرية', name:'الأحكام العامة والختامية',
-    check:(t) => {
-      const has = _hasAny(t, ['الأحكام العامة', 'الأحكام الختامية', 'يُعمل بهذه اللائحة', 'تسري هذه اللائحة', 'في كل ما لم يرد']);
-      return has
-        ? { status:'pass', message:'تتضمّن أحكاماً عامة/ختامية.' }
-        : { status:'warn', message:'لا توجد أحكام عامة/ختامية.', suggestion:'أضف فصلاً ختامياً يحدّد آلية التعديل، الإلغاء، والإحالة للمرجعيات الأعلى.' };
-    }
-  },
-  {
-    id:'systemRef', cat:'المرجعيات', name:'الإحالة للنظام والأنظمة الأخرى',
-    check:(t) => {
-      const has = _hasAny(t, ['نظام الجمعيات', 'اللائحة التنفيذية', 'نظام العمل', 'النظام الأساسي', 'اللائحة الأساسية', 'فيما لم يرد']);
-      return has
-        ? { status:'pass', message:'تُحيل للأنظمة العليا.' }
-        : { status:'fail', message:'لا توجد إحالة لنظام الجمعيات أو لوائحه.', suggestion:'اختم اللائحة بـ "فيما لم يرد فيه نص في هذه اللائحة، يُرجَع لنظام الجمعيات الأهلية ولائحته التنفيذية".' };
-    }
-  },
-  {
-    id:'date', cat:'الاعتماد', name:'تاريخ الاعتماد',
-    check:(t) => {
-      return _hasDate(t)
-        ? { status:'pass', message:'يحتوي على تاريخ.' }
-        : { status:'fail', message:'لا يوجد تاريخ اعتماد.', suggestion:'يجب ذكر تاريخ اعتماد اللائحة من الجهة المختصة.' };
-    }
-  },
-  {
-    id:'approval', cat:'الاعتماد', name:'جهة الاعتماد',
-    check:(t) => {
-      const has = _hasAny(t, ['اعتمد', 'اعتماد', 'موافقة', 'الجمعية العمومية', 'مجلس الإدارة', 'صادر عن']);
-      return has
-        ? { status:'pass', message:'تُحدّد جهة الاعتماد.' }
-        : { status:'fail', message:'لا توجد إشارة لجهة الاعتماد.', suggestion:'اللائحة الأساسية تحتاج اعتماد الجمعية العمومية، اللوائح الفرعية تحتاج اعتماد المجلس.' };
-    }
-  },
-  {
-    id:'length', cat:'جودة الصياغة', name:'الحجم المناسب',
-    check:(t) => {
-      const words = t.trim().split(/\s+/).length;
-      if (words < 300) return { status:'fail', message:'اللائحة قصيرة جداً (' + words + ' كلمة).', suggestion:'اللوائح الجيدة عادة 500+ كلمة.' };
-      if (words < 500) return { status:'warn', message:'اللائحة قصيرة (' + words + ' كلمة).', suggestion:'فكّر في إثرائها بمزيد من التفاصيل.' };
-      return { status:'pass', message:'الطول مناسب (' + words + ' كلمة).' };
-    }
-  }
-];
 
 // ── قواعد فحص نظامية القرارات ──
 const DECISION_RULES = [
@@ -15009,8 +15101,8 @@ function renderAuditor(mode) {
 function saveAuditText(mode, value) {
   try { localStorage.setItem('marjie_audit_' + mode + '_text', value); } catch (e) {}
 }
-function clearAuditText(mode) {
-  if (!confirm('مسح النص الحالي؟')) return;
+async function clearAuditText(mode) {
+  if (!await showConfirmDialog({title: 'تأكيد المسح', message: `مسح النص الحالي؟`, confirmText: 'نعم، امسح', variant: 'danger'})) return;
   try { localStorage.removeItem('marjie_audit_' + mode + '_text'); } catch (e) {}
   $('#audit-input').value = '';
   $('#audit-results').innerHTML = '';
@@ -15036,9 +15128,7 @@ function loadAuditFile(event, mode) {
 function runAuditor(mode) {
   const cfg = AUDITOR_CONFIG[mode];
   const text = ($('#audit-input').value || '').trim();
-  const rules = (mode === 'policy') ? POLICY_RULES
-              : (mode === 'regulation') ? REGULATION_RULES
-              : DECISION_RULES;
+  const rules = (mode === 'policy') ? POLICY_RULES : DECISION_RULES;
 
   if (text.length < cfg.minLength) {
     showToast(`النص قصير جداً (الحد الأدنى ${cfg.minLength} حرفاً)`, 'warning');
@@ -15754,10 +15844,9 @@ const CTX_SUGGESTION_TOPICS = {
     { type:'tool', tag:'أداة', title:'سجل أصحاب المصلحة', desc:'استراتيجية إدارة المتطوعين.', href:'#/tools/stakeholders' }
   ],
   'لائحة': [
-    { type:'tool', tag:'أداة', title:'محرّر اللوائح الذكي', desc:'فحص شامل لبنية اللائحة وعناصرها.', href:'#/tools/regulation-audit' }
   ],
   'سياسة': [
-    { type:'tool', tag:'أداة', title:'مدقّق السياسات', desc:'فحص فوري لجودة سياستك.', href:'#/tools/policy-audit' }
+    { type:'tool', tag:'أداة', title:'مدقّق السياسات الذكي', desc:'فحص فوري لجودة سياستك.', href:'#/tools/policy-audit' }
   ]
 };
 
