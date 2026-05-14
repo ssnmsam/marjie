@@ -15,15 +15,42 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="application-name" content="مَرْجِع" />
   <meta name="description" content="منصة الحوكمة العملية للجمعيات الأهلية: معايير، سياسات، أدوات، ومحتوى تعليمي." />
+  <meta name="author" content="سامي صلاح المضلع - خبير في الحوكمة وتأسيس المنظمات غير الربحية" />
+  <meta name="creator" content="سامي صلاح المضلع" />
+  <meta name="publisher" content="مَرْجِع" />
+  <meta name="keywords" content="مَرْجِع, الحوكمة, الجمعيات الأهلية, السياسات, المعايير, القطاع غير الربحي, سامي المضلع" />
 
   <!-- Open Graph للمشاركة -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="مَرْجِع — منصّة الحوكمة العملية للجمعيات الأهلية" />
-  <meta property="og:description" content="13 أداة احترافية، 45+ سياسة جاهزة، معايير الحوكمة كاملة." />
+  <meta property="og:description" content="منصّة شاملة لإدارة الجمعيات الأهلية. معايير، سياسات، أدوات احترافية، ومحتوى تعليمي. فكرة وإشراف: سامي صلاح المضلع." />
   <meta property="og:locale" content="ar_SA" />
+  <meta property="og:site_name" content="مَرْجِع" />
+  <meta property="article:author" content="سامي صلاح المضلع" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="مَرْجِع — منصّة الحوكمة العملية للجمعيات" />
-  <meta name="twitter:description" content="13 أداة احترافية، 45+ سياسة جاهزة، معايير الحوكمة كاملة." />
+  <meta name="twitter:description" content="معايير، سياسات، أدوات احترافية، ومحتوى تعليمي. فكرة: سامي صلاح المضلع." />
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "مَرْجِع",
+    "description": "منصّة الحوكمة العملية للجمعيات الأهلية في المملكة العربية السعودية",
+    "inLanguage": "ar-SA",
+    "author": {
+      "@type": "Person",
+      "name": "سامي صلاح المضلع",
+      "jobTitle": "خبير في الحوكمة وتأسيس المنظمات غير الربحية",
+      "telephone": "+966534992457"
+    },
+    "creator": {
+      "@type": "Person",
+      "name": "سامي صلاح المضلع"
+    }
+  }
+  </script>
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2314B8A6'/%3E%3Cstop offset='100%25' stop-color='%238B5CF6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='url(%23g)'/%3E%3Cg fill='white'%3E%3Crect x='40' y='49' width='100' height='28' rx='5'/%3E%3Crect x='40' y='49' width='28' height='82' rx='5'/%3E%3Crect x='112' y='49' width='28' height='68' rx='5'/%3E%3Crect x='61' y='93' width='58' height='18' rx='4'/%3E%3Crect x='76' y='117' width='28' height='25' rx='4'/%3E%3C/g%3E%3C/svg%3E" />
   <link rel="manifest" id="app-manifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -583,6 +610,91 @@
     .password-toggle{position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);width:34px;height:34px;border:none;background:transparent;color:var(--text-faint);cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);transition:all var(--duration-fast) var(--ease-smooth);font-family:inherit}
     .password-toggle:hover{background:var(--stone-100);color:var(--text)}
     .password-toggle:focus{outline:none;background:var(--stone-100);color:var(--teal-700)}
+
+    /* ═════════════════════════════════════════
+       زرّ واتساب عائم (Floating WhatsApp Button)
+       ═════════════════════════════════════════ */
+    .wa-fab{position:fixed;bottom:1.5rem;left:1.5rem;width:58px;height:58px;background:linear-gradient(135deg,#25D366,#128C7E);color:#FFFFFF;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.5);z-index:9000;text-decoration:none;transition:all .3s ease;animation:waPulseRing 2.4s ease-out infinite}
+    .wa-fab:hover{transform:scale(1.1) rotate(-5deg);box-shadow:0 8px 26px rgba(37,211,102,0.55), 0 0 0 0 rgba(37,211,102,0.5)}
+    .wa-fab:active{transform:scale(0.95)}
+    @keyframes waPulseRing{
+      0%, 100%{box-shadow:0 6px 20px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.5)}
+      50%{box-shadow:0 6px 20px rgba(37,211,102,0.5), 0 0 0 14px rgba(37,211,102,0)}
+    }
+
+    /* Tooltip للزرّ */
+    .wa-fab-tooltip{position:absolute;bottom:50%;right:calc(100% + 12px);transform:translateY(50%);background:#FFFFFF;color:var(--text);padding:0.6rem 0.95rem;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.15);font-size:0.82rem;font-weight:500;white-space:nowrap;opacity:0;pointer-events:none;transition:all .25s ease;display:flex;flex-direction:column;gap:0.1rem;line-height:1.3}
+    .wa-fab-tooltip strong{color:var(--text);font-weight:700;font-size:0.85rem}
+    .wa-fab-tooltip span{color:var(--text-muted);font-size:0.72rem;font-weight:400}
+    .wa-fab-tooltip::after{content:'';position:absolute;top:50%;right:-5px;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;background:#FFFFFF;box-shadow:2px -2px 4px rgba(0,0,0,0.05)}
+    .wa-fab:hover .wa-fab-tooltip{opacity:1;transform:translateY(50%) translateX(-4px)}
+    @media(max-width:600px){.wa-fab{bottom:1rem;left:1rem;width:54px;height:54px}.wa-fab-tooltip{display:none}}
+
+    /* ═════════════════════════════════════════
+       بطاقة المؤسّس (Founder Card)
+       ═════════════════════════════════════════ */
+    .founder-card{display:flex;gap:1.5rem;padding:2rem 1.75rem;background:linear-gradient(135deg,#FFFFFF 0%,#FAFBFC 100%);border:1px solid var(--border);border-radius:18px;box-shadow:0 4px 20px rgba(0,0,0,0.04);align-items:center;position:relative;overflow:hidden}
+    .founder-card::before{content:'';position:absolute;top:-50%;right:-10%;width:50%;height:200%;background:radial-gradient(ellipse,rgba(15,110,86,0.04),transparent 60%);pointer-events:none}
+    .founder-card-inline{margin-top:0.5rem}
+    @media(max-width:700px){.founder-card{flex-direction:column;text-align:center;padding:1.5rem 1rem;gap:1rem}}
+    .founder-avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--teal-500),var(--teal-700));display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 24px rgba(15,110,86,0.25);position:relative;z-index:1}
+    .founder-initials{color:#FFFFFF;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif;font-size:2.4rem;font-weight:700;letter-spacing:-0.02em}
+    .founder-info{flex:1;min-width:0;position:relative;z-index:1}
+    .founder-label{font-size:0.78rem;color:var(--teal-700);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem}
+    .founder-name{font-family:'Cairo','IBM Plex Sans Arabic',sans-serif;font-size:1.55rem;font-weight:700;color:var(--text);margin:0 0 0.3rem;letter-spacing:-0.01em}
+    .founder-title{font-size:0.95rem;color:var(--text-muted);font-weight:500;margin:0 0 0.85rem;line-height:1.6}
+    .founder-bio{font-size:0.92rem;color:var(--text);line-height:1.8;margin:0 0 1.1rem}
+    .founder-actions{display:flex;gap:0.6rem;flex-wrap:wrap}
+    @media(max-width:700px){.founder-actions{justify-content:center}}
+    .founder-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.2rem;border-radius:99px;font-family:inherit;font-size:0.92rem;font-weight:600;text-decoration:none;transition:all .2s ease;border:1.5px solid transparent}
+    .founder-btn-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:#FFFFFF;box-shadow:0 4px 12px rgba(37,211,102,0.3)}
+    .founder-btn-wa:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(37,211,102,0.4)}
+    .founder-btn-tel{background:#FFFFFF;color:var(--teal-700);border-color:#9FCEC3}
+    .founder-btn-tel:hover{background:var(--teal-50);border-color:var(--teal-500)}
+    .founder-meta{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.8rem;color:var(--text-muted)}
+
+    /* ═════════════════════════════════════════
+       صفحة "اتصل بنا"
+       ═════════════════════════════════════════ */
+    .contact-hero{margin-bottom:2rem}
+    .contact-hero h1{font-size:2rem;margin-bottom:0.4rem}
+    .contact-hero p{font-size:1.05rem;line-height:1.7;max-width:600px}
+
+    .contact-channels{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2rem 0}
+    .contact-channel-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:1.75rem 1.25rem;background:#FFFFFF;border:1px solid var(--border);border-radius:14px;text-decoration:none;color:var(--text);transition:all .25s var(--ease-smooth);position:relative;overflow:hidden}
+    .contact-channel-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.08);border-color:var(--teal-500)}
+    .contact-channel-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:0.85rem;transition:all .25s var(--ease-smooth)}
+    .contact-channel-wa .contact-channel-icon{background:linear-gradient(135deg,#25D366,#128C7E);color:#FFFFFF;box-shadow:0 4px 12px rgba(37,211,102,0.25)}
+    .contact-channel-tel .contact-channel-icon{background:linear-gradient(135deg,var(--teal-500),var(--teal-700));color:#FFFFFF;box-shadow:0 4px 12px rgba(15,110,86,0.25)}
+    .contact-channel-ai .contact-channel-icon{background:linear-gradient(135deg,#9F87E5,#6E59C8);color:#FFFFFF;box-shadow:0 4px 12px rgba(110,89,200,0.25)}
+    .contact-channel-card h3{font-size:1.1rem;margin:0 0 0.35rem;font-weight:600;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif}
+    .contact-channel-card p{font-size:0.88rem;color:var(--text-muted);margin:0 0 0.85rem;line-height:1.5}
+    .contact-channel-arrow{font-size:0.85rem;color:var(--teal-700);font-weight:600}
+
+    .contact-faq-section{margin-top:2.5rem;padding:1.75rem;background:var(--stone-50);border-radius:14px}
+    .contact-faq-section h2{font-size:1.3rem;margin-bottom:0.4rem;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif}
+    .contact-faq-section > p{margin-bottom:1.2rem;font-size:0.92rem}
+    .contact-faq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0.7rem}
+    .contact-faq-link{display:flex;align-items:center;gap:0.85rem;padding:0.85rem 1rem;background:#FFFFFF;border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:all .2s ease}
+    .contact-faq-link:hover{border-color:var(--teal-500);box-shadow:0 4px 10px rgba(0,0,0,0.05)}
+    .contact-faq-emoji{font-size:1.5rem;flex-shrink:0}
+    .contact-faq-link strong{display:block;font-size:0.92rem;margin-bottom:0.15rem}
+    .contact-faq-link span{display:block;font-size:0.78rem;color:var(--text-muted)}
+
+    /* ═════════════════════════════════════════
+       Footer — قسم التواصل مع المؤسّس
+       ═════════════════════════════════════════ */
+    .mj-footer-contact{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1.25rem 1.5rem;margin-top:1.5rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;flex-wrap:wrap}
+    .mj-footer-contact-info{flex:1;min-width:220px}
+    .mj-footer-contact-label{font-size:0.72rem;color:rgba(255,255,255,0.65);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem}
+    .mj-footer-contact-name{font-size:1.08rem;font-weight:700;color:#FFFFFF;margin-bottom:0.2rem;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif}
+    .mj-footer-contact-title{font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.5}
+    .mj-footer-contact-actions{display:flex;gap:0.5rem;flex-wrap:wrap}
+    .mj-footer-contact-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1rem;border-radius:99px;font-family:inherit;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all .2s ease;border:1.5px solid transparent}
+    .mj-footer-wa{background:#25D366;color:#FFFFFF}
+    .mj-footer-wa:hover{background:#128C7E;transform:translateY(-1px)}
+    .mj-footer-tel{background:rgba(255,255,255,0.1);color:#FFFFFF;border-color:rgba(255,255,255,0.2)}
+    .mj-footer-tel:hover{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.4)}
 
     /* ═════════════════════════════════════════
        صفحة "قريباً" — كرت معطّل للأدوات
@@ -2703,7 +2815,27 @@
               <li><a href="#" onclick="event.preventDefault();tryShowInstallFromMenu()">تثبيت كتطبيق</a></li>
               <li><a href="#/tools/chatbot">المساعد التفاعلي</a></li>
               <li><a href="#/about">عن المنصّة</a></li>
+              <li><a href="#/contact">اتصل بنا</a></li>
             </ul>
+          </div>
+        </div>
+
+        <!-- صفّ التواصل مع صاحب فكرة المنصّة -->
+        <div class="mj-footer-contact">
+          <div class="mj-footer-contact-info">
+            <div class="mj-footer-contact-label">فكرة وإشراف</div>
+            <div class="mj-footer-contact-name">سامي صلاح المضلع</div>
+            <div class="mj-footer-contact-title">خبير في الحوكمة وتأسيس المنظمات غير الربحية</div>
+          </div>
+          <div class="mj-footer-contact-actions">
+            <a href="https://wa.me/966534992457" target="_blank" rel="noopener" class="mj-footer-contact-btn mj-footer-wa" aria-label="تواصل عبر واتساب">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.464 3.488"/></svg>
+              <span>واتساب</span>
+            </a>
+            <a href="tel:+966534992457" class="mj-footer-contact-btn mj-footer-tel" aria-label="اتصال هاتفي">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span dir="ltr">0534992457</span>
+            </a>
           </div>
         </div>
 
@@ -2718,6 +2850,23 @@
 
   <div id="toasts"></div>
 
+  <!-- زرّ واتساب عائم للتواصل مع صاحب فكرة المنصّة -->
+  <a id="whatsapp-fab"
+     class="wa-fab"
+     href="https://wa.me/966534992457?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%AA%D9%88%D8%A7%D8%B5%D9%84%D8%AA%20%D9%85%D8%B9%D9%83%20%D8%B9%D8%A8%D8%B1%20%D9%85%D9%86%D8%B5%D9%91%D8%A9%20%D9%85%D9%8E%D8%B1%D9%92%D8%AC%D9%90%D8%B9"
+     target="_blank"
+     rel="noopener"
+     aria-label="تواصل مع سامي المضلع عبر واتساب"
+     title="تواصل مع صاحب فكرة المنصّة عبر واتساب">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.464 3.488"/>
+    </svg>
+    <span class="wa-fab-tooltip">
+      <strong>سامي المضلع</strong>
+      <span>تواصل عبر واتساب</span>
+    </span>
+  </a>
+
   <!-- منطقة الطباعة المخفية (للسياسات بصيغة PDF) -->
   <div id="print-area"></div>
 
@@ -2727,6 +2876,27 @@
 // ═════════════════════════════════════════════════════════════════
 
 const API_URL = 'https://script.google.com/macros/s/AKfycbxtZMFpNtqzdkXQon84PQ8jnjlfMNRh4sR4Sck3rqEcEYDUntlkd6oXCOs52YTxXKc/exec';
+
+// ═══════════════════════════════════════════════════════════════════
+// بيانات صاحب فكرة المنصّة (تظهر في عدّة أماكن)
+// ═══════════════════════════════════════════════════════════════════
+const FOUNDER = {
+  name: 'سامي صلاح المضلع',
+  title: 'خبير في الحوكمة وتأسيس المنظمات غير الربحية',
+  phone: '0534992457',
+  phoneIntl: '+966534992457',
+  waPhone: '966534992457', // واتساب يستخدم بدون 0 وبدون +
+  waMessage: 'السلام عليكم، تواصلت معك عبر منصّة مَرْجِع'
+};
+
+function getWhatsAppUrl(text) {
+  const msg = encodeURIComponent(text || FOUNDER.waMessage);
+  return `https://wa.me/${FOUNDER.waPhone}?text=${msg}`;
+}
+
+function getTelUrl() {
+  return `tel:${FOUNDER.phoneIntl}`;
+}
 
 const CLASSIFICATIONS = ['متناهية الصغر', 'الصغيرة', 'المتوسطة', 'الكبيرة', 'متناهية الكبر'];
 const STANDARDS_LABELS = {
@@ -3206,6 +3376,8 @@ function handleRoute() {
       break;
     case 'about':
       renderAbout(); break;
+    case 'contact':
+      renderContact(); break;
     default:
       renderNotFound();
   }
@@ -7304,6 +7476,116 @@ function resetAboutToDefault() {
 }
 
 // عرض الصفحة العامة "عن المنصة"
+// ═════════════════════════════════════════════════════════════════
+// صفحة "اتصل بنا"
+// ═════════════════════════════════════════════════════════════════
+function renderContact() {
+  $('#app').innerHTML = `
+    <div class="container">
+      <a href="#/" class="btn btn-ghost btn-sm mb-3">← العودة للرئيسية</a>
+
+      <div class="contact-hero">
+        <h1>تواصل معنا</h1>
+        <p class="muted">نسعد بتواصلك معنا حول أي استفسار أو ملاحظة أو اقتراح يخصّ منصّة مَرْجِع</p>
+      </div>
+
+      <!-- بطاقة المؤسّس -->
+      <div class="founder-card">
+        <div class="founder-avatar">
+          <div class="founder-initials">س.م</div>
+        </div>
+        <div class="founder-info">
+          <div class="founder-label">صاحب فكرة المنصّة</div>
+          <h2 class="founder-name">سامي صلاح المضلع</h2>
+          <p class="founder-title">خبير في الحوكمة وتأسيس المنظمات غير الربحية</p>
+          <div class="founder-actions">
+            <a href="https://wa.me/966534992457?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%AA%D9%88%D8%A7%D8%B5%D9%84%D8%AA%20%D9%85%D8%B9%D9%83%20%D8%B9%D8%A8%D8%B1%20%D9%85%D9%86%D8%B5%D9%91%D8%A9%20%D9%85%D9%8E%D8%B1%D9%92%D8%AC%D9%90%D8%B9" target="_blank" rel="noopener" class="founder-btn founder-btn-wa">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.464 3.488"/></svg>
+              <span>محادثة واتساب</span>
+            </a>
+            <a href="tel:+966534992457" class="founder-btn founder-btn-tel">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span dir="ltr">0534992457</span>
+            </a>
+          </div>
+          <div class="founder-meta">
+            <span>📞 متاح للتواصل من الأحد إلى الخميس، 9 صباحاً - 5 مساءً</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- بطاقات التواصل السريع -->
+      <div class="contact-channels">
+        <a href="https://wa.me/966534992457" target="_blank" rel="noopener" class="contact-channel-card contact-channel-wa">
+          <div class="contact-channel-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.464 3.488"/></svg>
+          </div>
+          <h3>واتساب</h3>
+          <p>تواصل مباشر وسريع — أسرع وسيلة</p>
+          <span class="contact-channel-arrow">ابدأ المحادثة ←</span>
+        </a>
+
+        <a href="tel:+966534992457" class="contact-channel-card contact-channel-tel">
+          <div class="contact-channel-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3>اتصال هاتفي</h3>
+          <p>للمكالمات المباشرة</p>
+          <span class="contact-channel-arrow" dir="ltr">0534992457 ←</span>
+        </a>
+
+        <a href="#/tools/chatbot" class="contact-channel-card contact-channel-ai">
+          <div class="contact-channel-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>المساعد الذكي</h3>
+          <p>إجابات فورية على أسئلتك حول الحوكمة</p>
+          <span class="contact-channel-arrow">جرّب الآن ←</span>
+        </a>
+      </div>
+
+      <!-- مواضيع شائعة -->
+      <div class="contact-faq-section">
+        <h2>مواضيع شائعة قد تساعدك</h2>
+        <p class="muted">قبل التواصل، تحقّق من هذه الأقسام — قد تجد إجابتك مباشرة:</p>
+        <div class="contact-faq-grid">
+          <a href="#/learn/faq" class="contact-faq-link">
+            <span class="contact-faq-emoji">❓</span>
+            <div>
+              <strong>الأسئلة الشائعة</strong>
+              <span>إجابات تفصيلية لـ42+ سؤال</span>
+            </div>
+          </a>
+          <a href="#/about" class="contact-faq-link">
+            <span class="contact-faq-emoji">ℹ️</span>
+            <div>
+              <strong>عن المنصّة</strong>
+              <span>تعرّف على الرؤية والرسالة</span>
+            </div>
+          </a>
+          <a href="#/standards" class="contact-faq-link">
+            <span class="contact-faq-emoji">📚</span>
+            <div>
+              <strong>المعايير والممارسات</strong>
+              <span>مرجع شامل للحوكمة</span>
+            </div>
+          </a>
+          <a href="#/tools/chatbot" class="contact-faq-link">
+            <span class="contact-faq-emoji">🤖</span>
+            <div>
+              <strong>المساعد التفاعلي</strong>
+              <span>إجابات فورية بالذكاء الاصطناعي</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// صفحة "عن المنصة" — محتوى افتراضي + قابل للتعديل من الإدارة
+// ═════════════════════════════════════════════════════════════════
 function renderAbout() {
   const about = getAboutPage();
   $('#app').innerHTML = `
@@ -7372,6 +7654,34 @@ function renderAbout() {
         <section class="about-section">
           <h2>${escapeHtml(about.audience.title)}</h2>
           <p class="about-lead">${escapeHtml(about.audience.content)}</p>
+        </section>
+
+        <!-- بطاقة صاحب فكرة المنصّة -->
+        <section class="about-section">
+          <h2>صاحب فكرة المنصّة</h2>
+          <div class="founder-card founder-card-inline">
+            <div class="founder-avatar">
+              <div class="founder-initials">س.م</div>
+            </div>
+            <div class="founder-info">
+              <div class="founder-label">المؤسّس والمشرف</div>
+              <h3 class="founder-name">سامي صلاح المضلع</h3>
+              <p class="founder-title">خبير في الحوكمة وتأسيس المنظمات غير الربحية</p>
+              <p class="founder-bio">
+                صاحب فكرة منصّة <strong>مَرْجِع</strong> ومُشرفها. يسعى من خلالها إلى رفع جودة الحوكمة في الجمعيات الأهلية السعودية بتوفير أدوات عملية ومحتوى تطبيقي مبني على المعايير الرسمية.
+              </p>
+              <div class="founder-actions">
+                <a href="https://wa.me/966534992457?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%AA%D9%88%D8%A7%D8%B5%D9%84%D8%AA%20%D9%85%D8%B9%D9%83%20%D8%B9%D8%A8%D8%B1%20%D9%85%D9%86%D8%B5%D9%91%D8%A9%20%D9%85%D9%8E%D8%B1%D9%92%D8%AC%D9%90%D8%B9" target="_blank" rel="noopener" class="founder-btn founder-btn-wa">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.464 3.488"/></svg>
+                  <span>محادثة واتساب</span>
+                </a>
+                <a href="tel:+966534992457" class="founder-btn founder-btn-tel">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span dir="ltr">0534992457</span>
+                </a>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- CTA -->
