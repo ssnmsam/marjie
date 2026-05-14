@@ -662,6 +662,45 @@
     .founder-photo-controls{flex:1;min-width:200px}
     .founder-photo-controls .btn input[type=file]{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 
+    /* ═════════════════════════════════════════
+       Modal محرّر اقتصاص الصورة
+       ═════════════════════════════════════════ */
+    .img-cropper-modal{display:none;position:fixed;inset:0;z-index:10000;align-items:center;justify-content:center;padding:1rem;animation:cropperFadeIn .2s ease}
+    @keyframes cropperFadeIn{from{opacity:0}to{opacity:1}}
+    .img-cropper-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(4px)}
+    .img-cropper-dialog{position:relative;background:#FFFFFF;border-radius:18px;width:100%;max-width:480px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.3);animation:cropperSlideUp .25s ease;overflow:hidden}
+    @keyframes cropperSlideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+    .img-cropper-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.4rem;border-bottom:1px solid var(--border)}
+    .img-cropper-header h3{margin:0;font-size:1.1rem;font-weight:700;font-family:'Cairo','IBM Plex Sans Arabic',sans-serif}
+    .img-cropper-close{width:34px;height:34px;border:none;background:var(--stone-50);color:var(--text-muted);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+    .img-cropper-close:hover{background:#FFEDED;color:#C44545}
+
+    .img-cropper-body{padding:1.25rem 1.4rem;overflow-y:auto;flex:1}
+
+    .img-cropper-area{position:relative;width:380px;height:380px;max-width:100%;margin:0 auto;background:#1a1a1a;border-radius:12px;overflow:hidden;touch-action:none}
+    @media(max-width:480px){
+      .img-cropper-area{width:100%;aspect-ratio:1}
+      .img-cropper-area canvas{width:100%;height:100%}
+    }
+    .img-cropper-area canvas{display:block;cursor:grab;user-select:none;-webkit-user-drag:none}
+    .img-cropper-area canvas:active{cursor:grabbing}
+
+    /* قناع دائري شفاف فوق الـcanvas */
+    .img-cropper-overlay{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at center, transparent 49%, rgba(0,0,0,0.55) 51%);border-radius:12px}
+
+    .img-cropper-zoom{margin-top:1.2rem;text-align:center}
+    .img-cropper-zoom label{display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem;font-weight:600}
+    .img-cropper-zoom-row{display:flex;align-items:center;gap:0.6rem;max-width:340px;margin:0 auto}
+    .img-cropper-zoom-btn{width:32px;height:32px;border:1.5px solid var(--border);background:#FFFFFF;color:var(--text);border-radius:8px;font-size:1.3rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;flex-shrink:0;transition:all .15s}
+    .img-cropper-zoom-btn:hover{border-color:var(--teal-500);color:var(--teal-700);background:var(--teal-50)}
+    .img-cropper-zoom-btn:active{transform:scale(0.92)}
+    .img-cropper-zoom input[type=range]{flex:1;height:6px;border-radius:99px;background:var(--stone-100);outline:none;-webkit-appearance:none;cursor:pointer}
+    .img-cropper-zoom input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--teal-500);cursor:pointer;border:3px solid #FFFFFF;box-shadow:0 2px 6px rgba(15,110,86,0.3)}
+    .img-cropper-zoom input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--teal-500);cursor:pointer;border:3px solid #FFFFFF;box-shadow:0 2px 6px rgba(15,110,86,0.3)}
+
+    .img-cropper-footer{display:flex;justify-content:flex-end;gap:0.5rem;padding:1rem 1.4rem;border-top:1px solid var(--border);background:var(--stone-50);flex-wrap:wrap}
+
     /* Toggle switches في admin forms */
     .form-toggles{display:flex;flex-direction:column;gap:0.7rem}
     .form-toggle{display:flex;align-items:center;gap:0.85rem;padding:0.95rem 1.1rem;background:var(--stone-50);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s ease}
@@ -2873,7 +2912,7 @@
           <span>© <span id="year"></span> <span data-bind="siteName">مَرْجِع</span> — منصّة الحوكمة العملية للجمعيات الأهلية • كل المحتوى استرشادي ويتطلب اعتماد جهتك المختصة</span>
         </div>
 
-        <div class="mj-footer-signature" id="footer-signature" data-bind="madeWithText">صُنعت بـ <span class="heart">💚</span> في الرياض</div>
+        <div class="mj-footer-signature" id="footer-signature" data-bind="madeWithText">صُنعت بـ <span class="heart">💚</span> في بريدة</div>
       </div>
     </div>
   </footer>
@@ -8275,44 +8314,289 @@ function handleFounderPhotoUpload(event) {
     return;
   }
 
-  if (file.size > 2 * 1024 * 1024) {
-    showToast('حجم الصورة كبير (الأقصى 2MB). جاري ضغطها...', 'info');
-  }
+  // إعادة تعيين الحقل (للسماح برفع نفس الملف مرّتين)
+  event.target.value = '';
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    const img = new Image();
-    img.onload = () => {
-      // ضغط وتصغير لـ400x400
-      const canvas = document.createElement('canvas');
-      canvas.width = 400;
-      canvas.height = 400;
-      const ctx = canvas.getContext('2d');
-
-      // قص لمربع (المركز)
-      const minDim = Math.min(img.width, img.height);
-      const sx = (img.width - minDim) / 2;
-      const sy = (img.height - minDim) / 2;
-      ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, 400, 400);
-
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-
-      if (saveFounderPhoto(dataUrl)) {
-        document.documentElement.style.setProperty('--founder-photo', `url('${dataUrl}')`);
-        updateFounderPhotoPreview();
-        if (typeof logAudit === 'function') logAudit('update', 'settings', 'founder-photo', 'Photo uploaded');
-        showToast('تمّ رفع الصورة ✓', 'success');
-        // إعادة رسم الـUI الخارجي
-        applyFounderUI();
-        // إعادة تحميل الـadmin page لتحديث زرّ "إعادة الافتراضي"
-        renderAdminFounder();
-      } else {
-        showToast('فشل الحفظ (قد يكون التخزين ممتلئاً)', 'error');
-      }
-    };
-    img.src = e.target.result;
+    // افتح محرّر الاقتصاص بدل الحفظ المباشر
+    openImageCropper(e.target.result);
   };
   reader.readAsDataURL(file);
+}
+
+// ═════════════════════════════════════════════════════════════════
+// محرّر الاقتصاص التفاعلي (zoom + pan)
+// ═════════════════════════════════════════════════════════════════
+
+let _cropperState = null;
+
+function openImageCropper(imgDataUrl) {
+  // إنشاء modal لو لم يكن موجوداً
+  let modal = document.getElementById('img-cropper-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'img-cropper-modal';
+    modal.className = 'img-cropper-modal';
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div class="img-cropper-backdrop" onclick="closeImageCropper()"></div>
+    <div class="img-cropper-dialog" role="dialog" aria-modal="true">
+      <div class="img-cropper-header">
+        <h3>تعديل الصورة</h3>
+        <button type="button" class="img-cropper-close" onclick="closeImageCropper()" aria-label="إغلاق">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="img-cropper-body">
+        <p class="small muted" style="margin-bottom:0.85rem;text-align:center">
+          🖱 اسحب الصورة لتحريكها • 🔍 استخدم الشريط أو عجلة الفأرة للتقريب
+        </p>
+
+        <!-- منطقة المعاينة مع القناع الدائري -->
+        <div class="img-cropper-area" id="cropper-area">
+          <canvas id="cropper-canvas" width="380" height="380"></canvas>
+          <div class="img-cropper-overlay"></div>
+        </div>
+
+        <!-- شريط التقريب -->
+        <div class="img-cropper-zoom">
+          <label class="small">التقريب</label>
+          <div class="img-cropper-zoom-row">
+            <button type="button" onclick="cropperAdjustZoom(-0.1)" aria-label="تبعيد" class="img-cropper-zoom-btn">−</button>
+            <input type="range" id="cropper-zoom" min="1" max="4" step="0.05" value="1" oninput="cropperOnZoomChange(this.value)" />
+            <button type="button" onclick="cropperAdjustZoom(0.1)" aria-label="تقريب" class="img-cropper-zoom-btn">+</button>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="cropperReset()" style="margin-top:0.5rem">
+            ↺ إعادة تعيين
+          </button>
+        </div>
+      </div>
+
+      <div class="img-cropper-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeImageCropper()">إلغاء</button>
+        <button type="button" class="btn btn-primary" onclick="cropperConfirm()">
+          ✓ تطبيق الصورة
+        </button>
+      </div>
+    </div>
+  `;
+  modal.style.display = 'flex';
+
+  // تحميل الصورة
+  const img = new Image();
+  img.onload = () => {
+    _cropperState = {
+      img: img,
+      canvas: document.getElementById('cropper-canvas'),
+      zoom: 1,
+      offsetX: 0,
+      offsetY: 0,
+      isDragging: false,
+      lastX: 0,
+      lastY: 0,
+      baseScale: 1
+    };
+
+    // احسب الـscale الأساسي (الذي يملأ الـcanvas تماماً)
+    const cw = _cropperState.canvas.width;
+    const ch = _cropperState.canvas.height;
+    _cropperState.baseScale = Math.max(cw / img.width, ch / img.height);
+
+    cropperDraw();
+    setupCropperEvents();
+  };
+  img.onerror = () => {
+    showToast('فشل تحميل الصورة', 'error');
+    closeImageCropper();
+  };
+  img.src = imgDataUrl;
+}
+
+function closeImageCropper() {
+  const modal = document.getElementById('img-cropper-modal');
+  if (modal) modal.style.display = 'none';
+  _cropperState = null;
+}
+
+function cropperDraw() {
+  if (!_cropperState) return;
+  const { img, canvas, zoom, offsetX, offsetY, baseScale } = _cropperState;
+  const ctx = canvas.getContext('2d');
+  const cw = canvas.width;
+  const ch = canvas.height;
+
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fillRect(0, 0, cw, ch);
+
+  const scale = baseScale * zoom;
+  const drawW = img.width * scale;
+  const drawH = img.height * scale;
+
+  // محور الرسم: وسط الـcanvas + الـoffset
+  const x = (cw - drawW) / 2 + offsetX;
+  const y = (ch - drawH) / 2 + offsetY;
+
+  ctx.drawImage(img, x, y, drawW, drawH);
+}
+
+function cropperOnZoomChange(val) {
+  if (!_cropperState) return;
+  _cropperState.zoom = parseFloat(val);
+  cropperDraw();
+}
+
+function cropperAdjustZoom(delta) {
+  if (!_cropperState) return;
+  const slider = document.getElementById('cropper-zoom');
+  let newZoom = Math.max(1, Math.min(4, _cropperState.zoom + delta));
+  _cropperState.zoom = newZoom;
+  if (slider) slider.value = newZoom;
+  cropperDraw();
+}
+
+function cropperReset() {
+  if (!_cropperState) return;
+  _cropperState.zoom = 1;
+  _cropperState.offsetX = 0;
+  _cropperState.offsetY = 0;
+  const slider = document.getElementById('cropper-zoom');
+  if (slider) slider.value = 1;
+  cropperDraw();
+}
+
+function setupCropperEvents() {
+  const canvas = _cropperState.canvas;
+
+  // الفأرة - بدء السحب
+  canvas.addEventListener('mousedown', (e) => {
+    if (!_cropperState) return;
+    _cropperState.isDragging = true;
+    _cropperState.lastX = e.clientX;
+    _cropperState.lastY = e.clientY;
+    canvas.style.cursor = 'grabbing';
+  });
+
+  // السحب
+  window.addEventListener('mousemove', (e) => {
+    if (!_cropperState || !_cropperState.isDragging) return;
+    const dx = e.clientX - _cropperState.lastX;
+    const dy = e.clientY - _cropperState.lastY;
+    _cropperState.offsetX += dx;
+    _cropperState.offsetY += dy;
+    _cropperState.lastX = e.clientX;
+    _cropperState.lastY = e.clientY;
+    cropperDraw();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (_cropperState) {
+      _cropperState.isDragging = false;
+      canvas.style.cursor = 'grab';
+    }
+  });
+
+  // عجلة الفأرة للتقريب
+  canvas.addEventListener('wheel', (e) => {
+    if (!_cropperState) return;
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.08 : 0.08;
+    cropperAdjustZoom(delta);
+  }, { passive: false });
+
+  // اللمس (الجوال)
+  let lastTouchDist = 0;
+
+  canvas.addEventListener('touchstart', (e) => {
+    if (!_cropperState) return;
+    if (e.touches.length === 1) {
+      _cropperState.isDragging = true;
+      _cropperState.lastX = e.touches[0].clientX;
+      _cropperState.lastY = e.touches[0].clientY;
+    } else if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      lastTouchDist = Math.sqrt(dx*dx + dy*dy);
+    }
+  }, { passive: true });
+
+  canvas.addEventListener('touchmove', (e) => {
+    if (!_cropperState) return;
+    e.preventDefault();
+    if (e.touches.length === 1 && _cropperState.isDragging) {
+      const dx = e.touches[0].clientX - _cropperState.lastX;
+      const dy = e.touches[0].clientY - _cropperState.lastY;
+      _cropperState.offsetX += dx;
+      _cropperState.offsetY += dy;
+      _cropperState.lastX = e.touches[0].clientX;
+      _cropperState.lastY = e.touches[0].clientY;
+      cropperDraw();
+    } else if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (lastTouchDist > 0) {
+        const delta = (dist - lastTouchDist) / 100;
+        cropperAdjustZoom(delta);
+      }
+      lastTouchDist = dist;
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', () => {
+    if (_cropperState) {
+      _cropperState.isDragging = false;
+      lastTouchDist = 0;
+    }
+  });
+
+  canvas.style.cursor = 'grab';
+}
+
+function cropperConfirm() {
+  if (!_cropperState) return;
+
+  // إنشاء canvas نهائي بحجم 400x400 (لتطابق الـbackground)
+  // المنطقة الدائرية تكون بداخل المربع
+  const finalCanvas = document.createElement('canvas');
+  finalCanvas.width = 400;
+  finalCanvas.height = 400;
+  const ctx = finalCanvas.getContext('2d');
+
+  // ارسم الصورة بنفس الإعدادات لكن بحجم 400
+  const { img, zoom, offsetX, offsetY, canvas, baseScale } = _cropperState;
+  const sourceCw = canvas.width;
+  const sourceCh = canvas.height;
+  const ratio = 400 / sourceCw;
+
+  const scale = baseScale * zoom * ratio;
+  const drawW = img.width * scale;
+  const drawH = img.height * scale;
+
+  // نفس المحور لكن مضروب في النسبة
+  const x = (400 - drawW) / 2 + offsetX * ratio;
+  const y = (400 - drawH) / 2 + offsetY * ratio;
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, 400, 400);
+  ctx.drawImage(img, x, y, drawW, drawH);
+
+  // الناتج JPEG
+  const dataUrl = finalCanvas.toDataURL('image/jpeg', 0.88);
+
+  if (saveFounderPhoto(dataUrl)) {
+    document.documentElement.style.setProperty('--founder-photo', `url('${dataUrl}')`);
+    if (typeof logAudit === 'function') logAudit('update', 'settings', 'founder-photo', 'Photo uploaded with cropper');
+    showToast('تمّ حفظ الصورة ✓', 'success');
+    applyFounderUI();
+    closeImageCropper();
+    renderAdminFounder();
+  } else {
+    showToast('فشل الحفظ (قد يكون التخزين ممتلئاً)', 'error');
+  }
 }
 
 function removeFounderPhoto() {
@@ -8723,7 +9007,7 @@ function getAppSettings() {
         footerNote: s.footerNote || '',
         // ─── حقول جديدة (تصميم الزجاج المضيء) قابلة للتعديل من المدير ───
         // التوقيع في التذييل
-        madeWithText: s.madeWithText !== undefined ? s.madeWithText : 'صُنعت بـ 💚 في الرياض',
+        madeWithText: s.madeWithText !== undefined ? s.madeWithText : 'صُنعت بـ 💚 في بريدة',
         showFooterSignature: s.showFooterSignature !== undefined ? s.showFooterSignature : true,
         // عنوان قسم الأدوات في الصفحة الرئيسية
         featuresHeading: s.featuresHeading !== undefined ? s.featuresHeading : 'كل ما تحتاجه جمعيتك في مكان واحد',
@@ -8743,7 +9027,7 @@ function getAppSettings() {
     contactEmail: '', contactPhone: '',
     twitterUrl: '', linkedinUrl: '',
     footerNote: '',
-    madeWithText: 'صُنعت بـ 💚 في الرياض',
+    madeWithText: 'صُنعت بـ 💚 في بريدة',
     showFooterSignature: true,
     featuresHeading: 'كل ما تحتاجه جمعيتك في مكان واحد',
     featuresSubheading: '',
@@ -8934,7 +9218,7 @@ function renderSettingsGeneral() {
         <div class="form-group">
           <label>نصّ التوقيع</label>
           <input type="text" name="madeWithText" value="${escapeHtml(s.madeWithText)}" maxlength="120" />
-          <div class="form-help">السطر الأخير الظاهر في تذييل الصفحة. يدعم الإيموجي. الافتراضي: <code>صُنعت بـ 💚 في الرياض</code></div>
+          <div class="form-help">السطر الأخير الظاهر في تذييل الصفحة. يدعم الإيموجي. الافتراضي: <code>صُنعت بـ 💚 في بريدة</code></div>
         </div>
 
         <div style="display:flex;justify-content:flex-end;margin-top:2rem;gap:0.75rem">
@@ -17140,7 +17424,7 @@ function applyEditableSettings() {
   try {
     const s = getAppSettings();
 
-    // التذييل: السطر الجديد "صُنعت بـ 💚 في الرياض"
+    // التذييل: السطر الجديد "صُنعت بـ 💚 في بريدة"
     const footerSig = document.getElementById('footer-signature');
     if (footerSig) {
       if (s.showFooterSignature && s.madeWithText) {
